@@ -1,0 +1,11 @@
+'a==b'
+'a+1==b-2'
+'1==2'
+'alpha==beta'
+'X^2+1==Y^3/2'
+'a<>b'
+'a+1<>b-2'
+'1<>2'
+'alpha<>beta'
+'X^2+1<>Y^3/2'
+get_class_count() = 0 for watched classes

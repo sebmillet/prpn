@@ -1,0 +1,52 @@
+->LIST
+"-START-"
+0
+->LIST
+0 1 ->LIST
+(-1.23e-45,+6.78e-90) 3.14159 2 ->LIST
+[-1.23e-45] DUP DUP DUP 4 DUPN 8 ->LIST
+[[-1.23e-45 -1 -2][1.3e-5 -3 -4][-1.2e-4 -5 -6][1e45 -7 -8]]
+1 ->LIST
+[[-1.23e-45 -1 -2][1.3e-5 -3 -4][-1.2e-4 -5 -6][1e45 -7 -8]]
+DUP ->STR
+2 ->LIST
+'alpha' 1 ->LIST
+{ [[1][2]] << [[1][2]] { 1 } { } >> { [1][2] } { } } 1
+->LIST
+<< [[1][2]] { [[1][2]] { 1 } { } } { [1][2] } { } >> 1
+->LIST
+<< >> 1 ->LIST
+0 (0,0) [0] [[0]] [(0,0)] [[(0,0)]] "" 'x' << 1 2 + >> { 1 "" } 10 ->LIST
+{ } 1 ->LIST
+1 ->LIST
+{ } 1 ->LIST 2 ->LIST 1 ->LIST 1 ->LIST
+DEPTH DUPN DEPTH 2 / ->LIST
+0 ->LIST
+(0, 0) ->LIST
+'x' ->LIST
+{ } ->LIST
+<< >> ->LIST
+[1] ->LIST
+[[1]] ->LIST
+0
+->LIST
+(0, 0)
+->LIST
+'x'
+->LIST
+{ }
+->LIST
+<< >>
+->LIST
+[1]
+->LIST
+[[1]]
+->LIST
+-1e-150 ->list
+1e-150 ->list
+-1e150 ->list
+-500 ->list
+0 ->list
+500 ->list
+1e150 ->list
+20 DROPN

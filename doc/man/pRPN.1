@@ -1,0 +1,327 @@
+.\" Written by Sébastien Millet
+.\"
+.TH pRPN 1 "version 0.5" "May 10, 2010"
+
+.SH NAME
+pRPN \- a portable RPN calculator
+
+.SH SYNOPSIS
+.B pRPN [options]
+.br
+
+.SH DESCRIPTION
+The \fBpRPN\fP program is a RPN calculator inspired by HP calculators
+of late 80s.
+.SH OPTIONS
+.TP
+.B \-h,\ \-\-help
+Display a quick help screen and exit
+.TP
+.B \-v\ \-\-version
+Display version information and exit
+.TP
+.B \-c,\ \-\-console
+Run in console mode.
+.TP
+.B \-w,\ \-\-width\ \fIwidth\fP
+Set width to \fIwidth\fP, measured in number of characters. Defaults to 23.
+.TP
+.B \-h,\ \-\-height\ \fIheight\fP
+Set height to \fIheight\fP, measured in number of lines. Defaults to 5.
+.TP
+.B \-\-min-stack-height\ \fImin-stack-height\fP
+Set minimum stack height to \fIheight\fP, measured in number of lines. Defaults to \fIheight\fP.
+Only in console mode.
+.TP
+.B \-b,\ \-\-batch
+Batch mode, implies console mode.
+.TP
+.B \-z,\ \-\-dry\-run
+Ignore rc files
+.TP
+.B \-d,\ \-\-debug\ \fIdebug_option\fP
+Debug mode, need a parameter
+.SH COMMANDS
+Commands are followed by the number of arguments they take, in parenthesis. These arguments are taken from the stack.
+.TP
+.B _HELP\ (0)
+Display a help screen
+.TP
+.B _HELP_FLAGS\ (0)
+Display a help screen about flags
+.TP
+.B _EXIT\ (0)
+Quit program
+.TP
+.B +\ (2)
+Addition
+.TP
+.B -\ (2)
+Subtraction
+.TP
+.B *\ (2)
+Multiplication
+.TP
+.B /\ (2)
+Division
+.TP
+.B ^\ (2)
+Power
+.TP
+.B COS\ (1)
+Cosinus
+.TP
+.B SIN\ (1)
+Sin
+.TP
+.B TAN\ (1)
+Tan
+.TP
+.B ACOS\ (1)
+Arccosinus
+.TP
+.B ASIN\ (1)
+Arcsinus
+.TP
+.B ATAN\ (1)
+Arctan
+.TP
+.B LN\ (1)
+Logarihtm (e base)
+.TP
+.B EXP\ (1)
+Exponential
+.TP
+.B NEG\ (1)
+Opposite
+.TP
+.B IP\ (1)
+Integer part
+.TP
+.B INV\ (1)
+1/x
+.TP
+.B SQ\ (1)
+Square
+.TP
+.B SQR\ (1)
+Square root
+.TP
+.B R->C\ (2)
+Real to complex
+.TP
+.B C->R\ (1)
+Complex to real
+.TP
+.B SAME\ (2)
+Is identical
+.TP
+.B ==\ (2)
+Equal to
+.TP
+.B <>\ (2)
+Different from
+.TP
+.B <\ (2)
+Lower than
+.TP
+.B <=\ (2)
+Lower than or equal to
+.TP
+.B >\ (2)
+Greater than
+.TP
+.B >=\ (2)
+Greater than or equal to
+.TP
+.B DUP\ (1)
+Copy the first item
+.TP
+.B SWAP\ (2)
+Exchange the first two items
+.TP
+.B DROP\ (1)
+Delete the first item
+.TP
+.B CLEAR\ (0)
+Clear the stack
+.TP
+.B OVER\ (2)
+Copy the second item
+.TP
+.B DUP2\ (2)
+Copy the first two items
+.TP
+.B DROP2\ (2)
+Delete the first two items
+.TP
+.B ROT\ (3)
+Move the third item to the first position
+.TP
+.B ROLLD\ (1)
+Move the first item to the Nth position
+.TP
+.B ROLL\ (1)
+Move the Nth item to the first position
+.TP
+.B PICK\ (1)
+Copy the Nth item
+.TP
+.B DUPN\ (1)
+Copy the n first items
+.TP
+.B DROPN\ (1)
+Delete the n first items
+.TP
+.B DEPTH\ (0)
+Get the number of items
+.TP
+.B SF\ (1)
+Set flag
+.TP
+.B CF\ (1)
+Clear flag
+.TP
+.B FS?\ (1)
+Return 1 if flag is set, 0 otherwise
+.TP
+.B FC?\ (1)
+Return 0 if flag is set, 1 otherwise
+.TP
+.B FS?C\ (1)
+Do FS? then clear flag
+.TP
+.B FC?C\ (1)
+Do FC? then clear flag
+.TP
+.B ->STR\ (1)
+Convert to string
+.TP
+.B STR->\ (0)
+Convert from string
+.TP
+.B ->LIST\ (1)
+Items to list
+.TP
+.B LIST->\ (1)
+Extract items from list
+.TP
+.B EVAL\ (0)
+Evaluate item
+.TP
+.B STO\ (2)
+Store value in variable name
+.TP
+.B RCL\ (1)
+Recall value from variable name
+.TP
+.B PURGE\ (1)
+Remove a variable
+.TP
+.B VARS\ (0)
+Get the list of variables in current directory
+.TP
+.B PATH\ (0)
+Get the list from root to current directory
+.TP
+.B CRDIR\ (1)
+Create a directory
+.TP
+.B HOME\ (0)
+Set root directory as the current one
+.TP
+.B UP\ (0)
+Make the parent directory the current one
+.TP
+.B BIN\ (0)
+Use binary mode for binary integers
+.TP
+.B OCT\ (0)
+Use octal mode for binary integers
+.TP
+.B DEC\ (0)
+Use decimal mode for binary integers
+.TP
+.B HEX\ (0)
+Use hexadecimal mode for binary integers
+.TP
+.B STWS\ (1)
+Define the number of bits in binary integers (1 to 64)
+.TP
+.B RCWS\ (0)
+Get the number of bits in binary integers
+.TP
+.B B->R\ (1)
+Convert a binary integer into a real
+.TP
+.B R->B\ (1)
+Convert a real into a binary integer
+.TP
+.B RCLF\ (0)
+Save flag states in a binary integer
+.TP
+.B STOF\ (1)
+Read flag states from a binary integer
+.TP
+.B WAIT\ (1)
+Wait a number of seconds
+.TP
+.B UNDO\ (0)
+Undo last command, 50 levels by default
+.TP
+.B _UNDO_LEVELS\ (1)
+Define number of undo levels
+.TP
+.B _UNDO_LEVELS?\ (0)
+Get number of undo levels
+.SH "OBJECT TYPES"
+.TP
+       Object type    Symbol Example
+.br
+-------------- ------ -------------------------
+.br
+
+.br
+Data
+.br
+Real Number           1.23456e-25
+.br
+Complex Number ( )    (123.45, 678.90)
+.br
+Binary Integer #      # 123AB
+.br
+String         " "    "RESULT"
+.br
+Vector         [ ]    [1.23 4.56 7.89]
+.br
+Matrix         [[ ]]  [[1.23 4.56] [6.54 3.21]]
+.br
+List           { }    {1.23 "ABC" # 45d}
+.br
+
+.br
+Names
+.br
+Name           ' '    'CALC'
+.br
+
+.br
+Procedures
+.br
+Program        << >>  << DUP + SWAP >>
+.br
+.SH "INITIALIZATION FILES"
+.TP
+.B ~/.prpn/stackrc
+Settings and stack content
+.TP
+.B ~/.prpn/varsrc
+Variables structure, and actual working directory
+.SH AUTHOR
+Written by Sébastien Millet <sebastien.millet1@club-internet.fr>. Permission is granted to copy, distribute and/or modify this document under the terms of the GNU General Public License, Version 3 published by the Free Software Foundation.
+.SH BUGS
+.TP
+\- Program is in version 0.5.0...
+.TP
+\- Windows version: wx disconnects the program from the terminal it is sent from. Therefore Windows generation produces a GUI version, pRPN.exe, and a console version, pRPNc.exe.
+

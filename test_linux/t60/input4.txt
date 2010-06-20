@@ -1,0 +1,329 @@
+"Real:Exp1->got"
+0 0 == ->STR +
+"Real:Exp0->got"
+0 1 == ->STR +
+"Cplx:Exp1->got"
+(0, 0) (0, 0) == ->STR +
+"Cplx:Exp0->got"
+(0, 0) (1, 0) == ->STR +
+"VecR:Exp1->got"
+[0] [0] == ->STR +
+"VecR:Exp0->got"
+[0] [1] == ->STR +
+"VecC:Exp1->got"
+[(0, 0)] [(0, 0)] == ->STR +
+"VecC:Exp0->got"
+[(0, 0)] [(1, 0)] == ->STR +
+"MatR:Exp1->got"
+[[0 0] [0 0]] [[0 0] [0 0]] == ->STR +
+"MatR:Exp0->got"
+[[0 0] [0 0]] [[0 0] [1 0]] == ->STR +
+"MatC:Exp1->got"
+[[(0, 0) (0, 0)] [(0, 0) (0, 0)]] [[(0, 0) (0, 0)] [(0, 0) (0, 0)]] == ->STR +
+"MatC:Exp0->got"
+[[(0, 0) (0, 0)] [(0, 0) (0, 0)]] [[(0, 0) (0, 0)] [(1, 0) (0, 0)]] == ->STR +
+"VecR:Exp0->got"
+[0] [[0]] == ->STR +
+"VecR:Exp0->got"
+[[0]] [0] == ->STR +
+"VecC:Exp0->got"
+[(0, 0)] [[(0, 0)]] == ->STR +
+"VecC:Exp0->got"
+[[(0, 0)]] [(0, 0)] == ->STR +
+"Bin:Exp1->got"
+#0 #0 == ->STR +
+"Bin:Exp0->got"
+#0 #1 == ->STR +
+"Str:Exp1->got"
+"0" "0" == ->STR +
+"Str:Exp0->got"
+"0" "1" == ->STR +
+"Str:Exp0->got"
+"" "0" == ->STR +
+"Str:Exp0->got"
+"0" "" == ->STR +
+"Str:Exp1->got"
+"" "" == ->STR +
+"--Mark1--"
+"List:Exp1->got"
+{  } {  } == ->STR +
+"List:Exp0->got"
+{  } { 1 } == ->STR +
+"List:Exp0->got"
+{ 1 } { } == ->STR +
+"List:Exp1->got"
+{ 0 } { 0 } == ->STR +
+"List:Exp0->got"
+{ 0 } { 1 } == ->STR +
+"List:Exp0->got"
+{ 0 } { 0 { } } == ->STR +
+"List:Exp0->got"
+{ 0 { } } { 0 } == ->STR +
+"List:Exp1->got"
+{ { } } { { } } == ->STR +
+"List:Exp0->got"
+{ { } } { 1 } == ->STR +
+"List:Exp1->got"
+{ { 0 } 0 } { { 0 } 0 } == ->STR +
+"List:Exp1->got"
+{ 0 { 0 } } { 0 { 0 } } == ->STR +
+"List:Exp0->got"
+{ 0 { 0 } } { { 0 } 0 } == ->STR +
+"List:Exp0->got"
+{ { 0 } 0 } { { 0 } 1 } == ->STR +
+"List:Exp1->got"
+{ { 0 } 0 { } } { { 0 } 0 { } } == ->STR +
+"List:Exp0->got"
+{ { 0 } 0 { } } { { 0 } 0 { 0 } } == ->STR +
+"--Mark2--"
+"List:Exp0->got"
+{  } { "1" } == ->STR +
+"List:Exp0->got"
+{ "1" } { } == ->STR +
+"List:Exp1->got"
+{ "0" } { "0" } == ->STR +
+"List:Exp0->got"
+{ "0" } { "1" } == ->STR +
+"List:Exp0->got"
+{ "0" } { "0" { } } == ->STR +
+"List:Exp0->got"
+{ "0" { } } { "0" } == ->STR +
+"List:Exp0->got"
+{ { } } { "1" } == ->STR +
+"List:Exp1->got"
+{ { "0" } "0" } { { "0" } "0" } == ->STR +
+"List:Exp1->got"
+{ "0" { "0" } } { "0" { "0" } } == ->STR +
+"List:Exp0->got"
+{ "0" { "0" } } { { "0" } "0" } == ->STR +
+"List:Exp0->got"
+{ { "0" } "0" } { { "0" } "1" } == ->STR +
+"List:Exp1->got"
+{ { "0" } "0" { } } { { "0" } "0" { } } == ->STR +
+"List:Exp0->got"
+{ { "0" } "0" { } } { { "0" } "0" { "0" } } == ->STR +
+"--Mark3--"
+"List:Exp0->got"
+{  } { << 1 >> } == ->STR +
+"List:Exp0->got"
+{ << 1 >> } { } == ->STR +
+"List:Exp1->got"
+{ << 0 >> } { << 0 >> } == ->STR +
+"List:Exp0->got"
+{ << 0 >> } { << 1 >> } == ->STR +
+"List:Exp0->got"
+{ << 0 >> } { << 0 >> { } } == ->STR +
+"List:Exp0->got"
+{ << 0 >> { } } { << 0 >> } == ->STR +
+"List:Exp0->got"
+{ { } } { << 1 >> } == ->STR +
+"List:Exp1->got"
+{ { << 0 >> } << 0 >> } { { << 0 >> } << 0 >> } == ->STR +
+"List:Exp1->got"
+{ << 0 >> { << 0 >> } } { << 0 >> { << 0 >> } } == ->STR +
+"List:Exp0->got"
+{ << 0 >> { << 0 >> } } { { << 0 >> } << 0 >> } == ->STR +
+"List:Exp0->got"
+{ { << 0 >> } << 0 >> } { { << 0 >> } << 1 >> } == ->STR +
+"List:Exp1->got"
+{ { << 0 >> } << 0 >> { } } { { << 0 >> } << 0 >> { } } == ->STR +
+"List:Exp0->got"
+{ { << 0 >> } << 0 >> { } } { { << 0 >> } << 0 >> { << 0 >> } } == ->STR +
+"--Mark4--"
+"Prog:Exp1->got"
+<<  >> <<  >> == ->STR +
+"Prog:Exp0->got"
+<<  >> << 1 >> == ->STR +
+"Prog:Exp0->got"
+<< 1 >> << >> == ->STR +
+"Prog:Exp1->got"
+<< 0 >> << 0 >> == ->STR +
+"Prog:Exp0->got"
+<< 0 >> << 1 >> == ->STR +
+"Prog:Exp0->got"
+<< 0 >> << 0 << >> >> == ->STR +
+"Prog:Exp0->got"
+<< 0 << >> >> << 0 >> == ->STR +
+"Prog:Exp1->got"
+<< << >> >> << << >> >> == ->STR +
+"Prog:Exp0->got"
+<< << >> >> << 1 >> == ->STR +
+"Prog:Exp1->got"
+<< << 0 >> 0 >> << << 0 >> 0 >> == ->STR +
+"Prog:Exp1->got"
+<< 0 << 0 >> >> << 0 << 0 >> >> == ->STR +
+"Prog:Exp0->got"
+<< 0 << 0 >> >> << << 0 >> 0 >> == ->STR +
+"Prog:Exp0->got"
+<< << 0 >> 0 >> << << 0 >> 1 >> == ->STR +
+"Prog:Exp1->got"
+<< << 0 >> 0 << >> >> << << 0 >> 0 << >> >> == ->STR +
+"Prog:Exp0->got"
+<< << 0 >> 0 << >> >> << << 0 >> 0 << 0 >> >> == ->STR +
+"--Mark5--"
+"Prog:Exp0->got"
+<<  >> << "1" >> == ->STR +
+"Prog:Exp0->got"
+<< "1" >> << >> == ->STR +
+"Prog:Exp1->got"
+<< "0" >> << "0" >> == ->STR +
+"Prog:Exp0->got"
+<< "0" >> << "1" >> == ->STR +
+"Prog:Exp0->got"
+<< "0" >> << "0" << >> >> == ->STR +
+"Prog:Exp0->got"
+<< "0" << >> >> << "0" >> == ->STR +
+"Prog:Exp0->got"
+<< << >> >> << "1" >> == ->STR +
+"Prog:Exp1->got"
+<< << "0" >> "0" >> << << "0" >> "0" >> == ->STR +
+"Prog:Exp1->got"
+<< "0" << "0" >> >> << "0" << "0" >> >> == ->STR +
+"Prog:Exp0->got"
+<< "0" << "0" >> >> << << "0" >> "0" >> == ->STR +
+"Prog:Exp0->got"
+<< << "0" >> "0" >> << << "0" >> "1" >> == ->STR +
+"Prog:Exp1->got"
+<< << "0" >> "0" << >> >> << << "0" >> "0" << >> >> == ->STR +
+"Prog:Exp0->got"
+<< << "0" >> "0" << >> >> << << "0" >> "0" << "0" >> >> == ->STR +
+"--Mark6--"
+"Prog:Exp0->got"
+<<  >> << { 1 } >> == ->STR +
+"Prog:Exp0->got"
+<< { 1 } >> << >> == ->STR +
+"Prog:Exp1->got"
+<< { 0 } >> << { 0 } >> == ->STR +
+"Prog:Exp0->got"
+<< { 0 } >> << { 1 } >> == ->STR +
+"Prog:Exp0->got"
+<< { 0 } >> << { 0 } << >> >> == ->STR +
+"Prog:Exp0->got"
+<< { 0 } << >> >> << { 0 } >> == ->STR +
+"Prog:Exp0->got"
+<< << >> >> << { 1 } >> == ->STR +
+"Prog:Exp1->got"
+<< << { 0 } >> { 0 } >> << << { 0 } >> { 0 } >> == ->STR +
+"Prog:Exp1->got"
+<< { 0 } << { 0 } >> >> << { 0 } << { 0 } >> >> == ->STR +
+"Prog:Exp0->got"
+<< { 0 } << { 0 } >> >> << << { 0 } >> { 0 } >> == ->STR +
+"Prog:Exp0->got"
+<< << { 0 } >> { 0 } >> << << { 0 } >> { 1 } >> == ->STR +
+"Prog:Exp1->got"
+<< << { 0 } >> { 0 } << >> >> << << { 0 } >> { 0 } << >> >> == ->STR +
+"Prog:Exp0->got"
+<< << { 0 } >> { 0 } << >> >> << << { 0 } >> { 0 } << { 0 } >> >> == ->STR +
+"--Mark7--"
+"Prog:Exp1->got"
+<< -> a << >> >> << -> a << >> >> == ->STR +
+"Prog:Exp0->got"
+<< -> a << >> >> << -> b << >> >> == ->STR +
+"Prog:Exp1->got"
+<< -> a b << >> >> << -> a b << >> >> == ->STR +
+"Prog:Exp0->got"
+<< -> a b << >> >> << -> b a << >> >> == ->STR +
+"Prog:Exp1->got"
+<< -> a << 0 >> 0 >> << -> a << 0 >> 0 >> == ->STR +
+"Prog:Exp0->got"
+<< -> a << >> >> << << >> >> == ->STR +
+"Prog:Exp0->got"
+<< << >> >> << -> a << >> >> == ->STR +
+"Prog:Exp1->got"
+<< -> a b c << 0 0 >> 0 >> << -> a b c << 0 0 >> 0 >> == ->STR +
+"Prog:Exp0->got"
+<< -> a b c << 0 >> >> << -> a c b << 0 >> >> == ->STR +
+"--Mark8--"
+"Loop:Exp1->got"
+<< START NEXT >> << START NEXT >> == ->STR +
+"Loop:Exp0->got"
+<< START 0 NEXT >> << START NEXT >> == ->STR +
+"Loop:Exp0->got"
+<< START NEXT >> << START 0 NEXT >> == ->STR +
+"Loop:Exp1->got"
+<< START STEP >> << START STEP >> == ->STR +
+"Loop:Exp0->got"
+<< START 0 STEP >> << START STEP >> == ->STR +
+"Loop:Exp0->got"
+<< START STEP >> << START 0 STEP >> == ->STR +
+"Loop:Exp1->got"
+<< FOR i STEP >> << FOR i STEP >> == ->STR +
+"Loop:Exp0->got"
+<< FOR i 0 STEP >> << FOR i STEP >> == ->STR +
+"Loop:Exp0->got"
+<< FOR i STEP >> << FOR i 0 STEP >> == ->STR +
+"Loop:Exp1->got"
+<< FOR i STEP >> << FOR i STEP >> == ->STR +
+"Loop:Exp0->got"
+<< FOR i 0 STEP >> << FOR i STEP >> == ->STR +
+"Loop:Exp0->got"
+<< FOR i STEP >> << FOR i 0 STEP >> == ->STR +
+"Loop:Exp0->got"
+<< START NEXT >> << START STEP >> == ->STR +
+"Loop:Exp0->got"
+<< START STEP >> << START NEXT >> == ->STR +
+"Loop:Exp0->got"
+<< FOR i NEXT >> << FOR i STEP >> == ->STR +
+"Loop:Exp0->got"
+<< FOR i STEP >> << FOR i NEXT >> == ->STR +
+"Loop:Exp0->got"
+<< FOR i NEXT >> << START NEXT >> == ->STR +
+"Loop:Exp0->got"
+<< FOR i STEP >> << START STEP >> == ->STR +
+"Loop:Exp0->got"
+<< START NEXT >> << FOR i NEXT >> == ->STR +
+"Loop:Exp0->got"
+<< START STEP >> << FOR i STEP >> == ->STR +
+"--Mark9--"
+"IFTE:Exp1->got"
+<< IF THEN ELSE END >> << IF THEN ELSE END >> == ->STR +
+"IFTE:Exp0->got"
+<< IF THEN END >> << IF THEN ELSE END >> == ->STR +
+"IFTE:Exp0->got"
+<< IF THEN ELSE END >> << IF THEN END >> == ->STR +
+"IFTE:Exp1->got"
+<< IF 1 THEN 1 ELSE 0 END >> << IF 1 THEN 1 ELSE 0 END >> == ->STR +
+"IFTE:Exp0->got"
+<< IF 1 THEN 1 ELSE 0 END >> << IF 1 THEN 1 ELSE 1 END >> == ->STR +
+"IFTE:Exp0->got"
+<< IF 1 THEN 1 ELSE 0 END >> << IF 0 THEN 1 ELSE 0 END >> == ->STR +
+"IFTE:Exp0->got"
+<< IF 1 THEN 1 ELSE 0 END >> << IF 1 THEN 0 ELSE 0 END >> == ->STR +
+"IFTE:Exp0->got"
+<< IF 1 THEN 1 ELSE 0 END >> << IF 1 THEN 0 END >> == ->STR +
+"IFTE:Exp0->got"
+<< IF 1 THEN 1 END >> << IF 1 THEN 1 ELSE 0 END >> == ->STR +
+"--Mark10--"
+"Whil:Exp1->got"
+<< WHILE REPEAT END >> << WHILE REPEAT END >> == ->STR +
+"Whil:Exp0->got"
+<< WHILE 1 REPEAT END >> << WHILE REPEAT END >> == ->STR +
+"Whil:Exp0->got"
+<< WHILE REPEAT END >> << WHILE 1 REPEAT END >> == ->STR +
+"Whil:Exp0->got"
+<< WHILE REPEAT 1 END >> << WHILE REPEAT END >> == ->STR +
+"Whil:Exp0->got"
+<< WHILE REPEAT END >> << WHILE REPEAT 1 END >> == ->STR +
+"Whil:Exp1->got"
+<< WHILE 1 REPEAT 1 END >> << WHILE 1 REPEAT 1 END >> == ->STR +
+"Whil:Exp0->got"
+<< WHILE 0 REPEAT END >> << WHILE 1 REPEAT END >> == ->STR +
+"Whil:Exp0->got"
+<< WHILE REPEAT 0 END >> << WHILE REPEAT 1 END >> == ->STR +
+"--Mark11--"
+"DoUn:Exp1->got"
+<< DO UNTIL END >> << DO UNTIL END >> == ->STR +
+"DoUn:Exp0->got"
+<< DO 1 UNTIL END >> << DO UNTIL END >> == ->STR +
+"DoUn:Exp0->got"
+<< DO UNTIL END >> << DO 1 UNTIL END >> == ->STR +
+"DoUn:Exp0->got"
+<< DO UNTIL 1 END >> << DO UNTIL END >> == ->STR +
+"DoUn:Exp0->got"
+<< DO UNTIL END >> << DO UNTIL 1 END >> == ->STR +
+"DoUn:Exp1->got"
+<< DO 1 UNTIL 1 END >> << DO 1 UNTIL 1 END >> == ->STR +
+"DoUn:Exp0->got"
+<< DO 0 UNTIL END >> << DO 1 UNTIL END >> == ->STR +
+"DoUn:Exp0->got"
+<< DO UNTIL 0 END >> << DO UNTIL 1 END >> == ->STR +

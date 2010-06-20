@@ -1,0 +1,99 @@
+1 1 START NEXT
+1 1 START "a" NEXT
+1 1 START "b" 1 STEP
+<< 1 1 START NEXT >> EVAL
+<< 1 1 START "c" NEXT >> EVAL
+<< 1 1 START "d" 1 STEP >> EVAL
+1 2 START NEXT
+1 2 START "e" NEXT
+1 2 START "f" 1 STEP
+<< 1 2 START NEXT >> EVAL
+<< 1 2 START "g" NEXT >> EVAL
+<< 1 2 START "h" 1 STEP >> EVAL
+2 1 START NEXT
+2 1 START "i" NEXT
+2 1 START "j" -1 STEP
+<< 2 1 START NEXT >> EVAL
+<< 2 1 START "k" NEXT >> EVAL
+<< 2 1 START "l" -1 STEP >> EVAL
+1 2 START "m" -1 STEP
+<< 1 2 START "n" -1 STEP >> EVAL
+2 1 START "o" 1 STEP
+<< 2 1 START "p" 1 STEP >> EVAL
+1 1 << START NEXT >> EVAL
+1 1 << START "q" NEXT >> EVAL
+1 1 << START "r" 1 STEP >> EVAL
+1 2 << START NEXT >> EVAL
+1 2 << START "s" NEXT >> EVAL
+1 2 << START "t" 1 STEP >> EVAL
+2 1 << START NEXT >> EVAL
+2 1 << START "u" NEXT >> EVAL
+2 1 << START "v" -1 STEP >> EVAL
+1 2 << START "w" -1 STEP >> EVAL
+2 1 << START "x" 1 STEP >> EVAL
+1 1 START NEXT
+1 1 START << "a" >> NEXT
+1 1 START << "b" >> 1 STEP
+<< 1 1 START NEXT >> EVAL
+<< 1 1 START << "c" >> NEXT >> EVAL
+<< 1 1 START << "d" >> 1 STEP >> EVAL
+1 2 START NEXT
+1 2 START << "e" >> NEXT
+1 2 START << "f" >> 1 STEP
+<< 1 2 START NEXT >> EVAL
+<< 1 2 START << "g" >> NEXT >> EVAL
+<< 1 2 START << "h" >> 1 STEP >> EVAL
+2 1 START NEXT
+2 1 START << "i" >> NEXT
+2 1 START << "j" >> -1 STEP
+<< 2 1 START NEXT >> EVAL
+<< 2 1 START << "k" >> NEXT >> EVAL
+<< 2 1 START << "l" >> -1 STEP >> EVAL
+1 2 START << "m" >> -1 STEP
+<< 1 2 START << "n" >> -1 STEP >> EVAL
+2 1 START << "o" >> 1 STEP
+<< 2 1 START << "p" >> 1 STEP >> EVAL
+1 1 << START NEXT >> EVAL
+1 1 << START << "q" >> NEXT >> EVAL
+1 1 << START << "r" >> 1 STEP >> EVAL
+1 2 << START NEXT >> EVAL
+1 2 << START << "s" >> NEXT >> EVAL
+1 2 << START << "t" >> 1 STEP >> EVAL
+2 1 << START NEXT >> EVAL
+2 1 << START << "u" >> NEXT >> EVAL
+2 1 << START << "v" >> -1 STEP >> EVAL
+1 2 << START << "w" >> -1 STEP >> EVAL
+2 1 << START << "x" >> 1 STEP >> EVAL
+1 1 START NEXT
+1 1 START { "a" } NEXT
+1 1 START { "b" } 1 STEP
+<< 1 1 START NEXT >> EVAL
+<< 1 1 START { "c" } NEXT >> EVAL
+<< 1 1 START { "d" } 1 STEP >> EVAL
+1 2 START NEXT
+1 2 START { "e" } NEXT
+1 2 START { "f" } 1 STEP
+<< 1 2 START NEXT >> EVAL
+<< 1 2 START { "g" } NEXT >> EVAL
+<< 1 2 START { "h" } 1 STEP >> EVAL
+2 1 START NEXT
+2 1 START { "i" } NEXT
+2 1 START { "j" } -1 STEP
+<< 2 1 START NEXT >> EVAL
+<< 2 1 START { "k" } NEXT >> EVAL
+<< 2 1 START { "l" } -1 STEP >> EVAL
+1 2 START { "m" } -1 STEP
+<< 1 2 START { "n" } -1 STEP >> EVAL
+2 1 START { "o" } 1 STEP
+<< 2 1 START { "p" } 1 STEP >> EVAL
+1 1 << START NEXT >> EVAL
+1 1 << START { "q" } NEXT >> EVAL
+1 1 << START { "r" } 1 STEP >> EVAL
+1 2 << START NEXT >> EVAL
+1 2 << START { "s" } NEXT >> EVAL
+1 2 << START { "t" } 1 STEP >> EVAL
+2 1 << START NEXT >> EVAL
+2 1 << START { "u" } NEXT >> EVAL
+2 1 << START { "v" } -1 STEP >> EVAL
+1 2 << START { "w" } -1 STEP >> EVAL
+2 1 << START { "x" } 1 STEP >> EVAL

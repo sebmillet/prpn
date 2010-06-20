@@ -1,0 +1,4 @@
+Syntax error: 1-1,1
+"[[0]]["
+[[ 0 ]]
+get_class_count() = 0 for watched classes

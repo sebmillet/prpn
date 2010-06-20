@@ -1,0 +1,30 @@
+NEXT
+1 1 START
+1 1 START "b"
+1 1 START END
+1 1 START "b" END
+<< 1 1 NEXT >> EVAL
+<< 1 1 START >> EVAL
+<< 1 1 START "c" >> EVAL
+<< 1 1 START END >> EVAL
+<< 1 1 START "d" END >> EVAL
+1 1 START { "b" }
+1 1 START { "b" } END
+<< 1 1 START { "c" } >> EVAL
+<< 1 1 START { "d" } END >> EVAL
+1 1 FOR i
+1 1 FOR i "b"
+1 1 FOR i END
+1 1 FOR i "b" END
+<< 1 1 NEXT >> EVAL
+<< 1 1 FOR i >> EVAL
+<< 1 1 FOR i "c" >> EVAL
+<< 1 1 FOR i END >> EVAL
+<< 1 1 FOR i "d" END >> EVAL
+1 1 FOR i { "b" }
+1 1 FOR i { "b" } END
+<< 1 1 FOR i { "c" } >> EVAL
+<< 1 1 FOR i { "d" } END >> EVAL
+STEP
+<< 1 1 STEP >> EVAL
+<< 1 1 STEP >> EVAL

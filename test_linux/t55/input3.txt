@@ -1,0 +1,8 @@
+1 2 FOR i i NEXT
+3 4 FOR i 1 i FOR j i ->STR j ->STR + NEXT NEXT
+<< 1 2 FOR i i NEXT >> EVAL
+<< 3 4 FOR i 1 i FOR j i ->STR j ->STR + NEXT NEXT >> EVAL
+<< 1 2 FOR i "Loop1-" i ->STR + 1 2 FOR i "Loop2-" i ->STR + NEXT NEXT >> EVAL
+5 << -> top << 0 top FOR var var ->STR "^2=" + var SQ ->STR + NEXT
+EVAL
+4 << -> top << 1 top FOR i 1 i for j i ->STR "*" + j ->STR + "=" + i j * ->STR + NEXT NEXT >> >> EVAL

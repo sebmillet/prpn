@@ -1,0 +1,26 @@
+1
+1
+0
+0
+0
+1
+0
+1
+0
+0
+1
+1
+"--Mark1--"
+1
+1
+0
+0
+0
+1
+0
+1
+0
+0
+1
+1
+get_class_count() = 0 for watched classes

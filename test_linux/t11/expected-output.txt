@@ -1,0 +1,106 @@
+/ Error:
+Infinite Result
+/ Error:
+Infinite Result
+/ Error:
+Infinite Result
+/ Error:
+Infinite Result
+/ Error:
+Infinite Result
+/ Error:
+Infinite Result
+/ Error:
+Infinite Result
+/ Error:
+Infinite Result
+/ Error:
+Infinite Result
+/ Error:
+Infinite Result
+/ Error:
+Infinite Result
+/ Error:
+Infinite Result
+/ Error:
+Infinite Result
+/ Error:
+Infinite Result
+/ Error:
+Infinite Result
+/ Error:
+Infinite Result
+/ Error:
+Undefined Result
+/ Error:
+Undefined Result
+/ Error:
+Undefined Result
+/ Error:
+Undefined Result
+/ Error:
+Undefined Result
+/ Error:
+Undefined Result
+/ Error:
+Undefined Result
+/ Error:
+Undefined Result
+/ Error:
+Undefined Result
+/ Error:
+Undefined Result
+/ Error:
+Undefined Result
+/ Error:
+Undefined Result
+/ Error:
+Undefined Result
+/ Error:
+Undefined Result
+/ Error:
+Undefined Result
+/ Error:
+Undefined Result
+/ Error:
+Undefined Result
+/ Error:
+Undefined Result
+/ Error:
+Undefined Result
+/ Error:
+Undefined Result
+/ Error:
+Undefined Result
+/ Error:
+Undefined Result
+/ Error:
+Undefined Result
+/ Error:
+Undefined Result
+/ Error:
+Undefined Result
+/ Error:
+Undefined Result
+/ Error:
+Undefined Result
+/ Error:
+Undefined Result
+[ (0,0) (0,0) ]
+[ 9.99999999999e199 9.99999999999e199 ]
+[ -9.99999999999e199 -9.99999999999e199 ]
+[ (9.99999999999e199,0) (9.99999999999e199,0) ]
+[ (-9.99999999999e199,0) (-9.99999999999e199,0) ]
+[ (9.99999999999e199,0) (9.99999999999e199,0) ]
+[ (-9.99999999999e199,0) (0,-9.99999999999e199) ]
+[ (0,9.99999999999e199) (9.99999999999e199,0) ]
+[ (0,-9.99999999999e199) (-9.99999999999e199,0) ]
+[ (9.99999999999e199,0) (0,9.99999999999e199) ]
+[ (-9.99999999999e199,0) (0,-9.99999999999e199) ]
+[ (0,9.99999999999e199) (9.99999999999e199,0) ]
+[ (0,-9.99999999999e199) (-9.99999999999e199,0) ]
+[ (9.99999999999e199,9.99999999999e199) (0,9.99999999999e199) ]
+[ (-9.99999999999e199,-9.99999999999e199) (0,-9.99999999999e199) ]
+[ (9.99999999999e199,9.99999999999e199) (9.99999999999e199,9.99999999999e199) ]
+[ (-9.99999999999e199,-9.99999999999e199) (-9.99999999999e199,-9.99999999999e199) ]
+get_class_count() = 0 for watched classes

@@ -1,0 +1,1534 @@
+let SessionLoad = 1
+if &cp | set nocp | endif
+let s:cpo_save=&cpo
+set cpo&vim
+map! <S-Insert> <MiddleMouse>
+map  :tab h
+map  :tab new
+map , }
+map ; ]
+map  T
+map   W
+noremap ,; []
+noremap ,, [[
+noremap , [
+noremap ;, ][
+noremap ;; ]]
+noremap ; ]
+map Q gq
+noremap [ ,
+noremap ] ;
+nmap gx <Plug>NetrwBrowseX
+noremap gQ Q
+map <M-Up> zk
+map <M-Down> zj
+nnoremap <silent> <Plug>NetrwBrowseX :call netrw#NetrwBrowseX(expand("<cWORD>"),0)
+map <End> g$
+map <Home> g^
+map <Down> gj
+map <Up> gk
+map <silent> <S-F1> :set list!
+map <silent> <F2> :noh
+map <BS> B
+map <silent> <S-F8> "+P:set filetype=rh:set buftype=nofile
+map <silent> <C-F12> :if &buftype == "quickfix" | :close | else | :only | endif
+map <silent> <F12> :cwindow 5
+map <silent> <C-F11> :make clean:make
+map <silent> <F11> :make
+map <silent> <F9> :/\(cout.*<<.*\|debug_write.*\)\C[A-Z][0-9]/
+map <silent> <F8> :/.\%>78v/
+map <F4> zg
+map <C-F3> z=
+noremap <S-F3> [s
+noremap <F3> ]s
+map <M-F3> :set spell!
+map <S-Insert> <MiddleMouse>
+map!  =strftime("%d/%m/%y")
+inoremap <expr>  omni#cpp#maycomplete#Complete()
+inoremap <expr> . omni#cpp#maycomplete#Dot()
+inoremap <expr> : omni#cpp#maycomplete#Scope()
+inoremap <expr> > omni#cpp#maycomplete#Arrow()
+map ùR "_diwp
+map ùr "_diwP
+map ùW yaw
+map ùw yiw
+map á 
+map ú 
+map å :Texplore
+map ø gt
+map ÷ gT
+map ñ :tabmove 0
+abbr #i #include
+abbr SMT Sébastien Millet, Juin 2009
+let &cpo=s:cpo_save
+unlet s:cpo_save
+set autoindent
+set backspace=indent,eol,start
+set cmdheight=2
+set confirm
+set fileencodings=ucs-bom,utf-8,default,latin1
+set guifont=Monospace\ 10
+set guioptions=aegimrLtTc
+set helplang=fr
+set history=50
+set hlsearch
+set ignorecase
+set incsearch
+set infercase
+set nojoinspaces
+set laststatus=2
+set listchars=tab:>-,trail:-,nbsp:%,eol:$
+set mouse=a
+set mousemodel=popup_setpos
+set omnifunc=omni#cpp#complete#Main
+set path=.,/usr/include,,,~/travail/**
+set printoptions=paper:a4
+set ruler
+set runtimepath=~/.vim,/var/lib/vim/addons,/usr/share/vim/vimfiles,/usr/share/vim/vim72,/usr/share/vim/vimfiles/after,/var/lib/vim/addons/after,~/.vim/after
+set scrolloff=2
+set selectmode=mouse,key
+set shiftwidth=4
+set smartindent
+set spelllang=fr
+set spellsuggest=best,10
+set statusline=%1*%m%*\ %<%F\ %h%r%=\ %y\ %-14.(%l,%c%V%)\ %P
+set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
+set tabstop=4
+set tags=./tags,./TAGS,tags,TAGS,./../tags
+set termencoding=utf-8
+set ttimeout
+set ttimeoutlen=200
+set virtualedit=block
+set whichwrap=b,s,[,]
+set wildmenu
+set winaltkeys=no
+let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
+let v:this_session=expand("<sfile>:p")
+silent only
+cd ~/travail/cpp/seb/pRPN/src
+if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
+  let s:wipebuf = bufnr('%')
+endif
+set shortmess=aoO
+badd +334 UiImplWx.cpp
+badd +130 UiImplConsole.cpp
+badd +1 Ui.h
+badd +207 Ui.cpp
+badd +1 platform/os_generic.h
+badd +1 platform/os_generic.cpp
+badd +21 platform/os_unix.h
+badd +1 platform/os_unknown.h
+badd +11 platform/os_win.h
+args UiImplWx.cpp UiImplConsole.cpp Ui.h Ui.cpp platform/os_generic.h platform/os_generic.cpp platform/os_unix.h platform/os_unknown.h
+edit UiImplWx.cpp
+set splitbelow splitright
+set nosplitbelow
+set nosplitright
+wincmd t
+set winheight=1 winwidth=1
+argglobal
+let s:cpo_save=&cpo
+set cpo&vim
+vnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'v')m'gv``
+vnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'v')m'gv``
+vnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'v')m'gv``
+vnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'v')m'gv``
+nnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
+onoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
+nnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
+onoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
+nnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
+onoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
+nnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
+onoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
+vnoremap <buffer> <silent> ùC :s/^\/\///
+vnoremap <buffer> <silent> ùc :s/^/\/\//
+let &cpo=s:cpo_save
+unlet s:cpo_save
+setlocal keymap=
+setlocal noarabic
+setlocal autoindent
+setlocal balloonexpr=
+setlocal nobinary
+setlocal bufhidden=
+setlocal buflisted
+setlocal buftype=
+setlocal nocindent
+setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
+setlocal cinoptions=
+setlocal cinwords=if,else,while,do,for,switch
+setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
+setlocal commentstring=/*%s*/
+setlocal complete=.,w,b,u,t,i
+setlocal completefunc=
+setlocal nocopyindent
+setlocal nocursorcolumn
+setlocal nocursorline
+setlocal define=
+setlocal dictionary=
+setlocal nodiff
+setlocal equalprg=
+setlocal errorformat=
+setlocal noexpandtab
+if &filetype != 'cpp'
+setlocal filetype=cpp
+endif
+setlocal foldcolumn=0
+setlocal foldenable
+setlocal foldexpr=getline(v:lnum)=~'^\\w.*\\({[^}]*\\|.*\ (.*\\)$'?'>1':(getline(v:lnum)=~'^};\\?$'?'<1':'=')
+setlocal foldignore=#
+setlocal foldlevel=1
+setlocal foldmarker={{{,}}}
+setlocal foldmethod=expr
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldtext=foldtext()
+setlocal formatexpr=
+setlocal formatoptions=tcq
+setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal grepprg=
+setlocal iminsert=0
+setlocal imsearch=2
+setlocal include=
+setlocal includeexpr=
+setlocal indentexpr=
+setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
+setlocal infercase
+setlocal iskeyword=@,48-57,_,192-255
+setlocal keywordprg=
+set linebreak
+setlocal linebreak
+setlocal nolisp
+setlocal nolist
+setlocal makeprg=
+setlocal matchpairs=(:),{:},[:]
+setlocal modeline
+setlocal modifiable
+setlocal nrformats=octal,hex
+setlocal nonumber
+setlocal numberwidth=4
+setlocal omnifunc=
+setlocal path=
+setlocal nopreserveindent
+setlocal nopreviewwindow
+setlocal quoteescape=\\
+setlocal noreadonly
+setlocal norightleft
+setlocal rightleftcmd=search
+setlocal noscrollbind
+setlocal shiftwidth=4
+setlocal noshortname
+setlocal smartindent
+setlocal softtabstop=0
+setlocal nospell
+setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
+setlocal spellfile=
+setlocal spelllang=fr
+setlocal statusline=
+setlocal suffixesadd=
+setlocal swapfile
+setlocal synmaxcol=3000
+if &syntax != 'cpp'
+setlocal syntax=cpp
+endif
+setlocal tabstop=4
+setlocal tags=
+setlocal textwidth=0
+setlocal thesaurus=
+setlocal nowinfixheight
+setlocal nowinfixwidth
+setlocal wrap
+setlocal wrapmargin=0
+558
+normal zo
+743
+normal zo
+757
+normal zo
+let s:l = 1 - ((0 * winheight(0) + 15) / 31)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 0
+tabedit UiImplConsole.cpp
+set splitbelow splitright
+set nosplitbelow
+set nosplitright
+wincmd t
+set winheight=1 winwidth=1
+argglobal
+2argu
+let s:cpo_save=&cpo
+set cpo&vim
+vnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'v')m'gv``
+vnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'v')m'gv``
+vnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'v')m'gv``
+vnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'v')m'gv``
+nnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
+onoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
+nnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
+onoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
+nnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
+onoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
+nnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
+onoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
+vnoremap <buffer> <silent> ùC :s/^\/\///
+vnoremap <buffer> <silent> ùc :s/^/\/\//
+let &cpo=s:cpo_save
+unlet s:cpo_save
+setlocal keymap=
+setlocal noarabic
+setlocal autoindent
+setlocal balloonexpr=
+setlocal nobinary
+setlocal bufhidden=
+setlocal buflisted
+setlocal buftype=
+setlocal nocindent
+setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
+setlocal cinoptions=
+setlocal cinwords=if,else,while,do,for,switch
+setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
+setlocal commentstring=/*%s*/
+setlocal complete=.,w,b,u,t,i
+setlocal completefunc=
+setlocal nocopyindent
+setlocal nocursorcolumn
+setlocal nocursorline
+setlocal define=
+setlocal dictionary=
+setlocal nodiff
+setlocal equalprg=
+setlocal errorformat=
+setlocal noexpandtab
+if &filetype != 'cpp'
+setlocal filetype=cpp
+endif
+setlocal foldcolumn=0
+setlocal foldenable
+setlocal foldexpr=getline(v:lnum)=~'^\\w.*\\({[^}]*\\|.*\ (.*\\)$'?'>1':(getline(v:lnum)=~'^};\\?$'?'<1':'=')
+setlocal foldignore=#
+setlocal foldlevel=1
+setlocal foldmarker={{{,}}}
+setlocal foldmethod=expr
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldtext=foldtext()
+setlocal formatexpr=
+setlocal formatoptions=tcq
+setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal grepprg=
+setlocal iminsert=0
+setlocal imsearch=2
+setlocal include=
+setlocal includeexpr=
+setlocal indentexpr=
+setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
+setlocal infercase
+setlocal iskeyword=@,48-57,_,192-255
+setlocal keywordprg=
+set linebreak
+setlocal linebreak
+setlocal nolisp
+setlocal nolist
+setlocal makeprg=
+setlocal matchpairs=(:),{:},[:]
+setlocal modeline
+setlocal modifiable
+setlocal nrformats=octal,hex
+setlocal nonumber
+setlocal numberwidth=4
+setlocal omnifunc=
+setlocal path=
+setlocal nopreserveindent
+setlocal nopreviewwindow
+setlocal quoteescape=\\
+setlocal noreadonly
+setlocal norightleft
+setlocal rightleftcmd=search
+setlocal noscrollbind
+setlocal shiftwidth=4
+setlocal noshortname
+setlocal smartindent
+setlocal softtabstop=0
+setlocal nospell
+setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
+setlocal spellfile=
+setlocal spelllang=fr
+setlocal statusline=
+setlocal suffixesadd=
+setlocal swapfile
+setlocal synmaxcol=3000
+if &syntax != 'cpp'
+setlocal syntax=cpp
+endif
+setlocal tabstop=4
+setlocal tags=
+setlocal textwidth=0
+setlocal thesaurus=
+setlocal nowinfixheight
+setlocal nowinfixwidth
+setlocal wrap
+setlocal wrapmargin=0
+32
+normal zo
+116
+normal zo
+let s:l = 1 - ((0 * winheight(0) + 15) / 31)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 0
+tabedit Ui.h
+set splitbelow splitright
+set nosplitbelow
+set nosplitright
+wincmd t
+set winheight=1 winwidth=1
+argglobal
+3argu
+let s:cpo_save=&cpo
+set cpo&vim
+vnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'v')m'gv``
+vnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'v')m'gv``
+vnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'v')m'gv``
+vnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'v')m'gv``
+nnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
+onoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
+nnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
+onoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
+nnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
+onoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
+nnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
+onoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
+vnoremap <buffer> <silent> ùC :s/^\/\///
+vnoremap <buffer> <silent> ùc :s/^/\/\//
+let &cpo=s:cpo_save
+unlet s:cpo_save
+setlocal keymap=
+setlocal noarabic
+setlocal autoindent
+setlocal balloonexpr=
+setlocal nobinary
+setlocal bufhidden=
+setlocal buflisted
+setlocal buftype=
+setlocal nocindent
+setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
+setlocal cinoptions=
+setlocal cinwords=if,else,while,do,for,switch
+setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
+setlocal commentstring=/*%s*/
+setlocal complete=.,w,b,u,t,i
+setlocal completefunc=
+setlocal nocopyindent
+setlocal nocursorcolumn
+setlocal nocursorline
+setlocal define=
+setlocal dictionary=
+setlocal nodiff
+setlocal equalprg=
+setlocal errorformat=
+setlocal noexpandtab
+if &filetype != 'cpp'
+setlocal filetype=cpp
+endif
+setlocal foldcolumn=0
+setlocal foldenable
+setlocal foldexpr=getline(v:lnum)=~'^\\w.*\\({[^}]*\\|.*\ (.*\\)$'?'>1':(getline(v:lnum)=~'^};\\?$'?'<1':'=')
+setlocal foldignore=#
+setlocal foldlevel=1
+setlocal foldmarker={{{,}}}
+setlocal foldmethod=expr
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldtext=foldtext()
+setlocal formatexpr=
+setlocal formatoptions=tcq
+setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal grepprg=
+setlocal iminsert=0
+setlocal imsearch=2
+setlocal include=
+setlocal includeexpr=
+setlocal indentexpr=
+setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
+setlocal infercase
+setlocal iskeyword=@,48-57,_,192-255
+setlocal keywordprg=
+set linebreak
+setlocal linebreak
+setlocal nolisp
+setlocal nolist
+setlocal makeprg=
+setlocal matchpairs=(:),{:},[:]
+setlocal modeline
+setlocal modifiable
+setlocal nrformats=octal,hex
+setlocal nonumber
+setlocal numberwidth=4
+setlocal omnifunc=
+setlocal path=
+setlocal nopreserveindent
+setlocal nopreviewwindow
+setlocal quoteescape=\\
+setlocal noreadonly
+setlocal norightleft
+setlocal rightleftcmd=search
+setlocal noscrollbind
+setlocal shiftwidth=4
+setlocal noshortname
+setlocal smartindent
+setlocal softtabstop=0
+setlocal nospell
+setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
+setlocal spellfile=
+setlocal spelllang=fr
+setlocal statusline=
+setlocal suffixesadd=
+setlocal swapfile
+setlocal synmaxcol=3000
+if &syntax != 'cpp'
+setlocal syntax=cpp
+endif
+setlocal tabstop=4
+setlocal tags=
+setlocal textwidth=0
+setlocal thesaurus=
+setlocal nowinfixheight
+setlocal nowinfixwidth
+setlocal wrap
+setlocal wrapmargin=0
+130
+normal zo
+let s:l = 1 - ((0 * winheight(0) + 15) / 31)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 0
+tabedit Ui.cpp
+set splitbelow splitright
+set nosplitbelow
+set nosplitright
+wincmd t
+set winheight=1 winwidth=1
+argglobal
+4argu
+let s:cpo_save=&cpo
+set cpo&vim
+vnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'v')m'gv``
+vnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'v')m'gv``
+vnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'v')m'gv``
+vnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'v')m'gv``
+nnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
+onoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
+nnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
+onoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
+nnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
+onoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
+nnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
+onoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
+vnoremap <buffer> <silent> ùC :s/^\/\///
+vnoremap <buffer> <silent> ùc :s/^/\/\//
+let &cpo=s:cpo_save
+unlet s:cpo_save
+setlocal keymap=
+setlocal noarabic
+setlocal autoindent
+setlocal balloonexpr=
+setlocal nobinary
+setlocal bufhidden=
+setlocal buflisted
+setlocal buftype=
+setlocal nocindent
+setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
+setlocal cinoptions=
+setlocal cinwords=if,else,while,do,for,switch
+setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
+setlocal commentstring=/*%s*/
+setlocal complete=.,w,b,u,t,i
+setlocal completefunc=
+setlocal nocopyindent
+setlocal nocursorcolumn
+setlocal nocursorline
+setlocal define=
+setlocal dictionary=
+setlocal nodiff
+setlocal equalprg=
+setlocal errorformat=
+setlocal noexpandtab
+if &filetype != 'cpp'
+setlocal filetype=cpp
+endif
+setlocal foldcolumn=0
+setlocal foldenable
+setlocal foldexpr=getline(v:lnum)=~'^\\w.*\\({[^}]*\\|.*\ (.*\\)$'?'>1':(getline(v:lnum)=~'^};\\?$'?'<1':'=')
+setlocal foldignore=#
+setlocal foldlevel=1
+setlocal foldmarker={{{,}}}
+setlocal foldmethod=expr
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldtext=foldtext()
+setlocal formatexpr=
+setlocal formatoptions=tcq
+setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal grepprg=
+setlocal iminsert=0
+setlocal imsearch=0
+setlocal include=
+setlocal includeexpr=
+setlocal indentexpr=
+setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
+setlocal infercase
+setlocal iskeyword=@,48-57,_,192-255
+setlocal keywordprg=
+set linebreak
+setlocal linebreak
+setlocal nolisp
+setlocal nolist
+setlocal makeprg=
+setlocal matchpairs=(:),{:},[:]
+setlocal modeline
+setlocal modifiable
+setlocal nrformats=octal,hex
+setlocal nonumber
+setlocal numberwidth=4
+setlocal omnifunc=
+setlocal path=
+setlocal nopreserveindent
+setlocal nopreviewwindow
+setlocal quoteescape=\\
+setlocal noreadonly
+setlocal norightleft
+setlocal rightleftcmd=search
+setlocal noscrollbind
+setlocal shiftwidth=4
+setlocal noshortname
+setlocal smartindent
+setlocal softtabstop=0
+setlocal nospell
+setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
+setlocal spellfile=
+setlocal spelllang=fr
+setlocal statusline=
+setlocal suffixesadd=
+setlocal swapfile
+setlocal synmaxcol=3000
+if &syntax != 'cpp'
+setlocal syntax=cpp
+endif
+setlocal tabstop=4
+setlocal tags=
+setlocal textwidth=0
+setlocal thesaurus=
+setlocal nowinfixheight
+setlocal nowinfixwidth
+setlocal wrap
+setlocal wrapmargin=0
+91
+normal zo
+149
+normal zo
+190
+normal zo
+195
+normal zo
+212
+normal zo
+257
+normal zo
+358
+normal zo
+367
+normal zo
+391
+normal zo
+469
+normal zo
+488
+normal zo
+495
+normal zo
+499
+normal zo
+543
+normal zo
+549
+normal zo
+594
+normal zo
+623
+normal zo
+679
+normal zo
+let s:l = 1 - ((0 * winheight(0) + 15) / 31)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 0
+tabedit platform/os_generic.h
+set splitbelow splitright
+set nosplitbelow
+set nosplitright
+wincmd t
+set winheight=1 winwidth=1
+argglobal
+5argu
+let s:cpo_save=&cpo
+set cpo&vim
+vnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'v')m'gv``
+vnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'v')m'gv``
+vnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'v')m'gv``
+vnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'v')m'gv``
+nnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
+onoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
+nnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
+onoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
+nnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
+onoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
+nnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
+onoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
+vnoremap <buffer> <silent> ùC :s/^\/\///
+vnoremap <buffer> <silent> ùc :s/^/\/\//
+let &cpo=s:cpo_save
+unlet s:cpo_save
+setlocal keymap=
+setlocal noarabic
+setlocal autoindent
+setlocal balloonexpr=
+setlocal nobinary
+setlocal bufhidden=
+setlocal buflisted
+setlocal buftype=
+setlocal nocindent
+setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
+setlocal cinoptions=
+setlocal cinwords=if,else,while,do,for,switch
+setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
+setlocal commentstring=/*%s*/
+setlocal complete=.,w,b,u,t,i
+setlocal completefunc=
+setlocal nocopyindent
+setlocal nocursorcolumn
+setlocal nocursorline
+setlocal define=
+setlocal dictionary=
+setlocal nodiff
+setlocal equalprg=
+setlocal errorformat=
+setlocal noexpandtab
+if &filetype != 'cpp'
+setlocal filetype=cpp
+endif
+setlocal foldcolumn=0
+setlocal foldenable
+setlocal foldexpr=getline(v:lnum)=~'^\\w.*\\({[^}]*\\|.*\ (.*\\)$'?'>1':(getline(v:lnum)=~'^};\\?$'?'<1':'=')
+setlocal foldignore=#
+setlocal foldlevel=1
+setlocal foldmarker={{{,}}}
+setlocal foldmethod=expr
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldtext=foldtext()
+setlocal formatexpr=
+setlocal formatoptions=tcq
+setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal grepprg=
+setlocal iminsert=0
+setlocal imsearch=2
+setlocal include=
+setlocal includeexpr=
+setlocal indentexpr=
+setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
+setlocal infercase
+setlocal iskeyword=@,48-57,_,192-255
+setlocal keywordprg=
+set linebreak
+setlocal linebreak
+setlocal nolisp
+setlocal nolist
+setlocal makeprg=
+setlocal matchpairs=(:),{:},[:]
+setlocal modeline
+setlocal modifiable
+setlocal nrformats=octal,hex
+setlocal nonumber
+setlocal numberwidth=4
+setlocal omnifunc=
+setlocal path=
+setlocal nopreserveindent
+setlocal nopreviewwindow
+setlocal quoteescape=\\
+setlocal noreadonly
+setlocal norightleft
+setlocal rightleftcmd=search
+setlocal noscrollbind
+setlocal shiftwidth=4
+setlocal noshortname
+setlocal smartindent
+setlocal softtabstop=0
+setlocal nospell
+setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
+setlocal spellfile=
+setlocal spelllang=fr
+setlocal statusline=
+setlocal suffixesadd=
+setlocal swapfile
+setlocal synmaxcol=3000
+if &syntax != 'cpp'
+setlocal syntax=cpp
+endif
+setlocal tabstop=4
+setlocal tags=
+setlocal textwidth=0
+setlocal thesaurus=
+setlocal nowinfixheight
+setlocal nowinfixwidth
+setlocal wrap
+setlocal wrapmargin=0
+26
+normal zo
+let s:l = 1 - ((0 * winheight(0) + 15) / 31)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 0
+tabedit platform/os_generic.cpp
+set splitbelow splitright
+set nosplitbelow
+set nosplitright
+wincmd t
+set winheight=1 winwidth=1
+argglobal
+6argu
+let s:cpo_save=&cpo
+set cpo&vim
+vnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'v')m'gv``
+vnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'v')m'gv``
+vnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'v')m'gv``
+vnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'v')m'gv``
+nnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
+onoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
+nnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
+onoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
+nnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
+onoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
+nnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
+onoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
+vnoremap <buffer> <silent> ùC :s/^\/\///
+vnoremap <buffer> <silent> ùc :s/^/\/\//
+let &cpo=s:cpo_save
+unlet s:cpo_save
+setlocal keymap=
+setlocal noarabic
+setlocal autoindent
+setlocal balloonexpr=
+setlocal nobinary
+setlocal bufhidden=
+setlocal buflisted
+setlocal buftype=
+setlocal nocindent
+setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
+setlocal cinoptions=
+setlocal cinwords=if,else,while,do,for,switch
+setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
+setlocal commentstring=/*%s*/
+setlocal complete=.,w,b,u,t,i
+setlocal completefunc=
+setlocal nocopyindent
+setlocal nocursorcolumn
+setlocal nocursorline
+setlocal define=
+setlocal dictionary=
+setlocal nodiff
+setlocal equalprg=
+setlocal errorformat=
+setlocal noexpandtab
+if &filetype != 'cpp'
+setlocal filetype=cpp
+endif
+setlocal foldcolumn=0
+setlocal foldenable
+setlocal foldexpr=getline(v:lnum)=~'^\\w.*\\({[^}]*\\|.*\ (.*\\)$'?'>1':(getline(v:lnum)=~'^};\\?$'?'<1':'=')
+setlocal foldignore=#
+setlocal foldlevel=1
+setlocal foldmarker={{{,}}}
+setlocal foldmethod=expr
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldtext=foldtext()
+setlocal formatexpr=
+setlocal formatoptions=tcq
+setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal grepprg=
+setlocal iminsert=0
+setlocal imsearch=2
+setlocal include=
+setlocal includeexpr=
+setlocal indentexpr=
+setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
+setlocal infercase
+setlocal iskeyword=@,48-57,_,192-255
+setlocal keywordprg=
+set linebreak
+setlocal linebreak
+setlocal nolisp
+setlocal nolist
+setlocal makeprg=
+setlocal matchpairs=(:),{:},[:]
+setlocal modeline
+setlocal modifiable
+setlocal nrformats=octal,hex
+setlocal nonumber
+setlocal numberwidth=4
+setlocal omnifunc=
+setlocal path=
+setlocal nopreserveindent
+setlocal nopreviewwindow
+setlocal quoteescape=\\
+setlocal noreadonly
+setlocal norightleft
+setlocal rightleftcmd=search
+setlocal noscrollbind
+setlocal shiftwidth=4
+setlocal noshortname
+setlocal smartindent
+setlocal softtabstop=0
+setlocal nospell
+setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
+setlocal spellfile=
+setlocal spelllang=fr
+setlocal statusline=
+setlocal suffixesadd=
+setlocal swapfile
+setlocal synmaxcol=3000
+if &syntax != 'cpp'
+setlocal syntax=cpp
+endif
+setlocal tabstop=4
+setlocal tags=
+setlocal textwidth=0
+setlocal thesaurus=
+setlocal nowinfixheight
+setlocal nowinfixwidth
+setlocal wrap
+setlocal wrapmargin=0
+let s:l = 1 - ((0 * winheight(0) + 15) / 31)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 0
+tabedit platform/os_unknown.h
+set splitbelow splitright
+set nosplitbelow
+set nosplitright
+wincmd t
+set winheight=1 winwidth=1
+argglobal
+8argu
+let s:cpo_save=&cpo
+set cpo&vim
+vnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'v')m'gv``
+vnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'v')m'gv``
+vnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'v')m'gv``
+vnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'v')m'gv``
+nnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
+onoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
+nnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
+onoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
+nnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
+onoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
+nnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
+onoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
+vnoremap <buffer> <silent> ùC :s/^\/\///
+vnoremap <buffer> <silent> ùc :s/^/\/\//
+let &cpo=s:cpo_save
+unlet s:cpo_save
+setlocal keymap=
+setlocal noarabic
+setlocal autoindent
+setlocal balloonexpr=
+setlocal nobinary
+setlocal bufhidden=
+setlocal buflisted
+setlocal buftype=
+setlocal nocindent
+setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
+setlocal cinoptions=
+setlocal cinwords=if,else,while,do,for,switch
+setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
+setlocal commentstring=/*%s*/
+setlocal complete=.,w,b,u,t,i
+setlocal completefunc=
+setlocal nocopyindent
+setlocal nocursorcolumn
+setlocal nocursorline
+setlocal define=
+setlocal dictionary=
+setlocal nodiff
+setlocal equalprg=
+setlocal errorformat=
+setlocal noexpandtab
+if &filetype != 'cpp'
+setlocal filetype=cpp
+endif
+setlocal foldcolumn=0
+setlocal foldenable
+setlocal foldexpr=getline(v:lnum)=~'^\\w.*\\({[^}]*\\|.*\ (.*\\)$'?'>1':(getline(v:lnum)=~'^};\\?$'?'<1':'=')
+setlocal foldignore=#
+setlocal foldlevel=1
+setlocal foldmarker={{{,}}}
+setlocal foldmethod=expr
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldtext=foldtext()
+setlocal formatexpr=
+setlocal formatoptions=tcq
+setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal grepprg=
+setlocal iminsert=0
+setlocal imsearch=2
+setlocal include=
+setlocal includeexpr=
+setlocal indentexpr=
+setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
+setlocal infercase
+setlocal iskeyword=@,48-57,_,192-255
+setlocal keywordprg=
+set linebreak
+setlocal linebreak
+setlocal nolisp
+setlocal nolist
+setlocal makeprg=
+setlocal matchpairs=(:),{:},[:]
+setlocal modeline
+setlocal modifiable
+setlocal nrformats=octal,hex
+setlocal nonumber
+setlocal numberwidth=4
+setlocal omnifunc=
+setlocal path=
+setlocal nopreserveindent
+setlocal nopreviewwindow
+setlocal quoteescape=\\
+setlocal noreadonly
+setlocal norightleft
+setlocal rightleftcmd=search
+setlocal noscrollbind
+setlocal shiftwidth=4
+setlocal noshortname
+setlocal smartindent
+setlocal softtabstop=0
+setlocal nospell
+setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
+setlocal spellfile=
+setlocal spelllang=fr
+setlocal statusline=
+setlocal suffixesadd=
+setlocal swapfile
+setlocal synmaxcol=3000
+if &syntax != 'cpp'
+setlocal syntax=cpp
+endif
+setlocal tabstop=4
+setlocal tags=
+setlocal textwidth=0
+setlocal thesaurus=
+setlocal nowinfixheight
+setlocal nowinfixwidth
+setlocal wrap
+setlocal wrapmargin=0
+let s:l = 1 - ((0 * winheight(0) + 15) / 31)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 0
+tabedit platform/os_unix.h
+set splitbelow splitright
+set nosplitbelow
+set nosplitright
+wincmd t
+set winheight=1 winwidth=1
+argglobal
+7argu
+let s:cpo_save=&cpo
+set cpo&vim
+vnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'v')m'gv``
+vnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'v')m'gv``
+vnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'v')m'gv``
+vnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'v')m'gv``
+nnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
+onoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
+nnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
+onoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
+nnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
+onoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
+nnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
+onoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
+vnoremap <buffer> <silent> ùC :s/^\/\///
+vnoremap <buffer> <silent> ùc :s/^/\/\//
+let &cpo=s:cpo_save
+unlet s:cpo_save
+setlocal keymap=
+setlocal noarabic
+setlocal autoindent
+setlocal balloonexpr=
+setlocal nobinary
+setlocal bufhidden=
+setlocal buflisted
+setlocal buftype=
+setlocal nocindent
+setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
+setlocal cinoptions=
+setlocal cinwords=if,else,while,do,for,switch
+setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
+setlocal commentstring=/*%s*/
+setlocal complete=.,w,b,u,t,i
+setlocal completefunc=
+setlocal nocopyindent
+setlocal nocursorcolumn
+setlocal nocursorline
+setlocal define=
+setlocal dictionary=
+setlocal nodiff
+setlocal equalprg=
+setlocal errorformat=
+setlocal noexpandtab
+if &filetype != 'cpp'
+setlocal filetype=cpp
+endif
+setlocal foldcolumn=0
+setlocal foldenable
+setlocal foldexpr=getline(v:lnum)=~'^\\w.*\\({[^}]*\\|.*\ (.*\\)$'?'>1':(getline(v:lnum)=~'^};\\?$'?'<1':'=')
+setlocal foldignore=#
+setlocal foldlevel=1
+setlocal foldmarker={{{,}}}
+setlocal foldmethod=expr
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldtext=foldtext()
+setlocal formatexpr=
+setlocal formatoptions=tcq
+setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal grepprg=
+setlocal iminsert=0
+setlocal imsearch=2
+setlocal include=
+setlocal includeexpr=
+setlocal indentexpr=
+setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
+setlocal infercase
+setlocal iskeyword=@,48-57,_,192-255
+setlocal keywordprg=
+set linebreak
+setlocal linebreak
+setlocal nolisp
+setlocal nolist
+setlocal makeprg=
+setlocal matchpairs=(:),{:},[:]
+setlocal modeline
+setlocal modifiable
+setlocal nrformats=octal,hex
+setlocal nonumber
+setlocal numberwidth=4
+setlocal omnifunc=
+setlocal path=
+setlocal nopreserveindent
+setlocal nopreviewwindow
+setlocal quoteescape=\\
+setlocal noreadonly
+setlocal norightleft
+setlocal rightleftcmd=search
+setlocal noscrollbind
+setlocal shiftwidth=4
+setlocal noshortname
+setlocal smartindent
+setlocal softtabstop=0
+setlocal nospell
+setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
+setlocal spellfile=
+setlocal spelllang=fr
+setlocal statusline=
+setlocal suffixesadd=
+setlocal swapfile
+setlocal synmaxcol=3000
+if &syntax != 'cpp'
+setlocal syntax=cpp
+endif
+setlocal tabstop=4
+setlocal tags=
+setlocal textwidth=0
+setlocal thesaurus=
+setlocal nowinfixheight
+setlocal nowinfixwidth
+setlocal wrap
+setlocal wrapmargin=0
+42
+normal zo
+let s:l = 1 - ((0 * winheight(0) + 15) / 31)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 0
+tabedit platform/os_win.h
+set splitbelow splitright
+set nosplitbelow
+set nosplitright
+wincmd t
+set winheight=1 winwidth=1
+argglobal
+8argu
+edit platform/os_win.h
+let s:cpo_save=&cpo
+set cpo&vim
+vnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'v')m'gv``
+vnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'v')m'gv``
+vnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'v')m'gv``
+vnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'v')m'gv``
+nnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
+onoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
+nnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
+onoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
+nnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
+onoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
+nnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
+onoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
+vnoremap <buffer> <silent> ùC :s/^\/\///
+vnoremap <buffer> <silent> ùc :s/^/\/\//
+let &cpo=s:cpo_save
+unlet s:cpo_save
+setlocal keymap=
+setlocal noarabic
+setlocal autoindent
+setlocal balloonexpr=
+setlocal nobinary
+setlocal bufhidden=
+setlocal buflisted
+setlocal buftype=
+setlocal nocindent
+setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
+setlocal cinoptions=
+setlocal cinwords=if,else,while,do,for,switch
+setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
+setlocal commentstring=/*%s*/
+setlocal complete=.,w,b,u,t,i
+setlocal completefunc=
+setlocal nocopyindent
+setlocal nocursorcolumn
+setlocal nocursorline
+setlocal define=
+setlocal dictionary=
+setlocal nodiff
+setlocal equalprg=
+setlocal errorformat=
+setlocal noexpandtab
+if &filetype != 'cpp'
+setlocal filetype=cpp
+endif
+setlocal foldcolumn=0
+setlocal foldenable
+setlocal foldexpr=0
+setlocal foldignore=#
+setlocal foldlevel=0
+setlocal foldmarker={{{,}}}
+setlocal foldmethod=manual
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldtext=foldtext()
+setlocal formatexpr=
+setlocal formatoptions=tcq
+setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal grepprg=
+setlocal iminsert=0
+setlocal imsearch=2
+setlocal include=
+setlocal includeexpr=
+setlocal indentexpr=
+setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
+setlocal infercase
+setlocal iskeyword=@,48-57,_,192-255
+setlocal keywordprg=
+set linebreak
+setlocal linebreak
+setlocal nolisp
+setlocal nolist
+setlocal makeprg=
+setlocal matchpairs=(:),{:},[:]
+setlocal modeline
+setlocal modifiable
+setlocal nrformats=octal,hex
+setlocal nonumber
+setlocal numberwidth=4
+setlocal omnifunc=
+setlocal path=
+setlocal nopreserveindent
+setlocal nopreviewwindow
+setlocal quoteescape=\\
+setlocal noreadonly
+setlocal norightleft
+setlocal rightleftcmd=search
+setlocal noscrollbind
+setlocal shiftwidth=4
+setlocal noshortname
+setlocal smartindent
+setlocal softtabstop=0
+setlocal nospell
+setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
+setlocal spellfile=
+setlocal spelllang=fr
+setlocal statusline=
+setlocal suffixesadd=
+setlocal swapfile
+setlocal synmaxcol=3000
+if &syntax != 'cpp'
+setlocal syntax=cpp
+endif
+setlocal tabstop=4
+setlocal tags=
+setlocal textwidth=0
+setlocal thesaurus=
+setlocal nowinfixheight
+setlocal nowinfixwidth
+setlocal wrap
+setlocal wrapmargin=0
+silent! normal! zE
+let s:l = 1 - ((0 * winheight(0) + 15) / 31)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 0
+lcd ~/travail/cpp/seb/pRPN/src
+tabnew
+set splitbelow splitright
+wincmd _ | wincmd |
+split
+1wincmd k
+wincmd w
+set nosplitbelow
+set nosplitright
+wincmd t
+set winheight=1 winwidth=1
+exe '1resize ' . ((&lines * 20 + 17) / 34)
+exe '2resize ' . ((&lines * 10 + 17) / 34)
+argglobal
+enew
+setlocal keymap=
+setlocal noarabic
+setlocal autoindent
+setlocal balloonexpr=
+setlocal nobinary
+setlocal bufhidden=
+setlocal buflisted
+setlocal buftype=
+setlocal nocindent
+setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
+setlocal cinoptions=
+setlocal cinwords=if,else,while,do,for,switch
+setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
+setlocal commentstring=/*%s*/
+setlocal complete=.,w,b,u,t,i
+setlocal completefunc=
+setlocal nocopyindent
+setlocal nocursorcolumn
+setlocal nocursorline
+setlocal define=
+setlocal dictionary=
+setlocal nodiff
+setlocal equalprg=
+setlocal errorformat=
+setlocal noexpandtab
+if &filetype != ''
+setlocal filetype=
+endif
+setlocal foldcolumn=0
+setlocal foldenable
+setlocal foldexpr=0
+setlocal foldignore=#
+setlocal foldlevel=0
+setlocal foldmarker={{{,}}}
+setlocal foldmethod=manual
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldtext=foldtext()
+setlocal formatexpr=
+setlocal formatoptions=tcq
+setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal grepprg=
+setlocal iminsert=2
+setlocal imsearch=2
+setlocal include=
+setlocal includeexpr=
+setlocal indentexpr=
+setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
+setlocal infercase
+setlocal iskeyword=@,48-57,_,192-255
+setlocal keywordprg=
+set linebreak
+setlocal linebreak
+setlocal nolisp
+setlocal nolist
+setlocal makeprg=
+setlocal matchpairs=(:),{:},[:]
+setlocal modeline
+setlocal modifiable
+setlocal nrformats=octal,hex
+setlocal nonumber
+setlocal numberwidth=4
+setlocal omnifunc=omni#cpp#complete#Main
+setlocal path=
+setlocal nopreserveindent
+setlocal nopreviewwindow
+setlocal quoteescape=\\
+setlocal noreadonly
+setlocal norightleft
+setlocal rightleftcmd=search
+setlocal noscrollbind
+setlocal shiftwidth=4
+setlocal noshortname
+setlocal smartindent
+setlocal softtabstop=0
+setlocal nospell
+setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
+setlocal spellfile=
+setlocal spelllang=fr
+setlocal statusline=
+setlocal suffixesadd=
+setlocal swapfile
+setlocal synmaxcol=3000
+if &syntax != ''
+setlocal syntax=
+endif
+setlocal tabstop=4
+setlocal tags=
+setlocal textwidth=0
+setlocal thesaurus=
+setlocal nowinfixheight
+setlocal nowinfixwidth
+setlocal wrap
+setlocal wrapmargin=0
+lcd ~/travail/cpp/seb/pRPN/src
+wincmd w
+argglobal
+enew
+setlocal keymap=
+setlocal noarabic
+setlocal autoindent
+setlocal balloonexpr=
+setlocal nobinary
+setlocal bufhidden=wipe
+setlocal buflisted
+setlocal buftype=quickfix
+setlocal nocindent
+setlocal cinkeys=0{,0},0),:,0#,!^F,o,O,e
+setlocal cinoptions=
+setlocal cinwords=if,else,while,do,for,switch
+setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
+setlocal commentstring=/*%s*/
+setlocal complete=.,w,b,u,t,i
+setlocal completefunc=
+setlocal nocopyindent
+setlocal nocursorcolumn
+setlocal nocursorline
+setlocal define=
+setlocal dictionary=
+setlocal nodiff
+setlocal equalprg=
+setlocal errorformat=
+setlocal noexpandtab
+if &filetype != 'qf'
+setlocal filetype=qf
+endif
+setlocal foldcolumn=0
+setlocal foldenable
+setlocal foldexpr=0
+setlocal foldignore=#
+setlocal foldlevel=0
+setlocal foldmarker={{{,}}}
+setlocal foldmethod=manual
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldtext=foldtext()
+setlocal formatexpr=
+setlocal formatoptions=tcq
+setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+setlocal grepprg=
+setlocal iminsert=2
+setlocal imsearch=2
+setlocal include=
+setlocal includeexpr=
+setlocal indentexpr=
+setlocal indentkeys=0{,0},:,0#,!^F,o,O,e
+setlocal infercase
+setlocal iskeyword=@,48-57,_,192-255
+setlocal keywordprg=
+set linebreak
+setlocal linebreak
+setlocal nolisp
+setlocal nolist
+setlocal makeprg=
+setlocal matchpairs=(:),{:},[:]
+setlocal modeline
+setlocal nomodifiable
+setlocal nrformats=octal,hex
+setlocal nonumber
+setlocal numberwidth=4
+setlocal omnifunc=omni#cpp#complete#Main
+setlocal path=
+setlocal nopreserveindent
+setlocal nopreviewwindow
+setlocal quoteescape=\\
+setlocal noreadonly
+setlocal norightleft
+setlocal rightleftcmd=search
+setlocal noscrollbind
+setlocal shiftwidth=4
+setlocal noshortname
+setlocal smartindent
+setlocal softtabstop=0
+setlocal nospell
+setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
+setlocal spellfile=
+setlocal spelllang=fr
+setlocal statusline=
+setlocal suffixesadd=
+setlocal noswapfile
+setlocal synmaxcol=3000
+if &syntax != 'qf'
+setlocal syntax=qf
+endif
+setlocal tabstop=4
+setlocal tags=
+setlocal textwidth=0
+setlocal thesaurus=
+setlocal winfixheight
+setlocal nowinfixwidth
+setlocal wrap
+setlocal wrapmargin=0
+lcd ~/travail/cpp/seb/pRPN/src
+wincmd w
+exe '1resize ' . ((&lines * 20 + 17) / 34)
+exe '2resize ' . ((&lines * 10 + 17) / 34)
+tabnext 1
+if exists('s:wipebuf')
+  silent exe 'bwipe ' . s:wipebuf
+endif
+unlet! s:wipebuf
+set winheight=1 winwidth=20 shortmess=filnxtToO
+let s:sx = expand("<sfile>:p:r")."x.vim"
+if file_readable(s:sx)
+  exe "source " . fnameescape(s:sx)
+endif
+let &so = s:so_save | let &siso = s:siso_save
+doautoall SessionLoadPost
+unlet SessionLoad
+" vim: set ft=vim :

@@ -1,0 +1,68 @@
+DUP Error:
+Too Few Arguments
+SWAP Error:
+Too Few Arguments
+DROP Error:
+Too Few Arguments
+OVER Error:
+Too Few Arguments
+DUP2 Error:
+Too Few Arguments
+DROP2 Error:
+Too Few Arguments
+ROT Error:
+Too Few Arguments
+ROLLD Error:
+Too Few Arguments
+ROLL Error:
+Too Few Arguments
+PICK Error:
+Too Few Arguments
+DUPN Error:
+Too Few Arguments
+DROPN Error:
+Too Few Arguments
+ROLLD Error:
+Too Few Arguments
+ROLL Error:
+Too Few Arguments
+PICK Error:
+Too Few Arguments
+DUPN Error:
+Too Few Arguments
+DROPN Error:
+Too Few Arguments
+ROLLD Error:
+Bad Argument Type
+ROLL Error:
+Bad Argument Type
+PICK Error:
+Bad Argument Type
+DUPN Error:
+Bad Argument Type
+DROPN Error:
+Bad Argument Type
+ROLLD Error:
+Bad Argument Type
+ROLL Error:
+Bad Argument Type
+PICK Error:
+Bad Argument Type
+DUPN Error:
+Bad Argument Type
+DROPN Error:
+Bad Argument Type
+ROLLD Error:
+Bad Argument Type
+ROLL Error:
+Bad Argument Type
+PICK Error:
+Bad Argument Type
+DUPN Error:
+Bad Argument Type
+DROPN Error:
+Bad Argument Type
+"Succession of errors: DUP, SWAP, DROP, OVER, DUP2, DROP2, ROT"
+"ROLLD, ROLL, PICK, DUPN, DROPN, ROLLD, ROLL, PICK, DUPN, DROPN"
+"ROLLD, ROLL, PICK, DUPN, DROPN, ROLLD, ROLL, PICK, DUPN, DROPN, ROLLD, ROLL, PICK, DUPN, DROPN"
+get_class_count() = 0 for watched classes

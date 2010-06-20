@@ -1,0 +1,2 @@
+[[ 0 ]]
+get_class_count() = 0 for watched classes

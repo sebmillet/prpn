@@ -1,0 +1,148 @@
+1.1 'x' STO
+1.2
+'y' STO
+1.3
+'z'
+STO
+PATH
+VARS
+'Alpha' CRDIR
+'Beta'
+CRDIR
+VARS
+'Alpha'
+EVAL
+UP
+Alpha
+Gamma
+crdir
+Delta crdir
+PATH VARS
+'Beta'
+EVAL
+PATH
+VARS
+Gamma
+Delta
+'Gamma' EVAL
+'Delta'
+EVAL
+PATH
+Alpha
+Gamma
+PATH
+'Delta'
+EVAL
+"hello" 't' STO
+PATH
+VARS
+HOME
+PATH
+ALPHA
+Alpha
+Delta
+PATH
+UP
+PATH
+UP
+PATH
+UP
+PATH
+HOME
+PATH
+VARS
+'x'
+EVAL
+'x' EVAL +
+x +
+x
++
+y
+'z'
+Alpha
+PATH
+x y z * *
+Gamma
+PATH
+'x' RCL 'y' RCL 'z' RCL * * NEG
+'x'
+RCL
+'y'
+RCL
+'z'
+RCL
+*
+*
+NEG
+R->C
+t
+UP
+PATH
+t EVAL
+Delta
+PATH
+t
+HOME
+PATH
+t
+'x' RCL 'y' RCL 'z' RCL * * 0 R->C
+'a' RCL
+'Alpha' RCL
+'Gamma' RCL
+Alpha
+'Gamma' RCL
+'Alpha' RCL
+'x' RCL
+HOME
+'A_very_long_name' CRDIR
+VARS
+A_very_long_name PATH 'Another_very_long_name' CRDIR Another_very_long_name PATH
+'Yet_another_big_name' CRDIR 'Yet_another_big_name' PATH SWAP EVAL PATH
+'a9' CRDIR a9
+'a8' CRDIR a8
+'a7' CRDIR a7
+'a6' CRDIR a6
+'a5' CRDIR a5
+'a4' CRDIR a4
+'a3' CRDIR a3
+'a2' CRDIR a2
+'a1' CRDIR a1
+'a0' CRDIR a0
+PATH
+UP PATH
+UP PATH
+UP PATH
+UP PATH
+UP PATH
+UP PATH
+UP PATH
+UP PATH
+UP PATH
+UP PATH
+UP PATH
+UP PATH
+UP PATH
+A_very_long_name Another_very_long_name Yet_another_big_name a9 a8 a7 a6 a5 a4 a3 a2 a1 a0
+PATH
+HOME
+PATH
+VARS
+'Alpha'
+PURGE
+'x' PURGE
+'y'
+PURGE
+VARS
+Alpha
+'z'
+PURGE
+UP
+VARS
+1 2 3 4 5 6 7 8 9 'z1' sto 'z2' sto 'z3' sto 'z4' sto 'z5' sto 'z6' sto 'z7' sto 'z8' sto 'z9' sto
+VARS
+'z5' purge 'z0' purge 'A_very_long_name' purge
+'z3' purge 'z' purge
+'z7' purge 'z4' purge Alpha 'Gamma' purge 'Delta' purge VARS DROP
+Delta VARS LIST-> DROP PURGE UP VARS LIST-> DROP PURGE UP 'Alpha' PURGE
+'z6' purge VARS DROP 'z9' purge VARS DROP 'z8' purge
+VARS

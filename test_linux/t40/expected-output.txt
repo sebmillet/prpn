@@ -1,0 +1,90 @@
+RCL Error:
+Undefined Name
+RCL Error:
+Directory Not Allowed
+RCL Error:
+Undefined Name
+RCL Error:
+Directory Not Allowed
+RCL Error:
+Directory Not Allowed
+PURGE Error:
+Non-Empty Directory
+PURGE Error:
+Non-Empty Directory
+PURGE Error:
+Non-Empty Directory
+{ HOME }
+{ z y x }
+{ Beta Alpha z y x }
+{ HOME Alpha }
+{ Delta Gamma }
+{ HOME Beta }
+{ }
+'Gamma'
+'Delta'
+'Gamma'
+'Delta'
+{ HOME Beta }
+{ HOME Alpha Gamma }
+{ HOME Alpha Delta }
+{ t }
+{ HOME }
+'ALPHA'
+{ HOME Alpha Delta }
+{ HOME Alpha }
+{ HOME }
+{ HOME }
+{ HOME }
+{ Beta Alpha z y x }
+4.4
+1.2
+'z'
+{ HOME Alpha }
+1.716
+{ HOME Alpha Gamma }
+(-1.716,-1.716)
+'t'
+{ HOME Alpha }
+'t'
+{ HOME Alpha Delta }
+"hello"
+{ HOME }
+'t'
+(1.716,0)
+'a'
+'Alpha'
+'Gamma'
+'Gamma'
+'Alpha'
+1.1
+{ A_very_long_name Beta Alpha z y x }
+{ HOME A_very_long_name }
+{ HOME A_very_long_name Another_very_long_name }
+{ HOME A_very_long_name Another_very_long_name }
+{ HOME A_very_long_name Another_very_long_name Yet_another_big_name }
+{ HOME A_very_long_name Another_very_long_name Yet_another_big_name a9 a8 a7 a6 a5 a4 a3 a2 a1 a0 }
+{ HOME A_very_long_name Another_very_long_name Yet_another_big_name a9 a8 a7 a6 a5 a4 a3 a2 a1 }
+{ HOME A_very_long_name Another_very_long_name Yet_another_big_name a9 a8 a7 a6 a5 a4 a3 a2 }
+{ HOME A_very_long_name Another_very_long_name Yet_another_big_name a9 a8 a7 a6 a5 a4 a3 }
+{ HOME A_very_long_name Another_very_long_name Yet_another_big_name a9 a8 a7 a6 a5 a4 }
+{ HOME A_very_long_name Another_very_long_name Yet_another_big_name a9 a8 a7 a6 a5 }
+{ HOME A_very_long_name Another_very_long_name Yet_another_big_name a9 a8 a7 a6 }
+{ HOME A_very_long_name Another_very_long_name Yet_another_big_name a9 a8 a7 }
+{ HOME A_very_long_name Another_very_long_name Yet_another_big_name a9 a8 }
+{ HOME A_very_long_name Another_very_long_name Yet_another_big_name a9 }
+{ HOME A_very_long_name Another_very_long_name Yet_another_big_name }
+{ HOME A_very_long_name Another_very_long_name }
+{ HOME A_very_long_name }
+{ HOME }
+{ HOME A_very_long_name Another_very_long_name Yet_another_big_name a9 a8 a7 a6 a5 a4 a3 a2 a1 a0 }
+{ HOME }
+{ A_very_long_name Beta Alpha z y x }
+'Alpha'
+{ A_very_long_name Beta Alpha z }
+{ A_very_long_name Beta Alpha z }
+{ z9 z8 z7 z6 z5 z4 z3 z2 z1 A_very_long_name Beta Alpha z }
+'A_very_long_name'
+'Delta'
+{ z2 z1 A_very_long_name Beta }
+get_class_count() = 0 for watched classes

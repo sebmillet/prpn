@@ -1,0 +1,18 @@
+Syntax error: 4-5,1
+Syntax error: 7-8,1
+Syntax error: 7-7,1
+Syntax error: 11-11,1
+Syntax error: 11-13,1
+Syntax error: 7-7,1
+Syntax error: 11-11,1
+Syntax error: 11-13,1
+/ Error:
+Infinite Result
+Syntax error: 7-8,1
+Syntax error: 7-8,1
+Syntax error: 7-7,1
+Syntax error: 11-11,1
+Syntax error: 7-7,1
+Syntax error: 11-11,1
+Syntax error: 11-13,1
+get_class_count() = 0 for watched classes

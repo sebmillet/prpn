@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+
+<makefile>
+	<include file="presets/wx.bkl"/>
+
+	<set var="WX_DEBUG">0</set>
+
+	<option name="DEBUG">
+		<values>0,1</values>
+		<values-description>Release,Debug</values-description>
+		<default-value>0</default-value>
+	</option>
+
+	<set var="DEBUG_FLAG">on</set>
+	<set var="OPTIMIZE_FLAG">off</set>
+
+	<exe id="prpn" template="wx">
+		<app-type>gui</app-type>
+		<if cond="COMPILER=='bcc'">
+			<echo>WX => bcc in use => will remove a few Borland C++ warnings</echo>
+			<cxxflags>-w-8022 -DDEBUG -DDEBUG_FILE</cxxflags>
+		</if>
+		<if cond="COMPILER=='gcc'">
+			<echo>WX => gcc in use => adding some high level warning flags</echo>
+			<cxxflags>-Wextra -O -Wuninitialized -DDEBUG</cxxflags>
+		</if>
+		<headers>Common.h Scalar.h Stack.h Commands.h Variable.h Parser.h PGetOpt.h Ui.h
+			platform/os_generic.h platform/os_win.h platform/os_unix.h
+		</headers>
+		<sources>Main.cpp Compat.cpp PGetOpt.cpp Scalar.cpp Stack.cpp Variable.cpp Parser.cpp Ui.cpp
+			platform/os_generic.cpp
+			UiImplConsole.cpp
+			UiImplWx.cpp
+		</sources>
+		<warnings>max</warnings>
+		<debug-info>$(DEBUG_FLAG)</debug-info>
+		<optimize>$(OPTIMIZE_FLAG)</optimize>
+		<define>FOREIGN_MAIN</define>
+        <wx-lib>html</wx-lib>
+		<wx-lib>core</wx-lib>
+		<wx-lib>base</wx-lib>
+        <win32-res>prpn.rc</win32-res>
+	</exe>
+	<if cond="PLATFORM_WIN32=='1'">
+		<exe id="prpnc">
+			<app-type>console</app-type>
+			<if cond="COMPILER=='bcc'">
+				<echo>CONSOLE => bcc in use => will remove a few Borland C++ warnings</echo>
+				<cxxflags>-w-8022 -DDEBUG -DDEBUG_FILE</cxxflags>
+			</if>
+			<headers>Common.h Scalar.h Stack.h Commands.h Variable.h Parser.h PGetOpt.h Ui.h
+				platform/os_generic.h platform/os_win.h platform/os_unix.h
+			</headers>
+			<sources>Main.cpp Compat.cpp PGetOpt.cpp Scalar.cpp Stack.cpp Variable.cpp Parser.cpp Ui.cpp
+				platform/os_generic.cpp
+				UiImplConsole.cpp
+			</sources>
+			<warnings>max</warnings>
+			<debug-info>$(DEBUG_FLAG)</debug-info>
+			<optimize>$(OPTIMIZE_FLAG)</optimize>
+		</exe>
+	</if>
+</makefile>
+

@@ -1,0 +1,46 @@
+->LIST Error:
+Too Few Arguments
+->LIST Error:
+Bad Argument Type
+->LIST Error:
+Bad Argument Type
+->LIST Error:
+Bad Argument Type
+->LIST Error:
+Bad Argument Type
+->LIST Error:
+Bad Argument Type
+->LIST Error:
+Bad Argument Type
+->LIST Error:
+Bad Argument Type
+->LIST Error:
+Bad Argument Type
+->LIST Error:
+Bad Argument Type
+->LIST Error:
+Bad Argument Type
+->LIST Error:
+Bad Argument Type
+->LIST Error:
+Bad Argument Type
+->LIST Error:
+Too Few Arguments
+->LIST Error:
+Too Few Arguments
+"-START-"
+{ }
+{ 0 }
+{ (-1.23e-45,6.78e-90) 3.14159 }
+{ [ -1.23e-45 ] [ -1.23e-45 ] [ -1.23e-45 ] [ -1.23e-45 ] [ -1.23e-45 ] [ -1.23e-45 ] [ -1.23e-45 ] [ -1.23e-45 ] }
+{ [[ -1.23e-45 -1 -2 ]  [ 1.3e-05 -3 -4 ]  [ -0.00012 -5 -6 ]  [ 1e45 -7 -8 ]] }
+{ [[ -1.23e-45 -1 -2 ]  [ 1.3e-05 -3 -4 ]  [ -0.00012 -5 -6 ]  [ 1e45 -7 -8 ]] "[[ -1.23e-45 -1 -2 ]  [ 1.3e-05 -3 -4 ]  [ -0.00012 -5 -6 ]  [ 1e45 -7 -8 ]]" }
+{ alpha }
+{ { [[ 1 ]  [ 2 ]] << [[ 1 ]  [ 2 ]] { 1 } { } >> { [ 1 ] [ 2 ] } { } } }
+{ << [[ 1 ]  [ 2 ]] { [[ 1 ]  [ 2 ]] { 1 } { } } { [ 1 ] [ 2 ] } { } >> }
+{ << >> }
+{ 0 (0,0) [ 0 ] [[ 0 ]] [ (0,0) ] [[ (0,0) ]] "" x << 1 2 + >> { 1 "" } }
+{ { { { { { } } } { { } } } } }
+{ "-START-" { } { 0 } { (-1.23e-45,6.78e-90) 3.14159 } { [ -1.23e-45 ] [ -1.23e-45 ] [ -1.23e-45 ] [ -1.23e-45 ] [ -1.23e-45 ] [ -1.23e-45 ] [ -1.23e-45 ] [ -1.23e-45 ] } { [[ -1.23e-45 -1 -2 ]  [ 1.3e-05 -3 -4 ]  [ -0.00012 -5 -6 ]  [ 1e45 -7 -8 ]] } { [[ -1.23e-45 -1 -2 ]  [ 1.3e-05 -3 -4 ]  [ -0.00012 -5 -6 ]  [ 1e45 -7 -8 ]] "[[ -1.23e-45 -1 -2 ]  [ 1.3e-05 -3 -4 ]  [ -0.00012 -5 -6 ]  [ 1e45 -7 -8 ]]" } { alpha } { { [[ 1 ]  [ 2 ]] << [[ 1 ]  [ 2 ]] { 1 } { } >> { [ 1 ] [ 2 ] } { } } } { << [[ 1 ]  [ 2 ]] { [[ 1 ]  [ 2 ]] { 1 } { } } { [ 1 ] [ 2 ] } { } >> } { << >> } { 0 (0,0) [ 0 ] [[ 0 ]] [ (0,0) ] [[ (0,0) ]] "" x << 1 2 + >> { 1 "" } } { { { { { { } } } { { } } } } } }
+{ }
+get_class_count() = 0 for watched classes

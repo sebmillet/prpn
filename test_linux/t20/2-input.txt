@@ -1,0 +1,154 @@
+6 _undo_levels
+31 cf
+dup
+1
+swap
+clear
+drop
+1
+over
+dup2
+drop2
+2
+rot
+clear
+1
+dup
+clear
+1 dup
+clear
+1 dup clear
+1
+2
+swap
+clear
+1
+2 swap
+clear
+1 2 swap
+clear
+1 2 swap clear
+1
+drop
+1 drop
+1
+2
+over
+clear
+1
+2 over
+clear
+1 2 over
+clear
+1 2 over clear
+1
+2
+dup2
+clear
+1
+2 dup2
+clear
+1 2 dup2
+clear
+1 2 dup2 clear
+1
+2
+drop2
+clear
+1
+2 drop2
+clear
+1 2 drop2
+clear
+1 2 drop2 clear
+1
+2
+3
+rot
+clear
+1
+2
+3 rot
+clear
+1
+2 3 rot
+clear
+1 2 3 rot
+clear
+1 2 3 rot clear
+1 rolld
+1 roll
+1 pick
+1 dupn
+1 dropn
+0 rolld
+0 roll
+0 pick
+0 dupn
+0 dropn
+-1
+rolld
+-1
+roll
+-1
+pick
+-1
+dupn
+-1
+dropn
+.49
+rolld
+.49
+roll
+.49
+pick
+.49
+dupn
+.49
+dropn
+"Succession of errors: DUP, SWAP, DROP, OVER, DUP2, DROP2, ROT"
+"ROLLD, ROLL, PICK, DUPN, DROPN, ROLLD, ROLL, PICK, DUPN, DROPN"
+"ROLLD, ROLL, PICK, DUPN, DROPN, ROLLD, ROLL, PICK, DUPN, DROPN, ROLLD, ROLL, PICK, DUPN, DROPN"
+1 2 3 4 5 6 7 8 9 10
+14 rolld
+14 roll
+14 pick
+14 dupn
+14 dropn
+10 rolld
+10 roll
+10 pick
+11 dupn
+22 dropn
+0 (1, 0)
+rolld
+(1, 0)
+roll
+(1, 0)
+pick
+(1, 0)
+dupn
+(1, 0)
+dropn
+"a"
+rolld
+"a"
+roll
+"a"
+pick
+"a"
+dupn
+"a"
+dropn
+[0]
+rolld
+[0]
+roll
+[0]
+pick
+[0]
+dupn
+[0]
+dropn
+[0]
+drop2

@@ -1,0 +1,98 @@
+Command (number of arguments): description
+
+_HELP          (0): Display a help screen
+_HELP_FLAGS    (0): Display a help screen about flags
+_EXIT          (0): Quit program
++              (2): Addition
+-              (2): Subtraction
+*              (2): Multiplication
+/              (2): Division
+^              (2): Power
+COS            (1): Cosinus
+SIN            (1): Sin
+TAN            (1): Tan
+ACOS           (1): Arccosinus
+ASIN           (1): Arcsinus
+ATAN           (1): Arctan
+LN             (1): Logarihtm (e base)
+EXP            (1): Exponential
+NEG            (1): Opposite
+IP             (1): Integer part
+INV            (1): 1/x
+SQ             (1): Square
+SQR            (1): Square root
+R->C           (2): Real to complex
+C->R           (1): Complex to real
+SAME           (2): Is identical
+==             (2): Equal to
+<>             (2): Different from
+<              (2): Lower than
+<=             (2): Lower than or equal to
+>              (2): Greater than
+>=             (2): Greater than or equal to
+DUP            (1): Copy the first item
+SWAP           (2): Exchange the first two items
+DROP           (1): Delete the first item
+CLEAR          (0): Clear the stack
+OVER           (2): Copy the second item
+DUP2           (2): Copy the first two items
+DROP2          (2): Delete the first two items
+ROT            (3): Move the third item to the first position
+ROLLD          (1): Move the first item to the Nth position
+ROLL           (1): Move the Nth item to the first position
+PICK           (1): Copy the Nth item
+DUPN           (1): Copy the n first items
+DROPN          (1): Delete the n first items
+DEPTH          (0): Get the number of items
+SF             (1): Set flag
+CF             (1): Clear flag
+FS?            (1): Return 1 if flag is set, 0 otherwise
+FC?            (1): Return 0 if flag is set, 1 otherwise
+FS?C           (1): Do FS? then clear flag
+FC?C           (1): Do FC? then clear flag
+->STR          (1): Convert to string
+STR->          (0): Convert from string
+->LIST         (1): Items to list
+LIST->         (1): Extract items from list
+EVAL           (0): Evaluate item
+STO            (2): Store value in variable name
+RCL            (1): Recall value from variable name
+PURGE          (1): Remove a variable
+VARS           (0): Get the list of variables in current directory
+PATH           (0): Get the list from root to current directory
+CRDIR          (1): Create a directory
+HOME           (0): Set root directory as the current one
+UP             (0): Make the parent directory the current one
+BIN            (0): Use binary mode for binary integers
+OCT            (0): Use octal mode for binary integers
+DEC            (0): Use decimal mode for binary integers
+HEX            (0): Use hexadecimal mode for binary integers
+STWS           (1): Define the number of bits in binary integers (1 to 64)
+RCWS           (0): Get the number of bits in binary integers
+B->R           (1): Convert a binary integer into a real
+R->B           (1): Convert a real into a binary integer
+RCLF           (0): Save flag states in a binary integer
+STOF           (1): Read flag states from a binary integer
+WAIT           (1): Wait a number of seconds
+UNDO           (0): Undo last command, 50 levels by default
+_UNDO_LEVELS   (1): Define number of undo levels
+_UNDO_LEVELS?  (0): Get number of undo levels
+
+Object type    Symbol Example
+-------------- ------ -------------------------
+
+Data
+Real Number           1.23456e-25
+Complex Number ( )    (123.45, 678.90)
+Binary Integer #      # 123AB
+String         " "    "RESULT"
+Vector         [ ]    [1.23 4.56 7.89]
+Matrix         [[ ]]  [[1.23 4.56] [6.54 3.21]]
+List           { }    {1.23 "ABC" # 45d}
+
+Names
+Name           ' '    'CALC'
+
+Procedures
+Program        << >>  << DUP + SWAP >>
+Algebraic      ' '    'X+2*Y=Z'get_class_count() = 0 for watched classes

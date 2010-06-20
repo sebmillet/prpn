@@ -1,0 +1,31 @@
+"GOOD1"
+"GOOD2"
+"GOOD3"
+"GOOD4"
+"GOOD5"
+"GOOD6"
+"GOOD7"
+"GOOD8"
+<< "GOOD1" >>
+<< "GOOD2" >>
+<< "GOOD3" >>
+<< "GOOD4" >>
+<< "GOOD5" >>
+<< "GOOD6" >>
+<< "GOOD7" >>
+<< "GOOD8" >>
+{ "GOOD1" }
+{ "GOOD2" }
+{ "GOOD3" }
+{ "GOOD4" }
+{ "GOOD5" }
+{ "GOOD6" }
+{ "GOOD7" }
+{ "GOOD8" }
+"OK1"
+"OK2"
+"OK3"
+"OK4"
+"OK5"
+"OK6"
+get_class_count() = 0 for watched classes

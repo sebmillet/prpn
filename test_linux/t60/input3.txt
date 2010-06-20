@@ -1,0 +1,87 @@
+"--Mark1--"
+0 (0,0) SAME
+0 [0] SAME
+0 [[0]] SAME
+0 'a' SAME
+0 "a" SAME
+0 #0 SAME
+0 { } SAME
+0 << >> SAME
+(0, 0) 0 SAME
+[0] 0 SAME
+[[0]] 0 SAME
+'a' 0 SAME
+"a" 0 SAME
+#0 0 SAME
+{ } 0 SAME
+<< >> 0 SAME
+"--Mark2--"
+(0, 0) [0] SAME
+(0, 0) [[0]] SAME
+(0, 0) 'a' SAME
+(0, 0) "a" SAME
+(0, 0) #0 SAME
+(0, 0) { } SAME
+(0, 0) << >> SAME
+[0] (0, 0) SAME
+[[0]] (0, 0) SAME
+'a' (0, 0) SAME
+"a" (0, 0) SAME
+#0 (0, 0) SAME
+{ } (0, 0) SAME
+<< >> (0, 0) SAME
+"--Mark3--"
+[0] [[0]] SAME
+[0] 'a' SAME
+[0] "a" SAME
+[0] #0 SAME
+[0] { } SAME
+[0] << >> SAME
+[[0]] [0] SAME
+'a' [0] SAME
+"a" [0] SAME
+#0 [0] SAME
+{ } [0] SAME
+<< >> [0] SAME
+"--Mark4--"
+[[0]] 'a' SAME
+[[0]] "a" SAME
+[[0]] #0 SAME
+[[0]] { } SAME
+[[0]] << >> SAME
+'a' [[0]] SAME
+"a" [[0]] SAME
+#0 [[0]] SAME
+{ } [[0]] SAME
+<< >> [[0]] SAME
+"--Mark5--"
+'a' "a" SAME
+'a' #0 SAME
+'a' { } SAME
+'a' << >> SAME
+"a" 'a' SAME
+#0 'a' SAME
+{ } 'a' SAME
+<< >> 'a' SAME
+"--Mark6--"
+"a" #0 SAME
+"a" { } SAME
+"a" << >> SAME
+#0 "a" SAME
+{ } "a" SAME
+<< >> "a" SAME
+"--Mark6--"
+"a" #0 SAME
+"a" { } SAME
+"a" << >> SAME
+#0 "a" SAME
+{ } "a" SAME
+<< >> "a" SAME
+"--Mark7--"
+#0 { } SAME
+#0 << >> SAME
+{ } #0 SAME
+<< >> #0 SAME
+"--Mark8--"
+{ } << >> SAME
+<< >> { } SAME

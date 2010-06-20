@@ -1,0 +1,120 @@
+
+      pRPN, a portable RPN calculator inspired by HP.
+      ===============================================
+
+$LastChangedDate: 2010-06-12 23:56:00 +0200 $
+
+Contents:
+
+      I. WHAT IS PRPN
+     II. WHY PRPN
+    III. LICENCE
+     IV. COMPILATION AND INSTALLATION
+
+
+
+I.    WHAT IS PRPN
+
+It is a RPN calculator based on WxWidgets for the GUI, that provides the
+following object: Reals, Complex, Vectors, Matrices, Binaries, Lists,
+Expressions, Strings and Programs.
+Expressions are minimalistic right now, they are not usable as such. On the
+other hand, programs are almost fully implemented.
+pRPN also provides a terminal interface if launched with -c option (see the
+note in section IV about Windows version.)
+
+
+
+II.   WHY PRPN
+
+I like to use my genuine HP-28S, and I didn't find any program close to the
+power it brings with a similar simple interface. I managed to program it. Big
+deal! About half the work is done as of June 2010, the big remaining piece to
+program is expressions management.
+
+
+
+III.  LICENCE
+
+See COPYING file that comes along with the package the program belongs to.
+
+
+
+IV.   COMPILATION AND INSTALLATION
+
+The file of name INSTALL, distributed with pRPN source files, gives
+instructions to compile and install the program, using the usual
+    ./configure, make and make install sequence.
+This INSTALL file is the one provided by default by autotools.
+Below is found information specific to this package.
+
+- Linux compilation
+    The configure script provides the following options in addition to the
+    defaults.
+    --disable-gui
+        Compile without WxWidgets GUI => build a console-only executable
+    --enable-debug
+		Activate pRPN debug information (has nothing to do with WxWidgets debug
+		system)
+    --enable-maintainer-mode
+        This option causes documentation to be rebuilt if necessary
+
+    Note
+        Bakefile files (.bkl extension) are used for Windows. Under Linux, the
+        standard automake/autoconf couple is used, without any bakefile piece.
+        Bakefile provides a half-a-way solution to get mixed with autotools
+        (bakefilize, that replaces automake but keep using autoconf), that
+        isn't in use here.
+        Using bakefile generated makefiles under Linux is presumed to work
+        fine but has not been tested for a while.
+
+- Windows compilation
+    1) Borland C++
+        The program was compiled primarily using Borland C++ 5.5. It worked
+        well until the program becomes bigger and caused a known bug in
+        Borland to block compilation. The bug is in the linker and occurs when
+        the target is too big. A workaround to this is to compile WxWidgets
+        library without debug. To be more precise:
+            By default, to compile WxWidgets in Windows using Borland C++ 5.5,
+            you execute the command:
+                cd %WX%\build
+                %BORLAND_BIN%\make -f makefile.bcc
+            To build the library without debug support, you have to execute:
+                cd %WX%\build
+                %BORLAND_BIN%\make -f makefile.bcc WX_DEBUG=0
+        Borland C++ can be downloaded for free, from
+            http://edn.embarcadero.com/article/20633
+    2) Mingw
+        Mingw32 has also been used successfully, however, the resulting
+        executable size is very big. Compilation of pRPN 0.5.0 (released early
+        June), was 30MB wide, whereas BCC55 compilation produced a 3MB wide
+        executable.
+        Remind: to compile pRPN with Mingw, you've got to compile WxWidgets
+        with it as well, executing:
+            cd %WX%\build
+            %MINGW32_BIN%\mingw32-make -f makefile.gcc
+        Mingw32 is licensed under GPL mostly, its homepage is found here
+            http://www.mingw.org
+    3) Makefiles generation
+        As Windows doesn't provide the usual configure/make/make install
+        mechanism (provided you are not using an environment like cygwin), the
+        solution used is WxWidgets default, bakefile. You can find it from
+            http://www.bakefile.org
+    4) Note about the console version
+        Under Linux, a single executable is produced, that enables both GUI
+        version (default) and the console version when launched with the -c
+        option in the command line.
+        Under Windows, things are different. By default, WxWidgets disconnects
+        itself from the controlling terminal, making it impossible to interact
+        with the console. Note this point is unclear to me, maybe it is more
+        of a Windows default behavior than WxWidgets... Any way.
+		To workaround this characteristic, Windows build produces two
+		executables, prpn.exe (GUI) and prpnc.exe (console.)
+
+- Known builds done so far
+    Ubuntu 9.10 / gcc x.y.z, 32 bits, WxWidgets 2.8.10
+    Ubuntu 10.4 beta / gcc 4.4.3, 64 bits, WxWidgets 2.8.10
+    Windows XP SP3 / mingw32-gcc x.y.z, 32 bits, WxWidgets a.b.c
+    Windows XP SP3 / bcc55 t.u.v, 32 bits, WxWidgets a.b.c compiled with
+        WX_DEBUG=0 option
+

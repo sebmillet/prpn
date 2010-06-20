@@ -1,0 +1,44 @@
+1 _undo_levels
+<< << >> >>
+EVAL
+EVAL
+<< << >> >>
+EVAL EVAL
+<< << >> >> EVAL
+EVAL
+<< << 1 >> >>
+EVAL
+EVAL
+DROP
+<< << 1 >> >>
+EVAL EVAL DROP
+<< << 1 >> >> EVAL
+EVAL DROP
+<< << 1 >> >> EVAL EVAL
+DROP
+<< << 1 >> >> EVAL EVAL DROP
+<< 1 2 + cos << 10 * << 3 + << 5 -
+DUP
+EVAL
+EVAL
+EVAL
+EVAL
+SWAP
+DUP
+EVAL EVAL EVAL EVAL
+DROP
+DROP
+<< 1 2 + cos << 10 * << 3 + << 5 - << >> << << >> >> << << >> << >> >> >> >> >> >> EVAL
+EVAL EVAL EVAL
+EVAL EVAL EVAL EVAL EVAL EVAL
+<< 1 2 + cos << 10 * << 3 + << 5 - >> >> >> >> EVAL EVAL
+EVAL EVAL
+<< 1 2 + cos << 10 * << 3 + << 5 - >> >> >> >> EVAL EVAL EVAL
+EVAL
++ + +
+<< 1 2 + cos << 10 * << 3 + << 5 - >> >> >> >> DROP
+<< 1 2 + cos << 10 * << 3 + << 5 - >> >> >> >> DUP DROP DROP
+<< 1 2 + cos << 10 * << 3 + << 5 - >> >> >> >> DUP DROP2
+<< 1 2 + cos << 10 * << 3 + << 5 - >> >> >> >> DUP DUP 3 DROPN
+<< 1 2 + cos << 10 * << 3 + << 5 - >> >> >> >> DUP DUP
+3 DROPN

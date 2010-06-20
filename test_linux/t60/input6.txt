@@ -1,0 +1,330 @@
+"--Mark1--"
+0 (0,0) <
+DROP2
+0 [0] <
+DROP2
+0 [[0]] <
+DROP2
+0 'a' <
+DROP2
+0 "a" <
+DROP2
+0 #0 <
+DROP2
+0 { } <
+DROP2
+0 << >> <
+DROP2
+(0, 0) 0 <
+DROP2
+[0] 0 <
+DROP2
+[[0]] 0 <
+DROP2
+'a' 0 <
+DROP2
+"a" 0 <
+DROP2
+#0 0 <
+DROP2
+{ } 0 <
+DROP2
+<< >> 0 <
+DROP2
+"--Mark2--"
+(0, 0) [0] <
+DROP2
+(0, 0) [[0]] <
+DROP2
+(0, 0) 'a' <
+DROP2
+(0, 0) "a" <
+DROP2
+(0, 0) #0 <
+DROP2
+(0, 0) { } <
+DROP2
+(0, 0) << >> <
+DROP2
+[0] (0, 0) <
+DROP2
+[[0]] (0, 0) <
+DROP2
+'a' (0, 0) <
+DROP2
+"a" (0, 0) <
+DROP2
+#0 (0, 0) <
+DROP2
+{ } (0, 0) <
+DROP2
+<< >> (0, 0) <
+DROP2
+"--Mark3--"
+[0] [[0]] <
+DROP2
+[0] 'a' <
+DROP2
+[0] "a" <
+DROP2
+[0] #0 <
+DROP2
+[0] { } <
+DROP2
+[0] << >> <
+DROP2
+[[0]] [0] <
+DROP2
+'a' [0] <
+DROP2
+"a" [0] <
+DROP2
+#0 [0] <
+DROP2
+{ } [0] <
+DROP2
+<< >> [0] <
+DROP2
+"--Mark4--"
+[[0]] 'a' <
+DROP2
+[[0]] "a" <
+DROP2
+[[0]] #0 <
+DROP2
+[[0]] { } <
+DROP2
+[[0]] << >> <
+DROP2
+'a' [[0]] <
+DROP2
+"a" [[0]] <
+DROP2
+#0 [[0]] <
+DROP2
+{ } [[0]] <
+DROP2
+<< >> [[0]] <
+DROP2
+"--Mark5--"
+'a' "a" <
+DROP2
+'a' #0 <
+DROP2
+'a' { } <
+DROP2
+'a' << >> <
+DROP2
+"a" 'a' <
+DROP2
+#0 'a' <
+DROP2
+{ } 'a' <
+DROP2
+<< >> 'a' <
+DROP2
+"--Mark6--"
+"a" #0 <
+DROP2
+"a" { } <
+DROP2
+"a" << >> <
+DROP2
+#0 "a" <
+DROP2
+{ } "a" <
+DROP2
+<< >> "a" <
+DROP2
+"--Mark6--"
+"a" #0 <
+DROP2
+"a" { } <
+DROP2
+"a" << >> <
+DROP2
+#0 "a" <
+DROP2
+{ } "a" <
+DROP2
+<< >> "a" <
+DROP2
+"--Mark7--"
+#0 { } <
+DROP2
+#0 << >> <
+DROP2
+{ } #0 <
+DROP2
+<< >> #0 <
+DROP2
+"--Mark8--"
+{ } << >> <
+DROP2
+<< >> { } <
+DROP2
+"--Mark101--"
+0 (0,0) <=
+DROP2
+0 [0] <=
+DROP2
+0 [[0]] <=
+DROP2
+0 'a' <=
+DROP2
+0 "a" <=
+DROP2
+0 #0 <=
+DROP2
+0 { } <=
+DROP2
+0 << >> <=
+DROP2
+(0, 0) 0 <=
+DROP2
+[0] 0 <=
+DROP2
+[[0]] 0 <=
+DROP2
+'a' 0 <=
+DROP2
+"a" 0 <=
+DROP2
+#0 0 <=
+DROP2
+{ } 0 <=
+DROP2
+<< >> 0 <=
+DROP2
+"--Mark102--"
+(0, 0) [0] <=
+DROP2
+(0, 0) [[0]] <=
+DROP2
+(0, 0) 'a' <=
+DROP2
+(0, 0) "a" <=
+DROP2
+(0, 0) #0 <=
+DROP2
+(0, 0) { } <=
+DROP2
+(0, 0) << >> <=
+DROP2
+[0] (0, 0) <=
+DROP2
+[[0]] (0, 0) <=
+DROP2
+'a' (0, 0) <=
+DROP2
+"a" (0, 0) <=
+DROP2
+#0 (0, 0) <=
+DROP2
+{ } (0, 0) <=
+DROP2
+<< >> (0, 0) <=
+DROP2
+"--Mark103--"
+[0] [[0]] <=
+DROP2
+[0] 'a' <=
+DROP2
+[0] "a" <=
+DROP2
+[0] #0 <=
+DROP2
+[0] { } <=
+DROP2
+[0] << >> <=
+DROP2
+[[0]] [0] <=
+DROP2
+'a' [0] <=
+DROP2
+"a" [0] <=
+DROP2
+#0 [0] <=
+DROP2
+{ } [0] <=
+DROP2
+<< >> [0] <=
+DROP2
+"--Mark104--"
+[[0]] 'a' <=
+DROP2
+[[0]] "a" <=
+DROP2
+[[0]] #0 <=
+DROP2
+[[0]] { } <=
+DROP2
+[[0]] << >> <=
+DROP2
+'a' [[0]] <=
+DROP2
+"a" [[0]] <=
+DROP2
+#0 [[0]] <=
+DROP2
+{ } [[0]] <=
+DROP2
+<< >> [[0]] <=
+DROP2
+"--Mark105--"
+'a' "a" <=
+DROP2
+'a' #0 <=
+DROP2
+'a' { } <=
+DROP2
+'a' << >> <=
+DROP2
+"a" 'a' <=
+DROP2
+#0 'a' <=
+DROP2
+{ } 'a' <=
+DROP2
+<< >> 'a' <=
+DROP2
+"--Mark106--"
+"a" #0 <=
+DROP2
+"a" { } <=
+DROP2
+"a" << >> <=
+DROP2
+#0 "a" <=
+DROP2
+{ } "a" <=
+DROP2
+<< >> "a" <=
+DROP2
+"--Mark106--"
+"a" #0 <=
+DROP2
+"a" { } <=
+DROP2
+"a" << >> <=
+DROP2
+#0 "a" <=
+DROP2
+{ } "a" <=
+DROP2
+<< >> "a" <=
+DROP2
+"--Mark107--"
+#0 { } <=
+DROP2
+#0 << >> <=
+DROP2
+{ } #0 <=
+DROP2
+<< >> #0 <=
+DROP2
+"--Mark108--"
+{ } << >> <=
+DROP2
+<< >> { } <=
+DROP2

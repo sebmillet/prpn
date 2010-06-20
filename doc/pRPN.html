@@ -1,0 +1,487 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of pRPN</TITLE>
+</HEAD><BODY>
+<H1>pRPN</H1>
+Section: User Commands  (1)<BR>Updated: version 0.5<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<P>
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+pRPN - a portable RPN calculator
+<P>
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>pRPN [options]</B>
+
+<BR>
+
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+The <B>pRPN</B> program is a RPN calculator inspired by HP calculators
+of late 80s.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<DL COMPACT>
+<DT><B>-h,&nbsp;--help</B>
+
+<DD>
+Display a quick help screen and exit
+<DT><B>-v&nbsp;--version</B>
+
+<DD>
+Display version information and exit
+<DT><B>-c,&nbsp;--console</B>
+
+<DD>
+Run in console mode.
+<DT><B>-w,&nbsp;--width&nbsp;</B><I>width</I>
+
+<DD>
+Set width to <I>width</I>, measured in number of characters. Defaults to 23.
+<DT><B>-h,&nbsp;--height&nbsp;</B><I>height</I>
+
+<DD>
+Set height to <I>height</I>, measured in number of lines. Defaults to 5.
+<DT><B>--min-stack-height&nbsp;</B><I>min-stack-height</I>
+
+<DD>
+Set minimum stack height to <I>height</I>, measured in number of lines. Defaults to <I>height</I>.
+Only in console mode.
+<DT><B>-b,&nbsp;--batch</B>
+
+<DD>
+Batch mode, implies console mode.
+<DT><B>-z,&nbsp;--dry-run</B>
+
+<DD>
+Ignore rc files
+<DT><B>-d,&nbsp;--debug&nbsp;</B><I>debug_option</I>
+
+<DD>
+Debug mode, need a parameter
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>COMMANDS</H2>
+
+Commands are followed by the number of arguments they take, in parenthesis. These arguments are taken from the stack.
+<DL COMPACT>
+<DT><B>_HELP&nbsp;(0)</B>
+
+<DD>
+Display a help screen
+<DT><B>_HELP_FLAGS&nbsp;(0)</B>
+
+<DD>
+Display a help screen about flags
+<DT><B>_EXIT&nbsp;(0)</B>
+
+<DD>
+Quit program
+<DT><B>+&nbsp;(2)</B>
+
+<DD>
+Addition
+<DT><B>-&nbsp;(2)</B>
+
+<DD>
+Subtraction
+<DT><B>*&nbsp;(2)</B>
+
+<DD>
+Multiplication
+<DT><B>/&nbsp;(2)</B>
+
+<DD>
+Division
+<DT><B>^&nbsp;(2)</B>
+
+<DD>
+Power
+<DT><B>COS&nbsp;(1)</B>
+
+<DD>
+Cosinus
+<DT><B>SIN&nbsp;(1)</B>
+
+<DD>
+Sin
+<DT><B>TAN&nbsp;(1)</B>
+
+<DD>
+Tan
+<DT><B>ACOS&nbsp;(1)</B>
+
+<DD>
+Arccosinus
+<DT><B>ASIN&nbsp;(1)</B>
+
+<DD>
+Arcsinus
+<DT><B>ATAN&nbsp;(1)</B>
+
+<DD>
+Arctan
+<DT><B>LN&nbsp;(1)</B>
+
+<DD>
+Logarihtm (e base)
+<DT><B>EXP&nbsp;(1)</B>
+
+<DD>
+Exponential
+<DT><B>NEG&nbsp;(1)</B>
+
+<DD>
+Opposite
+<DT><B>IP&nbsp;(1)</B>
+
+<DD>
+Integer part
+<DT><B>INV&nbsp;(1)</B>
+
+<DD>
+1/x
+<DT><B>SQ&nbsp;(1)</B>
+
+<DD>
+Square
+<DT><B>SQR&nbsp;(1)</B>
+
+<DD>
+Square root
+<DT><B>R-&gt;C&nbsp;(2)</B>
+
+<DD>
+Real to complex
+<DT><B>C-&gt;R&nbsp;(1)</B>
+
+<DD>
+Complex to real
+<DT><B>SAME&nbsp;(2)</B>
+
+<DD>
+Is identical
+<DT><B>==&nbsp;(2)</B>
+
+<DD>
+Equal to
+<DT><B>&lt;&gt;&nbsp;(2)</B>
+
+<DD>
+Different from
+<DT><B>&lt;&nbsp;(2)</B>
+
+<DD>
+Lower than
+<DT><B>&lt;=&nbsp;(2)</B>
+
+<DD>
+Lower than or equal to
+<DT><B>&gt;&nbsp;(2)</B>
+
+<DD>
+Greater than
+<DT><B>&gt;=&nbsp;(2)</B>
+
+<DD>
+Greater than or equal to
+<DT><B>DUP&nbsp;(1)</B>
+
+<DD>
+Copy the first item
+<DT><B>SWAP&nbsp;(2)</B>
+
+<DD>
+Exchange the first two items
+<DT><B>DROP&nbsp;(1)</B>
+
+<DD>
+Delete the first item
+<DT><B>CLEAR&nbsp;(0)</B>
+
+<DD>
+Clear the stack
+<DT><B>OVER&nbsp;(2)</B>
+
+<DD>
+Copy the second item
+<DT><B>DUP2&nbsp;(2)</B>
+
+<DD>
+Copy the first two items
+<DT><B>DROP2&nbsp;(2)</B>
+
+<DD>
+Delete the first two items
+<DT><B>ROT&nbsp;(3)</B>
+
+<DD>
+Move the third item to the first position
+<DT><B>ROLLD&nbsp;(1)</B>
+
+<DD>
+Move the first item to the Nth position
+<DT><B>ROLL&nbsp;(1)</B>
+
+<DD>
+Move the Nth item to the first position
+<DT><B>PICK&nbsp;(1)</B>
+
+<DD>
+Copy the Nth item
+<DT><B>DUPN&nbsp;(1)</B>
+
+<DD>
+Copy the n first items
+<DT><B>DROPN&nbsp;(1)</B>
+
+<DD>
+Delete the n first items
+<DT><B>DEPTH&nbsp;(0)</B>
+
+<DD>
+Get the number of items
+<DT><B>SF&nbsp;(1)</B>
+
+<DD>
+Set flag
+<DT><B>CF&nbsp;(1)</B>
+
+<DD>
+Clear flag
+<DT><B>FS?&nbsp;(1)</B>
+
+<DD>
+Return 1 if flag is set, 0 otherwise
+<DT><B>FC?&nbsp;(1)</B>
+
+<DD>
+Return 0 if flag is set, 1 otherwise
+<DT><B>FS?C&nbsp;(1)</B>
+
+<DD>
+Do FS? then clear flag
+<DT><B>FC?C&nbsp;(1)</B>
+
+<DD>
+Do FC? then clear flag
+<DT><B>-&gt;STR&nbsp;(1)</B>
+
+<DD>
+Convert to string
+<DT><B>STR-&gt;&nbsp;(0)</B>
+
+<DD>
+Convert from string
+<DT><B>-&gt;LIST&nbsp;(1)</B>
+
+<DD>
+Items to list
+<DT><B>LIST-&gt;&nbsp;(1)</B>
+
+<DD>
+Extract items from list
+<DT><B>EVAL&nbsp;(0)</B>
+
+<DD>
+Evaluate item
+<DT><B>STO&nbsp;(2)</B>
+
+<DD>
+Store value in variable name
+<DT><B>RCL&nbsp;(1)</B>
+
+<DD>
+Recall value from variable name
+<DT><B>PURGE&nbsp;(1)</B>
+
+<DD>
+Remove a variable
+<DT><B>VARS&nbsp;(0)</B>
+
+<DD>
+Get the list of variables in current directory
+<DT><B>PATH&nbsp;(0)</B>
+
+<DD>
+Get the list from root to current directory
+<DT><B>CRDIR&nbsp;(1)</B>
+
+<DD>
+Create a directory
+<DT><B>HOME&nbsp;(0)</B>
+
+<DD>
+Set root directory as the current one
+<DT><B>UP&nbsp;(0)</B>
+
+<DD>
+Make the parent directory the current one
+<DT><B>BIN&nbsp;(0)</B>
+
+<DD>
+Use binary mode for binary integers
+<DT><B>OCT&nbsp;(0)</B>
+
+<DD>
+Use octal mode for binary integers
+<DT><B>DEC&nbsp;(0)</B>
+
+<DD>
+Use decimal mode for binary integers
+<DT><B>HEX&nbsp;(0)</B>
+
+<DD>
+Use hexadecimal mode for binary integers
+<DT><B>STWS&nbsp;(1)</B>
+
+<DD>
+Define the number of bits in binary integers (1 to 64)
+<DT><B>RCWS&nbsp;(0)</B>
+
+<DD>
+Get the number of bits in binary integers
+<DT><B>B-&gt;R&nbsp;(1)</B>
+
+<DD>
+Convert a binary integer into a real
+<DT><B>R-&gt;B&nbsp;(1)</B>
+
+<DD>
+Convert a real into a binary integer
+<DT><B>RCLF&nbsp;(0)</B>
+
+<DD>
+Save flag states in a binary integer
+<DT><B>STOF&nbsp;(1)</B>
+
+<DD>
+Read flag states from a binary integer
+<DT><B>WAIT&nbsp;(1)</B>
+
+<DD>
+Wait a number of seconds
+<DT><B>UNDO&nbsp;(0)</B>
+
+<DD>
+Undo last command, 50 levels by default
+<DT><B>_UNDO_LEVELS&nbsp;(1)</B>
+
+<DD>
+Define number of undo levels
+<DT><B>_UNDO_LEVELS?&nbsp;(0)</B>
+
+<DD>
+Get number of undo levels
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>OBJECT TYPES</H2>
+
+<DL COMPACT>
+<DT><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Object&nbsp;type&nbsp;&nbsp;&nbsp;&nbsp;Symbol&nbsp;Example<DD>
+<BR>
+
+-------------- ------ -------------------------
+<BR>
+
+<P>
+<BR>
+
+Data
+<BR>
+
+Real Number           1.23456e-25
+<BR>
+
+Complex Number ( )    (123.45, 678.90)
+<BR>
+
+Binary Integer #      # 123AB
+<BR>
+
+String         &quot; &quot;    &quot;RESULT&quot;
+<BR>
+
+Vector         [ ]    [1.23 4.56 7.89]
+<BR>
+
+Matrix         [[ ]]  [[1.23 4.56] [6.54 3.21]]
+<BR>
+
+List           { }    {1.23 &quot;ABC&quot; # 45d}
+<BR>
+
+<P>
+<BR>
+
+Names
+<BR>
+
+Name           ' '    'CALC'
+<BR>
+
+<P>
+<BR>
+
+Procedures
+<BR>
+
+Program        &lt;&lt; &gt;&gt;  &lt;&lt; DUP + SWAP &gt;&gt;
+<BR>
+
+</DL>
+<A NAME="lbAH">&nbsp;</A>
+<H2>INITIALIZATION FILES</H2>
+
+<DL COMPACT>
+<DT><B>~/.prpn/stackrc</B>
+
+<DD>
+Settings and stack content
+<DT><B>~/.prpn/varsrc</B>
+
+<DD>
+Variables structure, and actual working directory
+</DL>
+<A NAME="lbAI">&nbsp;</A>
+<H2>AUTHOR</H2>
+
+Written by Sébastien Millet &lt;<A HREF="mailto:sebastien.millet1@club-internet.fr">sebastien.millet1@club-internet.fr</A>&gt;. Permission is granted to copy, distribute and/or modify this document under the terms of the GNU General Public License, Version 3 published by the Free Software Foundation.
+<A NAME="lbAJ">&nbsp;</A>
+<H2>BUGS</H2>
+
+<DL COMPACT>
+<DT>- Program is in version 0.5.0...<DD>
+<DT>- Windows version: wx disconnects the program from the terminal it is sent from. Therefore Windows generation produces a GUI version, pRPN.exe, and a console version, pRPNc.exe.<DD>
+<P>
+<P>
+</DL>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">COMMANDS</A><DD>
+<DT><A HREF="#lbAG">OBJECT TYPES</A><DD>
+<DT><A HREF="#lbAH">INITIALIZATION FILES</A><DD>
+<DT><A HREF="#lbAI">AUTHOR</A><DD>
+<DT><A HREF="#lbAJ">BUGS</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 16:42:44 GMT, June 05, 2010
+</BODY>
+</HTML>

@@ -1,0 +1,28 @@
+LIST-> Error:
+Too Few Arguments
+LIST-> Error:
+Bad Argument Type
+LIST-> Error:
+Bad Argument Type
+LIST-> Error:
+Bad Argument Type
+LIST-> Error:
+Bad Argument Type
+LIST-> Error:
+Bad Argument Type
+LIST-> Error:
+Bad Argument Type
+LIST-> Error:
+Bad Argument Type
+LIST-> Error:
+Bad Argument Type
+LIST-> Error:
+Bad Argument Type
+LIST-> Error:
+Bad Argument Type
+LIST-> Error:
+Bad Argument Type
+LIST-> Error:
+Bad Argument Type
+1296
+get_class_count() = 0 for watched classes

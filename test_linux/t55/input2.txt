@@ -1,0 +1,99 @@
+1 1 FOR i NEXT
+1 1 FOR i "a" NEXT
+1 1 FOR i "b" 1 STEP
+<< 1 1 FOR i NEXT >> EVAL
+<< 1 1 FOR i "c" NEXT >> EVAL
+<< 1 1 FOR i "d" 1 STEP >> EVAL
+1 2 FOR i NEXT
+1 2 FOR i "e" NEXT
+1 2 FOR i "f" 1 STEP
+<< 1 2 FOR i NEXT >> EVAL
+<< 1 2 FOR i "g" NEXT >> EVAL
+<< 1 2 FOR i "h" 1 STEP >> EVAL
+2 1 FOR i NEXT
+2 1 FOR i "i" NEXT
+2 1 FOR i "j" -1 STEP
+<< 2 1 FOR i NEXT >> EVAL
+<< 2 1 FOR i "k" NEXT >> EVAL
+<< 2 1 FOR i "l" -1 STEP >> EVAL
+1 2 FOR i "m" -1 STEP
+<< 1 2 FOR i "n" -1 STEP >> EVAL
+2 1 FOR i "o" 1 STEP
+<< 2 1 FOR i "p" 1 STEP >> EVAL
+1 1 << FOR i NEXT >> EVAL
+1 1 << FOR i "q" NEXT >> EVAL
+1 1 << FOR i "r" 1 STEP >> EVAL
+1 2 << FOR i NEXT >> EVAL
+1 2 << FOR i "s" NEXT >> EVAL
+1 2 << FOR i "t" 1 STEP >> EVAL
+2 1 << FOR i NEXT >> EVAL
+2 1 << FOR i "u" NEXT >> EVAL
+2 1 << FOR i "v" -1 STEP >> EVAL
+1 2 << FOR i "w" -1 STEP >> EVAL
+2 1 << FOR i "x" 1 STEP >> EVAL
+1 1 FOR i NEXT
+1 1 FOR i << "a" >> NEXT
+1 1 FOR i << "b" >> 1 STEP
+<< 1 1 FOR i NEXT >> EVAL
+<< 1 1 FOR i << "c" >> NEXT >> EVAL
+<< 1 1 FOR i << "d" >> 1 STEP >> EVAL
+1 2 FOR i NEXT
+1 2 FOR i << "e" >> NEXT
+1 2 FOR i << "f" >> 1 STEP
+<< 1 2 FOR i NEXT >> EVAL
+<< 1 2 FOR i << "g" >> NEXT >> EVAL
+<< 1 2 FOR i << "h" >> 1 STEP >> EVAL
+2 1 FOR i NEXT
+2 1 FOR i << "i" >> NEXT
+2 1 FOR i << "j" >> -1 STEP
+<< 2 1 FOR i NEXT >> EVAL
+<< 2 1 FOR i << "k" >> NEXT >> EVAL
+<< 2 1 FOR i << "l" >> -1 STEP >> EVAL
+1 2 FOR i << "m" >> -1 STEP
+<< 1 2 FOR i << "n" >> -1 STEP >> EVAL
+2 1 FOR i << "o" >> 1 STEP
+<< 2 1 FOR i << "p" >> 1 STEP >> EVAL
+1 1 << FOR i NEXT >> EVAL
+1 1 << FOR i << "q" >> NEXT >> EVAL
+1 1 << FOR i << "r" >> 1 STEP >> EVAL
+1 2 << FOR i NEXT >> EVAL
+1 2 << FOR i << "s" >> NEXT >> EVAL
+1 2 << FOR i << "t" >> 1 STEP >> EVAL
+2 1 << FOR i NEXT >> EVAL
+2 1 << FOR i << "u" >> NEXT >> EVAL
+2 1 << FOR i << "v" >> -1 STEP >> EVAL
+1 2 << FOR i << "w" >> -1 STEP >> EVAL
+2 1 << FOR i << "x" >> 1 STEP >> EVAL
+1 1 FOR i NEXT
+1 1 FOR i { "a" } NEXT
+1 1 FOR i { "b" } 1 STEP
+<< 1 1 FOR i NEXT >> EVAL
+<< 1 1 FOR i { "c" } NEXT >> EVAL
+<< 1 1 FOR i { "d" } 1 STEP >> EVAL
+1 2 FOR i NEXT
+1 2 FOR i { "e" } NEXT
+1 2 FOR i { "f" } 1 STEP
+<< 1 2 FOR i NEXT >> EVAL
+<< 1 2 FOR i { "g" } NEXT >> EVAL
+<< 1 2 FOR i { "h" } 1 STEP >> EVAL
+2 1 FOR i NEXT
+2 1 FOR i { "i" } NEXT
+2 1 FOR i { "j" } -1 STEP
+<< 2 1 FOR i NEXT >> EVAL
+<< 2 1 FOR i { "k" } NEXT >> EVAL
+<< 2 1 FOR i { "l" } -1 STEP >> EVAL
+1 2 FOR i { "m" } -1 STEP
+<< 1 2 FOR i { "n" } -1 STEP >> EVAL
+2 1 FOR i { "o" } 1 STEP
+<< 2 1 FOR i { "p" } 1 STEP >> EVAL
+1 1 << FOR i NEXT >> EVAL
+1 1 << FOR i { "q" } NEXT >> EVAL
+1 1 << FOR i { "r" } 1 STEP >> EVAL
+1 2 << FOR i NEXT >> EVAL
+1 2 << FOR i { "s" } NEXT >> EVAL
+1 2 << FOR i { "t" } 1 STEP >> EVAL
+2 1 << FOR i NEXT >> EVAL
+2 1 << FOR i { "u" } NEXT >> EVAL
+2 1 << FOR i { "v" } -1 STEP >> EVAL
+1 2 << FOR i { "w" } -1 STEP >> EVAL
+2 1 << FOR i { "x" } 1 STEP >> EVAL

@@ -1,0 +1,33 @@
+# Makefile
+
+# Sébastien Millet, Août 2009
+
+CPP = g++
+CPPFLAGS = -Wall -Wextra -ansi -pedantic -O -Wuninitialized
+LINKERFLAGS = -Wall -Wextra -ansi -pedantic
+OFLAG = -o
+
+.SUFFIXES : .o .cpp .h
+.cpp.o :
+	$(CPP) $(CPPFLAGS) -c $<
+
+all : CPPFLAGS += -g
+all : pRPN
+
+release : CPPFLAGS += -O3
+release : pRPN
+
+pRPN : Main.o Stack.o Parser.o Scalar.o Variables.o
+	$(CPP) $(LINKERFLAGS) $(OFLAG)pRPN Main.o Stack.o Parser.o Scalar.o Variables.o
+
+# Common.h contains project-level definitions and macros, and any update to this file requires
+# complete re-compilation.
+Main.o : Main.cpp Common.h
+Stack.o : Stack.cpp Common.h
+Parser.o : Parser.cpp Common.h
+Scalar.o : Scalar.cpp Common.h
+Variables.o : Variables.cpp Common.h
+
+clean :
+	rm *.o pRPN 2> /dev/null
+

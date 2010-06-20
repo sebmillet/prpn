@@ -1,0 +1,11 @@
+Syntax error: 1-5,1
+Syntax error: 1-5,1
+Syntax error: 4-8,1
+Syntax error: 4-8,1
+Syntax error: 1-5,1
+Syntax error: 4-8,1
+Syntax error: 1-2,1
+Syntax error: 4-4,1
+Syntax error: 17-19,1
+Syntax error: 4-6,1
+get_class_count() = 0 for watched classes

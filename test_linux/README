@@ -1,0 +1,12 @@
+Test done with Linux scripts
+
+- Run ./tt.sh to have all tests run and results displayed. It requires
+the binary executable to be available in ../src, as per default build.
+Only tests in sub-directories starting with a 't' are processed. Therefore
+u22 is not by default. This one takes time by definition -> it tests
+the behavior of the program with huge stack sizes.
+
+This test suite is not intended to be clean, portable, etc., so it's easily
+confused if you start to tune ./configure parameters.
+
+Next step: convert it to DejaGNU...
