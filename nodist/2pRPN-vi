@@ -20,8 +20,8 @@ noremap [ ,
 noremap ] ;
 nmap gx <Plug>NetrwBrowseX
 noremap gQ Q
-map <M-Up> zk
 map <M-Down> zj
+map <M-Up> zk
 nnoremap <silent> <Plug>NetrwBrowseX :call netrw#NetrwBrowseX(expand("<cWORD>"),0)
 map <End> g$
 map <Home> g^
@@ -105,7 +105,7 @@ set winaltkeys=no
 let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
 let v:this_session=expand("<sfile>:p")
 silent only
-cd ~/travail/cpp/seb/pRPN/src
+cd ~/travail/cpp/seb/prpn/src
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
@@ -118,7 +118,7 @@ badd +1 platform/os_generic.h
 badd +1 platform/os_generic.cpp
 badd +21 platform/os_unix.h
 badd +1 platform/os_unknown.h
-badd +11 platform/os_win.h
+badd +1 platform/os_win.h
 args UiImplWx.cpp UiImplConsole.cpp Ui.h Ui.cpp platform/os_generic.h platform/os_generic.cpp platform/os_unix.h platform/os_unknown.h
 edit UiImplWx.cpp
 set splitbelow splitright
@@ -129,17 +129,17 @@ set winheight=1 winwidth=1
 argglobal
 let s:cpo_save=&cpo
 set cpo&vim
+nnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
+nnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
+nnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
+nnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
 vnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'v')m'gv``
 vnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'v')m'gv``
 vnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'v')m'gv``
 vnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'v')m'gv``
-nnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
 onoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
-nnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
 onoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
-nnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
 onoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
-nnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
 onoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
 vnoremap <buffer> <silent> ùC :s/^\/\///
 vnoremap <buffer> <silent> ùc :s/^/\/\//
@@ -239,11 +239,9 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-558
+556
 normal zo
-743
-normal zo
-757
+721
 normal zo
 let s:l = 1 - ((0 * winheight(0) + 15) / 31)
 if s:l < 1 | let s:l = 1 | endif
@@ -261,17 +259,17 @@ argglobal
 2argu
 let s:cpo_save=&cpo
 set cpo&vim
+nnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
+nnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
+nnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
+nnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
 vnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'v')m'gv``
 vnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'v')m'gv``
 vnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'v')m'gv``
 vnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'v')m'gv``
-nnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
 onoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
-nnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
 onoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
-nnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
 onoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
-nnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
 onoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
 vnoremap <buffer> <silent> ùC :s/^\/\///
 vnoremap <buffer> <silent> ùc :s/^/\/\//
@@ -373,8 +371,6 @@ setlocal wrap
 setlocal wrapmargin=0
 32
 normal zo
-116
-normal zo
 let s:l = 1 - ((0 * winheight(0) + 15) / 31)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
@@ -391,17 +387,17 @@ argglobal
 3argu
 let s:cpo_save=&cpo
 set cpo&vim
+nnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
+nnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
+nnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
+nnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
 vnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'v')m'gv``
 vnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'v')m'gv``
 vnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'v')m'gv``
 vnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'v')m'gv``
-nnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
 onoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
-nnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
 onoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
-nnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
 onoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
-nnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
 onoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
 vnoremap <buffer> <silent> ùC :s/^\/\///
 vnoremap <buffer> <silent> ùc :s/^/\/\//
@@ -501,8 +497,6 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-130
-normal zo
 let s:l = 1 - ((0 * winheight(0) + 15) / 31)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
@@ -519,17 +513,17 @@ argglobal
 4argu
 let s:cpo_save=&cpo
 set cpo&vim
+nnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
+nnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
+nnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
+nnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
 vnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'v')m'gv``
 vnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'v')m'gv``
 vnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'v')m'gv``
 vnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'v')m'gv``
-nnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
 onoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
-nnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
 onoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
-nnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
 onoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
-nnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
 onoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
 vnoremap <buffer> <silent> ùC :s/^\/\///
 vnoremap <buffer> <silent> ùc :s/^/\/\//
@@ -629,41 +623,27 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-91
-normal zo
 149
 normal zo
-190
+156
 normal zo
-195
+204
 normal zo
-212
+251
 normal zo
-257
+357
 normal zo
-358
+377
 normal zo
-367
+431
 normal zo
-391
+535
 normal zo
-469
+592
 normal zo
-488
+608
 normal zo
-495
-normal zo
-499
-normal zo
-543
-normal zo
-549
-normal zo
-594
-normal zo
-623
-normal zo
-679
+659
 normal zo
 let s:l = 1 - ((0 * winheight(0) + 15) / 31)
 if s:l < 1 | let s:l = 1 | endif
@@ -681,17 +661,17 @@ argglobal
 5argu
 let s:cpo_save=&cpo
 set cpo&vim
+nnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
+nnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
+nnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
+nnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
 vnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'v')m'gv``
 vnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'v')m'gv``
 vnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'v')m'gv``
 vnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'v')m'gv``
-nnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
 onoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
-nnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
 onoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
-nnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
 onoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
-nnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
 onoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
 vnoremap <buffer> <silent> ùC :s/^\/\///
 vnoremap <buffer> <silent> ùc :s/^/\/\//
@@ -809,17 +789,17 @@ argglobal
 6argu
 let s:cpo_save=&cpo
 set cpo&vim
+nnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
+nnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
+nnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
+nnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
 vnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'v')m'gv``
 vnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'v')m'gv``
 vnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'v')m'gv``
 vnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'v')m'gv``
-nnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
 onoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
-nnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
 onoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
-nnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
 onoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
-nnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
 onoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
 vnoremap <buffer> <silent> ùC :s/^\/\///
 vnoremap <buffer> <silent> ùc :s/^/\/\//
@@ -935,17 +915,17 @@ argglobal
 8argu
 let s:cpo_save=&cpo
 set cpo&vim
+nnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
+nnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
+nnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
+nnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
 vnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'v')m'gv``
 vnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'v')m'gv``
 vnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'v')m'gv``
 vnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'v')m'gv``
-nnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
 onoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
-nnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
 onoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
-nnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
 onoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
-nnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
 onoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
 vnoremap <buffer> <silent> ùC :s/^\/\///
 vnoremap <buffer> <silent> ùc :s/^/\/\//
@@ -1061,17 +1041,17 @@ argglobal
 7argu
 let s:cpo_save=&cpo
 set cpo&vim
+nnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
+nnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
+nnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
+nnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
 vnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'v')m'gv``
 vnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'v')m'gv``
 vnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'v')m'gv``
 vnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'v')m'gv``
-nnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
 onoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
-nnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
 onoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
-nnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
 onoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
-nnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
 onoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
 vnoremap <buffer> <silent> ùC :s/^\/\///
 vnoremap <buffer> <silent> ùc :s/^/\/\//
@@ -1190,17 +1170,17 @@ argglobal
 edit platform/os_win.h
 let s:cpo_save=&cpo
 set cpo&vim
+nnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
+nnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
+nnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
+nnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
 vnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'v')m'gv``
 vnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'v')m'gv``
 vnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'v')m'gv``
 vnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'v')m'gv``
-nnoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
 onoremap <buffer> <silent> <M-Down> :call b:NextStop(b:nextstop_updown, 'W', 'n')
-nnoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
 onoremap <buffer> <silent> <M-Up> :call b:NextStop(b:nextstop_updown, 'Wb', 'n')
-nnoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
 onoremap <buffer> <silent> <M-Right> :call b:NextStop(b:nextstop_leftright, 'W', 'n')
-nnoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
 onoremap <buffer> <silent> <M-Left> :call b:NextStop(b:nextstop_leftright, 'Wb', 'n')
 vnoremap <buffer> <silent> ùC :s/^\/\///
 vnoremap <buffer> <silent> ùc :s/^/\/\//
@@ -1307,7 +1287,6 @@ exe s:l
 normal! zt
 1
 normal! 0
-lcd ~/travail/cpp/seb/pRPN/src
 tabnew
 set splitbelow splitright
 wincmd _ | wincmd |
@@ -1416,7 +1395,6 @@ setlocal nowinfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-lcd ~/travail/cpp/seb/pRPN/src
 wincmd w
 argglobal
 enew
@@ -1514,7 +1492,6 @@ setlocal winfixheight
 setlocal nowinfixwidth
 setlocal wrap
 setlocal wrapmargin=0
-lcd ~/travail/cpp/seb/pRPN/src
 wincmd w
 exe '1resize ' . ((&lines * 20 + 17) / 34)
 exe '2resize ' . ((&lines * 10 + 17) / 34)

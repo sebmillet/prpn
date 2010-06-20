@@ -26,6 +26,7 @@
 		</if>
 		<headers>Common.h Scalar.h Stack.h Commands.h Variable.h Parser.h PGetOpt.h Ui.h
 			platform/os_generic.h platform/os_win.h platform/os_unix.h
+			gettext.h MyIntl.h
 		</headers>
 		<sources>Main.cpp Compat.cpp PGetOpt.cpp Scalar.cpp Stack.cpp Variable.cpp Parser.cpp Ui.cpp
 			platform/os_generic.cpp
@@ -50,6 +51,7 @@
 			</if>
 			<headers>Common.h Scalar.h Stack.h Commands.h Variable.h Parser.h PGetOpt.h Ui.h
 				platform/os_generic.h platform/os_win.h platform/os_unix.h
+				gettext.h MyIntl.h
 			</headers>
 			<sources>Main.cpp Compat.cpp PGetOpt.cpp Scalar.cpp Stack.cpp Variable.cpp Parser.cpp Ui.cpp
 				platform/os_generic.cpp

@@ -10,11 +10,12 @@ prpn_SOURCES=Main.cpp Compat.cpp Common.h \
 	Ui.cpp  Ui.h \
 	UiImplConsole.cpp \
 	platform/os_generic.cpp platform/os_generic.h \
-	platform/os_unknown.h platform/os_unix.h platform/os_win.h
+	platform/os_unknown.h platform/os_unix.h platform/os_win.h \
+	gettext.h MyIntl.h
 
 AM_CPPFLAGS=-DPKG_DOCDIR="\"${docdir}\"" -DPKG_HTMLDIR="\"${htmldir}\""
 AM_CPPFLAGS+= -DPKG_PREFIX="\"${prefix}\"" -DPKG_DATADIR="\"${datadir}\""
-AM_CPPFLAGS+= -DPKG_BINDIR="\"${bindir}\""
+AM_CPPFLAGS+= -DPKG_BINDIR="\"${bindir}\"" -DPKG_LOCALEDIR=\"$(localedir)\"
 
 CMDS=${top_srcdir}/doc/cmds.txt
 noinst_DATA=${CMDS}

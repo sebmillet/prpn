@@ -1,9 +1,11 @@
-SUBDIRS = src doc
+SUBDIRS = intl po src doc
 ACLOCAL_AMFLAGS = -I admin
 
 dist_doc_DATA=README
 
-EXTRA_DIST=test_linux extracfg.h wininst images
+EXTRA_DIST= admin/config.rpath test_linux extracfg.h wininst images \
+	pRPN.bkl makefile.bcc makefile.gcc \
+	src/makefile.bcc src/makefile.gcc
 
 dist-hook:
 	rm -rf `find $(distdir) -name .svn`

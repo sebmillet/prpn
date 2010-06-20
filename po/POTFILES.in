@@ -1,0 +1,26 @@
+# List of source files which contain translatable strings.
+
+src/Compat.cpp
+src/Main.cpp
+src/Parser.cpp
+src/PGetOpt.cpp
+src/Scalar.cpp
+src/Stack.cpp
+src/Ui.cpp
+src/UiImplConsole.cpp
+src/UiImplWx.cpp
+src/Variable.cpp
+src/Commands.h
+src/Common.h
+src/Parser.h
+src/PGetOpt.h
+src/Scalar.h
+src/Stack.h
+src/Ui.h
+src/Variable.h
+src/MyIntl.h
+src/platform/os_generic.cpp
+src/platform/os_generic.h
+src/platform/os_unix.h
+src/platform/os_unknown.h
+src/platform/os_win.h

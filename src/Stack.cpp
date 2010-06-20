@@ -16,6 +16,8 @@
 #include <iostream>
 #endif
 
+#include "MyIntl.h"
+
 using namespace std;
 
 Flag flags[] = {
@@ -26,31 +28,31 @@ Flag flags[] = {
 	{false, "", false}, {false, "", false}, {false, "", false}, {false, "", false}, {false, "", false},
 	{false, "", false}, {false, "", false}, {false, "", false}, {false, "", false}, {false, "", false},
 	{false, "", false},
-	{true, "Allow LAST function", true},	// FL_LAST			31
-	{false, "Automatic print mode", false},	// FL_AUTO_PRINT	32
-	{false, "Automatic CR", false},	// FL_CR_AUTOMATIC	33
-	{false, "Principal value (definition range)", false},	// FL_MAIN_VALUE	34
-	{true, "Symbolic constants evaluation", true},	// FL_CONST_EVAL	35
-	{true, "Symbolic functions evaluation", true},	// FL_FUNC_EVAL		36
+	{true, _N("Allow LAST function"), true},	// FL_LAST			31
+	{false, _N("Automatic print mode"), false},	// FL_AUTO_PRINT	32
+	{false, _N("Automatic CR"), false},	// FL_CR_AUTOMATIC	33
+	{false, _N("Principal value (definition range)"), false},	// FL_MAIN_VALUE	34
+	{true, _N("Symbolic constants evaluation"), true},	// FL_CONST_EVAL	35
+	{true, _N("Symbolic functions evaluation"), true},	// FL_FUNC_EVAL		36
 	{true, "", true}, {true, "", true}, {true, "", true}, {true, "", true}, {true, "", true},
-		{true, "Binary integers word size", true},	// FL_BIN_SIZE		37-42
-	{false, "", false}, {false, "Numeric base for binary integers", false},		// FL_BIN_BASE		43-44
-	{true, "Level 1 display", true},	// FL_DISPLAY_L1	45
-	{false, "Reserved", false},	// FL_RESERVED1		46
-	{false, "Reserved", false},	// FL_RESERVED2		47
-	{false, "Decimal separator", false},	// FL_DECIMAL_SEP	48
-	{false, "", false}, {false, "Real numbers format", false},						// FL_REAL_FORMAT	49-50
-	{false, "Tone", false},	// FL_TONE			51
-	{false, "Fast printing", false},	// FL_FAST_PRINT	52
-	{false, "", false}, {false, "", false}, {false, "", false}, {false, "Number of decimals", false},			// FL_REAL_NB_DECS	53-56
-	{false, "Underflow processed normally", false},	// FL_UNDERFLOW_OK	57
-	{false, "Overflow processed normally", false},					// FL_OVERFLOW_OK	58
-	{true, "Infinite result processed normally", true},			// FL_INFINITE		59
-	{false, "Angle", false},										// FL_ANGLE			60
-	{false, "Underflow- processed as an exception", false},			// FL_UNDERFLOW_NEG_EXCEPT	61
-	{false, "Underdlow+ processed as an exception", false},			// FL_UNDERFLOW_POS_EXCEPT	62
-	{false, "Overflow processed as an exception", false},			// FL_OVERFLOW_EXCEPT		63
-	{false, "Infinite Result processed as an exception", false}	// FL_INFINITE_EXCEPT		64
+		{true, _N("Binary integers word size"), true},	// FL_BIN_SIZE		37-42
+	{false, "", false}, {false, _N("Numeric base for binary integers"), false},		// FL_BIN_BASE		43-44
+	{true, _N("Level 1 display"), true},	// FL_DISPLAY_L1	45
+	{false, _N("Reserved"), false},	// FL_RESERVED1		46
+	{false, _N("Reserved"), false},	// FL_RESERVED2		47
+	{false, _N("Decimal separator"), false},	// FL_DECIMAL_SEP	48
+	{false, "", false}, {false, _N("Real numbers format"), false},						// FL_REAL_FORMAT	49-50
+	{false, _N("Tone"), false},	// FL_TONE			51
+	{false, _N("Fast printing"), false},	// FL_FAST_PRINT	52
+	{false, "", false}, {false, "", false}, {false, "", false}, {false, _N("Number of decimals"), false},			// FL_REAL_NB_DECS	53-56
+	{false, _N("Underflow processed normally"), false},	// FL_UNDERFLOW_OK	57
+	{false, _N("Overflow processed normally"), false},					// FL_OVERFLOW_OK	58
+	{true, _N("Infinite Result processed normally"), true},			// FL_INFINITE		59
+	{false, _N("Angle"), false},										// FL_ANGLE			60
+	{false, _N("Underflow- processed as an exception"), false},			// FL_UNDERFLOW_NEG_EXCEPT	61
+	{false, _N("Underdlow+ processed as an exception"), false},			// FL_UNDERFLOW_POS_EXCEPT	62
+	{false, _N("Overflow processed as an exception"), false},			// FL_OVERFLOW_EXCEPT		63
+	{false, _N("Infinite Result processed as an exception"), false}	// FL_INFINITE_EXCEPT		64
 };
 
 const int DEFAULT_PORTABLE_BIN_BASE = 16;

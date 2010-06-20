@@ -24,4 +24,6 @@
 #ifndef PACKAGE_BUGREPORT
 #define PACKAGE_BUGREPORT	 "sebastien.millet1@club-internet.fr"
 #endif
-
+#ifndef PKG_LOCALEDIR
+#define PKG_LOCALEDIR	"."
+#endif

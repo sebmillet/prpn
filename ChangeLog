@@ -1,3 +1,38 @@
+2010-06-20  gettextize  <bug-gnu-gettext@gnu.org>
+
+	* admin/gettext.m4: New file, from gettext-0.17.
+	* admin/iconv.m4: New file, from gettext-0.17.
+	* admin/lib-ld.m4: New file, from gettext-0.17.
+	* admin/lib-link.m4: New file, from gettext-0.17.
+	* admin/lib-prefix.m4: New file, from gettext-0.17.
+	* admin/nls.m4: New file, from gettext-0.17.
+	* admin/po.m4: New file, from gettext-0.17.
+	* admin/progtest.m4: New file, from gettext-0.17.
+	* admin/codeset.m4: New file, from gettext-0.17.
+	* admin/glibc2.m4: New file, from gettext-0.17.
+	* admin/glibc21.m4: New file, from gettext-0.17.
+	* admin/intdiv0.m4: New file, from gettext-0.17.
+	* admin/intl.m4: New file, from gettext-0.17.
+	* admin/intldir.m4: New file, from gettext-0.17.
+	* admin/intlmacosx.m4: New file, from gettext-0.17.
+	* admin/intmax.m4: New file, from gettext-0.17.
+	* admin/inttypes_h.m4: New file, from gettext-0.17.
+	* admin/inttypes-pri.m4: New file, from gettext-0.17.
+	* admin/lcmessage.m4: New file, from gettext-0.17.
+	* admin/lock.m4: New file, from gettext-0.17.
+	* admin/longlong.m4: New file, from gettext-0.17.
+	* admin/printf-posix.m4: New file, from gettext-0.17.
+	* admin/size_max.m4: New file, from gettext-0.17.
+	* admin/stdint_h.m4: New file, from gettext-0.17.
+	* admin/uintmax_t.m4: New file, from gettext-0.17.
+	* admin/visibility.m4: New file, from gettext-0.17.
+	* admin/wchar_t.m4: New file, from gettext-0.17.
+	* admin/wint_t.m4: New file, from gettext-0.17.
+	* admin/xsize.m4: New file, from gettext-0.17.
+	* Makefile.am (SUBDIRS): Add intl, po.
+	(EXTRA_DIST): Add admin/config.rpath.
+	* configure.ac (AC_OUTPUT): Add intl/Makefile, po/Makefile.in.
+
 2010-05-14 Sébastien Millet <sebastien.millet1@club-internet.fr>
 
 	* Release 0.5 built and autoconfiscated

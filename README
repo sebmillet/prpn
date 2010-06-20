@@ -69,6 +69,7 @@ Below is found information specific to this package.
         fine but has not been tested for a while.
 
 - Windows compilation
+
     1) Borland C++
         The program was compiled primarily using Borland C++ 5.5. It worked
         well until the program becomes bigger and caused a known bug in
@@ -84,6 +85,7 @@ Below is found information specific to this package.
                 %BORLAND_BIN%\make -f makefile.bcc WX_DEBUG=0
         Borland C++ can be downloaded for free, from
             http://edn.embarcadero.com/article/20633
+
     2) Mingw
         Mingw32 has also been used successfully, however, the resulting
         executable size is very big. Compilation of pRPN 0.5.0 (released early
@@ -95,11 +97,13 @@ Below is found information specific to this package.
             %MINGW32_BIN%\mingw32-make -f makefile.gcc
         Mingw32 is licensed under GPL mostly, its homepage is found here
             http://www.mingw.org
+
     3) Makefiles generation
         As Windows doesn't provide the usual configure/make/make install
         mechanism (provided you are not using an environment like cygwin), the
         solution used is WxWidgets default, bakefile. You can find it from
             http://www.bakefile.org
+
     4) Note about the console version
         Under Linux, a single executable is produced, that enables both GUI
         version (default) and the console version when launched with the -c

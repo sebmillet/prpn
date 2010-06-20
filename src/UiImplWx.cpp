@@ -15,6 +15,8 @@
 #include "wx/wxhtml.h"
 #include "wx/statline.h"
 
+#include "MyIntl.h"
+
 #include <vector>
 
 #ifdef DEBUG
@@ -484,10 +486,11 @@ void MyFrame::build_dispStack() {
 }
 
 void MyFrame::display_help(const int& dh) {
-	wxSize mysize = wxSize(65 * MY_HELP_FONTSIZE, 45 * MY_HELP_FONTSIZE);
+	wxSize mysize = wxSize(85 * MY_HELP_FONTSIZE, 46 * MY_HELP_FONTSIZE);
 	if (dlg != NULL)
 		dlg->Destroy();
-	dlg = new wxDialog(this, wxID_ANY, wxString(_("Help")), wxPoint(wxDefaultPosition), wxSize(wxDefaultSize),
+	string h = _("Help");
+	dlg = new wxDialog(this, wxID_ANY, string_to_wxString(h), wxPoint(wxDefaultPosition), wxSize(wxDefaultSize),
 		wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 	wxHtmlWindow *html = NULL;
 	bool display_html = html_help_found;
@@ -508,7 +511,8 @@ void MyFrame::display_help(const int& dh) {
 		topsizer -> Add(new wxStaticLine(dlg, wxID_ANY), 0, wxEXPAND | wxLEFT | wxRIGHT, 10);
 #endif // wxUSE_STATLINE
 
-		wxButton *btn = new wxButton(dlg, wxID_OK, _("OK"));
+		string ok = _("OK");
+		wxButton *btn = new wxButton(dlg, wxID_OK, string_to_wxString(ok));
 		btn->SetDefault();
 		topsizer->Add(btn, 0, wxALL | MY_HELP_OKBUTTON_ALIGN, MY_HELP_OKBUTTON_MARGIN);
 		dlg->SetSizer(topsizer);
@@ -520,7 +524,8 @@ void MyFrame::display_help(const int& dh) {
 			wxPoint(wxDefaultPosition), mysize, wxTE_READONLY | wxTE_MULTILINE);
 		t->SetFont(wxFont(MY_HELP_FONTSIZE, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, MY_HELP_FONTWEIGHT, 0));
 		topsizer->Add(t, 1, wxALL, 10);
-		wxButton *btn = new wxButton(dlg, wxID_OK, _("OK"));
+		string ok = _("OK");
+		wxButton *btn = new wxButton(dlg, wxID_OK, string_to_wxString(ok));
 		btn->SetDefault();
 		topsizer->Add(btn, 0, wxALL | MY_HELP_OKBUTTON_ALIGN, MY_HELP_OKBUTTON_MARGIN);
 		dlg->SetSizer(topsizer);

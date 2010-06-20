@@ -1,0 +1,591 @@
+# French translations for pRPN package
+# Traductions françaises du paquet pRPN.
+# Copyright (C) 2010 Sébastien Millet
+# This file is distributed under the same license as the pRPN package.
+# Sébastien Millet <sebastien.millet1@club-internet.fr>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: prpn 0.5.0\n"
+"Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
+"POT-Creation-Date: 2010-06-20 16:47+0200\n"
+"PO-Revision-Date: 2010-06-20 16:47+0100\n"
+"Last-Translator: Sébastien Millet <sebastien.millet1@club-internet.fr>\n"
+"Language-Team: French\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: src/Main.cpp:93
+msgid "Try `"
+msgstr "Essayez `"
+
+#: src/Main.cpp:93
+msgid " --help' for more information."
+msgstr " --help' pour plus d'information."
+
+#: src/Main.cpp:97
+msgid "Usage: "
+msgstr "Utilisation : "
+
+#: src/Main.cpp:97
+msgid " [options]..."
+msgstr " [options]..."
+
+#: src/PGetOpt.cpp:27
+#, c-format
+msgid "invalid option -- %s"
+msgstr "option incorrecte -- %s"
+
+#: src/PGetOpt.cpp:28
+#, c-format
+msgid "unrecognized option `%s'"
+msgstr "option non reconnue `%s'"
+
+#: src/PGetOpt.cpp:29
+#, c-format
+msgid "option requires an argument -- %s"
+msgstr "l'option nécessite un argument -- %s"
+
+#: src/PGetOpt.cpp:30
+#, c-format
+msgid "option `%s' is ambiguous"
+msgstr "l'option `%s' est ambiguë"
+
+#: src/PGetOpt.cpp:31
+#, c-format
+msgid "trailing arguments%s"
+msgstr "arguments excédentaires%s"
+
+#: src/Stack.cpp:31
+msgid "Allow LAST function"
+msgstr "Autorise la fonction LAST"
+
+#: src/Stack.cpp:32
+msgid "Automatic print mode"
+msgstr "Mode impression automatique"
+
+#: src/Stack.cpp:33
+msgid "Automatic CR"
+msgstr "Retour chariot automatique"
+
+#: src/Stack.cpp:34
+msgid "Principal value (definition range)"
+msgstr "Valeur principale (intervalle de définition)"
+
+#: src/Stack.cpp:35
+msgid "Symbolic constants evaluation"
+msgstr "Évaluation des constantes symboliques"
+
+#: src/Stack.cpp:36
+msgid "Symbolic functions evaluation"
+msgstr "Évaluation des fonctions symboliques"
+
+#: src/Stack.cpp:38
+msgid "Binary integers word size"
+msgstr "Taille d'entier binaire"
+
+#: src/Stack.cpp:39
+msgid "Numeric base for binary integers"
+msgstr "Base numérique pour les entiers binaires"
+
+#: src/Stack.cpp:40
+msgid "Level 1 display"
+msgstr "Affichage du niveau 1"
+
+#: src/Stack.cpp:41 src/Stack.cpp:42
+msgid "Reserved"
+msgstr "Réservé"
+
+#: src/Stack.cpp:43
+msgid "Decimal separator"
+msgstr "Séparateur décimal"
+
+#: src/Stack.cpp:44
+msgid "Real numbers format"
+msgstr "Format des nombres réels"
+
+#: src/Stack.cpp:45
+msgid "Tone"
+msgstr "Tonalité"
+
+#: src/Stack.cpp:46
+msgid "Fast printing"
+msgstr "Impression rapide"
+
+#: src/Stack.cpp:47
+msgid "Number of decimals"
+msgstr "Nombre de décimales"
+
+#: src/Stack.cpp:48
+msgid "Underflow processed normally"
+msgstr "Underflow (dépassement vers zéro) traité normalement"
+
+#: src/Stack.cpp:49
+msgid "Overflow processed normally"
+msgstr "Overflow (dépassement à l'infini) traité normalement"
+
+#: src/Stack.cpp:50
+msgid "Infinite Result processed normally"
+msgstr "Infinite Result (Résultat Infini) traité normalement"
+
+#: src/Stack.cpp:51
+msgid "Angle"
+msgstr "Angle"
+
+#: src/Stack.cpp:52
+msgid "Underflow- processed as an exception"
+msgstr "Underflow- (dépassement négatif vers zéro) traité en exception"
+
+#: src/Stack.cpp:53
+msgid "Underdlow+ processed as an exception"
+msgstr "Underflow+ (dépassement positif vers zéro) traité en exception"
+
+#: src/Stack.cpp:54
+msgid "Overflow processed as an exception"
+msgstr "Overflow (dépassement à l'infini) traité en exception"
+
+#: src/Stack.cpp:55
+msgid "Infinite Result processed as an exception"
+msgstr "Infinite Result (résultat infini) traité en exception"
+
+#: src/UiImplWx.cpp:492
+msgid "Help"
+msgstr "Aide"
+
+#: src/UiImplWx.cpp:514 src/UiImplWx.cpp:527
+msgid "OK"
+msgstr "OK"
+
+#: src/Commands.h:23
+msgid "Display a help screen"
+msgstr "Affiche un écran d'aide"
+
+#: src/Commands.h:24
+msgid "Display a help screen about flags"
+msgstr "Affiche un écran d'aide sur les options"
+
+#: src/Commands.h:25
+msgid "Quit program"
+msgstr "Quitte le programme"
+
+#: src/Commands.h:27
+msgid "Addition"
+msgstr "Addition"
+
+#: src/Commands.h:28
+msgid "Subtraction"
+msgstr "Soustraction"
+
+#: src/Commands.h:29
+msgid "Multiplication"
+msgstr "Multiplication"
+
+#: src/Commands.h:30
+msgid "Division"
+msgstr "Division"
+
+#: src/Commands.h:31
+msgid "Power"
+msgstr "Puissance"
+
+#: src/Commands.h:33
+msgid "Cosine"
+msgstr "Cosinus"
+
+#: src/Commands.h:34
+msgid "Sine"
+msgstr "Sinus"
+
+#: src/Commands.h:35
+msgid "Tangent"
+msgstr "Tangente"
+
+#: src/Commands.h:36
+msgid "Arccos"
+msgstr "Arc-cosinus"
+
+#: src/Commands.h:37
+msgid "Arcsin"
+msgstr "Arc-sinus"
+
+#: src/Commands.h:38
+msgid "Arctan"
+msgstr "Arc-tangente"
+
+#: src/Commands.h:39
+msgid "Logarihtm (e base)"
+msgstr "Logarithme (base e)"
+
+#: src/Commands.h:40
+msgid "Exponential"
+msgstr "Exponentiel"
+
+#: src/Commands.h:41
+msgid "Opposite"
+msgstr "Opposé"
+
+#: src/Commands.h:42
+msgid "Integer part"
+msgstr "Partie entière"
+
+#: src/Commands.h:43
+msgid "1/x"
+msgstr "1/x"
+
+#: src/Commands.h:44
+msgid "Square"
+msgstr "Carré"
+
+#: src/Commands.h:45
+msgid "Square root"
+msgstr "Racine carrée"
+
+#: src/Commands.h:46
+msgid "Real to complex"
+msgstr "Réel à complexe"
+
+#: src/Commands.h:47
+msgid "Complex to real"
+msgstr "Complexe à réel"
+
+#: src/Commands.h:49
+msgid "Is identical"
+msgstr "Est identique"
+
+#: src/Commands.h:50
+msgid "Equal to"
+msgstr "Est égal à"
+
+#: src/Commands.h:51
+msgid "Different from"
+msgstr "Est différent de"
+
+#: src/Commands.h:52
+msgid "Lower than"
+msgstr "Est plus petit que"
+
+#: src/Commands.h:53
+msgid "Lower than or equal to"
+msgstr "Est plus petit que, ou égal à"
+
+#: src/Commands.h:54
+msgid "Greater than"
+msgstr "Est plus grand que"
+
+#: src/Commands.h:55
+msgid "Greater than or equal to"
+msgstr "Est plus grand que, ou égal à"
+
+#: src/Commands.h:57
+msgid "Copy the first item"
+msgstr "Copie le premier élément"
+
+#: src/Commands.h:58
+msgid "Exchange the first two items"
+msgstr "Échange les deux premiers éléments"
+
+#: src/Commands.h:59
+msgid "Delete the first item"
+msgstr "Supprime le premier élément"
+
+#: src/Commands.h:60
+msgid "Clear the stack"
+msgstr "Efface la pile"
+
+#: src/Commands.h:61
+msgid "Copy the second item"
+msgstr "Copie le second élément"
+
+#: src/Commands.h:62
+msgid "Copy the first two items"
+msgstr "Copie les deux premiers éléments"
+
+#: src/Commands.h:63
+msgid "Delete the first two items"
+msgstr "Supprime les deux premiers éléments"
+
+#: src/Commands.h:64
+msgid "Move the third item to the first position"
+msgstr "Déplace le troisième élément en première position"
+
+#: src/Commands.h:65
+msgid "Move the first item to the Nth position"
+msgstr "Déplace le premier élément en Nième position"
+
+#: src/Commands.h:66
+msgid "Move the Nth item to the first position"
+msgstr "Déplace le Ne élément en première position"
+
+#: src/Commands.h:67
+msgid "Copy the Nth item"
+msgstr "Copie le Ne élément"
+
+#: src/Commands.h:68
+msgid "Copy the n first items"
+msgstr "Copie les N premiers éléments"
+
+#: src/Commands.h:69
+msgid "Delete the n first items"
+msgstr "Supprime les N premiers éléments"
+
+#: src/Commands.h:70
+msgid "Get the number of items"
+msgstr "Renvoie le nombre d'éléments dans la pile"
+
+#: src/Commands.h:72
+msgid "Set flag"
+msgstr "Active l'option"
+
+#: src/Commands.h:73
+msgid "Clear flag"
+msgstr "Désactive l'option"
+
+#: src/Commands.h:74
+msgid "Return 1 if flag is set, 0 otherwise"
+msgstr "Renvoie 1 si l'option est activée, 0 sinon"
+
+#: src/Commands.h:75
+msgid "Return 0 if flag is set, 1 otherwise"
+msgstr "Renvoie 0 si l'option est activée, 1 sinon"
+
+#: src/Commands.h:76
+msgid "Do FS? then clear flag"
+msgstr "Exécute FS? et désactive l'option"
+
+#: src/Commands.h:77
+msgid "Do FC? then clear flag"
+msgstr "Exécute FC? et désactive l'option"
+
+#: src/Commands.h:79
+msgid "Convert to string"
+msgstr "Convertit un élément en chaîne de caractères"
+
+#: src/Commands.h:80
+msgid "Convert from string"
+msgstr "Convertit une chaîne de caractère en éléments"
+
+#: src/Commands.h:82
+msgid "Items to list"
+msgstr "Mets les éléments dans une liste"
+
+#: src/Commands.h:83
+msgid "Extract items from list"
+msgstr "Convertit la liste en ses éléments"
+
+#: src/Commands.h:85
+msgid "Evaluate item"
+msgstr "Évalue l'élément"
+
+#: src/Commands.h:86
+msgid "Store value in variable name"
+msgstr "Enregistre la valeur dans la variable"
+
+#: src/Commands.h:87
+msgid "Recall value from variable name"
+msgstr "Récupère la valeur de la variable"
+
+#: src/Commands.h:88
+msgid "Remove a variable"
+msgstr "Supprime la variable"
+
+#: src/Commands.h:89
+msgid "Get the list of variables in current directory"
+msgstr "Renvoie la liste des variables dans le répertoire courant"
+
+#: src/Commands.h:90
+msgid "Get the list from root to current directory"
+msgstr "Renvoie le répertoire en cours sous forme de liste"
+
+#: src/Commands.h:91
+msgid "Create a directory"
+msgstr "Crée un répertoire"
+
+#: src/Commands.h:92
+msgid "Set root directory as the current one"
+msgstr "Définis le répertoire racine comme répertoire courant"
+
+#: src/Commands.h:93
+msgid "Make the parent directory the current one"
+msgstr "Définis le répertoire parent comme répertoire courant"
+
+#: src/Commands.h:95
+msgid "Use binary mode for binary integers"
+msgstr "Utilise le mode binaire pour les entiers binaires"
+
+#: src/Commands.h:96
+msgid "Use octal mode for binary integers"
+msgstr "Utilise le mode octal pour les entiers binaires"
+
+#: src/Commands.h:97
+msgid "Use decimal mode for binary integers"
+msgstr "Utilise le mode décimal pour les entiers binaires"
+
+#: src/Commands.h:98
+msgid "Use hexadecimal mode for binary integers"
+msgstr "Utilise le mode hexadécimal pour les entiers binaires"
+
+#: src/Commands.h:99
+msgid "Define the number of bits in binary integers (1 to 64)"
+msgstr "Définis le nombre de bits des entiers binaires (de 1 à 64)"
+
+#: src/Commands.h:100
+msgid "Get the number of bits in binary integers"
+msgstr "Renvoie le nombre de bits des entiers binaires"
+
+#: src/Commands.h:101
+msgid "Convert a binary integer into a real"
+msgstr "Convertit un entier binaire en réel"
+
+#: src/Commands.h:102
+msgid "Convert a real into a binary integer"
+msgstr "Convertit un réel en entier binaire"
+
+#: src/Commands.h:103
+msgid "Save flag states in a binary integer"
+msgstr "Enregistre l'état des options dans un entier binaire"
+
+#: src/Commands.h:104
+msgid "Read flag states from a binary integer"
+msgstr "Récupère l'état des options depuis un entier binaire"
+
+#: src/Commands.h:106
+msgid "Wait a number of seconds"
+msgstr "Pause d'une durée définie en secondes"
+
+#: src/Commands.h:108
+msgid "Undo last command, 50 levels by default"
+msgstr "Annule la dernière commande, 50 niveaux par défaut"
+
+#: src/Commands.h:109
+msgid "Define number of undo levels"
+msgstr "Définis le nombre de niveaux d'annulation"
+
+#: src/Commands.h:110
+msgid "Get number of undo levels"
+msgstr "Renvoie le nombre de niveaux d'annulations"
+
+#: src/Commands.h:117
+msgid "Command (number of arguments): description"
+msgstr "Commande (nombre d'arguments) : description"
+
+#: src/Commands.h:124
+msgid "Object type"
+msgstr "Type d'objet"
+
+#: src/Commands.h:125
+msgid "Symbol"
+msgstr "Symbole"
+
+#: src/Commands.h:125
+msgid "Example"
+msgstr "Exemple"
+
+#: src/Commands.h:129
+msgid "Data"
+msgstr "Donnée"
+
+#: src/Commands.h:130
+msgid "Real Number"
+msgstr "Nombre réel"
+
+#: src/Commands.h:131
+msgid "1.23456e-25"
+msgstr "1.23456e-25"
+
+#: src/Commands.h:132
+msgid "Complex Number"
+msgstr "Nombre Complexe"
+
+#: src/Commands.h:133
+msgid "(123.45, 678.90)"
+msgstr "(123.45, 678.90)"
+
+#: src/Commands.h:134
+msgid "Binary Integer"
+msgstr "Entier Binaire"
+
+#: src/Commands.h:136
+msgid "String"
+msgstr "Chaîne de Caractères"
+
+#: src/Commands.h:137
+msgid "\"RESULT\""
+msgstr "\"RÉSULTAT\""
+
+#: src/Commands.h:138
+msgid "Vector"
+msgstr "Vecteur"
+
+#: src/Commands.h:139
+msgid "[1.23 4.56 7.89]"
+msgstr "[1.23 4.56 7.89]"
+
+#: src/Commands.h:140
+msgid "Matrix"
+msgstr "Matrice"
+
+#: src/Commands.h:141
+msgid "[[1.23 4.56] [6.54 3.21]]"
+msgstr "[[1.23 4.56] [6.54 3.21]]"
+
+#: src/Commands.h:142
+msgid "List"
+msgstr "Liste"
+
+#: src/Commands.h:143
+msgid "{1.23 \"ABC\" # 45d}"
+msgstr "{1.23 \"ABC\" # 45d}"
+
+#: src/Commands.h:145
+msgid "Names"
+msgstr "Noms"
+
+#: src/Commands.h:146
+msgid "Name"
+msgstr "Nom"
+
+#: src/Commands.h:147
+msgid "'CALC'"
+msgstr "'CALC'"
+
+#: src/Commands.h:149
+msgid "Procedures"
+msgstr "Programmes"
+
+#: src/Commands.h:150
+msgid "Program"
+msgstr "Programme"
+
+#: src/Commands.h:151
+msgid "<< DUP + SWAP >>"
+msgstr "<< DUP + SWAP >>"
+
+#: src/Commands.h:152
+msgid "Algebraic"
+msgstr "Algébrique"
+
+#: src/Commands.h:153
+msgid "'X+2*Y=Z'"
+msgstr "'X+2*Y=Z'"
+
+#: src/Commands.h:159
+msgid "Flag #"
+msgstr "Option #"
+
+#: src/Commands.h:160
+msgid "Description"
+msgstr "Description"
+
+#: src/Commands.h:161
+msgid "Status"
+msgstr "État"
+
+#: src/Commands.h:175
+msgid "Set"
+msgstr "Activé"
+
+#: src/Commands.h:175
+msgid "Unset"
+msgstr "Désactivé"

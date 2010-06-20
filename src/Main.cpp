@@ -23,10 +23,7 @@
 
 OS_Dirs *osd;
 
-  // Don't stop compilation miserably if no gettext() stuff is around
-#ifndef _
-#define _(s)	s
-#endif
+#include "MyIntl.h"
 
 using namespace std;
 
@@ -138,6 +135,13 @@ static void read_opt_string_to_integer(const string& opt, int& val, const bool& 
 
 int prog_init(int argc, char **argv) {
 	osd = new OS_Dirs(argv[0]);
+
+// Initialize gettext part
+#if ENABLE_NLS
+	setlocale(LC_ALL, "");
+	bindtextdomain(PACKAGE, PKG_LOCALEDIR);
+	textdomain(PACKAGE);
+#endif
 
 	html_help_file = os_concatene(osd->get_dir(OSD_HC_HTML), MY_HELP_HTML);
 	html_help_found = os_file_exists(html_help_file.c_str());
