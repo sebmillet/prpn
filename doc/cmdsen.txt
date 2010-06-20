@@ -8,11 +8,11 @@ _EXIT          (0): Quit program
 *              (2): Multiplication
 /              (2): Division
 ^              (2): Power
-COS            (1): Cosinus
-SIN            (1): Sin
-TAN            (1): Tan
-ACOS           (1): Arccosinus
-ASIN           (1): Arcsinus
+COS            (1): Cosine
+SIN            (1): Sine
+TAN            (1): Tangent
+ACOS           (1): Arccos
+ASIN           (1): Arcsin
 ATAN           (1): Arctan
 LN             (1): Logarihtm (e base)
 EXP            (1): Exponential
@@ -78,21 +78,28 @@ UNDO           (0): Undo last command, 50 levels by default
 _UNDO_LEVELS   (1): Define number of undo levels
 _UNDO_LEVELS?  (0): Get number of undo levels
 
-Object type    Symbol Example
--------------- ------ -------------------------
+Object type              Symbol         Example
+------------------------ -------------- -------------------------
 
 Data
-Real Number           1.23456e-25
-Complex Number ( )    (123.45, 678.90)
-Binary Integer #      # 123AB
-String         " "    "RESULT"
-Vector         [ ]    [1.23 4.56 7.89]
-Matrix         [[ ]]  [[1.23 4.56] [6.54 3.21]]
-List           { }    {1.23 "ABC" # 45d}
+Real Number                             1.23456e-25
+Complex Number           ( )            (123.45, 678.90)
+Binary Integer           #              # 123AB
+String                   " "            "RESULT"
+Vector                   [ ]            [1.23 4.56 7.89]
+Matrix                   [[ ]]          [[1.23 4.56] [6.54 3.21]]
+List                     { }            {1.23 "ABC" # 45d}
 
 Names
-Name           ' '    'CALC'
+Name                     ' '            'CALC'
 
 Procedures
-Program        << >>  << DUP + SWAP >>
-Algebraic      ' '    'X+2*Y=Z'get_class_count() = 0 for watched classes
+Program                  << >>          << DUP + SWAP >>
+Algebraic                ' '            'X+2*Y=Z'1
+(1;2,3)
+9,99999999999e199
+9,99999999999e199
+1
+0
+{ x A_very_long_name Beta }
+get_class_count() = 0 for watched classes

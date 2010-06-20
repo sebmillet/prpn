@@ -1,12 +1,12 @@
 MANPAGE=${srcdir}/man/pRPN.1
 HTMLPAGE=${srcdir}/pRPN.html
 TEXTPAGE=${srcdir}/pRPN.txt
-CMDS=${srcdir}/cmds.txt
+CMDSEN=${srcdir}/cmdsen.txt
 
 dist_doc_DATA=${HTMLPAGE} ${TEXTPAGE}
 
 EXTRA_DIST=${srcdir}/make-man-page.sh ${srcdir}/pRPN1-prefix ${srcdir}/pRPN1-postfix \
-	${CMDS}
+	${CMDSEN}
 
 dist_man_MANS=${MANPAGE}
 
@@ -26,7 +26,7 @@ if BUILD_DOCS
 # Parsing Commands.h would be OK but it'd be difficult to be independant of
 # the code presentation, it would require to recreate a logic comparable to
 # C++ preprocessor.
-${MANPAGE}: ${CMDS} ${srcdir}/pRPN1-prefix ${srcdir}/pRPN1-postfix
+${MANPAGE}: ${CMDSEN} ${srcdir}/pRPN1-prefix ${srcdir}/pRPN1-postfix
 	${srcdir}/make-man-page.sh "${srcdir}"
 
 ${HTMLPAGE}: ${MANPAGE}

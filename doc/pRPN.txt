@@ -69,19 +69,19 @@ COMMANDS
        ^ (2)  Power
 
        COS (1)
-	      Cosinus
+	      Cosine
 
        SIN (1)
-	      Sin
+	      Sine
 
        TAN (1)
-	      Tan
+	      Tangent
 
        ACOS (1)
-	      Arccosinus
+	      Arccos
 
        ASIN (1)
-	      Arcsinus
+	      Arcsin
 
        ATAN (1)
 	      Arctan
@@ -264,23 +264,32 @@ COMMANDS
 	      Get number of undo levels
 
 OBJECT TYPES
-	      Object type    Symbol Example
-	      -------------- ------ -------------------------
+	      Object type	       Symbol	      Example
+	      ------------------------				--------------
+	      -------------------------
 
 	      Data
-	      Real Number	    1.23456e-25
-	      Complex Number ( )    (123.45, 678.90)
-	      Binary Integer #	    # 123AB
-	      String	     " "    "RESULT"
-	      Vector	     [ ]    [1.23 4.56 7.89]
-	      Matrix	     [[ ]]  [[1.23 4.56] [6.54 3.21]]
-	      List	     { }    {1.23 "ABC" # 45d}
+	      Real Number			      1.23456e-25
+	      Complex Number	       ( )	      (123.45, 678.90)
+	      Binary Integer	       #	      # 123AB
+	      String		       " "	      "RESULT"
+	      Vector		       [ ]	      [1.23 4.56 7.89]
+	      Matrix			 [[  ]] 	  [[1.23  4.56]  [6.54
+	      3.21]]
+	      List		       { }	      {1.23 "ABC" # 45d}
 
 	      Names
-	      Name		  CALC
+	      Name				    CALC
 
 	      Procedures
-	      Program	     << >>  << DUP + SWAP >>
+	      Program		       << >>	      << DUP + SWAP >>
+	      Algebraic 			    X+2*Y=Z1
+	      (1;2,3)
+	      9,99999999999e199
+	      9,99999999999e199
+	      1
+	      0
+	      { x A_very_long_name Beta }
 
 INITIALIZATION FILES
        ~/.prpn/stackrc

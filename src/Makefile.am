@@ -17,13 +17,13 @@ AM_CPPFLAGS=-DPKG_DOCDIR="\"${docdir}\"" -DPKG_HTMLDIR="\"${htmldir}\""
 AM_CPPFLAGS+= -DPKG_PREFIX="\"${prefix}\"" -DPKG_DATADIR="\"${datadir}\""
 AM_CPPFLAGS+= -DPKG_BINDIR="\"${bindir}\"" -DPKG_LOCALEDIR=\"$(localedir)\"
 
-CMDS=${top_srcdir}/doc/cmds.txt
-noinst_DATA=${CMDS}
+CMDSEN=${top_srcdir}/doc/cmdsen.txt
+noinst_DATA=${CMDSEN}
 
 if BUILD_DOCS
 
-${CMDS}: Commands.h
-	echo "_HELP" | ${builddir}/${EXENAME} -b > ${CMDS}
+${CMDSEN}: Commands.h
+	echo "_HELP" | LC_ALL="C" ${builddir}/${EXENAME} -b > ${CMDSEN}
 
 endif
 

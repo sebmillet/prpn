@@ -9,15 +9,15 @@ MANDIR=man
 MANPAGE=${MANDIR}/${BASE}.1
 HTMLDOC=${BASE}.html
 TEXTDOC=${BASE}.txt
-CMDS=${SRCDIR}/cmds.txt
+CMDSEN=${SRCDIR}/cmdsen.txt
 PREFIX=${SRCDIR}/pRPN1-prefix
 POSTFIX=${SRCDIR}/pRPN1-postfix
 
 mkdir -p $MANDIR
 
 cat ${PREFIX} > ${MANPAGE}
-egrep "\([[:digit:]]\):" ${CMDS} | sed 's/^\(\S\+\)\s\+(\(.\)):\s\+/.TP\n.B \1\\ (\2)\n/' >> ${MANPAGE}
+egrep "\([[:digit:]]\):" ${CMDSEN} | sed 's/^\(\S\+\)\s\+(\(.\)):\s\+/.TP\n.B \1\\ (\2)\n/' >> ${MANPAGE}
 echo ".SH \"OBJECT TYPES\"" >> ${MANPAGE}
 echo ".TP" >> ${MANPAGE}
-sed -n '/^Object type/,$p' ${CMDS} | egrep -v "get_class_count" | sed 's/$/\n.br/' | sed 's/^Object type/       Object type/' >> ${MANPAGE}
+sed -n '/^Object type/,$p' ${CMDSEN} | egrep -v "get_class_count" | sed 's/$/\n.br/' | sed 's/^Object type/       Object type/' >> ${MANPAGE}
 cat ${POSTFIX} >> ${MANPAGE}

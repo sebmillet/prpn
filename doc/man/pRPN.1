@@ -69,19 +69,19 @@ Division
 Power
 .TP
 .B COS\ (1)
-Cosinus
+Cosine
 .TP
 .B SIN\ (1)
-Sin
+Sine
 .TP
 .B TAN\ (1)
-Tan
+Tangent
 .TP
 .B ACOS\ (1)
-Arccosinus
+Arccos
 .TP
 .B ASIN\ (1)
-Arcsinus
+Arcsin
 .TP
 .B ATAN\ (1)
 Arctan
@@ -276,39 +276,53 @@ Define number of undo levels
 Get number of undo levels
 .SH "OBJECT TYPES"
 .TP
-       Object type    Symbol Example
+       Object type              Symbol         Example
 .br
--------------- ------ -------------------------
+------------------------ -------------- -------------------------
 .br
 
 .br
 Data
 .br
-Real Number           1.23456e-25
+Real Number                             1.23456e-25
 .br
-Complex Number ( )    (123.45, 678.90)
+Complex Number           ( )            (123.45, 678.90)
 .br
-Binary Integer #      # 123AB
+Binary Integer           #              # 123AB
 .br
-String         " "    "RESULT"
+String                   " "            "RESULT"
 .br
-Vector         [ ]    [1.23 4.56 7.89]
+Vector                   [ ]            [1.23 4.56 7.89]
 .br
-Matrix         [[ ]]  [[1.23 4.56] [6.54 3.21]]
+Matrix                   [[ ]]          [[1.23 4.56] [6.54 3.21]]
 .br
-List           { }    {1.23 "ABC" # 45d}
+List                     { }            {1.23 "ABC" # 45d}
 .br
 
 .br
 Names
 .br
-Name           ' '    'CALC'
+Name                     ' '            'CALC'
 .br
 
 .br
 Procedures
 .br
-Program        << >>  << DUP + SWAP >>
+Program                  << >>          << DUP + SWAP >>
+.br
+Algebraic                ' '            'X+2*Y=Z'1
+.br
+(1;2,3)
+.br
+9,99999999999e199
+.br
+9,99999999999e199
+.br
+1
+.br
+0
+.br
+{ x A_very_long_name Beta }
 .br
 .SH "INITIALIZATION FILES"
 .TP
