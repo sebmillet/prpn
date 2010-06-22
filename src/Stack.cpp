@@ -500,13 +500,12 @@ const string Stack::get_display_line(const DisplayStackLayout& dsl, const int& l
 
 	if (w >= 1 && dsl.get_max_stack() >= 1 && (e < e1 || first_elem_height == 1)) {
 		o << " ";
-		o.width(w);
-		o.setf(ios::right);
-		o << s;
+		string tmp;
+		my_append_padl(tmp, s.c_str(), w);
+		o << tmp;
 	} else {
 		if (dsl.get_max_stack() >= 1)
 			o << " ";
-		o.setf(ios::left);
 		o << s;
 	}
 

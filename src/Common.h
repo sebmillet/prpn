@@ -47,6 +47,10 @@ typedef double real;
 #define G_HARD_MAX_NB_BITS	64
 extern int g_max_nb_bits;
 
+size_t my_get_string_length(const char *);
+void my_append_padl(std::string&, const std::string&, const size_t&);
+void my_append_padr(std::string&, const std::string&, const size_t&);
+
 void my_sleep_seconds(const int&);
 const std::string integer_to_string(const int&);
 
