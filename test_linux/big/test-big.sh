@@ -1,3 +1,3 @@
 #!/bin/sh
 
-time ../../build/pRPN --batch < test-big-input.txt
+time ../../src/prpn --batch < test-big-input.txt
