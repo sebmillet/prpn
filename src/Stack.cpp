@@ -13,6 +13,7 @@
 #include "MyIntl.h"
 #include "platform/os_generic.h"
 #include <sstream>
+#include <fstream>
 
 #ifdef DEBUG
 #include <iostream>
@@ -73,6 +74,7 @@ static string st_errors[] = {
 	"Directory Not Allowed",// ST_ERR_DIRECTORY_NOT_ALLOWED
 	"Non-Empty Directory",	// ST_ERR_NON_EMPTY_DIRECTORY
 	"Undefined Name",		// ST_ERR_UNDEFINED_NAME
+	"File Read Error",		// ST_ERR_FILE_READ_ERROR
 	"Not Yet Implemented",	// ST_ERR_NOT_IMPLEMENTED
 	"Internal Error",		// ST_ERR_INTERNAL
 	"Quitting"				// ST_ERR_EXIT
@@ -1684,6 +1686,10 @@ static st_err_t bc_wait(StackItem& op1, StackItem*&, string&) {
 
   // Misc
 
+static st_err_t bc_read(TransStack& ts, SIO *args, string&) { return args[0].si->op_read(ts); }
+
+static st_err_t bc_write(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { return op2.op_write(op1); }
+
 static st_err_t bc_undo(TransStack& ts, SIO*, string&) {
 	if (!ts.get_modified_flag())
 		ts.backward_head();
@@ -2339,6 +2345,19 @@ st_err_t StackItemString::op_greater(StackItemString *arg1, StackItem*& ret) {
 st_err_t StackItemString::op_greater_or_equal(StackItemString *arg1, StackItem*& ret) {
 	real res = (arg1->s >= s ? 1 : 0);
 	ret = new StackItemReal(Real(res));
+	return ST_ERR_OK;
+}
+
+st_err_t StackItemString::op_read(TransStack& ts) {
+	ifstream ifs(s.c_str(), ifstream::in);
+	if (ifs.good()) {
+		return ST_ERR_OK;
+	} else
+		return ST_ERR_FILE_READ_ERROR;
+	ifs.close();
+}
+
+st_err_t StackItemString::op_write(StackItem& arg1) {
 	return ST_ERR_OK;
 }
 

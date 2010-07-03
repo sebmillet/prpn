@@ -147,9 +147,10 @@ const BtnDescription btn_descriptions[] = {
 static map<string, beval_t> cmd_evals;
 
 void string_trim(string& s, const size_t& width, const DisplayStackLayout* dsl) {
-	if (width >= 1 && s.length() > width && dsl->get_max_stack() >= 1) {
-		s.erase(width - dsl->get_to_be_continued_length());
-		s.append(dsl->get_to_be_continued());
+	if (width >= 1 && E->get_string_length(s) > width && dsl->get_max_stack() >= 1) {
+		string tmp = s.substr(0, width - dsl->get_to_be_continued_length());
+		tmp.append(dsl->get_to_be_continued());
+		s = tmp;
 	}
 }
 

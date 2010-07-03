@@ -105,6 +105,8 @@ BuiltinCommandDescriptor builtinCommands[] = {
 	  // Programs
 	{1, BC_COMMAND_WRAPPER, "WAIT", 0, 0, &bc_wait, 0, 0, _N("Wait a number of seconds")},
 	  // Misc
+	{1, BC_RAW, PREFIX_NOSTD "READ", &bc_read, 0, 0, 0, 0, _N("Read file and puts its content in the stack")},
+	{2, BC_COMMAND_WRAPPER, PREFIX_NOSTD "WRITE", 0, 0, 0, &bc_write, 0, _N("Write the second item into the file named by the first item")},
 	{0, BC_RAW, "UNDO", &bc_undo, 0, 0, 0, 0, _N("Undo last command, 50 levels by default")},
 	{1, BC_COMMAND_WRAPPER, PREFIX_NOSTD "UNDO_LEVELS", 0, 0, &bc_undo_levels, 0, 0, _N("Define number of undo levels")},
 	{0, BC_FUNCTION_WRAPPER, PREFIX_NOSTD "UNDO_LEVELS?", 0, &bc_undo_levels_get, 0, 0, 0, _N("Get number of undo levels")}

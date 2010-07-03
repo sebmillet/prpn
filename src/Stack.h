@@ -271,6 +271,9 @@ public:
 	virtual st_err_t op_sub(StackItemBinary*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_mul(StackItemBinary*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_div(StackItemBinary*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	  // _READ, _WRITE
+	virtual st_err_t op_read(TransStack&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_write(StackItem&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 
 	  // Program execution
 	virtual st_err_t exec1(TransStack&, int&, std::string&);
@@ -570,6 +573,9 @@ public:
 	virtual st_err_t op_lower_or_equal(StackItemString*, StackItem*&);
 	virtual st_err_t op_greater(StackItemString*, StackItem*&);
 	virtual st_err_t op_greater_or_equal(StackItemString*, StackItem*&);
+
+	virtual st_err_t op_read(TransStack&);
+	virtual st_err_t op_write(StackItem&);
 };
 
 
