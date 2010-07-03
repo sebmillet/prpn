@@ -20,7 +20,9 @@ class MyEncoding {
 	size_t utf8_get_string_length(const char *);
 	void utf8_append_padl(std::string&, const std::string&, const size_t&);
 	void utf8_append_padr(std::string&, const std::string&, const size_t&);
-	const std::string utf8_substr(const std::string&, const size_t& = 0, const size_t& = std::string::npos);
+	void utf8_transform_start_length(const std::string&, size_t&, size_t&);
+	const std::string utf8_substr(const std::string&, size_t, size_t);
+	void utf8_erase(std::string&, size_t, size_t);
 	void ascii_append_padl(std::string&, const std::string&, const size_t&);
 	void ascii_append_padr(std::string&, const std::string&, const size_t&);
 public:
@@ -30,6 +32,7 @@ public:
 	void append_padl(std::string&, const std::string&, const size_t&);
 	void append_padr(std::string&, const std::string&, const size_t&);
 	const std::string substr(const std::string&, size_t = 0, size_t = std::string::npos);
+	void erase(std::string&, size_t = 0, size_t = std::string::npos);
 };
 
 #endif

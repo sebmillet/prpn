@@ -75,11 +75,12 @@ void MyEncoding::utf8_append_padr(string& s, const string& a, const size_t& pad_
 		s.append(nb_spaces, ' ');
 }
 
-const string MyEncoding::utf8_substr(const string& s, const size_t& start, const size_t& length) {
+void MyEncoding::utf8_transform_start_length(const string& s, size_t& start, size_t& length) {
 	size_t l;
 	int n;
 	int a;
 
+	  // Find real start according to UTF-8 encoding
 	const char *it = s.c_str();
 	size_t char_pos = 0;
 	l = 0;
@@ -94,6 +95,8 @@ const string MyEncoding::utf8_substr(const string& s, const size_t& start, const
 		char_pos++;
 	}
 	size_t utf8_byte_start = l;
+
+	  // Find real length according to UTF-8 encoding
 	size_t nb_chars = 0;
 	l = 0;
 	while (*it != '\0' && nb_chars < length) {
@@ -106,7 +109,20 @@ const string MyEncoding::utf8_substr(const string& s, const size_t& start, const
 		it += a;
 		nb_chars++;
 	}
-	return s.substr(utf8_byte_start, l);
+
+	  // "Return" values
+	start = utf8_byte_start;
+	length = l;
+}
+
+const string MyEncoding::utf8_substr(const string& s, size_t start, size_t length) {
+	utf8_transform_start_length(s, start, length);
+	return s.substr(start, length);
+}
+
+void MyEncoding::utf8_erase(string& s, size_t start, size_t length) {
+	utf8_transform_start_length(s, start, length);
+	s.erase(start, length);
 }
 
 void MyEncoding::ascii_append_padl(string& s, const string& a, const size_t& pad_length) {
@@ -160,6 +176,18 @@ const string MyEncoding::substr(const string& s, size_t start, size_t length) {
 		if (length > s.length())
 			length = s.length();
 		return s.substr(start, length);
+	}
+}
+
+void MyEncoding::erase(string& s, size_t start, size_t length) {
+	if (actual_encoding == MYENCODING_UTF8)
+		utf8_erase(s, start, length);
+	else if (actual_encoding == MYENCODING_1BYTE) {
+		if (start > s.length())
+			start = s.length();
+		if (length > s.length())
+			length = s.length();
+		s.erase(start, length);
 	}
 }
 
