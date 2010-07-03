@@ -21,6 +21,8 @@ extern bool opt_dry_run;
 
 const std::string stack_get_help(const int&);
 
+void ui_string_trim(std::string&, const size_t&, const DisplayStackLayout*);
+
 extern std::string html_help_file;
 extern bool html_help_found;
 

@@ -72,7 +72,7 @@ void UiImplConsole::set_line(const int&, const string& s) { cout << s << endl; }
 void UiImplConsole::refresh_display_path(const string& s, const bool&) {
 	if (!opt_batch) {
 		string s_mod = s;
-		string_trim(s_mod, ui_dsl.get_width(), &ui_dsl);
+		ui_string_trim(s_mod, ui_dsl.get_width(), &ui_dsl);
 		cout << s_mod << endl;
 	}
 }

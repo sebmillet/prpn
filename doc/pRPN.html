@@ -369,6 +369,14 @@ Read flag states from a binary integer
 
 <DD>
 Wait a number of seconds
+<DT><B>_READ&nbsp;(1)</B>
+
+<DD>
+Read file and puts its content in the stack
+<DT><B>_WRITE&nbsp;(2)</B>
+
+<DD>
+Write the second item into the file named by the first item
 <DT><B>UNDO&nbsp;(0)</B>
 
 <DD>
@@ -437,25 +445,34 @@ Procedures
 Program                  &lt;&lt; &gt;&gt;          &lt;&lt; DUP + SWAP &gt;&gt;
 <BR>
 
-Algebraic                ' '            'X+2*Y=Z'1
+Algebraic                ' '            'X+2*Y=Z'&quot;a&quot;
 <BR>
 
-(1;2,3)
+&quot;é&quot;
 <BR>
 
-9,99999999999e199
+&quot;éé&quot;
 <BR>
 
-9,99999999999e199
+&quot;12345678910éééèâïëä&quot;
 <BR>
 
-1
+&quot;éèâïëä&quot;
 <BR>
 
-0
+&quot; 12345678910éé.éèâïë&quot;
 <BR>
 
-{ x A_very_long_name Beta }
+1.2
+<BR>
+
+(3,-1.222)
+<BR>
+
+# 10010b
+<BR>
+
+{ 18 1.2 (3,-1.222) # 10010b }
 <BR>
 
 </DL>
@@ -503,6 +520,6 @@ Written by S�bastien Millet &lt;<A HREF="mailto:sebastien.millet1@club-internet.
 This document was created by
 <A HREF="/cgi-bin/man/man2html">man2html</A>,
 using the manual pages.<BR>
-Time: 15:06:00 GMT, June 20, 2010
+Time: 20:06:36 GMT, July 03, 2010
 </BODY>
 </HTML>

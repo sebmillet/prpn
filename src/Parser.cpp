@@ -12,6 +12,7 @@
 #include "Stack.h"
 #include "Variable.h"
 #include <sstream>
+#include <fstream>
 
 #ifdef DEBUG
 #include <iostream>
@@ -1087,6 +1088,52 @@ st_err_t parser_str_to(TransStack& ts, string str, string& cmd_err) {
 	delete iss;
 	delete itemise;
 
+	return c;
+}
+
+st_err_t read_rc_file(TransStack* ts, const tostring_t& tostring, const string& filename_real, const string& filename_display,
+		const bool& do_eval, string& error_l1, string& error_l2) {
+	st_err_t c = ST_ERR_OK;
+	error_l1 = "";
+	error_l2 = "";
+	ifstream ifs(filename_real.c_str(), ifstream::in);
+	if (ifs.good()) {
+
+		debug_write("Reading:");
+		debug_write(filename_real.c_str());
+
+		Itemiser* itemise = new Itemiser(&ifs, tostring);
+
+		ParserError par;
+		par.set = false;
+		SIO s;
+		bool inside_undo_sequence = false;
+		bool r = true;
+		string cmd_err;
+		while (!par.set && c == ST_ERR_OK && r) {
+			r = itemise->get_item(par, s.si);
+			if (!par.set && r) {
+				if (do_eval) {
+					s.ownership = TSO_OWNED_BY_TS;
+					c = ts->do_push_eval(s, inside_undo_sequence, cmd_err);
+				} else {
+					ts->transstack_push(s.si);
+				}
+			}
+		}
+		delete itemise;
+		if (par.set) {
+			cmd_err = "Syntax";
+			c = ST_ERR_SYNTAX_ERROR;
+		}
+		if (par.set || (c != ST_ERR_OK && c != ST_ERR_EXIT)) {
+			error_l1 = filename_display + ":";
+			error_l2 = cmd_err + " Error, line " + integer_to_string(par.line);
+		}
+	} else {
+		c = ST_ERR_FILE_READ_ERROR;
+	}
+	ifs.close();
 	return c;
 }
 

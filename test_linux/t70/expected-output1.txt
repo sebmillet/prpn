@@ -1,0 +1,24 @@
+_READ Error:
+Too Few Arguments
+_WRITE Error:
+Too Few Arguments
+_READ Error:
+Bad Argument Type
+_WRITE Error:
+Too Few Arguments
+_READ Error:
+Bad Argument Type
+_WRITE Error:
+Bad Argument Type
+_READ Error:
+File Read Error
+_WRITE Error:
+File Write Error
+_WRITE Error:
+File Write Error
+0
+1
+"nonexistent file"
+""
+"."
+get_class_count() = 0 for watched classes

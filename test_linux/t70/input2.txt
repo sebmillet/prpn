@@ -1,0 +1,8 @@
+"read-file-test.txt"
+_READ
+SQ
+"tmp-write-file-test.txt"
+_WRITE
+CLEAR
+"tmp-write-file-test.txt"
+_READ

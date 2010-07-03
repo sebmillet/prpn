@@ -12,6 +12,7 @@
 #include "Common.h"
 #include "Scalar.h"
 #include <string>
+#include <fstream>
 
 class DisplayStackLayout;
 class IntervalShift;
@@ -107,6 +108,8 @@ const std::string base_int_to_letter(const int&);
 const std::string get_error_string(const st_err_t&);
 
 const std::string get_rclf_portable_string();
+
+void write_si(const tostring_t&, const StackItem*, std::ostream&);
 
 
 //

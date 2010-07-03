@@ -31,7 +31,7 @@ void os_init() {
 
 const string os_concatene(const string& base, const string& added) { return concatene(SEP, base, added); }
 
-static bool os_e_exists(const char *sz, const int& my_flag) {
+static bool os_e_exists(const char *sz, const unsigned int& my_flag) {
 	struct stat st;
 
 	if (stat(sz, &st) != 0)

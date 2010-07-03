@@ -79,6 +79,7 @@ typedef enum {
 	ST_ERR_NON_EMPTY_DIRECTORY,
 	ST_ERR_UNDEFINED_NAME,
 	ST_ERR_FILE_READ_ERROR,
+	ST_ERR_FILE_WRITE_ERROR,
 	ST_ERR_NOT_IMPLEMENTED,
 	ST_ERR_INTERNAL,
 	ST_ERR_EXIT
@@ -126,7 +127,6 @@ enum {
 typedef enum {TOSTRING_DISPLAY, TOSTRING_EDIT, TOSTRING_PORTABLE} tostring_t;
 
 class DisplayStackLayout;
-void string_trim(std::string&, const size_t&, const DisplayStackLayout*);
 
 char get_decimal_separator(const bool&);
 char get_complex_separator(const bool&);

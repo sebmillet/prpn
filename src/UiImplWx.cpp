@@ -670,7 +670,7 @@ void UiImplWx::set_line(const int& line_number, const string& s) {
 void UiImplWx::refresh_display_path(const string& s, const bool& modified) {
 	if (modified) {
 		string s_mod = s;
-		string_trim(s_mod, f->path_width, &ui_dsl);
+		ui_string_trim(s_mod, f->path_width, &ui_dsl);
 		f->path->SetLabel(string_to_wxString(s_mod));
 	}
 }

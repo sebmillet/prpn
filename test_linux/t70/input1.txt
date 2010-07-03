@@ -1,0 +1,14 @@
+_READ
+_WRITE
+0
+_READ
+_WRITE
+1
+_READ
+_WRITE
+"nonexistent file"
+_READ
+""
+_WRITE
+"."
+_WRITE

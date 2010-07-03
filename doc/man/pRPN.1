@@ -266,6 +266,12 @@ Read flag states from a binary integer
 .B WAIT\ (1)
 Wait a number of seconds
 .TP
+.B _READ\ (1)
+Read file and puts its content in the stack
+.TP
+.B _WRITE\ (2)
+Write the second item into the file named by the first item
+.TP
 .B UNDO\ (0)
 Undo last command, 50 levels by default
 .TP
@@ -310,19 +316,25 @@ Procedures
 .br
 Program                  << >>          << DUP + SWAP >>
 .br
-Algebraic                ' '            'X+2*Y=Z'1
+Algebraic                ' '            'X+2*Y=Z'"a"
 .br
-(1;2,3)
+"é"
 .br
-9,99999999999e199
+"éé"
 .br
-9,99999999999e199
+"12345678910éééèâïëä"
 .br
-1
+"éèâïëä"
 .br
-0
+" 12345678910éé.éèâïë"
 .br
-{ x A_very_long_name Beta }
+1.2
+.br
+(3,-1.222)
+.br
+# 10010b
+.br
+{ 18 1.2 (3,-1.222) # 10010b }
 .br
 .SH "INITIALIZATION FILES"
 .TP

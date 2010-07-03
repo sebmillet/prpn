@@ -13,7 +13,6 @@
 #include "MyIntl.h"
 #include "platform/os_generic.h"
 #include <sstream>
-#include <fstream>
 
 #ifdef DEBUG
 #include <iostream>
@@ -75,6 +74,7 @@ static string st_errors[] = {
 	"Non-Empty Directory",	// ST_ERR_NON_EMPTY_DIRECTORY
 	"Undefined Name",		// ST_ERR_UNDEFINED_NAME
 	"File Read Error",		// ST_ERR_FILE_READ_ERROR
+	"File Write Error",		// ST_ERR_FILE_WRITE_ERROR
 	"Not Yet Implemented",	// ST_ERR_NOT_IMPLEMENTED
 	"Internal Error",		// ST_ERR_INTERNAL
 	"Quitting"				// ST_ERR_EXIT
@@ -147,6 +147,23 @@ int get_bin_size_from_flags() {
 }
 
 const string get_error_string(const st_err_t& c) { return st_errors[c]; }
+
+  // Number of columns in a file containing StackItems
+#define RC_FILE_WIDTH			78
+
+void write_si(const tostring_t& tostring, const StackItem* csi, ostream& oss) {
+	ToString tostr(tostring, 0, RC_FILE_WIDTH);
+	csi->to_string(tostr);
+	tostr.lock();
+	const char *sz = tostr.get_first_line();
+	while (sz != NULL) {
+		oss << sz;
+		if (sz != NULL)
+			oss << "\n";
+		sz = tostr.get_next_line();
+	}
+	tostr.unlock();
+}
 
 
 //
@@ -498,7 +515,7 @@ const string Stack::get_display_line(const DisplayStackLayout& dsl, const int& l
 		s.erase(w - dsl.get_to_be_continued_length());
 		s.append(dsl.get_to_be_continued());
 	}*/
-	string_trim(s, static_cast<size_t>(w), &dsl);
+	ui_string_trim(s, static_cast<size_t>(w), &dsl);
 
 	if (w >= 1 && dsl.get_max_stack() >= 1 && (e < e1 || first_elem_height == 1)) {
 		o << " ";
@@ -2348,17 +2365,22 @@ st_err_t StackItemString::op_greater_or_equal(StackItemString *arg1, StackItem*&
 	return ST_ERR_OK;
 }
 
+st_err_t read_rc_file(TransStack*, const tostring_t&, const std::string&, const std::string&, const bool&, std::string&, std::string&);
 st_err_t StackItemString::op_read(TransStack& ts) {
-	ifstream ifs(s.c_str(), ifstream::in);
-	if (ifs.good()) {
-		return ST_ERR_OK;
-	} else
-		return ST_ERR_FILE_READ_ERROR;
-	ifs.close();
+	string error_l1, error_l2;
+	st_err_t c = read_rc_file(&ts, TOSTRING_PORTABLE, s, s, false, error_l1, error_l2);
+	return c;
 }
 
 st_err_t StackItemString::op_write(StackItem& arg1) {
-	return ST_ERR_OK;
+	fstream ofs(s.c_str(), fstream::out | fstream::trunc);
+	st_err_t c = ST_ERR_OK;
+	if (ofs.good())
+		write_si(TOSTRING_PORTABLE, &arg1, ofs);
+	else
+		c = ST_ERR_FILE_WRITE_ERROR;
+	ofs.close();
+	return c;
 }
 
 

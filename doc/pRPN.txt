@@ -46,7 +46,7 @@ OPTIONS
 	      Debug mode, need a parameter
 
 COMMANDS
-       Commands  are  followed by the number of arguments they take, in paren
+       Commands  are  followed by the number of arguments they take, in paren‐
        thesis. These arguments are taken from the stack.
 
        _HELP (0)
@@ -254,6 +254,12 @@ COMMANDS
        WAIT (1)
 	      Wait a number of seconds
 
+       _READ (1)
+	      Read file and puts its content in the stack
+
+       _WRITE (2)
+	      Write the second item into the file named by the first item
+
        UNDO (0)
 	      Undo last command, 50 levels by default
 
@@ -279,17 +285,20 @@ OBJECT TYPES
 	      List		       { }	      {1.23 "ABC" # 45d}
 
 	      Names
-	      Name				    CALC
+	      Name		       ' '	      'CALC'
 
 	      Procedures
 	      Program		       << >>	      << DUP + SWAP >>
-	      Algebraic 			    X+2*Y=Z1
-	      (1;2,3)
-	      9,99999999999e199
-	      9,99999999999e199
-	      1
-	      0
-	      { x A_very_long_name Beta }
+	      Algebraic 	       ' '	      'X+2*Y=Z'"a"
+	      "Ã©"
+	      "Ã©Ã©"
+	      "12345678910Ã©Ã©Ã©Ã¨Ã¢Ã¯Ã«Ã¤"
+	      "Ã©Ã¨Ã¢Ã¯Ã«Ã¤"
+	      " 12345678910Ã©Ã©.Ã©Ã¨Ã¢Ã¯Ã«"
+	      1.2
+	      (3,-1.222)
+	      # 10010b
+	      { 18 1.2 (3,-1.222) # 10010b }
 
 INITIALIZATION FILES
        ~/.prpn/stackrc
@@ -299,7 +308,7 @@ INITIALIZATION FILES
 	      Variables structure, and actual working directory
 
 AUTHOR
-       Written by Sbastien Millet <sebastien.millet1@club-internet.fr>.  Per
+       Written by Sébastien Millet <sebastien.millet1@club-internet.fr>.  Per‐
        mission	is  granted  to  copy,	distribute and/or modify this document
        under the terms of the GNU General Public License, Version 3  published
        by the Free Software Foundation.

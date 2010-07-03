@@ -24,7 +24,6 @@
 using namespace std;
 
 #define HARD_GUI_MIN_HEIGHT	3
-#define RC_WIDTH			78
 
 static void set_refresh_status_flag();
 static void reset_refresh_status_flag();
@@ -108,6 +107,13 @@ static void redim(int nb_newlines = -1) {
 	}
 }
 
+void ui_string_trim(string& s, const size_t& width, const DisplayStackLayout *dsl) {
+	if (width >= 1 && E->get_string_length(s.c_str()) > width && dsl->get_max_stack() >= 1) {
+		E->erase(s, width - dsl->get_to_be_continued_length());
+		s.append(dsl->get_to_be_continued());
+	}
+}
+
 
 //
 // Buttons area
@@ -146,53 +152,15 @@ const BtnDescription btn_descriptions[] = {
 
 static map<string, beval_t> cmd_evals;
 
-void string_trim(string& s, const size_t& width, const DisplayStackLayout* dsl) {
-	if (width >= 1 && E->get_string_length(s) > width && dsl->get_max_stack() >= 1) {
-		string tmp = s.substr(0, width - dsl->get_to_be_continued_length());
-		tmp.append(dsl->get_to_be_continued());
-		s = tmp;
-	}
-}
-
 static void readrc_1file(const string& filename_real, const string& filename_display) {
-	ifstream ifs(filename_real.c_str(), ifstream::in);
-	if (ifs.good()) {
-
-		debug_write("Reading:");
-		debug_write(filename_real.c_str());
-
-		Itemiser* itemise = new Itemiser(&ifs, TOSTRING_PORTABLE);
-
-		ParserError par;
-		par.set = false;
-		SIO s;
-		st_err_t c = ST_ERR_OK;
-		bool inside_undo_sequence = false;
-		bool r = true;
-		string cmd_err;
-		while (!par.set && c == ST_ERR_OK && r) {
-			r = itemise->get_item(par, s.si);
-			if (!par.set && r) {
-				s.ownership = TSO_OWNED_BY_TS;
-				c = ts->do_push_eval(s, inside_undo_sequence, cmd_err);
-			}
-		}
-		delete itemise;
-		if (par.set)
-			cmd_err = "Syntax";
-		if (par.set || (c != ST_ERR_OK && c != ST_ERR_EXIT)) {
-			set_error(filename_display + ":", cmd_err + " Error, line " + integer_to_string(par.line));
-		}
-	} else {
-
-		debug_write("Could not open:");
-		debug_write(filename_real.c_str());
-
+	string error_l1, error_l2;
+	st_err_t c = read_rc_file(ts, TOSTRING_PORTABLE, filename_real, filename_display, true, error_l1, error_l2);
+	if (c == ST_ERR_FILE_READ_ERROR) {
 		if (os_file_exists(filename_real.c_str())) {
 			set_error(filename_display + ":", "Could not open");
 		}
-	}
-	ifs.close();
+	} else if (c != ST_ERR_OK && c != ST_ERR_EXIT)
+		set_error(error_l1, error_l2);
 }
 
 static void readrc() {
@@ -200,20 +168,6 @@ static void readrc() {
 		readrc_1file(osd->get_dir(OSF_VARSRC), osd->get_dir(OSF_SMALL_VARSRC));
 		readrc_1file(osd->get_dir(OSF_STACKRC), osd->get_dir(OSF_SMALL_STACKRC));
 	}
-}
-
-static void write_si(const StackItem* csi, ostream& oss) {
-	ToString tostr(TOSTRING_PORTABLE, 0, RC_WIDTH);
-	csi->to_string(tostr);
-	tostr.lock();
-	const char *sz = tostr.get_first_line();
-	while (sz != NULL) {
-		oss << sz;
-		if (sz != NULL)
-			oss << "\n";
-		sz = tostr.get_next_line();
-	}
-	tostr.unlock();
 }
 
 static void write_vars_dir(ostream& oss) {
@@ -240,7 +194,7 @@ static void write_vars_dir(ostream& oss) {
 			oss << "UP\n";
 			ts->vars.up();
 		} else if (c == ST_ERR_OK) {
-			write_si(csi, oss);
+			write_si(TOSTRING_PORTABLE, csi, oss);
 			oss << "'" + *it + "' STO\n";
 		} else
 			throw(CalcFatal(__FILE__, __LINE__, "write_vars_dir(): unexpected return code from ts->rcl()"));
@@ -268,7 +222,7 @@ static void writerc() {
 		int n = ui_get_nb_items_in_stack();
 		for (int i = n; i >= 1; i--) {
 			csi = ts->transstack_get_const_si(i);
-			write_si(csi, ofs);
+			write_si(TOSTRING_PORTABLE, csi, ofs);
 		}
 	} else {
 		debug_write("Unable to open:");
