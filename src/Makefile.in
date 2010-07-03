@@ -74,18 +74,19 @@ PROGRAMS = $(bin_PROGRAMS)
 am__prpn_SOURCES_DIST = Main.cpp Compat.cpp Common.h PGetOpt.cpp \
 	PGetOpt.h Scalar.cpp Scalar.h Stack.cpp Stack.h Commands.h \
 	Variable.cpp Variable.h Parser.cpp Parser.h Ui.cpp Ui.h \
-	UiImplConsole.cpp platform/os_generic.cpp \
-	platform/os_generic.h platform/os_unknown.h platform/os_unix.h \
-	platform/os_win.h gettext.h MyIntl.h UiImplWx.cpp prpn.xpm \
-	prpn.rc prpn.ico shiftsel.xpm shiftuns.xpm unit_bin.xpm \
-	unit_oct.xpm unit_dec.xpm unit_hex.xpm
+	UiImplConsole.cpp MyString.cpp MyString.h \
+	platform/os_generic.cpp platform/os_generic.h \
+	platform/os_unknown.h platform/os_unix.h platform/os_win.h \
+	gettext.h MyIntl.h UiImplWx.cpp prpn.xpm prpn.rc prpn.ico \
+	shiftsel.xpm shiftuns.xpm unit_bin.xpm unit_oct.xpm \
+	unit_dec.xpm unit_hex.xpm
 @BUILD_CLIENTGUI_TRUE@am__objects_1 = prpn-UiImplWx.$(OBJEXT)
 am_prpn_OBJECTS = prpn-Main.$(OBJEXT) prpn-Compat.$(OBJEXT) \
 	prpn-PGetOpt.$(OBJEXT) prpn-Scalar.$(OBJEXT) \
 	prpn-Stack.$(OBJEXT) prpn-Variable.$(OBJEXT) \
 	prpn-Parser.$(OBJEXT) prpn-Ui.$(OBJEXT) \
-	prpn-UiImplConsole.$(OBJEXT) prpn-os_generic.$(OBJEXT) \
-	$(am__objects_1)
+	prpn-UiImplConsole.$(OBJEXT) prpn-MyString.$(OBJEXT) \
+	prpn-os_generic.$(OBJEXT) $(am__objects_1)
 prpn_OBJECTS = $(am_prpn_OBJECTS)
 prpn_LDADD = $(LDADD)
 prpn_LINK = $(CXXLD) $(prpn_CXXFLAGS) $(CXXFLAGS) $(prpn_LDFLAGS) \
@@ -268,9 +269,9 @@ EXENAME = prpn${EXEEXT}
 prpn_SOURCES = Main.cpp Compat.cpp Common.h PGetOpt.cpp PGetOpt.h \
 	Scalar.cpp Scalar.h Stack.cpp Stack.h Commands.h Variable.cpp \
 	Variable.h Parser.cpp Parser.h Ui.cpp Ui.h UiImplConsole.cpp \
-	platform/os_generic.cpp platform/os_generic.h \
-	platform/os_unknown.h platform/os_unix.h platform/os_win.h \
-	gettext.h MyIntl.h $(am__append_1)
+	MyString.cpp MyString.h platform/os_generic.cpp \
+	platform/os_generic.h platform/os_unknown.h platform/os_unix.h \
+	platform/os_win.h gettext.h MyIntl.h $(am__append_1)
 AM_CPPFLAGS = -DPKG_DOCDIR="\"${docdir}\"" \
 	-DPKG_HTMLDIR="\"${htmldir}\"" -DPKG_PREFIX="\"${prefix}\"" \
 	-DPKG_DATADIR="\"${datadir}\"" -DPKG_BINDIR="\"${bindir}\"" \
@@ -347,6 +348,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-Compat.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-Main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-MyString.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-PGetOpt.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-Parser.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-Scalar.Po@am__quote@
@@ -496,6 +498,20 @@ prpn-UiImplConsole.obj: UiImplConsole.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='UiImplConsole.cpp' object='prpn-UiImplConsole.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-UiImplConsole.obj `if test -f 'UiImplConsole.cpp'; then $(CYGPATH_W) 'UiImplConsole.cpp'; else $(CYGPATH_W) '$(srcdir)/UiImplConsole.cpp'; fi`
+
+prpn-MyString.o: MyString.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -MT prpn-MyString.o -MD -MP -MF $(DEPDIR)/prpn-MyString.Tpo -c -o prpn-MyString.o `test -f 'MyString.cpp' || echo '$(srcdir)/'`MyString.cpp
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/prpn-MyString.Tpo $(DEPDIR)/prpn-MyString.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='MyString.cpp' object='prpn-MyString.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-MyString.o `test -f 'MyString.cpp' || echo '$(srcdir)/'`MyString.cpp
+
+prpn-MyString.obj: MyString.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -MT prpn-MyString.obj -MD -MP -MF $(DEPDIR)/prpn-MyString.Tpo -c -o prpn-MyString.obj `if test -f 'MyString.cpp'; then $(CYGPATH_W) 'MyString.cpp'; else $(CYGPATH_W) '$(srcdir)/MyString.cpp'; fi`
+@am__fastdepCXX_TRUE@	mv -f $(DEPDIR)/prpn-MyString.Tpo $(DEPDIR)/prpn-MyString.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='MyString.cpp' object='prpn-MyString.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-MyString.obj `if test -f 'MyString.cpp'; then $(CYGPATH_W) 'MyString.cpp'; else $(CYGPATH_W) '$(srcdir)/MyString.cpp'; fi`
 
 prpn-os_generic.o: platform/os_generic.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -MT prpn-os_generic.o -MD -MP -MF $(DEPDIR)/prpn-os_generic.Tpo -c -o prpn-os_generic.o `test -f 'platform/os_generic.cpp' || echo '$(srcdir)/'`platform/os_generic.cpp

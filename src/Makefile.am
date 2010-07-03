@@ -9,6 +9,7 @@ prpn_SOURCES=Main.cpp Compat.cpp Common.h \
 	Parser.cpp Parser.h \
 	Ui.cpp  Ui.h \
 	UiImplConsole.cpp \
+	MyString.cpp MyString.h \
 	platform/os_generic.cpp platform/os_generic.h \
 	platform/os_unknown.h platform/os_unix.h platform/os_win.h \
 	gettext.h MyIntl.h

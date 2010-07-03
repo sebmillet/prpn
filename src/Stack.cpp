@@ -10,13 +10,13 @@
 #include "Stack.h"
 #include "Variable.h"
 #include "Ui.h"
+#include "MyIntl.h"
+#include "platform/os_generic.h"
 #include <sstream>
 
 #ifdef DEBUG
 #include <iostream>
 #endif
-
-#include "MyIntl.h"
 
 using namespace std;
 
@@ -501,7 +501,7 @@ const string Stack::get_display_line(const DisplayStackLayout& dsl, const int& l
 	if (w >= 1 && dsl.get_max_stack() >= 1 && (e < e1 || first_elem_height == 1)) {
 		o << " ";
 		string tmp;
-		my_append_padl(tmp, s.c_str(), w);
+		E->append_padl(tmp, s.c_str(), w);
 		o << tmp;
 	} else {
 		if (dsl.get_max_stack() >= 1)

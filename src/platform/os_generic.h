@@ -14,6 +14,13 @@
 #include "../Common.h"
 #include <string>
 
+#include "MyString.h"
+
+extern MyEncoding* E;
+
+void os_init();
+void os_terminate();
+
 extern const char *os_to_be_continued;
 extern const int os_to_be_continued_length;
 int os_get_size_of_newline();

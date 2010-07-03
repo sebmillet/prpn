@@ -22,6 +22,13 @@ const char *os_to_be_continued = "┄";
 const int os_to_be_continued_length = 1;
 int os_get_size_of_newline() { return 1; }
 
+void os_init() {
+	E = new MyEncoding(MYENCODING_UTF8);
+
+	debug_write("os_init() called");
+
+}
+
 const string os_concatene(const string& base, const string& added) { return concatene(SEP, base, added); }
 
 static bool os_e_exists(const char *sz, const int& my_flag) {

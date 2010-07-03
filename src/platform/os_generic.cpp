@@ -13,6 +13,13 @@ using namespace std;
 //#undef PROG_WINDOWS
 //#undef PROG_UNIXLIKE
 
+MyEncoding *E = NULL;
+
+void os_terminate() {
+	if (E != NULL)
+		delete E;
+}
+
 const string concatene(const char& sep, const string& base, const string& added) {
 	if (base.empty())
 		return added;

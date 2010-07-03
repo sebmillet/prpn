@@ -221,6 +221,8 @@ int prog_init(int argc, char **argv) {
 		opt_min_stack_height = 0;
 	}
 
+	os_init();
+
 	ui_init();
 
 	if (!has_gui)
