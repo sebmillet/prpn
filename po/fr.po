@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: prpn 0.5.0\n"
 "Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
 "POT-Creation-Date: 2010-07-04 14:40+0200\n"
-"PO-Revision-Date: 2010-07-04 14:40+0100\n"
+"PO-Revision-Date: 2010-07-04 15:54+0100\n"
 "Last-Translator: Sébastien Millet <sebastien.millet1@club-internet.fr>\n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
@@ -462,7 +462,7 @@ msgstr "Lit le fichier et met son contenu dans la pile"
 
 #: src/Commands.h:109
 msgid "Write the second item into the file named by the first item"
-msgstr "Écris le second élément de la pile dans le fichier nommé par le premier élément"
+msgstr "Écrit le second élément de la pile dans le fichier nommé par le premier élément"
 
 #: src/Commands.h:110
 msgid "Undo last command, 50 levels by default"

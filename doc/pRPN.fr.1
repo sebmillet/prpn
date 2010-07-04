@@ -1,0 +1,332 @@
+.\" Écrit par Sébastien Millet
+.\"
+.TH pRPN 1 "version 0.5.1" "18 juin 2010"
+
+.SH NAME
+pRPN \- une calculatrice en notation polonaise inverse multi systèmes
+d'exploitation
+
+.SH SYNOPSIS
+.B prpn [options]
+.br
+
+.SH DESCRIPTION
+Le programme \fBpRPN\fP est une calculatrice en notation polonaise inverse inspirée des calculatrices HP de la fin des années 80.
+.SH OPTIONS
+.TP
+.B \-h,\ \-\-help
+Affiche l'aide et quitte.
+.TP
+.B \-v\ \-\-version
+Affiche le numéro de version et quitte.
+.TP
+.B \-c,\ \-\-console
+Exécution en mode console.
+.TP
+.B \-w,\ \-\-width\ \fIwidth\fP
+Définis la largeur à \fIwidth\fP, mesurée en nombre de caractères. 23 par défaut.
+.TP
+.B \-h,\ \-\-height\ \fIheight\fP
+Définis la hauteur à \fIheight\fP, mesurée en nombre de lignes. 5 par défaut.
+.TP
+.B \-\-min-stack-height\ \fImin-stack-height\fP
+Définis la hauteur minimale à \fIheight\fP, mesurée en nombre de lignes. \fIheight\fP par défaut. Uniquement en mode console.
+.TP
+.B \-b,\ \-\-batch
+Mode batch, implique le mode console.
+.TP
+.B \-z,\ \-\-dry\-run
+Ignore les fichiers rc.
+.TP
+.B \-d,\ \-\-debug\ \fIdebug_option\fP
+Mode debug, prend un paramètre.
+.SH COMMANDES
+Les commandes sont suivies du nombre d'arguments qu'elles prennent, entre parenthèses. Ces arguments sont pris dans la pile.
+.TP
+.B _HELP\ (0)
+Affiche un écran d'aide
+.TP
+.B _HELP_FLAGS\ (0)
+Affiche un écran d'aide sur les options
+.TP
+.B _EXIT\ (0)
+Quitte le programme
+.TP
+.B +\ (2)
+Addition
+.TP
+.B -\ (2)
+Soustraction
+.TP
+.B *\ (2)
+Multiplication
+.TP
+.B /\ (2)
+Division
+.TP
+.B ^\ (2)
+Puissance
+.TP
+.B COS\ (1)
+Cosinus
+.TP
+.B SIN\ (1)
+Sinus
+.TP
+.B TAN\ (1)
+Tangente
+.TP
+.B ACOS\ (1)
+Arc-cosinus
+.TP
+.B ASIN\ (1)
+Arc-sinus
+.TP
+.B ATAN\ (1)
+Arc-tangente
+.TP
+.B LN\ (1)
+Logarithme (base e)
+.TP
+.B EXP\ (1)
+Exponentiel
+.TP
+.B NEG\ (1)
+Opposé
+.TP
+.B IP\ (1)
+Partie entière
+.TP
+.B INV\ (1)
+1/x
+.TP
+.B SQ\ (1)
+Carré
+.TP
+.B SQR\ (1)
+Racine carrée
+.TP
+.B R->C\ (2)
+Réel à complexe
+.TP
+.B C->R\ (1)
+Complexe à réel
+.TP
+.B SAME\ (2)
+Est identique
+.TP
+.B ==\ (2)
+Est égal à
+.TP
+.B <>\ (2)
+Est différent de
+.TP
+.B <\ (2)
+Est plus petit que
+.TP
+.B <=\ (2)
+Est plus petit que, ou égal à
+.TP
+.B >\ (2)
+Est plus grand que
+.TP
+.B >=\ (2)
+Est plus grand que, ou égal à
+.TP
+.B DUP\ (1)
+Copie le premier élément
+.TP
+.B SWAP\ (2)
+Échange les deux premiers éléments
+.TP
+.B DROP\ (1)
+Supprime le premier élément
+.TP
+.B CLEAR\ (0)
+Efface la pile
+.TP
+.B OVER\ (2)
+Copie le second élément
+.TP
+.B DUP2\ (2)
+Copie les deux premiers éléments
+.TP
+.B DROP2\ (2)
+Supprime les deux premiers éléments
+.TP
+.B ROT\ (3)
+Déplace le troisième élément en première position
+.TP
+.B ROLLD\ (1)
+Déplace le premier élément en Nième position
+.TP
+.B ROLL\ (1)
+Déplace le Ne élément en première position
+.TP
+.B PICK\ (1)
+Copie le Ne élément
+.TP
+.B DUPN\ (1)
+Copie les N premiers éléments
+.TP
+.B DROPN\ (1)
+Supprime les N premiers éléments
+.TP
+.B DEPTH\ (0)
+Renvoie le nombre d'éléments dans la pile
+.TP
+.B SF\ (1)
+Active l'option
+.TP
+.B CF\ (1)
+Désactive l'option
+.TP
+.B FS?\ (1)
+Renvoie 1 si l'option est activée, 0 sinon
+.TP
+.B FC?\ (1)
+Renvoie 0 si l'option est activée, 1 sinon
+.TP
+.B FS?C\ (1)
+Exécute FS? et désactive l'option
+.TP
+.B FC?C\ (1)
+Exécute FC? et désactive l'option
+.TP
+.B ->STR\ (1)
+Convertit un élément en chaîne de caractères
+.TP
+.B STR->\ (0)
+Convertit une chaîne de caractère en éléments
+.TP
+.B ->LIST\ (1)
+Mets les éléments dans une liste
+.TP
+.B LIST->\ (1)
+Convertit la liste en ses éléments
+.TP
+.B EVAL\ (0)
+Évalue l'élément
+.TP
+.B STO\ (2)
+Enregistre la valeur dans la variable
+.TP
+.B RCL\ (1)
+Récupère la valeur de la variable
+.TP
+.B PURGE\ (1)
+Supprime la variable
+.TP
+.B VARS\ (0)
+Renvoie la liste des variables dans le répertoire courant
+.TP
+.B PATH\ (0)
+Renvoie le répertoire en cours sous forme de liste
+.TP
+.B CRDIR\ (1)
+Crée un répertoire
+.TP
+.B HOME\ (0)
+Définis le répertoire racine comme répertoire courant
+.TP
+.B UP\ (0)
+Définis le répertoire parent comme répertoire courant
+.TP
+.B BIN\ (0)
+Utilise le mode binaire pour les entiers binaires
+.TP
+.B OCT\ (0)
+Utilise le mode octal pour les entiers binaires
+.TP
+.B DEC\ (0)
+Utilise le mode décimal pour les entiers binaires
+.TP
+.B HEX\ (0)
+Utilise le mode hexadécimal pour les entiers binaires
+.TP
+.B STWS\ (1)
+Définis le nombre de bits des entiers binaires (de 1 à 64)
+.TP
+.B RCWS\ (0)
+Renvoie le nombre de bits des entiers binaires
+.TP
+.B B->R\ (1)
+Convertit un entier binaire en réel
+.TP
+.B R->B\ (1)
+Convertit un réel en entier binaire
+.TP
+.B RCLF\ (0)
+Enregistre l'état des options dans un entier binaire
+.TP
+.B STOF\ (1)
+Récupère l'état des options depuis un entier binaire
+.TP
+.B WAIT\ (1)
+Pause d'une durée définie en secondes
+.TP
+.B _READ\ (1)
+Lit le fichier et met son contenu dans la pile
+.TP
+.B _WRITE\ (2)
+Écrit le second élément de la pile dans le fichier nommé par le premier élément
+.TP
+.B UNDO\ (0)
+Annule la dernière commande, 50 niveaux par défaut
+.TP
+.B _UNDO_LEVELS\ (1)
+Définis le nombre de niveaux d'annulation
+.TP
+.B _UNDO_LEVELS?\ (0)
+Renvoie le nombre de niveaux d'annulations
+.SH "TYPES D'OBJETS"
+.TP
+.I Donnée
+.TP
+.B Nombre réel
+1.23456e-25    
+.TP
+.B Nombre complexe
+( )	(123.45, 678.90)
+.TP
+.B Entier binaire
+#	# 123AB
+.TP
+.B Chaîne de caractères
+" "	"RESULT"
+.TP
+.B Vecteur
+[ ]	[1.23 4.56 7.89]
+.TP
+.B Matrice
+[[ ]]	[[1.23 4.56] [6.54 3.21]]
+.TP
+.B Liste
+{ }	{1.23 "ABC" # 45d}
+.TP
+.I Noms
+.TP
+.B Nom
+\' \'	\'CALC\'
+.TP
+.I Procédures
+.TP
+.B Programme
+<< >>	<< DUP + SWAP >>
+.TP
+.B Algébrique
+\' \'	\'X+2*Y=Z\'
+.SH "FICHIERS D'INITIALISATION"
+.TP
+.B ~/.prpn/stackrc
+Réglages et contenu de la pile.
+.TP
+.B ~/.prpn/varsrc
+Structure contenant les variables, et répertoire courant.
+.SH AUTEUR
+Écrit par Sébastien Millet <sebastien.millet1@club-internet.fr>. Autorisation est donnée de copier, distribuer et/ou modifier ce document selon les termes de la licence "GNU General Public License". La version 3 est publiée par la Free Software Foundation.
+.SH BUGS
+.TP
+\- Ce programme est en version 0.5.1...
+.TP
+\- Version Windows : wx se déconnecte du terminal d'où il est lancé. C'est pourquoi la compilation de la version Windows produit une version graphique, prpn.exe, et une version console, prpnc.exe.

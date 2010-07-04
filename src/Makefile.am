@@ -20,6 +20,7 @@ AM_CPPFLAGS+= -DPKG_BINDIR="\"${bindir}\"" -DPKG_LOCALEDIR=\"$(localedir)\"
 
 CMDSEN=${top_srcdir}/doc/cmdsen.txt
 CMDSFR=${top_srcdir}/doc/cmdsfr.txt
+CMDSFRTMP=${top_srcdir}/doc/cmdsfr-0-tmp.txt
 noinst_DATA=${CMDSEN} ${CMDSFR}
 
 if BUILD_DOCS
@@ -28,7 +29,9 @@ ${CMDSEN}: Commands.h
 	echo "_HELP" | LC_ALL="C" ${builddir}/${EXENAME} -b > ${CMDSEN}
 
 ${CMDSFR}: Commands.h
-	echo "_HELP" | LC_ALL="fr_FR.UTF-8" ${builddir}/${EXENAME} -b > ${CMDSFR}
+	echo "_HELP" | LC_ALL="fr_FR.utf8" ${builddir}/${EXENAME} -b > ${CMDSFRTMP}
+	iconv -f utf8 -t latin1 ${CMDSFRTMP} > ${CMDSFR}
+	rm -f ${CMDSFRTMP}
 
 endif
 

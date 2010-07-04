@@ -99,23 +99,15 @@ Procedures
 Program                  << >>          << DUP + SWAP >>
 Algebraic                ' '            'X+2*Y=Z'
 
-1
-(1;2,3)
-9,99999999999e199
-9,99999999999e199
-1
-0
-{ x A_very_long_name Beta }
-# 11000000b
-# 11100000b
-"allo"
-"z"
+"a"
 "é"
-"hé bé"
-""
-"x"
-"xé"
-"éâî "
-"éâî "
-"read-file-test-bad1.txt"
+"éé"
+"12345678910éééèâïëä"
+"éèâïëä"
+" 12345678910éé.éèâïë"
+1.2
+(3,-1.222)
+# 10010b
+{ 18 1.2 (3,-1.222) # 10010b }
+'-help'
 get_class_count() = 0 for watched classes

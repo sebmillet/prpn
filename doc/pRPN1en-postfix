@@ -1,3 +1,40 @@
+.SH "OBJECT TYPES"
+.TP
+.I Data
+.TP
+.B Real Number
+1.23456e-25    
+.TP
+.B Complex Number
+( )	(123.45, 678.90)
+.TP
+.B Binary Integer
+#	# 123AB
+.TP
+.B String
+" "	"RESULT"
+.TP
+.B Vector
+[ ]	[1.23 4.56 7.89]
+.TP
+.B Matrix
+[[ ]]	[[1.23 4.56] [6.54 3.21]]
+.TP
+.B List
+{ }	{1.23 "ABC" # 45d}
+.TP
+.I Names
+.TP
+.B Name
+\' \'	\'CALC\'
+.TP
+.I Procedures
+.TP
+.B Program
+<< >>	<< DUP + SWAP >>
+.TP
+.B Algebraic
+\' \'	\'X+2*Y=Z\'
 .SH "INITIALIZATION FILES"
 .TP
 .B ~/.prpn/stackrc
@@ -6,14 +43,9 @@ Settings and stack content.
 .B ~/.prpn/varsrc
 Variables structure, and actual working directory.
 .SH AUTHOR
-Written by SÃ©bastien Millet <sebastien.millet1@club-internet.fr>. Permission
-is granted to copy, distribute and/or modify this document under the terms of
-the GNU General Public License, Version 3 published by the Free Software
-Foundation.
+Written by Sébastien Millet <sebastien.millet1@club-internet.fr>. Permission is granted to copy, distribute and/or modify this document under the terms of the GNU General Public License, Version 3 published by the Free Software Foundation.
 .SH BUGS
 .TP
 \- Program is in version 0.5.1...
 .TP
-\- Windows version: wx disconnects the program from the terminal it is sent
-from. Therefore Windows generation produces a GUI version, pRPN.exe, and a
-console version, pRPNc.exe.
+\- Windows version: wx disconnects the program from the terminal it is sent from. Therefore Windows generation produces a GUI version, pRPN.exe, and a console version, pRPNc.exe.

@@ -1,0 +1,491 @@
+Content-type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML><HEAD><TITLE>Man page of pRPN</TITLE>
+</HEAD><BODY>
+<H1>pRPN</H1>
+Section: User Commands  (1)<BR>Updated: version 0.5.1<BR><A HREF="#index">Index</A>
+<A HREF="/cgi-bin/man/man2html">Return to Main Contents</A><HR>
+
+<P>
+<A NAME="lbAB">&nbsp;</A>
+<H2>NAME</H2>
+
+pRPN - une calculatrice en notation polonaise inverse multi systèmes
+d'exploitation
+<P>
+<A NAME="lbAC">&nbsp;</A>
+<H2>SYNOPSIS</H2>
+
+<B>prpn [options]</B>
+
+<BR>
+
+<P>
+<A NAME="lbAD">&nbsp;</A>
+<H2>DESCRIPTION</H2>
+
+Le programme <B>pRPN</B> est une calculatrice en notation polonaise inverse inspirée des calculatrices HP de la fin des années 80.
+<A NAME="lbAE">&nbsp;</A>
+<H2>OPTIONS</H2>
+
+<DL COMPACT>
+<DT><B>-h,&nbsp;--help</B>
+
+<DD>
+Affiche l'aide et quitte.
+<DT><B>-v&nbsp;--version</B>
+
+<DD>
+Affiche le numéro de version et quitte.
+<DT><B>-c,&nbsp;--console</B>
+
+<DD>
+Exécution en mode console.
+<DT><B>-w,&nbsp;--width&nbsp;</B><I>width</I>
+
+<DD>
+Définis la largeur à <I>width</I>, mesurée en nombre de caractères. 23 par défaut.
+<DT><B>-h,&nbsp;--height&nbsp;</B><I>height</I>
+
+<DD>
+Définis la hauteur à <I>height</I>, mesurée en nombre de lignes. 5 par défaut.
+<DT><B>--min-stack-height&nbsp;</B><I>min-stack-height</I>
+
+<DD>
+Définis la hauteur minimale à <I>height</I>, mesurée en nombre de lignes. <I>height</I> par défaut. Uniquement en mode console.
+<DT><B>-b,&nbsp;--batch</B>
+
+<DD>
+Mode batch, implique le mode console.
+<DT><B>-z,&nbsp;--dry-run</B>
+
+<DD>
+Ignore les fichiers rc.
+<DT><B>-d,&nbsp;--debug&nbsp;</B><I>debug_option</I>
+
+<DD>
+Mode debug, prend un paramètre.
+</DL>
+<A NAME="lbAF">&nbsp;</A>
+<H2>COMMANDES</H2>
+
+Les commandes sont suivies du nombre d'arguments qu'elles prennent, entre parenthèses. Ces arguments sont pris dans la pile.
+<DL COMPACT>
+<DT><B>_HELP&nbsp;(0)</B>
+
+<DD>
+Affiche un écran d'aide
+<DT><B>_HELP_FLAGS&nbsp;(0)</B>
+
+<DD>
+Affiche un écran d'aide sur les options
+<DT><B>_EXIT&nbsp;(0)</B>
+
+<DD>
+Quitte le programme
+<DT><B>+&nbsp;(2)</B>
+
+<DD>
+Addition
+<DT><B>-&nbsp;(2)</B>
+
+<DD>
+Soustraction
+<DT><B>*&nbsp;(2)</B>
+
+<DD>
+Multiplication
+<DT><B>/&nbsp;(2)</B>
+
+<DD>
+Division
+<DT><B>^&nbsp;(2)</B>
+
+<DD>
+Puissance
+<DT><B>COS&nbsp;(1)</B>
+
+<DD>
+Cosinus
+<DT><B>SIN&nbsp;(1)</B>
+
+<DD>
+Sinus
+<DT><B>TAN&nbsp;(1)</B>
+
+<DD>
+Tangente
+<DT><B>ACOS&nbsp;(1)</B>
+
+<DD>
+Arc-cosinus
+<DT><B>ASIN&nbsp;(1)</B>
+
+<DD>
+Arc-sinus
+<DT><B>ATAN&nbsp;(1)</B>
+
+<DD>
+Arc-tangente
+<DT><B>LN&nbsp;(1)</B>
+
+<DD>
+Logarithme (base e)
+<DT><B>EXP&nbsp;(1)</B>
+
+<DD>
+Exponentiel
+<DT><B>NEG&nbsp;(1)</B>
+
+<DD>
+Opposé
+<DT><B>IP&nbsp;(1)</B>
+
+<DD>
+Partie entière
+<DT><B>INV&nbsp;(1)</B>
+
+<DD>
+1/x
+<DT><B>SQ&nbsp;(1)</B>
+
+<DD>
+Carré
+<DT><B>SQR&nbsp;(1)</B>
+
+<DD>
+Racine carrée
+<DT><B>R-&gt;C&nbsp;(2)</B>
+
+<DD>
+Réel à complexe
+<DT><B>C-&gt;R&nbsp;(1)</B>
+
+<DD>
+Complexe à réel
+<DT><B>SAME&nbsp;(2)</B>
+
+<DD>
+Est identique
+<DT><B>==&nbsp;(2)</B>
+
+<DD>
+Est égal à
+<DT><B>&lt;&gt;&nbsp;(2)</B>
+
+<DD>
+Est différent de
+<DT><B>&lt;&nbsp;(2)</B>
+
+<DD>
+Est plus petit que
+<DT><B>&lt;=&nbsp;(2)</B>
+
+<DD>
+Est plus petit que, ou égal à
+<DT><B>&gt;&nbsp;(2)</B>
+
+<DD>
+Est plus grand que
+<DT><B>&gt;=&nbsp;(2)</B>
+
+<DD>
+Est plus grand que, ou égal à
+<DT><B>DUP&nbsp;(1)</B>
+
+<DD>
+Copie le premier élément
+<DT><B>SWAP&nbsp;(2)</B>
+
+<DD>
+Échange les deux premiers éléments
+<DT><B>DROP&nbsp;(1)</B>
+
+<DD>
+Supprime le premier élément
+<DT><B>CLEAR&nbsp;(0)</B>
+
+<DD>
+Efface la pile
+<DT><B>OVER&nbsp;(2)</B>
+
+<DD>
+Copie le second élément
+<DT><B>DUP2&nbsp;(2)</B>
+
+<DD>
+Copie les deux premiers éléments
+<DT><B>DROP2&nbsp;(2)</B>
+
+<DD>
+Supprime les deux premiers éléments
+<DT><B>ROT&nbsp;(3)</B>
+
+<DD>
+Déplace le troisième élément en première position
+<DT><B>ROLLD&nbsp;(1)</B>
+
+<DD>
+Déplace le premier élément en Nième position
+<DT><B>ROLL&nbsp;(1)</B>
+
+<DD>
+Déplace le Ne élément en première position
+<DT><B>PICK&nbsp;(1)</B>
+
+<DD>
+Copie le Ne élément
+<DT><B>DUPN&nbsp;(1)</B>
+
+<DD>
+Copie les N premiers éléments
+<DT><B>DROPN&nbsp;(1)</B>
+
+<DD>
+Supprime les N premiers éléments
+<DT><B>DEPTH&nbsp;(0)</B>
+
+<DD>
+Renvoie le nombre d'éléments dans la pile
+<DT><B>SF&nbsp;(1)</B>
+
+<DD>
+Active l'option
+<DT><B>CF&nbsp;(1)</B>
+
+<DD>
+Désactive l'option
+<DT><B>FS?&nbsp;(1)</B>
+
+<DD>
+Renvoie 1 si l'option est activée, 0 sinon
+<DT><B>FC?&nbsp;(1)</B>
+
+<DD>
+Renvoie 0 si l'option est activée, 1 sinon
+<DT><B>FS?C&nbsp;(1)</B>
+
+<DD>
+Exécute FS? et désactive l'option
+<DT><B>FC?C&nbsp;(1)</B>
+
+<DD>
+Exécute FC? et désactive l'option
+<DT><B>-&gt;STR&nbsp;(1)</B>
+
+<DD>
+Convertit un élément en chaîne de caractères
+<DT><B>STR-&gt;&nbsp;(0)</B>
+
+<DD>
+Convertit une chaîne de caractère en éléments
+<DT><B>-&gt;LIST&nbsp;(1)</B>
+
+<DD>
+Mets les éléments dans une liste
+<DT><B>LIST-&gt;&nbsp;(1)</B>
+
+<DD>
+Convertit la liste en ses éléments
+<DT><B>EVAL&nbsp;(0)</B>
+
+<DD>
+Évalue l'élément
+<DT><B>STO&nbsp;(2)</B>
+
+<DD>
+Enregistre la valeur dans la variable
+<DT><B>RCL&nbsp;(1)</B>
+
+<DD>
+Récupère la valeur de la variable
+<DT><B>PURGE&nbsp;(1)</B>
+
+<DD>
+Supprime la variable
+<DT><B>VARS&nbsp;(0)</B>
+
+<DD>
+Renvoie la liste des variables dans le répertoire courant
+<DT><B>PATH&nbsp;(0)</B>
+
+<DD>
+Renvoie le répertoire en cours sous forme de liste
+<DT><B>CRDIR&nbsp;(1)</B>
+
+<DD>
+Crée un répertoire
+<DT><B>HOME&nbsp;(0)</B>
+
+<DD>
+Définis le répertoire racine comme répertoire courant
+<DT><B>UP&nbsp;(0)</B>
+
+<DD>
+Définis le répertoire parent comme répertoire courant
+<DT><B>BIN&nbsp;(0)</B>
+
+<DD>
+Utilise le mode binaire pour les entiers binaires
+<DT><B>OCT&nbsp;(0)</B>
+
+<DD>
+Utilise le mode octal pour les entiers binaires
+<DT><B>DEC&nbsp;(0)</B>
+
+<DD>
+Utilise le mode décimal pour les entiers binaires
+<DT><B>HEX&nbsp;(0)</B>
+
+<DD>
+Utilise le mode hexadécimal pour les entiers binaires
+<DT><B>STWS&nbsp;(1)</B>
+
+<DD>
+Définis le nombre de bits des entiers binaires (de 1 à 64)
+<DT><B>RCWS&nbsp;(0)</B>
+
+<DD>
+Renvoie le nombre de bits des entiers binaires
+<DT><B>B-&gt;R&nbsp;(1)</B>
+
+<DD>
+Convertit un entier binaire en réel
+<DT><B>R-&gt;B&nbsp;(1)</B>
+
+<DD>
+Convertit un réel en entier binaire
+<DT><B>RCLF&nbsp;(0)</B>
+
+<DD>
+Enregistre l'état des options dans un entier binaire
+<DT><B>STOF&nbsp;(1)</B>
+
+<DD>
+Récupère l'état des options depuis un entier binaire
+<DT><B>WAIT&nbsp;(1)</B>
+
+<DD>
+Pause d'une durée définie en secondes
+<DT><B>_READ&nbsp;(1)</B>
+
+<DD>
+Lit le fichier et met son contenu dans la pile
+<DT><B>_WRITE&nbsp;(2)</B>
+
+<DD>
+Écrit le second élément de la pile dans le fichier nommé par le premier élément
+<DT><B>UNDO&nbsp;(0)</B>
+
+<DD>
+Annule la dernière commande, 50 niveaux par défaut
+<DT><B>_UNDO_LEVELS&nbsp;(1)</B>
+
+<DD>
+Définis le nombre de niveaux d'annulation
+<DT><B>_UNDO_LEVELS?&nbsp;(0)</B>
+
+<DD>
+Renvoie le nombre de niveaux d'annulations
+</DL>
+<A NAME="lbAG">&nbsp;</A>
+<H2>TYPES D'OBJETS</H2>
+
+<DL COMPACT>
+<DT><I>Donnée</I>
+
+<DD>
+<DT><B>Nombre réel</B>
+
+<DD>
+1.23456e-25    
+<DT><B>Nombre complexe</B>
+
+<DD>
+( )<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>(123.45, 678.90)<BR>
+<DT><B>Entier binaire</B>
+
+<DD>
+#<TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TT># 123AB<BR>
+<DT><B>Chaîne de caractères</B>
+
+<DD>
+&quot; &quot;<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>&quot;RESULT&quot;<BR>
+<DT><B>Vecteur</B>
+
+<DD>
+[ ]<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>[1.23 4.56 7.89]<BR>
+<DT><B>Matrice</B>
+
+<DD>
+[[ ]]<TT>&nbsp;&nbsp;</TT>[[1.23 4.56] [6.54 3.21]]<BR>
+<DT><B>Liste</B>
+
+<DD>
+{ }<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>{1.23 &quot;ABC&quot; # 45d}<BR>
+<DT><I>Noms</I>
+
+<DD>
+<DT><B>Nom</B>
+
+<DD>
+' '<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>'CALC'<BR>
+<DT><I>Procédures</I>
+
+<DD>
+<DT><B>Programme</B>
+
+<DD>
+&lt;&lt; &gt;&gt;<TT>&nbsp;&nbsp;</TT>&lt;&lt; DUP + SWAP &gt;&gt;<BR>
+<DT><B>Algébrique</B>
+
+<DD>
+' '<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>'X+2*Y=Z'<BR>
+</DL>
+<A NAME="lbAH">&nbsp;</A>
+<H2>FICHIERS D'INITIALISATION</H2>
+
+<DL COMPACT>
+<DT><B>~/.prpn/stackrc</B>
+
+<DD>
+Réglages et contenu de la pile.
+<DT><B>~/.prpn/varsrc</B>
+
+<DD>
+Structure contenant les variables, et répertoire courant.
+</DL>
+<A NAME="lbAI">&nbsp;</A>
+<H2>AUTEUR</H2>
+
+Écrit par Sébastien Millet &lt;<A HREF="mailto:sebastien.millet1@club-internet.fr">sebastien.millet1@club-internet.fr</A>&gt;. Autorisation est donnée de copier, distribuer et/ou modifier ce document selon les termes de la licence &quot;GNU General Public License&quot;. La version 3 est publiée par la Free Software Foundation.
+<A NAME="lbAJ">&nbsp;</A>
+<H2>BUGS</H2>
+
+<DL COMPACT>
+<DT>- Ce programme est en version 0.5.1...<DD>
+<DT>- Version Windows : wx se déconnecte du terminal d'où il est lancé. C'est pourquoi la compilation de la version Windows produit une version graphique, prpn.exe, et une version console, prpnc.exe.<DD>
+<P>
+</DL>
+
+<HR>
+<A NAME="index">&nbsp;</A><H2>Index</H2>
+<DL>
+<DT><A HREF="#lbAB">NAME</A><DD>
+<DT><A HREF="#lbAC">SYNOPSIS</A><DD>
+<DT><A HREF="#lbAD">DESCRIPTION</A><DD>
+<DT><A HREF="#lbAE">OPTIONS</A><DD>
+<DT><A HREF="#lbAF">COMMANDES</A><DD>
+<DT><A HREF="#lbAG">TYPES D'OBJETS</A><DD>
+<DT><A HREF="#lbAH">FICHIERS D'INITIALISATION</A><DD>
+<DT><A HREF="#lbAI">AUTEUR</A><DD>
+<DT><A HREF="#lbAJ">BUGS</A><DD>
+</DL>
+<HR>
+This document was created by
+<A HREF="/cgi-bin/man/man2html">man2html</A>,
+using the manual pages.<BR>
+Time: 15:41:07 GMT, July 04, 2010
+</BODY>
+</HTML>

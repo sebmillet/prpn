@@ -1,7 +1,7 @@
 Commande (nombre d'arguments) : description
 
-_HELP          (0): Affiche un √©cran d'aide
-_HELP_FLAGS    (0): Affiche un √©cran d'aide sur les options
+_HELP          (0): Affiche un Ècran d'aide
+_HELP_FLAGS    (0): Affiche un Ècran d'aide sur les options
 _EXIT          (0): Quitte le programme
 +              (2): Addition
 -              (2): Soustraction
@@ -16,78 +16,78 @@ ASIN           (1): Arc-sinus
 ATAN           (1): Arc-tangente
 LN             (1): Logarithme (base e)
 EXP            (1): Exponentiel
-NEG            (1): Oppos√©
-IP             (1): Partie enti√®re
+NEG            (1): OpposÈ
+IP             (1): Partie entiËre
 INV            (1): 1/x
-SQ             (1): Carr√©
-SQR            (1): Racine carr√©e
-R->C           (2): R√©el √† complexe
-C->R           (1): Complexe √† r√©el
+SQ             (1): CarrÈ
+SQR            (1): Racine carrÈe
+R->C           (2): RÈel ‡ complexe
+C->R           (1): Complexe ‡ rÈel
 SAME           (2): Est identique
-==             (2): Est √©gal √†
-<>             (2): Est diff√©rent de
+==             (2): Est Ègal ‡
+<>             (2): Est diffÈrent de
 <              (2): Est plus petit que
-<=             (2): Est plus petit que, ou √©gal √†
+<=             (2): Est plus petit que, ou Ègal ‡
 >              (2): Est plus grand que
->=             (2): Est plus grand que, ou √©gal √†
-DUP            (1): Copie le premier √©l√©ment
-SWAP           (2): √âchange les deux premiers √©l√©ments
-DROP           (1): Supprime le premier √©l√©ment
+>=             (2): Est plus grand que, ou Ègal ‡
+DUP            (1): Copie le premier ÈlÈment
+SWAP           (2): …change les deux premiers ÈlÈments
+DROP           (1): Supprime le premier ÈlÈment
 CLEAR          (0): Efface la pile
-OVER           (2): Copie le second √©l√©ment
-DUP2           (2): Copie les deux premiers √©l√©ments
-DROP2          (2): Supprime les deux premiers √©l√©ments
-ROT            (3): D√©place le troisi√®me √©l√©ment en premi√®re position
-ROLLD          (1): D√©place le premier √©l√©ment en Ni√®me position
-ROLL           (1): D√©place le Ne √©l√©ment en premi√®re position
-PICK           (1): Copie le Ne √©l√©ment
-DUPN           (1): Copie les N premiers √©l√©ments
-DROPN          (1): Supprime les N premiers √©l√©ments
-DEPTH          (0): Renvoie le nombre d'√©l√©ments dans la pile
+OVER           (2): Copie le second ÈlÈment
+DUP2           (2): Copie les deux premiers ÈlÈments
+DROP2          (2): Supprime les deux premiers ÈlÈments
+ROT            (3): DÈplace le troisiËme ÈlÈment en premiËre position
+ROLLD          (1): DÈplace le premier ÈlÈment en NiËme position
+ROLL           (1): DÈplace le Ne ÈlÈment en premiËre position
+PICK           (1): Copie le Ne ÈlÈment
+DUPN           (1): Copie les N premiers ÈlÈments
+DROPN          (1): Supprime les N premiers ÈlÈments
+DEPTH          (0): Renvoie le nombre d'ÈlÈments dans la pile
 SF             (1): Active l'option
-CF             (1): D√©sactive l'option
-FS?            (1): Renvoie 1 si l'option est activ√©e, 0 sinon
-FC?            (1): Renvoie 0 si l'option est activ√©e, 1 sinon
-FS?C           (1): Ex√©cute FS? et d√©sactive l'option
-FC?C           (1): Ex√©cute FC? et d√©sactive l'option
-->STR          (1): Convertit un √©l√©ment en cha√Æne de caract√®res
-STR->          (0): Convertit une cha√Æne de caract√®re en √©l√©ments
-->LIST         (1): Mets les √©l√©ments dans une liste
-LIST->         (1): Convertit la liste en ses √©l√©ments
-EVAL           (0): √âvalue l'√©l√©ment
+CF             (1): DÈsactive l'option
+FS?            (1): Renvoie 1 si l'option est activÈe, 0 sinon
+FC?            (1): Renvoie 0 si l'option est activÈe, 1 sinon
+FS?C           (1): ExÈcute FS? et dÈsactive l'option
+FC?C           (1): ExÈcute FC? et dÈsactive l'option
+->STR          (1): Convertit un ÈlÈment en chaÓne de caractËres
+STR->          (0): Convertit une chaÓne de caractËre en ÈlÈments
+->LIST         (1): Mets les ÈlÈments dans une liste
+LIST->         (1): Convertit la liste en ses ÈlÈments
+EVAL           (0): …value l'ÈlÈment
 STO            (2): Enregistre la valeur dans la variable
-RCL            (1): R√©cup√®re la valeur de la variable
+RCL            (1): RÈcupËre la valeur de la variable
 PURGE          (1): Supprime la variable
-VARS           (0): Renvoie la liste des variables dans le r√©pertoire courant
-PATH           (0): Renvoie le r√©pertoire en cours sous forme de liste
-CRDIR          (1): Cr√©e un r√©pertoire
-HOME           (0): D√©finis le r√©pertoire racine comme r√©pertoire courant
-UP             (0): D√©finis le r√©pertoire parent comme r√©pertoire courant
+VARS           (0): Renvoie la liste des variables dans le rÈpertoire courant
+PATH           (0): Renvoie le rÈpertoire en cours sous forme de liste
+CRDIR          (1): CrÈe un rÈpertoire
+HOME           (0): DÈfinis le rÈpertoire racine comme rÈpertoire courant
+UP             (0): DÈfinis le rÈpertoire parent comme rÈpertoire courant
 BIN            (0): Utilise le mode binaire pour les entiers binaires
 OCT            (0): Utilise le mode octal pour les entiers binaires
-DEC            (0): Utilise le mode d√©cimal pour les entiers binaires
-HEX            (0): Utilise le mode hexad√©cimal pour les entiers binaires
-STWS           (1): D√©finis le nombre de bits des entiers binaires (de 1 √† 64)
+DEC            (0): Utilise le mode dÈcimal pour les entiers binaires
+HEX            (0): Utilise le mode hexadÈcimal pour les entiers binaires
+STWS           (1): DÈfinis le nombre de bits des entiers binaires (de 1 ‡ 64)
 RCWS           (0): Renvoie le nombre de bits des entiers binaires
-B->R           (1): Convertit un entier binaire en r√©el
-R->B           (1): Convertit un r√©el en entier binaire
-RCLF           (0): Enregistre l'√©tat des options dans un entier binaire
-STOF           (1): R√©cup√®re l'√©tat des options depuis un entier binaire
-WAIT           (1): Pause d'une dur√©e d√©finie en secondes
+B->R           (1): Convertit un entier binaire en rÈel
+R->B           (1): Convertit un rÈel en entier binaire
+RCLF           (0): Enregistre l'Ètat des options dans un entier binaire
+STOF           (1): RÈcupËre l'Ètat des options depuis un entier binaire
+WAIT           (1): Pause d'une durÈe dÈfinie en secondes
 _READ          (1): Lit le fichier et met son contenu dans la pile
-_WRITE         (2): √âcris le second √©l√©ment de la pile dans le fichier nomm√© par le premier √©l√©ment
-UNDO           (0): Annule la derni√®re commande, 50 niveaux par d√©faut
-_UNDO_LEVELS   (1): D√©finis le nombre de niveaux d'annulation
+_WRITE         (2): …crit le second ÈlÈment de la pile dans le fichier nommÈ par le premier ÈlÈment
+UNDO           (0): Annule la derniËre commande, 50 niveaux par dÈfaut
+_UNDO_LEVELS   (1): DÈfinis le nombre de niveaux d'annulation
 _UNDO_LEVELS?  (0): Renvoie le nombre de niveaux d'annulations
 
 Type d'objet             Symbole        Exemple
 ------------------------ -------------- -------------------------
 
-Donn√©e
-Nombre r√©el              1.23456e-25    
+DonnÈe
+Nombre rÈel              1.23456e-25    
 Nombre Complexe          ( )            (123.45, 678.90)
 Entier Binaire           #              # 123AB
-Cha√Æne de Caract√®res     " "            "R√âSULTAT"
+ChaÓne de CaractËres     " "            "R…SULTAT"
 Vecteur                  [ ]            [1.23 4.56 7.89]
 Matrice                  [[ ]]          [[1.23 4.56] [6.54 3.21]]
 Liste                    { }            {1.23 "ABC" # 45d}
@@ -97,25 +97,17 @@ Nom                      ' '            'CALC'
 
 Programmes
 Programme                << >>          << DUP + SWAP >>
-Alg√©brique               ' '            'X+2*Y=Z'
+AlgÈbrique               ' '            'X+2*Y=Z'
 
-1
-(1;2,3)
-9,99999999999e199
-9,99999999999e199
-1
-0
-{ x A_very_long_name Beta }
-# 11000000b
-# 11100000b
-"allo"
-"z"
-"√©"
-"h√© b√©"
-""
-"x"
-"x√©"
-"√©√¢√Æ "
-"√©√¢√Æ "
-"read-file-test-bad1.txt"
+"a"
+"È"
+"ÈÈ"
+"12345678910ÈÈÈË‚ÔÎ‰"
+"ÈË‚ÔÎ‰"
+" 12345678910ÈÈ.ÈË‚ÔÎ"
+1.2
+(3,-1.222)
+# 10010b
+{ 18 1.2 (3,-1.222) # 10010b }
+'-help'
 get_class_count() = 0 for watched classes

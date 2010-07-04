@@ -1,19 +1,51 @@
+.SH "TYPES D'OBJETS"
+.TP
+.I Donnée
+.TP
+.B Nombre réel
+1.23456e-25    
+.TP
+.B Nombre complexe
+( )	(123.45, 678.90)
+.TP
+.B Entier binaire
+#	# 123AB
+.TP
+.B Chaîne de caractères
+" "	"RESULT"
+.TP
+.B Vecteur
+[ ]	[1.23 4.56 7.89]
+.TP
+.B Matrice
+[[ ]]	[[1.23 4.56] [6.54 3.21]]
+.TP
+.B Liste
+{ }	{1.23 "ABC" # 45d}
+.TP
+.I Noms
+.TP
+.B Nom
+\' \'	\'CALC\'
+.TP
+.I Procédures
+.TP
+.B Programme
+<< >>	<< DUP + SWAP >>
+.TP
+.B Algébrique
+\' \'	\'X+2*Y=Z\'
 .SH "FICHIERS D'INITIALISATION"
 .TP
 .B ~/.prpn/stackrc
-RÃ©glages et contenu de la pile.
+Réglages et contenu de la pile.
 .TP
 .B ~/.prpn/varsrc
-Structure contenant les variables, et rÃ©pertoire courant.
+Structure contenant les variables, et répertoire courant.
 .SH AUTEUR
-Ã‰crit par SÃ©bastien Millet <sebastien.millet1@club-internet.fr>. Autorisation
-est donnÃ©e de copier, distribuer et/ou modifier ce document selon les termes
-de la licence "GNU General Public License". La version 3 est publiÃ©e par la
-Free Software Foundation.
+Écrit par Sébastien Millet <sebastien.millet1@club-internet.fr>. Autorisation est donnée de copier, distribuer et/ou modifier ce document selon les termes de la licence "GNU General Public License". La version 3 est publiée par la Free Software Foundation.
 .SH BUGS
 .TP
-\- Program is in version 0.5.1...
+\- Ce programme est en version 0.5.1...
 .TP
-\- Version Windows : wx se dÃ©connecte du terminal d'oÃ¹ il est lancÃ©. C'est
-pourquoi la compilation de la version Windows produit une version graphique,
-prpn.exe, et une version console, prpnc.exe.
+\- Version Windows : wx se déconnecte du terminal d'où il est lancé. C'est pourquoi la compilation de la version Windows produit une version graphique, prpn.exe, et une version console, prpnc.exe.
