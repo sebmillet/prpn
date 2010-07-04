@@ -117,49 +117,51 @@ const string stack_get_help(const int& dh) {
 	ostringstream sout;
 	if (dh == DH_MAIN) {
 		sout << _("Command (number of arguments): description") << endl << endl;
+		string s;
 		for (size_t i = 0; i < sizeof_builtinCommands; i++) {
 			sout.width(14);
-			sout << left << builtinCommands[i].command << " (" << builtinCommands[i].nb_args << "): " <<
+			s.erase(); E->append_padr(s, builtinCommands[i].command, 14);
+			sout << s << " (" << builtinCommands[i].nb_args << "): " <<
 				_(builtinCommands[i].short_description) << endl;
 		}
 		sout << endl;
-		sout.width(25); sout << left << _("Object type");
-		sout.width(15); sout << left << _("Symbol") << _("Example") << endl;
-		sout.width(25); sout << left << "------------------------";
-		sout.width(15); sout << left << "--------------" << "-------------------------" << endl;
+
+		s.erase(); E->append_padr(s, _("Object type"), 25); sout << s;
+		s.erase(); E->append_padr(s, _("Symbol"), 15); sout << s << _("Example") << endl;
+		s.erase(); E->append_padr(s, "------------------------", 25); sout << s;
+		s.erase(); E->append_padr(s, "--------------", 15); sout << s << "-------------------------" << endl;
 		sout << endl;
 		sout << _("Data") << endl;
-		sout.width(25); sout << _("Real Number");
-		sout.width(15); sout << left << "" << _("1.23456e-25") << endl;
-		sout.width(25); sout << _("Complex Number");
-		sout.width(15); sout << "( )" << _("(123.45, 678.90)") << endl;
-		sout.width(25); sout << _("Binary Integer");
-		sout.width(15); sout << "#" << "# 123AB" << endl;
-		sout.width(25); sout << left << _("String");
-		sout.width(15); sout << left << "\" \"" << _("\"RESULT\"") << endl;
-		sout.width(25); sout << left << _("Vector");
-		sout.width(15); sout << left << "[ ]" << _("[1.23 4.56 7.89]") << endl;
-		sout.width(25); sout << left << _("Matrix");
-		sout.width(15); sout << left << "[[ ]]" << _("[[1.23 4.56] [6.54 3.21]]") << endl;
-		sout.width(25); sout << left << _("List");
-		sout.width(15); sout << left << "{ }" << _("{1.23 \"ABC\" # 45d}") << endl;
+		s.erase(); E->append_padr(s, _("Real Number"), 25); sout << s;
+		s.erase(); E->append_padr(s, _("1.23456e-25"), 15); sout << s << endl;
+		s.erase(); E->append_padr(s, _("Complex Number"), 25); sout << s;
+		s.erase(); E->append_padr(s, "( )", 15); sout << s << _("(123.45, 678.90)") << endl;
+		s.erase(); E->append_padr(s, _("Binary Integer"), 25); sout << s;
+		s.erase(); E->append_padr(s, "#", 15); sout << s << _("# 123AB") << endl;
+		s.erase(); E->append_padr(s, _("String"), 25); sout << s;
+		s.erase(); E->append_padr(s, "\" \"", 15); sout << s << _("\"RESULT\"") << endl;
+		s.erase(); E->append_padr(s, _("Vector"), 25); sout << s;
+		s.erase(); E->append_padr(s, "[ ]", 15); sout << s << _("[1.23 4.56 7.89]") << endl;
+		s.erase(); E->append_padr(s, _("Matrix"), 25); sout << s;
+		s.erase(); E->append_padr(s, "[[ ]]", 15); sout << s << _("[[1.23 4.56] [6.54 3.21]]") << endl;
+		s.erase(); E->append_padr(s, _("List"), 25); sout << s;
+		s.erase(); E->append_padr(s, "{ }", 15); sout << s << _("{1.23 \"ABC\" # 45d}") << endl;
 		sout << endl;
 		sout << _("Names") << endl;
-		sout.width(25); sout << left << _("Name");
-		sout.width(15); sout << left << "' '" << _("'CALC'") << endl;
+		s.erase(); E->append_padr(s, _("Name"), 25); sout << s;
+		s.erase(); E->append_padr(s, "' '", 15); sout << s << _("'CALC'") << endl;
 		sout << endl;
 		sout << _("Procedures") << endl;
-		sout.width(25); sout << left << _("Program");
-		sout.width(15); sout << left << "<< >>" << _("<< DUP + SWAP >>") << endl;
-		sout.width(25); sout << left << _("Algebraic");
-		sout.width(15); sout << left << "' '" << _("'X+2*Y=Z'");
+		s.erase(); E->append_padr(s, _("Program"), 25); sout << s;
+		s.erase(); E->append_padr(s, "<< >>", 15); sout << s << _("<< DUP + SWAP >>") << endl;
+		s.erase(); E->append_padr(s, _("Algebraic"), 25); sout << s;
+		s.erase(); E->append_padr(s, "' '", 15); sout << s << _("'X+2*Y=Z'") << endl;
+		sout << endl;
 	} else if (dh == DH_FLAGS) {
-		string c;
+		string c, s;
 		ostringstream o;
-		sout.width(12 - c.length());
-		sout.setf(ios::left);
-		sout << _("Flag #");
-		sout.width(75); sout << left << _("Description");
+		s.erase(); E->append_padr(s, _("Flag #"), 12); sout << s;
+		s.erase(); E->append_padr(s, _("Description"), 75); sout << s;
 		sout << _("Status") << endl << endl;
 		for (int i = FL_TAG_IT_BEGIN; i <= FL_TAG_IT_END; i++) {
 			if (string(flags[i].description) == "" && c == "") {
@@ -169,11 +171,9 @@ const string stack_get_help(const int& dh) {
 				c = o.str();
 			} else if (string(flags[i].description) != "") {
 				ostringstream o;
-				o.width(12 - c.length());
-				o.setf(ios::left);
-				o << i;
+				s.erase(); E->append_padr(s, integer_to_string(i), 12 - E->get_string_length(c.c_str())); o << s;
 				sout << c + o.str();
-				sout.width(75); sout << left << _(flags[i].description);
+				s.erase(); E->append_padr(s, _(flags[i].description), 75); sout << s;
 				sout << (flags[i].default_value ? _("Set") : _("Unset"));
 				//if (i != FL_TAG_IT_END)
 				sout << endl;

@@ -1,0 +1,19 @@
+.SH "FICHIERS D'INITIALISATION"
+.TP
+.B ~/.prpn/stackrc
+Réglages et contenu de la pile.
+.TP
+.B ~/.prpn/varsrc
+Structure contenant les variables, et répertoire courant.
+.SH AUTEUR
+Écrit par Sébastien Millet <sebastien.millet1@club-internet.fr>. Autorisation
+est donnée de copier, distribuer et/ou modifier ce document selon les termes
+de la licence "GNU General Public License". La version 3 est publiée par la
+Free Software Foundation.
+.SH BUGS
+.TP
+\- Program is in version 0.5.1...
+.TP
+\- Version Windows : wx se déconnecte du terminal d'où il est lancé. C'est
+pourquoi la compilation de la version Windows produit une version graphique,
+prpn.exe, et une version console, prpnc.exe.

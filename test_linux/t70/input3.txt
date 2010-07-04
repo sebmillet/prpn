@@ -1,0 +1,8 @@
+"read-file-test-bad1.txt"
+_READ
+"read-file-test-bad2.txt"
+_READ
+"read-file-test-bad3.txt"
+_READ
+"read-file-test-bad4.txt"
+_READ

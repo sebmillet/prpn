@@ -1,0 +1,9 @@
+_READ Error:
+Syntax Error
+_READ Error:
+Syntax Error
+0
+"read-file-test-bad2.txt"
+0
+"read-file-test-bad4.txt"
+get_class_count() = 0 for watched classes

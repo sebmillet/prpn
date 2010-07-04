@@ -1092,34 +1092,31 @@ st_err_t parser_str_to(TransStack& ts, string str, string& cmd_err) {
 }
 
 st_err_t read_rc_file(TransStack* ts, const tostring_t& tostring, const string& filename_real, const string& filename_display,
-		const bool& do_eval, string& error_l1, string& error_l2) {
+		const bool& do_eval, string& error_l1, string& error_l2, const int& limit_number_of_items) {
 	st_err_t c = ST_ERR_OK;
 	error_l1 = "";
 	error_l2 = "";
 	ifstream ifs(filename_real.c_str(), ifstream::in);
 	if (ifs.good()) {
 
+// 1. Read items
+
 		debug_write("Reading:");
 		debug_write(filename_real.c_str());
 
+		vector<SIO> vs;
 		Itemiser* itemise = new Itemiser(&ifs, tostring);
-
 		ParserError par;
 		par.set = false;
 		SIO s;
-		bool inside_undo_sequence = false;
 		bool r = true;
 		string cmd_err;
-		while (!par.set && c == ST_ERR_OK && r) {
+		int n = 0;
+		while (!par.set && r && (limit_number_of_items < 0 || n < limit_number_of_items)) {
 			r = itemise->get_item(par, s.si);
-			if (!par.set && r) {
-				if (do_eval) {
-					s.ownership = TSO_OWNED_BY_TS;
-					c = ts->do_push_eval(s, inside_undo_sequence, cmd_err);
-				} else {
-					ts->transstack_push(s.si);
-				}
-			}
+			if (!par.set && r)
+				vs.push_back(SIO(TSO_OUTSIDE_TS, s.si));
+			n++;
 		}
 		delete itemise;
 		if (par.set) {
@@ -1130,6 +1127,25 @@ st_err_t read_rc_file(TransStack* ts, const tostring_t& tostring, const string& 
 			error_l1 = filename_display + ":";
 			error_l2 = cmd_err + " Error, line " + integer_to_string(par.line);
 		}
+
+// 2. Send items in the stack, and evaluate them if do_eval is true
+
+		if (c == ST_ERR_OK) {
+			bool inside_undo_sequence = false;
+			for (vector<SIO>::iterator it = vs.begin(); it != vs.end() && c == ST_ERR_OK; it++) {
+				(*it).ownership = TSO_OWNED_BY_TS;
+				if (do_eval) {
+					c = ts->do_push_eval(*it, inside_undo_sequence, cmd_err);
+					inside_undo_sequence = true;
+				} else {
+					ts->transstack_push((*it).si);
+				}
+			}
+		}
+
+		for (vector<SIO>::iterator it = vs.begin(); it != vs.end(); it++)
+			(*it).cleanup();
+
 	} else {
 		c = ST_ERR_FILE_READ_ERROR;
 	}

@@ -232,15 +232,22 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-MANPAGE = ${srcdir}/man/pRPN.1
-HTMLPAGE = ${srcdir}/pRPN.html
-TEXTPAGE = ${srcdir}/pRPN.txt
+
+# EN
+MANPAGEEN = ${srcdir}/man/pRPN.1
+HTMLPAGEEN = ${srcdir}/pRPNen.html
+TEXTPAGEEN = ${srcdir}/pRPNen.txt
 CMDSEN = ${srcdir}/cmdsen.txt
+# FR
+MANPAGEFR = ${srcdir}/man/fr/pRPN.1
+HTMLPAGEFR = ${srcdir}/pRPNfr.html
+TEXTPAGEFR = ${srcdir}/pRPNfr.txt
+CMDSFR = ${srcdir}/cmdsfr.txt
 dist_doc_DATA = ${HTMLPAGE} ${TEXTPAGE}
 EXTRA_DIST = ${srcdir}/make-man-page.sh ${srcdir}/pRPN1-prefix ${srcdir}/pRPN1-postfix \
 	${CMDSEN}
 
-dist_man_MANS = ${MANPAGE}
+dist_man_MANS = ${MANPAGEEN} ${MANPAGEFR}
 all: all-am
 
 .SUFFIXES:
@@ -483,14 +490,21 @@ uninstall-man: uninstall-man1
 # Parsing Commands.h would be OK but it'd be difficult to be independant of
 # the code presentation, it would require to recreate a logic comparable to
 # C++ preprocessor.
-@BUILD_DOCS_TRUE@${MANPAGE}: ${CMDSEN} ${srcdir}/pRPN1-prefix ${srcdir}/pRPN1-postfix
-@BUILD_DOCS_TRUE@	${srcdir}/make-man-page.sh "${srcdir}"
 
-@BUILD_DOCS_TRUE@${HTMLPAGE}: ${MANPAGE}
-@BUILD_DOCS_TRUE@	man2html ${MANPAGE} > $@
-
-@BUILD_DOCS_TRUE@${TEXTPAGE}: ${MANPAGE}
-@BUILD_DOCS_TRUE@	nroff -man ${MANPAGE} | col -b > $@
+# EN
+@BUILD_DOCS_TRUE@${MANPAGEEN}: ${CMDSEN} ${srcdir}/pRPN1en-prefix ${srcdir}/pRPN1en-postfix
+@BUILD_DOCS_TRUE@	${srcdir}/make-man-page.sh "${srcdir}" en
+@BUILD_DOCS_TRUE@${HTMLPAGEEN}: ${MANPAGEEN}
+@BUILD_DOCS_TRUE@	man2html ${MANPAGEEN} > $@
+@BUILD_DOCS_TRUE@${TEXTPAGEEN}: ${MANPAGEEN}
+@BUILD_DOCS_TRUE@	nroff -man ${MANPAGEEN} | col -b > $@
+# FR
+@BUILD_DOCS_TRUE@${MANPAGEFR}: ${CMDSFR} ${srcdir}/pRPN1en-prefix ${srcdir}/pRPN1en-postfix
+@BUILD_DOCS_TRUE@	${srcdir}/make-man-page.sh "${srcdir}" fr
+@BUILD_DOCS_TRUE@${HTMLPAGEFR}: ${MANPAGEFR}
+@BUILD_DOCS_TRUE@	man2html ${MANPAGEFR} > $@
+@BUILD_DOCS_TRUE@${TEXTPAGEFR}: ${MANPAGEFR}
+@BUILD_DOCS_TRUE@	nroff -man ${MANPAGEFR} | col -b > $@
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

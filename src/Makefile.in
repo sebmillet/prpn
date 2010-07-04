@@ -277,7 +277,8 @@ AM_CPPFLAGS = -DPKG_DOCDIR="\"${docdir}\"" \
 	-DPKG_DATADIR="\"${datadir}\"" -DPKG_BINDIR="\"${bindir}\"" \
 	-DPKG_LOCALEDIR=\"$(localedir)\"
 CMDSEN = ${top_srcdir}/doc/cmdsen.txt
-noinst_DATA = ${CMDSEN}
+CMDSFR = ${top_srcdir}/doc/cmdsfr.txt
+noinst_DATA = ${CMDSEN} ${CMDSFR}
 @BUILD_CLIENTGUI_TRUE@prpn_CXXFLAGS = @WX_CXXFLAGS@ -DFOREIGN_MAIN
 @BUILD_CLIENTGUI_TRUE@prpn_LDFLAGS = @WX_LIBS@
 all: all-am
@@ -720,6 +721,9 @@ uninstall-am: uninstall-binPROGRAMS
 
 @BUILD_DOCS_TRUE@${CMDSEN}: Commands.h
 @BUILD_DOCS_TRUE@	echo "_HELP" | LC_ALL="C" ${builddir}/${EXENAME} -b > ${CMDSEN}
+
+@BUILD_DOCS_TRUE@${CMDSFR}: Commands.h
+@BUILD_DOCS_TRUE@	echo "_HELP" | LC_ALL="fr_FR.UTF-8" ${builddir}/${EXENAME} -b > ${CMDSFR}
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

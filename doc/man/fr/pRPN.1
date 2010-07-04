@@ -1,0 +1,68 @@
+.\" Écrit par Sébastien Millet
+.\"
+.TH pRPN 1 "version 0.5.1" "18 juin 2010"
+
+.SH NAME
+pRPN \- une calculatrice en notation polonaise inverse multi systèmes
+d'exploitation
+
+.SH SYNOPSIS
+.B pRPN [options]
+.br
+
+.SH DESCRIPTION
+Le programme \fBpRPN\fP est une calculatrice en notation polonaise inverse
+inspirée des calculatrices HP de la fin des années 80.
+.SH OPTIONS
+.TP
+.B \-h,\ \-\-help
+Affiche l'aide et quitte.
+.TP
+.B \-v\ \-\-version
+Affiche le numéro de version et quitte.
+.TP
+.B \-c,\ \-\-console
+Exécution en mode console.
+.TP
+.B \-w,\ \-\-width\ \fIwidth\fP
+Définis la largeur à \fIwidth\fP, mesurée en nombre de caractères. 23 par
+défaut.
+.TP
+.B \-h,\ \-\-height\ \fIheight\fP
+Définis la hauteur à \fIheight\fP, mesurée en nombre de lignes. 5 par défaut.
+.TP
+.B \-\-min-stack-height\ \fImin-stack-height\fP
+Définis la hauteur minimale à \fIheight\fP, mesurée en nombre de lignes.
+\fIheight\fP par défaut. Uniquement en mode console.
+.TP
+.B \-b,\ \-\-batch
+Mode batch, implique le mode console.
+.TP
+.B \-z,\ \-\-dry\-run
+Ignore les fichiers rc.
+.TP
+.B \-d,\ \-\-debug\ \fIdebug_option\fP
+Mode debug, prend un paramètre.
+.SH COMMANDES
+Les commandes sont suivies du nombre d'arguments qu'elles prennent, entre
+parenthèses. Ces arguments sont pris dans la pile.
+.TP
+.SH "FICHIERS D'INITIALISATION"
+.TP
+.B ~/.prpn/stackrc
+Réglages et contenu de la pile.
+.TP
+.B ~/.prpn/varsrc
+Structure contenant les variables, et répertoire courant.
+.SH AUTEUR
+Écrit par Sébastien Millet <sebastien.millet1@club-internet.fr>. Autorisation
+est donnée de copier, distribuer et/ou modifier ce document selon les termes
+de la licence "GNU General Public License". La version 3 est publiée par la
+Free Software Foundation.
+.SH BUGS
+.TP
+\- Program is in version 0.5.1...
+.TP
+\- Version Windows : wx se déconnecte du terminal d'où il est lancé. C'est
+pourquoi la compilation de la version Windows produit une version graphique,
+prpn.exe, et une version console, prpnc.exe.

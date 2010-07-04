@@ -1,14 +1,20 @@
-MANPAGE=${srcdir}/man/pRPN.1
-HTMLPAGE=${srcdir}/pRPN.html
-TEXTPAGE=${srcdir}/pRPN.txt
+# EN
+MANPAGEEN=${srcdir}/man/pRPN.1
+HTMLPAGEEN=${srcdir}/pRPNen.html
+TEXTPAGEEN=${srcdir}/pRPNen.txt
 CMDSEN=${srcdir}/cmdsen.txt
+# FR
+MANPAGEFR=${srcdir}/man/fr/pRPN.1
+HTMLPAGEFR=${srcdir}/pRPNfr.html
+TEXTPAGEFR=${srcdir}/pRPNfr.txt
+CMDSFR=${srcdir}/cmdsfr.txt
 
 dist_doc_DATA=${HTMLPAGE} ${TEXTPAGE}
 
 EXTRA_DIST=${srcdir}/make-man-page.sh ${srcdir}/pRPN1-prefix ${srcdir}/pRPN1-postfix \
 	${CMDSEN}
 
-dist_man_MANS=${MANPAGE}
+dist_man_MANS=${MANPAGEEN} ${MANPAGEFR}
 
 
 if BUILD_DOCS
@@ -26,13 +32,20 @@ if BUILD_DOCS
 # Parsing Commands.h would be OK but it'd be difficult to be independant of
 # the code presentation, it would require to recreate a logic comparable to
 # C++ preprocessor.
-${MANPAGE}: ${CMDSEN} ${srcdir}/pRPN1-prefix ${srcdir}/pRPN1-postfix
-	${srcdir}/make-man-page.sh "${srcdir}"
 
-${HTMLPAGE}: ${MANPAGE}
-	man2html ${MANPAGE} > $@
-
-${TEXTPAGE}: ${MANPAGE}
-	nroff -man ${MANPAGE} | col -b > $@
+# EN
+${MANPAGEEN}: ${CMDSEN} ${srcdir}/pRPN1en-prefix ${srcdir}/pRPN1en-postfix
+	${srcdir}/make-man-page.sh "${srcdir}" en
+${HTMLPAGEEN}: ${MANPAGEEN}
+	man2html ${MANPAGEEN} > $@
+${TEXTPAGEEN}: ${MANPAGEEN}
+	nroff -man ${MANPAGEEN} | col -b > $@
+# FR
+${MANPAGEFR}: ${CMDSFR} ${srcdir}/pRPN1en-prefix ${srcdir}/pRPN1en-postfix
+	${srcdir}/make-man-page.sh "${srcdir}" fr
+${HTMLPAGEFR}: ${MANPAGEFR}
+	man2html ${MANPAGEFR} > $@
+${TEXTPAGEFR}: ${MANPAGEFR}
+	nroff -man ${MANPAGEFR} | col -b > $@
 
 endif

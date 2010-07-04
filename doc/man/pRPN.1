@@ -1,6 +1,6 @@
-.\" Written by S�bastien Millet
+.\" Written by Sébastien Millet
 .\"
-.TH pRPN 1 "version 0.5" "May 10, 2010"
+.TH pRPN 1 "version 0.5.1" "June 18, 2010"
 
 .SH NAME
 pRPN \- a portable RPN calculator
@@ -10,15 +10,15 @@ pRPN \- a portable RPN calculator
 .br
 
 .SH DESCRIPTION
-The \fBpRPN\fP program is a RPN calculator inspired by HP calculators
-of late 80s.
+The \fBpRPN\fP program is a RPN calculator inspired by HP calculators of late
+80s.
 .SH OPTIONS
 .TP
 .B \-h,\ \-\-help
-Display a quick help screen and exit
+Display a quick help screen and exit.
 .TP
 .B \-v\ \-\-version
-Display version information and exit
+Display version information and exit.
 .TP
 .B \-c,\ \-\-console
 Run in console mode.
@@ -30,19 +30,20 @@ Set width to \fIwidth\fP, measured in number of characters. Defaults to 23.
 Set height to \fIheight\fP, measured in number of lines. Defaults to 5.
 .TP
 .B \-\-min-stack-height\ \fImin-stack-height\fP
-Set minimum stack height to \fIheight\fP, measured in number of lines. Defaults to \fIheight\fP.
-Only in console mode.
+Set minimum stack height to \fIheight\fP, measured in number of lines.
+Defaults to \fIheight\fP. Only in console mode.
 .TP
 .B \-b,\ \-\-batch
 Batch mode, implies console mode.
 .TP
 .B \-z,\ \-\-dry\-run
-Ignore rc files
+Ignore rc files.
 .TP
 .B \-d,\ \-\-debug\ \fIdebug_option\fP
-Debug mode, need a parameter
+Debug mode, requires a parameter.
 .SH COMMANDS
-Commands are followed by the number of arguments they take, in parenthesis. These arguments are taken from the stack.
+Commands are followed by the number of arguments they take, in parenthesis.
+These arguments are taken from the stack.
 .TP
 .B _HELP\ (0)
 Display a help screen
@@ -280,74 +281,23 @@ Define number of undo levels
 .TP
 .B _UNDO_LEVELS?\ (0)
 Get number of undo levels
-.SH "OBJECT TYPES"
 .TP
-       Object type              Symbol         Example
-.br
------------------------- -------------- -------------------------
-.br
-
-.br
-Data
-.br
-Real Number                             1.23456e-25
-.br
-Complex Number           ( )            (123.45, 678.90)
-.br
-Binary Integer           #              # 123AB
-.br
-String                   " "            "RESULT"
-.br
-Vector                   [ ]            [1.23 4.56 7.89]
-.br
-Matrix                   [[ ]]          [[1.23 4.56] [6.54 3.21]]
-.br
-List                     { }            {1.23 "ABC" # 45d}
-.br
-
-.br
-Names
-.br
-Name                     ' '            'CALC'
-.br
-
-.br
-Procedures
-.br
-Program                  << >>          << DUP + SWAP >>
-.br
-Algebraic                ' '            'X+2*Y=Z'"a"
-.br
-"é"
-.br
-"éé"
-.br
-"12345678910éééèâïëä"
-.br
-"éèâïëä"
-.br
-" 12345678910éé.éèâïë"
-.br
-1.2
-.br
-(3,-1.222)
-.br
-# 10010b
-.br
-{ 18 1.2 (3,-1.222) # 10010b }
-.br
 .SH "INITIALIZATION FILES"
 .TP
 .B ~/.prpn/stackrc
-Settings and stack content
+Settings and stack content.
 .TP
 .B ~/.prpn/varsrc
-Variables structure, and actual working directory
+Variables structure, and actual working directory.
 .SH AUTHOR
-Written by S�bastien Millet <sebastien.millet1@club-internet.fr>. Permission is granted to copy, distribute and/or modify this document under the terms of the GNU General Public License, Version 3 published by the Free Software Foundation.
+Written by Sébastien Millet <sebastien.millet1@club-internet.fr>. Permission
+is granted to copy, distribute and/or modify this document under the terms of
+the GNU General Public License, Version 3 published by the Free Software
+Foundation.
 .SH BUGS
 .TP
-\- Program is in version 0.5.0...
+\- Program is in version 0.5.1...
 .TP
-\- Windows version: wx disconnects the program from the terminal it is sent from. Therefore Windows generation produces a GUI version, pRPN.exe, and a console version, pRPNc.exe.
-
+\- Windows version: wx disconnects the program from the terminal it is sent
+from. Therefore Windows generation produces a GUI version, pRPN.exe, and a
+console version, pRPNc.exe.

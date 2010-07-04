@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: prpn 0.5.1\n"
 "Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
-"POT-Creation-Date: 2010-06-20 17:12+0200\n"
+"POT-Creation-Date: 2010-07-04 14:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -454,137 +454,149 @@ msgid "Wait a number of seconds"
 msgstr ""
 
 #: src/Commands.h:108
-msgid "Undo last command, 50 levels by default"
+msgid "Read file and puts its content in the stack"
 msgstr ""
 
 #: src/Commands.h:109
-msgid "Define number of undo levels"
+msgid "Write the second item into the file named by the first item"
 msgstr ""
 
 #: src/Commands.h:110
+msgid "Undo last command, 50 levels by default"
+msgstr ""
+
+#: src/Commands.h:111
+msgid "Define number of undo levels"
+msgstr ""
+
+#: src/Commands.h:112
 msgid "Get number of undo levels"
 msgstr ""
 
-#: src/Commands.h:117
+#: src/Commands.h:119
 msgid "Command (number of arguments): description"
 msgstr ""
 
-#: src/Commands.h:124
+#: src/Commands.h:129
 msgid "Object type"
 msgstr ""
 
-#: src/Commands.h:125
+#: src/Commands.h:130
 msgid "Symbol"
 msgstr ""
 
-#: src/Commands.h:125
+#: src/Commands.h:130
 msgid "Example"
 msgstr ""
 
-#: src/Commands.h:129
+#: src/Commands.h:134
 msgid "Data"
 msgstr ""
 
-#: src/Commands.h:130
+#: src/Commands.h:135
 msgid "Real Number"
 msgstr ""
 
-#: src/Commands.h:131
+#: src/Commands.h:136
 msgid "1.23456e-25"
 msgstr ""
 
-#: src/Commands.h:132
+#: src/Commands.h:137
 msgid "Complex Number"
 msgstr ""
 
-#: src/Commands.h:133
+#: src/Commands.h:138
 msgid "(123.45, 678.90)"
 msgstr ""
 
-#: src/Commands.h:134
+#: src/Commands.h:139
 msgid "Binary Integer"
 msgstr ""
 
-#: src/Commands.h:136
-msgid "String"
-msgstr ""
-
-#: src/Commands.h:137
-msgid "\"RESULT\""
-msgstr ""
-
-#: src/Commands.h:138
-msgid "Vector"
-msgstr ""
-
-#: src/Commands.h:139
-msgid "[1.23 4.56 7.89]"
-msgstr ""
-
 #: src/Commands.h:140
-msgid "Matrix"
+msgid "# 123AB"
 msgstr ""
 
 #: src/Commands.h:141
-msgid "[[1.23 4.56] [6.54 3.21]]"
+msgid "String"
 msgstr ""
 
 #: src/Commands.h:142
-msgid "List"
+msgid "\"RESULT\""
 msgstr ""
 
 #: src/Commands.h:143
-msgid "{1.23 \"ABC\" # 45d}"
+msgid "Vector"
+msgstr ""
+
+#: src/Commands.h:144
+msgid "[1.23 4.56 7.89]"
 msgstr ""
 
 #: src/Commands.h:145
-msgid "Names"
+msgid "Matrix"
 msgstr ""
 
 #: src/Commands.h:146
-msgid "Name"
+msgid "[[1.23 4.56] [6.54 3.21]]"
 msgstr ""
 
 #: src/Commands.h:147
-msgid "'CALC'"
+msgid "List"
 msgstr ""
 
-#: src/Commands.h:149
-msgid "Procedures"
+#: src/Commands.h:148
+msgid "{1.23 \"ABC\" # 45d}"
 msgstr ""
 
 #: src/Commands.h:150
-msgid "Program"
+msgid "Names"
 msgstr ""
 
 #: src/Commands.h:151
-msgid "<< DUP + SWAP >>"
+msgid "Name"
 msgstr ""
 
 #: src/Commands.h:152
+msgid "'CALC'"
+msgstr ""
+
+#: src/Commands.h:154
+msgid "Procedures"
+msgstr ""
+
+#: src/Commands.h:155
+msgid "Program"
+msgstr ""
+
+#: src/Commands.h:156
+msgid "<< DUP + SWAP >>"
+msgstr ""
+
+#: src/Commands.h:157
 msgid "Algebraic"
 msgstr ""
 
-#: src/Commands.h:153
+#: src/Commands.h:158
 msgid "'X+2*Y=Z'"
 msgstr ""
 
-#: src/Commands.h:159
+#: src/Commands.h:163
 msgid "Flag #"
 msgstr ""
 
-#: src/Commands.h:160
+#: src/Commands.h:164
 msgid "Description"
 msgstr ""
 
-#: src/Commands.h:161
+#: src/Commands.h:165
 msgid "Status"
 msgstr ""
 
-#: src/Commands.h:175
+#: src/Commands.h:177
 msgid "Set"
 msgstr ""
 
-#: src/Commands.h:175
+#: src/Commands.h:177
 msgid "Unset"
 msgstr ""

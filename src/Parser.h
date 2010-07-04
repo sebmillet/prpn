@@ -20,7 +20,7 @@ void prepare_arith();
 int get_bin_size_from_flags();
 
 class TransStack;
-st_err_t read_rc_file(TransStack*, const tostring_t&, const std::string&, const std::string&, const bool&, std::string&, std::string&);
+st_err_t read_rc_file(TransStack*, const tostring_t&, const std::string&, const std::string&, const bool&, std::string&, std::string&, const int& = -1);
 
 
 //

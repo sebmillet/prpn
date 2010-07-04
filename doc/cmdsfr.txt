@@ -1,0 +1,121 @@
+Commande (nombre d'arguments) : description
+
+_HELP          (0): Affiche un écran d'aide
+_HELP_FLAGS    (0): Affiche un écran d'aide sur les options
+_EXIT          (0): Quitte le programme
++              (2): Addition
+-              (2): Soustraction
+*              (2): Multiplication
+/              (2): Division
+^              (2): Puissance
+COS            (1): Cosinus
+SIN            (1): Sinus
+TAN            (1): Tangente
+ACOS           (1): Arc-cosinus
+ASIN           (1): Arc-sinus
+ATAN           (1): Arc-tangente
+LN             (1): Logarithme (base e)
+EXP            (1): Exponentiel
+NEG            (1): Opposé
+IP             (1): Partie entière
+INV            (1): 1/x
+SQ             (1): Carré
+SQR            (1): Racine carrée
+R->C           (2): Réel à complexe
+C->R           (1): Complexe à réel
+SAME           (2): Est identique
+==             (2): Est égal à
+<>             (2): Est différent de
+<              (2): Est plus petit que
+<=             (2): Est plus petit que, ou égal à
+>              (2): Est plus grand que
+>=             (2): Est plus grand que, ou égal à
+DUP            (1): Copie le premier élément
+SWAP           (2): Échange les deux premiers éléments
+DROP           (1): Supprime le premier élément
+CLEAR          (0): Efface la pile
+OVER           (2): Copie le second élément
+DUP2           (2): Copie les deux premiers éléments
+DROP2          (2): Supprime les deux premiers éléments
+ROT            (3): Déplace le troisième élément en première position
+ROLLD          (1): Déplace le premier élément en Nième position
+ROLL           (1): Déplace le Ne élément en première position
+PICK           (1): Copie le Ne élément
+DUPN           (1): Copie les N premiers éléments
+DROPN          (1): Supprime les N premiers éléments
+DEPTH          (0): Renvoie le nombre d'éléments dans la pile
+SF             (1): Active l'option
+CF             (1): Désactive l'option
+FS?            (1): Renvoie 1 si l'option est activée, 0 sinon
+FC?            (1): Renvoie 0 si l'option est activée, 1 sinon
+FS?C           (1): Exécute FS? et désactive l'option
+FC?C           (1): Exécute FC? et désactive l'option
+->STR          (1): Convertit un élément en chaîne de caractères
+STR->          (0): Convertit une chaîne de caractère en éléments
+->LIST         (1): Mets les éléments dans une liste
+LIST->         (1): Convertit la liste en ses éléments
+EVAL           (0): Évalue l'élément
+STO            (2): Enregistre la valeur dans la variable
+RCL            (1): Récupère la valeur de la variable
+PURGE          (1): Supprime la variable
+VARS           (0): Renvoie la liste des variables dans le répertoire courant
+PATH           (0): Renvoie le répertoire en cours sous forme de liste
+CRDIR          (1): Crée un répertoire
+HOME           (0): Définis le répertoire racine comme répertoire courant
+UP             (0): Définis le répertoire parent comme répertoire courant
+BIN            (0): Utilise le mode binaire pour les entiers binaires
+OCT            (0): Utilise le mode octal pour les entiers binaires
+DEC            (0): Utilise le mode décimal pour les entiers binaires
+HEX            (0): Utilise le mode hexadécimal pour les entiers binaires
+STWS           (1): Définis le nombre de bits des entiers binaires (de 1 à 64)
+RCWS           (0): Renvoie le nombre de bits des entiers binaires
+B->R           (1): Convertit un entier binaire en réel
+R->B           (1): Convertit un réel en entier binaire
+RCLF           (0): Enregistre l'état des options dans un entier binaire
+STOF           (1): Récupère l'état des options depuis un entier binaire
+WAIT           (1): Pause d'une durée définie en secondes
+_READ          (1): Lit le fichier et met son contenu dans la pile
+_WRITE         (2): Écris le second élément de la pile dans le fichier nommé par le premier élément
+UNDO           (0): Annule la dernière commande, 50 niveaux par défaut
+_UNDO_LEVELS   (1): Définis le nombre de niveaux d'annulation
+_UNDO_LEVELS?  (0): Renvoie le nombre de niveaux d'annulations
+
+Type d'objet             Symbole        Exemple
+------------------------ -------------- -------------------------
+
+Donnée
+Nombre réel              1.23456e-25    
+Nombre Complexe          ( )            (123.45, 678.90)
+Entier Binaire           #              # 123AB
+Chaîne de Caractères     " "            "RÉSULTAT"
+Vecteur                  [ ]            [1.23 4.56 7.89]
+Matrice                  [[ ]]          [[1.23 4.56] [6.54 3.21]]
+Liste                    { }            {1.23 "ABC" # 45d}
+
+Noms
+Nom                      ' '            'CALC'
+
+Programmes
+Programme                << >>          << DUP + SWAP >>
+Algébrique               ' '            'X+2*Y=Z'
+
+1
+(1;2,3)
+9,99999999999e199
+9,99999999999e199
+1
+0
+{ x A_very_long_name Beta }
+# 11000000b
+# 11100000b
+"allo"
+"z"
+"é"
+"hé bé"
+""
+"x"
+"xé"
+"éâî "
+"éâî "
+"read-file-test-bad1.txt"
+get_class_count() = 0 for watched classes

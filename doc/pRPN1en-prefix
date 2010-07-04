@@ -1,6 +1,6 @@
-.\" Written by Sébastien Millet
+.\" Written by SÃ©bastien Millet
 .\"
-.TH pRPN 1 "version 0.5" "May 10, 2010"
+.TH pRPN 1 "version 0.5.1" "June 18, 2010"
 
 .SH NAME
 pRPN \- a portable RPN calculator
@@ -10,15 +10,15 @@ pRPN \- a portable RPN calculator
 .br
 
 .SH DESCRIPTION
-The \fBpRPN\fP program is a RPN calculator inspired by HP calculators
-of late 80s.
+The \fBpRPN\fP program is a RPN calculator inspired by HP calculators of late
+80s.
 .SH OPTIONS
 .TP
 .B \-h,\ \-\-help
-Display a quick help screen and exit
+Display a quick help screen and exit.
 .TP
 .B \-v\ \-\-version
-Display version information and exit
+Display version information and exit.
 .TP
 .B \-c,\ \-\-console
 Run in console mode.
@@ -30,16 +30,17 @@ Set width to \fIwidth\fP, measured in number of characters. Defaults to 23.
 Set height to \fIheight\fP, measured in number of lines. Defaults to 5.
 .TP
 .B \-\-min-stack-height\ \fImin-stack-height\fP
-Set minimum stack height to \fIheight\fP, measured in number of lines. Defaults to \fIheight\fP.
-Only in console mode.
+Set minimum stack height to \fIheight\fP, measured in number of lines.
+Defaults to \fIheight\fP. Only in console mode.
 .TP
 .B \-b,\ \-\-batch
 Batch mode, implies console mode.
 .TP
 .B \-z,\ \-\-dry\-run
-Ignore rc files
+Ignore rc files.
 .TP
 .B \-d,\ \-\-debug\ \fIdebug_option\fP
-Debug mode, need a parameter
+Debug mode, requires a parameter.
 .SH COMMANDS
-Commands are followed by the number of arguments they take, in parenthesis. These arguments are taken from the stack.
+Commands are followed by the number of arguments they take, in parenthesis.
+These arguments are taken from the stack.
