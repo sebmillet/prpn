@@ -1,6 +1,6 @@
 .\" Écrit par Sébastien Millet
 .\"
-.TH pRPN 1 "version 0.5.1" "18 juin 2010"
+.TH pRPN 1 "version 0.5.1" "5 juillet 2010"
 
 .SH NAME
 pRPN \- une calculatrice en notation polonaise inverse multi systèmes

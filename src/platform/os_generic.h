@@ -14,7 +14,7 @@
 #include "../Common.h"
 #include <string>
 
-#include "MyString.h"
+#include "../MyString.h"
 
 extern MyEncoding* E;
 

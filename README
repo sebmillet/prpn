@@ -2,7 +2,7 @@
       pRPN, a portable RPN calculator inspired by HP.
       ===============================================
 
-$LastChangedDate: 2010-06-12 23:56:00 +0200 $
+$LastChangedDate: 2010-07-05 21:06:00 +0200 $
 
 Contents:
 
@@ -56,6 +56,8 @@ Below is found information specific to this package.
     --enable-debug
 		Activate pRPN debug information (has nothing to do with WxWidgets debug
 		system)
+	--disable-nls
+		Deactivate internationalization, 
     --enable-maintainer-mode
         This option causes documentation to be rebuilt if necessary
 
@@ -78,22 +80,25 @@ Below is found information specific to this package.
         library without debug. To be more precise:
             By default, to compile WxWidgets in Windows using Borland C++ 5.5,
             you execute the command:
-                cd %WX%\build
+                cd %WXWIN%\build\msw
                 %BORLAND_BIN%\make -f makefile.bcc
             To build the library without debug support, you have to execute:
-                cd %WX%\build
-                %BORLAND_BIN%\make -f makefile.bcc WX_DEBUG=0
+                cd %WXWIN%\build
+                %BORLAND_BIN%\make -f makefile.bcc BUILD=release WX_DEBUG=0
+			If you forget the <<BUILD=release>> sequence above, WxWidgets
+			compilation will be successful BUT compilation of prpn will
+			produce a cryptic error "can't find wx/setup.h".
         Borland C++ can be downloaded for free, from
             http://edn.embarcadero.com/article/20633
 
     2) Mingw
         Mingw32 has also been used successfully, however, the resulting
         executable size is very big. Compilation of pRPN 0.5.0 (released early
-        June), was 30MB wide, whereas BCC55 compilation produced a 3MB wide
+        June) was 30MB wide, whereas BCC55 compilation produced a 3MB wide
         executable.
         Remind: to compile pRPN with Mingw, you've got to compile WxWidgets
         with it as well, executing:
-            cd %WX%\build
+            cd %WXWIN%\build\msw
             %MINGW32_BIN%\mingw32-make -f makefile.gcc
         Mingw32 is licensed under GPL mostly, its homepage is found here
             http://www.mingw.org
@@ -120,5 +125,5 @@ Below is found information specific to this package.
     Ubuntu 10.4 beta / gcc 4.4.3, 64 bits, WxWidgets 2.8.10
     Windows XP SP3 / mingw32-gcc x.y.z, 32 bits, WxWidgets a.b.c
     Windows XP SP3 / bcc55 t.u.v, 32 bits, WxWidgets a.b.c compiled with
-        WX_DEBUG=0 option
+        <<BUILD=release WX_DEBUG=0>> options (without surrounding << >>)
 

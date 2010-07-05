@@ -46,7 +46,7 @@ using namespace std;
 
   // Stack
 #define STACK_MIN_LINES					1
-#define MY_STACK_BACKGROUND_COLOUR		(wxColour(0xE8, 0xE8, 0xE8))
+#define MY_STACK_BACKGROUND_COLOUR		(wxColour(0xF4, 0xF4, 0xFA))
 #define MY_STACK_FOREGROUND_COLOUR		(*wxBLACK)
 #define MY_TYPEIN_BACKGROUND_COLOUR		MY_STACK_BACKGROUND_COLOUR
 #define MY_TYPEIN_FOREGROUND_COLOUR		(*wxBLACK)
@@ -611,7 +611,7 @@ void MyFrame::OnPaint(wxPaintEvent& ev) {
 		debug_write_i("A1: my_y0 = %i", my_y0);
 		debug_write_i("A1: my_y1 = %i", my_y1);
 		debug_write_i("A1: my_ty = %i", my_ty);*/
-
+	
 		xy_set = true;
 	}
 	ev.Skip();

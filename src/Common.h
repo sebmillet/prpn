@@ -34,8 +34,11 @@
 #include <iostream>
 #endif
 
-#define BIN_NAME		"prpn"
-#define MY_HELP_HTML	"pRPN.html"
+#define BIN_NAME					"prpn"
+#define MY_HELP_HTML_PREFIX			"pRPN"
+#define MY_HELP_HTML_PEXTENSION		".html"
+
+#define DEFAULT_ACTUAL_COUNTRY_CODE	"en"
 
   // Count objects creations and destruction, to detect leaks
 #define DEBUG_CLASS_COUNT
@@ -46,6 +49,9 @@ typedef double real;
 
 #define G_HARD_MAX_NB_BITS	64
 extern int g_max_nb_bits;
+
+extern std::string actual_locale;
+extern std::string actual_country_code;
 
 size_t my_get_string_length(const char *);
 void my_append_padl(std::string&, const std::string&, const size_t&);

@@ -109,5 +109,4 @@ Algebraic                ' '            'X+2*Y=Z'
 (3,-1.222)
 # 10010b
 { 18 1.2 (3,-1.222) # 10010b }
-'-help'
 get_class_count() = 0 for watched classes

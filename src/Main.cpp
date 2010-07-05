@@ -37,6 +37,9 @@ int g_max_int;
   // Should be lower than, or equal to, G_HARD_MAX_NB_BITS
 int g_max_nb_bits = 64;
 
+string actual_locale = "";
+string actual_country_code = "";
+
 
 //
 // COMMAND-LINE OPTIONS
@@ -138,13 +141,42 @@ int prog_init(int argc, char **argv) {
 
 // Initialize gettext part
 #if ENABLE_NLS
-	setlocale(LC_ALL, "");
+	char *sz = setlocale(LC_ALL, "");
+	if (sz != NULL)
+		actual_locale = sz;
+	else
+		actual_locale = "";
+	actual_country_code = actual_locale;
+	if (actual_country_code.length() >= 3)
+		actual_country_code.erase(2);
 	bindtextdomain(PACKAGE, PKG_LOCALEDIR);
 	textdomain(PACKAGE);
+#else
+	actual_locale = "en";
+	actual_country_code = "en";
 #endif
 
-	html_help_file = os_concatene(osd->get_dir(OSD_HC_HTML), MY_HELP_HTML);
-	html_help_found = os_file_exists(html_help_file.c_str());
+	if (actual_locale == "C")
+		actual_locale = DEFAULT_ACTUAL_COUNTRY_CODE;
+	if (actual_country_code == "C")
+		actual_country_code = DEFAULT_ACTUAL_COUNTRY_CODE;
+	debug_write("actual_locale =");
+	debug_write(actual_locale.c_str());
+	debug_write("actual_country_code =");
+	debug_write(actual_country_code.c_str());
+
+	html_help_found = false;
+	string h;
+	for (int i = 0; i < 2 && !html_help_found; i++) {
+		if (i == 0)
+			h = MY_HELP_HTML_PREFIX + actual_country_code + MY_HELP_HTML_PEXTENSION;
+		else if (i == 1)
+			h = MY_HELP_HTML_PREFIX DEFAULT_ACTUAL_COUNTRY_CODE MY_HELP_HTML_PEXTENSION;
+		else
+			throw(CalcFatal(__FILE__, __LINE__, "prog_init(): internal error 001"));
+		html_help_file = os_concatene(osd->get_dir(OSD_HC_HTML), h);
+		html_help_found = os_file_exists(html_help_file.c_str());
+	}
 
 	if (!html_help_found) {
 		debug_write("html file not found");

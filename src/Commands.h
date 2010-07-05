@@ -16,7 +16,9 @@
 #include <iostream>
 
   // Commands that do not exist as per standard start with this string
+#ifndef PREFIX_NOSTD
 #define PREFIX_NOSTD "_"
+#endif
 
 BuiltinCommandDescriptor builtinCommands[] = {
 	  // Base

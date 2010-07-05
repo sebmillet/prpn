@@ -265,7 +265,8 @@ CMDSFR = ${srcdir}/cmdsfr.txt
 dist_doc_DATA = ${HTMLPAGEEN} ${TEXTPAGEEN} \
 	${HTMLPAGEFR} ${TEXTPAGEFR}
 
-EXTRA_DIST = ${srcdir}/make-man-page.sh ${srcdir}/pRPN1-prefix ${srcdir}/pRPN1-postfix \
+EXTRA_DIST = ${srcdir}/make-man-page.sh ${srcdir}/pRPN1en-prefix ${srcdir}/pRPN1en-postfix \
+	${srcdir}/pRPN1fr-prefix ${srcdir}/pRPN1fr-postfix \
 	${CMDSEN} ${CMDSFR}
 
 manfrdir = $(mandir)/fr
