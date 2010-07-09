@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=pRPN
+Comment=Calculator using Reverse Polish Notation
+Comment[fr]=Calculatrice en Notation Polonaise Inverse
+TryExec=prpn
+Exec=prpn
+Terminal=false
+Type=Application
+Icon=/usr/share/pixmaps/prpn.ico
+Categories=Utility;
+StartupNotify=false
