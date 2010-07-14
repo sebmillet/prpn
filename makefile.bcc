@@ -85,8 +85,9 @@ DEBUG = 0
 PRPN_CXXFLAGS = -I$(BCCDIR)\include $(__WXUNICODE_DEFINE_p) \
 	$(__WXDEBUG_DEFINE_p) -D__WXMSW__ \
 	-I$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) \
-	-I$(WX_DIR)\include $(__DEBUG_FLAG) $(__OPTIMIZE_FLAG) -DFOREIGN_MAIN \
-	-w-8022 $(CPPFLAGS) $(CXXFLAGS)
+	-I$(WX_DIR)\include -DENABLE_NLS=0 $(__DEBUG_FLAG) $(__OPTIMIZE_FLAG) \
+	-DFOREIGN_MAIN -I"C:\Progra~1\GnuWin32\include" -w-8022 $(CPPFLAGS) \
+	$(CXXFLAGS)
 PRPN_OBJECTS =  \
 	build\prpn_Main.obj \
 	build\prpn_Compat.obj \
@@ -96,11 +97,13 @@ PRPN_OBJECTS =  \
 	build\prpn_Variable.obj \
 	build\prpn_Parser.obj \
 	build\prpn_Ui.obj \
+	build\prpn_MyString.obj \
 	build\prpn_os_generic.obj \
 	build\prpn_UiImplConsole.obj \
 	build\prpn_UiImplWx.obj
-PRPNC_CXXFLAGS = -I$(BCCDIR)\include $(__DEBUG_FLAG) $(__OPTIMIZE_FLAG) -w-8022 \
-	$(CPPFLAGS) $(CXXFLAGS)
+PRPNC_CXXFLAGS = -I$(BCCDIR)\include -DENABLE_NLS=0 $(__DEBUG_FLAG) \
+	$(__OPTIMIZE_FLAG) -I"C:\Progra~1\GnuWin32\include" -w-8022 $(CPPFLAGS) \
+	$(CXXFLAGS)
 PRPNC_OBJECTS =  \
 	build\prpnc_Main.obj \
 	build\prpnc_Compat.obj \
@@ -110,6 +113,7 @@ PRPNC_OBJECTS =  \
 	build\prpnc_Variable.obj \
 	build\prpnc_Parser.obj \
 	build\prpnc_Ui.obj \
+	build\prpnc_MyString.obj \
 	build\prpnc_os_generic.obj \
 	build\prpnc_UiImplConsole.obj
 
@@ -212,13 +216,13 @@ clean:
 	-if exist build\prpnc.ils del build\prpnc.ils
 
 build\prpn.exe: $(PRPN_OBJECTS)  build\prpn_prpn.res
-	ilink32 -Tpe -q  -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk -L$(WX_DIR)$(__WXLIBPATH_FILENAMES) -aa $(__DEBUG_FLAG) $(LDFLAGS) @&&|
-	c0w32.obj $(PRPN_OBJECTS),$@,, $(__WXLIB_HTML_NAME_p) $(__WXLIB_CORE_NAME_p) $(__WXLIB_BASE_NAME_p) wxtiff$(WX3RDPARTYLIBPOSTFIX).lib wxjpeg$(WX3RDPARTYLIBPOSTFIX).lib wxpng$(WX3RDPARTYLIBPOSTFIX).lib wxzlib$(WX3RDPARTYLIBPOSTFIX).lib wxregex$(WXLIBPOSTFIX).lib wxexpat$(WX3RDPARTYLIBPOSTFIX).lib ole2w32.lib odbc32.lib oleacc.lib import32.lib cw32.lib,, build\prpn_prpn.res
+	ilink32 -Tpe -q  -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk -L$(WX_DIR)$(__WXLIBPATH_FILENAMES) -aa $(__DEBUG_FLAG) -L"C:\Progra~1\GnuWin32\lib" $(LDFLAGS) @&&|
+	c0w32.obj $(PRPN_OBJECTS),$@,,  $(__WXLIB_HTML_NAME_p) $(__WXLIB_CORE_NAME_p) $(__WXLIB_BASE_NAME_p) wxtiff$(WX3RDPARTYLIBPOSTFIX).lib wxjpeg$(WX3RDPARTYLIBPOSTFIX).lib wxpng$(WX3RDPARTYLIBPOSTFIX).lib wxzlib$(WX3RDPARTYLIBPOSTFIX).lib wxregex$(WXLIBPOSTFIX).lib wxexpat$(WX3RDPARTYLIBPOSTFIX).lib ole2w32.lib odbc32.lib oleacc.lib import32.lib cw32.lib,, build\prpn_prpn.res
 |
 
 build\prpnc.exe: $(PRPNC_OBJECTS)
-	ilink32 -Tpe -q  -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk -ap $(__DEBUG_FLAG) $(LDFLAGS) @&&|
-	c0x32.obj $(PRPNC_OBJECTS),$@,, import32.lib cw32.lib,,
+	ilink32 -Tpe -q  -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk -ap $(__DEBUG_FLAG) -L"C:\Progra~1\GnuWin32\lib" $(LDFLAGS) @&&|
+	c0x32.obj $(PRPNC_OBJECTS),$@,,  import32.lib cw32.lib,,
 |
 
 build\prpn_Main.obj: src\Main.cpp
@@ -245,6 +249,9 @@ build\prpn_Parser.obj: src\Parser.cpp
 build\prpn_Ui.obj: src\Ui.cpp
 	$(CXX) -q -c -P -o$@ $(PRPN_CXXFLAGS) src\Ui.cpp
 
+build\prpn_MyString.obj: src\MyString.cpp
+	$(CXX) -q -c -P -o$@ $(PRPN_CXXFLAGS) src\MyString.cpp
+
 build\prpn_os_generic.obj: src\platform\os_generic.cpp
 	$(CXX) -q -c -P -o$@ $(PRPN_CXXFLAGS) src\platform\os_generic.cpp
 
@@ -255,7 +262,7 @@ build\prpn_UiImplWx.obj: src\UiImplWx.cpp
 	$(CXX) -q -c -P -o$@ $(PRPN_CXXFLAGS) src\UiImplWx.cpp
 
 build\prpn_prpn.res: src\prpn.rc
-	brcc32 -32 -r -fo$@ -i$(BCCDIR)\include  $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) -d__WXMSW__ -i$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) -i$(WX_DIR)\include -dFOREIGN_MAIN src\prpn.rc
+	brcc32 -32 -r -fo$@ -i$(BCCDIR)\include  $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) -d__WXMSW__ -i$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) -i$(WX_DIR)\include -dENABLE_NLS=0 -dFOREIGN_MAIN -i"C:\Progra~1\GnuWin32\include" src\prpn.rc
 
 build\prpnc_Main.obj: src\Main.cpp
 	$(CXX) -q -c -P -o$@ $(PRPNC_CXXFLAGS) src\Main.cpp
@@ -280,6 +287,9 @@ build\prpnc_Parser.obj: src\Parser.cpp
 
 build\prpnc_Ui.obj: src\Ui.cpp
 	$(CXX) -q -c -P -o$@ $(PRPNC_CXXFLAGS) src\Ui.cpp
+
+build\prpnc_MyString.obj: src\MyString.cpp
+	$(CXX) -q -c -P -o$@ $(PRPNC_CXXFLAGS) src\MyString.cpp
 
 build\prpnc_os_generic.obj: src\platform\os_generic.cpp
 	$(CXX) -q -c -P -o$@ $(PRPNC_CXXFLAGS) src\platform\os_generic.cpp

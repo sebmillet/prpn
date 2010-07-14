@@ -7,6 +7,17 @@
 	<set var="BUILDDIR">build</set>
 	<set var="WX_DEBUG">0</set>
 
+	<option name="WITH_NLS">
+		<values>0,1</values>
+		<values-description>Without-NLS-support,With-NLS-support</values-description>
+		<default-value>1</default-value>
+	</option>
+	<set var="LIBINTL">
+		<if cond="WITH_NLS=='1' and COMPILER!='bcc'">libintl</if>
+		<if cond="WITH_NLS=='0' and COMPILER!='bcc'"></if>
+		<if cond="COMPILER=='bcc'"></if>
+	</set>
+
 	<option name="DEBUG">
 		<values>0,1</values>
 		<values-description>Release,Debug</values-description>
@@ -23,6 +34,9 @@
 
 	<exe id="prpn" template="wx">
 		<app-type>gui</app-type>
+		<if cond="COMPILER!='bcc'"><set var ="MY_NLS">$(WITH_NLS)</set></if>
+		<if cond="COMPILER=='bcc'"><set var ="MY_NLS">0</set></if>
+		<define>ENABLE_NLS=$(MY_NLS)</define>
 		<if cond="COMPILER=='bcc'">
 			<echo>WX => bcc in use => will remove a few Borland C++ warnings</echo>
 			<cxxflags>-w-8022</cxxflags>
@@ -32,10 +46,12 @@
 			<cxxflags>-Wextra -Wuninitialized</cxxflags>
 		</if>
 		<headers>Common.h Scalar.h Stack.h Commands.h Variable.h Parser.h PGetOpt.h Ui.h
+			MyString.h
 			platform/os_generic.h platform/os_win.h platform/os_unix.h
 			gettext.h MyIntl.h
 		</headers>
 		<sources>Main.cpp Compat.cpp PGetOpt.cpp Scalar.cpp Stack.cpp Variable.cpp Parser.cpp Ui.cpp
+			MyString.cpp
 			platform/os_generic.cpp
 			UiImplConsole.cpp
 			UiImplWx.cpp
@@ -44,6 +60,9 @@
 		<debug-info>$(DEBUG_FLAG)</debug-info>
 		<optimize>$(OPTIMIZE_FLAG)</optimize>
 		<define>FOREIGN_MAIN</define>
+		<include>"$(MYINCLUDE)"</include>
+		<lib-path>"$(MYLIB)"</lib-path>
+		<sys-lib>$(LIBINTL)</sys-lib>
         <wx-lib>html</wx-lib>
 		<wx-lib>core</wx-lib>
 		<wx-lib>base</wx-lib>
@@ -52,21 +71,29 @@
 	<if cond="PLATFORM_WIN32=='1'">
 		<exe id="prpnc">
 			<app-type>console</app-type>
+			<if cond="COMPILER!='bcc'"><set var ="MY_NLS">$(WITH_NLS)</set></if>
+			<if cond="COMPILER=='bcc'"><set var ="MY_NLS">0</set></if>
+			<define>ENABLE_NLS=$(MY_NLS)</define>
 			<if cond="COMPILER=='bcc'">
 				<echo>CONSOLE => bcc in use => will remove a few Borland C++ warnings</echo>
 				<cxxflags>-w-8022</cxxflags>
 			</if>
 			<headers>Common.h Scalar.h Stack.h Commands.h Variable.h Parser.h PGetOpt.h Ui.h
+				MyString.h
 				platform/os_generic.h platform/os_win.h platform/os_unix.h
 				gettext.h MyIntl.h
 			</headers>
 			<sources>Main.cpp Compat.cpp PGetOpt.cpp Scalar.cpp Stack.cpp Variable.cpp Parser.cpp Ui.cpp
+				MyString.cpp
 				platform/os_generic.cpp
 				UiImplConsole.cpp
 			</sources>
 			<warnings>max</warnings>
 			<debug-info>$(DEBUG_FLAG)</debug-info>
 			<optimize>$(OPTIMIZE_FLAG)</optimize>
+			<include>"$(MYINCLUDE)"</include>
+			<lib-path>"$(MYLIB)"</lib-path>
+			<sys-lib>$(LIBINTL)</sys-lib>
 		</exe>
 	</if>
 </makefile>

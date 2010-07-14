@@ -41,6 +41,9 @@ WX_MONOLITHIC ?= 0
 WX_PYTHON ?= 0
 
 #  [0,1]
+WITH_NLS ?= 1
+
+#  [0,1]
 DEBUG ?= 0
 
 
@@ -54,8 +57,9 @@ DEBUG ?= 0
 CPPDEPS = -MT$@ -MF$@.d -MD -MP
 PRPN_CXXFLAGS = -DHAVE_W32API_H $(__WXUNICODE_DEFINE_p) $(__WXDEBUG_DEFINE_p) \
 	-D__WXMSW__ -I$(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX) -I$(WX_DIR)\include \
-	-W -Wall $(__DEBUG_FLAG) $(__OPTIMIZE_FLAG) -DFOREIGN_MAIN -Wextra \
-	-Wuninitialized $(CPPFLAGS) $(CXXFLAGS)
+	-DENABLE_NLS=$(WITH_NLS) -W -Wall $(__DEBUG_FLAG) $(__OPTIMIZE_FLAG) \
+	-DFOREIGN_MAIN -I"C:\Progra~1\GnuWin32\include" -Wextra -Wuninitialized \
+	$(CPPFLAGS) $(CXXFLAGS)
 PRPN_OBJECTS =  \
 	build\prpn_Main.o \
 	build\prpn_Compat.o \
@@ -65,12 +69,13 @@ PRPN_OBJECTS =  \
 	build\prpn_Variable.o \
 	build\prpn_Parser.o \
 	build\prpn_Ui.o \
+	build\prpn_MyString.o \
 	build\prpn_os_generic.o \
 	build\prpn_UiImplConsole.o \
 	build\prpn_UiImplWx.o \
 	build\prpn_prpn_rc.o
-PRPNC_CXXFLAGS = -W -Wall $(__DEBUG_FLAG) $(__OPTIMIZE_FLAG) $(CPPFLAGS) \
-	$(CXXFLAGS)
+PRPNC_CXXFLAGS = -DENABLE_NLS=$(WITH_NLS) -W -Wall $(__DEBUG_FLAG) \
+	$(__OPTIMIZE_FLAG) -I"C:\Progra~1\GnuWin32\include" $(CPPFLAGS) $(CXXFLAGS)
 PRPNC_OBJECTS =  \
 	build\prpnc_Main.o \
 	build\prpnc_Compat.o \
@@ -80,6 +85,7 @@ PRPNC_OBJECTS =  \
 	build\prpnc_Variable.o \
 	build\prpnc_Parser.o \
 	build\prpnc_Ui.o \
+	build\prpnc_MyString.o \
 	build\prpnc_os_generic.o \
 	build\prpnc_UiImplConsole.o
 
@@ -170,6 +176,12 @@ endif
 ifeq ($(DEBUG),1)
 __OPTIMIZE_FLAG = -O0
 endif
+ifeq ($(WITH_NLS),0)
+__LIBINTL_p = 
+endif
+ifeq ($(WITH_NLS),1)
+__LIBINTL_p = -llibintl
+endif
 ifeq ($(DEBUG),0)
 __DEBUG_FLAG = 
 endif
@@ -193,10 +205,10 @@ clean:
 	-if exist build\prpnc.exe del build\prpnc.exe
 
 build\prpn.exe: $(PRPN_OBJECTS) build\prpn_prpn_rc.o
-	$(CXX) -o $@ $(PRPN_OBJECTS)  -mthreads -L$(WX_DIR)$(WXLIBPATH) -Wl,--subsystem,windows -mwindows $(__DEBUG_FLAG) $(LDFLAGS)  $(__WXLIB_HTML_NAME_p) $(__WXLIB_CORE_NAME_p) $(__WXLIB_BASE_NAME_p) -lwxtiff$(WX3RDPARTYLIBPOSTFIX) -lwxjpeg$(WX3RDPARTYLIBPOSTFIX) -lwxpng$(WX3RDPARTYLIBPOSTFIX) -lwxzlib$(WX3RDPARTYLIBPOSTFIX) -lwxregex$(WXLIBPOSTFIX) -lwxexpat$(WX3RDPARTYLIBPOSTFIX) -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lwinspool -lwinmm -lshell32 -lcomctl32 -lole32 -loleaut32 -luuid -lrpcrt4 -ladvapi32 -lwsock32 -lodbc32
+	$(CXX) -o $@ $(PRPN_OBJECTS)  -mthreads -L$(WX_DIR)$(WXLIBPATH) -Wl,--subsystem,windows -mwindows $(__DEBUG_FLAG) -L"C:\Progra~1\GnuWin32\lib" $(LDFLAGS)  $(__LIBINTL_p) $(__WXLIB_HTML_NAME_p) $(__WXLIB_CORE_NAME_p) $(__WXLIB_BASE_NAME_p) -lwxtiff$(WX3RDPARTYLIBPOSTFIX) -lwxjpeg$(WX3RDPARTYLIBPOSTFIX) -lwxpng$(WX3RDPARTYLIBPOSTFIX) -lwxzlib$(WX3RDPARTYLIBPOSTFIX) -lwxregex$(WXLIBPOSTFIX) -lwxexpat$(WX3RDPARTYLIBPOSTFIX) -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lwinspool -lwinmm -lshell32 -lcomctl32 -lole32 -loleaut32 -luuid -lrpcrt4 -ladvapi32 -lwsock32 -lodbc32
 
 build\prpnc.exe: $(PRPNC_OBJECTS)
-	$(CXX) -o $@ $(PRPNC_OBJECTS)   $(__DEBUG_FLAG) $(LDFLAGS)
+	$(CXX) -o $@ $(PRPNC_OBJECTS)   $(__DEBUG_FLAG) -L"C:\Progra~1\GnuWin32\lib" $(LDFLAGS)  $(__LIBINTL_p)
 
 build\prpn_Main.o: src/Main.cpp
 	$(CXX) -c -o $@ $(PRPN_CXXFLAGS) $(CPPDEPS) $<
@@ -222,6 +234,9 @@ build\prpn_Parser.o: src/Parser.cpp
 build\prpn_Ui.o: src/Ui.cpp
 	$(CXX) -c -o $@ $(PRPN_CXXFLAGS) $(CPPDEPS) $<
 
+build\prpn_MyString.o: src/MyString.cpp
+	$(CXX) -c -o $@ $(PRPN_CXXFLAGS) $(CPPDEPS) $<
+
 build\prpn_os_generic.o: src/platform/os_generic.cpp
 	$(CXX) -c -o $@ $(PRPN_CXXFLAGS) $(CPPDEPS) $<
 
@@ -232,7 +247,7 @@ build\prpn_UiImplWx.o: src/UiImplWx.cpp
 	$(CXX) -c -o $@ $(PRPN_CXXFLAGS) $(CPPDEPS) $<
 
 build\prpn_prpn_rc.o: src/prpn.rc
-	windres --use-temp-file -i$< -o$@  --define HAVE_W32API_H $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) --define __WXMSW__ --include-dir $(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX) --include-dir $(WX_DIR)/include --define FOREIGN_MAIN
+	windres --use-temp-file -i$< -o$@  --define HAVE_W32API_H $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) --define __WXMSW__ --include-dir $(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX) --include-dir $(WX_DIR)/include --define ENABLE_NLS=$(WITH_NLS) --define FOREIGN_MAIN --include-dir "C:\Progra~1\GnuWin32\include"
 
 build\prpnc_Main.o: src/Main.cpp
 	$(CXX) -c -o $@ $(PRPNC_CXXFLAGS) $(CPPDEPS) $<
@@ -256,6 +271,9 @@ build\prpnc_Parser.o: src/Parser.cpp
 	$(CXX) -c -o $@ $(PRPNC_CXXFLAGS) $(CPPDEPS) $<
 
 build\prpnc_Ui.o: src/Ui.cpp
+	$(CXX) -c -o $@ $(PRPNC_CXXFLAGS) $(CPPDEPS) $<
+
+build\prpnc_MyString.o: src/MyString.cpp
 	$(CXX) -c -o $@ $(PRPNC_CXXFLAGS) $(CPPDEPS) $<
 
 build\prpnc_os_generic.o: src/platform/os_generic.cpp

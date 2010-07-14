@@ -4,15 +4,6 @@
 #     Do not modify, all changes will be overwritten!
 # =========================================================================
 
-.autodepend
-
-!ifndef BCCDIR
-!ifndef MAKEDIR
-!error Your Borland compiler does not define MAKEDIR. Please define the BCCDIR variable, e.g. BCCDIR=d:\bc4
-!endif
-BCCDIR = $(MAKEDIR)\..
-!endif
-
 
 
 # -------------------------------------------------------------------------
@@ -20,54 +11,43 @@ BCCDIR = $(MAKEDIR)\..
 # -------------------------------------------------------------------------
 
 # C++ compiler 
-!ifndef CXX
-CXX = bcc32
-!endif
+CXX = cl
 
 # Standard flags for C++ 
-!ifndef CXXFLAGS
 CXXFLAGS = 
-!endif
 
 # Standard preprocessor flags (common for CC and CXX) 
-!ifndef CPPFLAGS
-CPPFLAGS = -a8 -g0
-!endif
+CPPFLAGS = 
 
 # Standard linker flags 
-!ifndef LDFLAGS
 LDFLAGS = 
-!endif
 
 # The directory where wxWidgets library is installed 
-!ifndef WX_DIR
 WX_DIR = $(WXWIN)
-!endif
 
 # Use DLL build of wx library to use? [0,1]
-!ifndef WX_SHARED
+#   1 - DLL
 WX_SHARED = 0
-!endif
 
 # Compile Unicode build of wxWidgets? [0,1]
-!ifndef WX_UNICODE
+#   1 - Unicode
 WX_UNICODE = 0
-!endif
 
 # Version of the wx library to build against. 
-!ifndef WX_VERSION
 WX_VERSION = 28
-!endif
 
 # Use monolithic build of wxWidgets? [0,1]
-!ifndef WX_MONOLITHIC
+#   0 - Multilib
+#   1 - Monolithic
 WX_MONOLITHIC = 0
-!endif
 
 # Whether or not we're building against wxPython libraries. [0,1]
-!ifndef WX_PYTHON
 WX_PYTHON = 0
-!endif
+
+#  [0,1]
+#   0 - Without-NLS-support
+#   1 - With-NLS-support
+WITH_NLS = 1
 
 
 
@@ -77,12 +57,11 @@ WX_PYTHON = 0
 
 ### Variables: ###
 
-PRPN_CXXFLAGS = -I$(BCCDIR)\include $(__WXUNICODE_DEFINE_p) \
-	$(__WXDEBUG_DEFINE_p) -D__WXMSW__ \
-	-I$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) \
-	-I$(WX_DIR)\include -DENABLE_NLS=0 -v -Od -DFOREIGN_MAIN \
-	-I"C:\Progra~1\GnuWin32\include" -w-8022 -DDEBUG -DDEBUG_FILE $(CPPFLAGS) \
-	$(CXXFLAGS)
+PRPN_CXXFLAGS = /MDd /DWIN32 $(__WXUNICODE_DEFINE_p) $(__WXDEBUG_DEFINE_p) \
+	/D__WXMSW__ /I$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) \
+	/I$(WX_DIR)\include /D_WINDOWS /DENABLE_NLS=$(WITH_NLS) /W4 /Zi /D_DEBUG \
+	/Fdprpn.pdb /Od /DFOREIGN_MAIN /I"C:\Progra~1\GnuWin32\include" /GR /EHsc \
+	$(CPPFLAGS) $(CXXFLAGS)
 PRPN_OBJECTS =  \
 	prpn_Main.obj \
 	prpn_Compat.obj \
@@ -96,8 +75,10 @@ PRPN_OBJECTS =  \
 	prpn_os_generic.obj \
 	prpn_UiImplConsole.obj \
 	prpn_UiImplWx.obj
-PRPNC_CXXFLAGS = -I$(BCCDIR)\include -DENABLE_NLS=0 -v -Od \
-	-I"C:\Progra~1\GnuWin32\include" -w-8022 -DDEBUG -DDEBUG_FILE $(CPPFLAGS) \
+PRPN_RESOURCES =  \
+	prpn_prpn.res
+PRPNC_CXXFLAGS = /MDd /DWIN32 /D_CONSOLE /DENABLE_NLS=$(WITH_NLS) /W4 /Zi /D_DEBUG \
+	/Fdprpnc.pdb /Od /I"C:\Progra~1\GnuWin32\include" /GR /EHsc $(CPPFLAGS) \
 	$(CXXFLAGS)
 PRPNC_OBJECTS =  \
 	prpnc_Main.obj \
@@ -121,22 +102,22 @@ WX3RDPARTYLIBPOSTFIX = d
 WX3RDPARTYLIBPOSTFIX = h
 !endif
 !if "$(WX_UNICODE)" == "1"
-__WXUNICODE_DEFINE_p = -D_UNICODE
+__WXUNICODE_DEFINE_p = /D_UNICODE
 !endif
 !if "$(WX_UNICODE)" == "1"
-__WXUNICODE_DEFINE_p_1 = -d_UNICODE
+__WXUNICODE_DEFINE_p_1 = /d _UNICODE
 !endif
 !if "$(WX_DEBUG)" == "1" && "$(WX_PYTHON)" == "0"
-__WXDEBUG_DEFINE_p = -D__WXDEBUG__
+__WXDEBUG_DEFINE_p = /D__WXDEBUG__
 !endif
 !if "$(WX_PYTHON)" == "1"
-__WXDEBUG_DEFINE_p = -D__WXDEBUG__
+__WXDEBUG_DEFINE_p = /D__WXDEBUG__
 !endif
 !if "$(WX_DEBUG)" == "1" && "$(WX_PYTHON)" == "0"
-__WXDEBUG_DEFINE_p_1 = -d__WXDEBUG__
+__WXDEBUG_DEFINE_p_1 = /d __WXDEBUG__
 !endif
 !if "$(WX_PYTHON)" == "1"
-__WXDEBUG_DEFINE_p_1 = -d__WXDEBUG__
+__WXDEBUG_DEFINE_p_1 = /d __WXDEBUG__
 !endif
 !if "$(WX_MONOLITHIC)" == "0"
 __WXLIB_HTML_NAME_p = wxmsw$(WX_VERSION)$(WXLIBPOSTFIX)_html.lib
@@ -166,10 +147,16 @@ WXLIBPOSTFIX = h
 WXLIBPOSTFIX = uh
 !endif
 !if "$(WX_SHARED)" == "0"
-__WXLIBPATH_FILENAMES = \lib\bcc_lib
+__WXLIBPATH_FILENAMES = \lib\vc_lib
 !endif
 !if "$(WX_SHARED)" == "1"
-__WXLIBPATH_FILENAMES = \lib\bcc_dll
+__WXLIBPATH_FILENAMES = \lib\vc_dll
+!endif
+!if "$(WITH_NLS)" == "0"
+__LIBINTL_p = 
+!endif
+!if "$(WITH_NLS)" == "1"
+__LIBINTL_p = libintl.lib
 !endif
 
 
@@ -180,99 +167,93 @@ all: prpn.exe prpnc.exe
 clean: 
 	-if exist .\*.obj del .\*.obj
 	-if exist .\*.res del .\*.res
-	-if exist .\*.csm del .\*.csm
+	-if exist .\*.pch del .\*.pch
 	-if exist prpn.exe del prpn.exe
-	-if exist prpn.tds del prpn.tds
-	-if exist prpn.ilc del prpn.ilc
-	-if exist prpn.ild del prpn.ild
-	-if exist prpn.ilf del prpn.ilf
-	-if exist prpn.ils del prpn.ils
+	-if exist prpn.ilk del prpn.ilk
+	-if exist prpn.pdb del prpn.pdb
 	-if exist prpnc.exe del prpnc.exe
-	-if exist prpnc.tds del prpnc.tds
-	-if exist prpnc.ilc del prpnc.ilc
-	-if exist prpnc.ild del prpnc.ild
-	-if exist prpnc.ilf del prpnc.ilf
-	-if exist prpnc.ils del prpnc.ils
+	-if exist prpnc.ilk del prpnc.ilk
+	-if exist prpnc.pdb del prpnc.pdb
 
-prpn.exe: $(PRPN_OBJECTS)  prpn_prpn.res
-	ilink32 -Tpe -q  -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk -L$(WX_DIR)$(__WXLIBPATH_FILENAMES) -aa -v -L"C:\Progra~1\GnuWin32\lib" $(LDFLAGS) @&&|
-	c0w32.obj $(PRPN_OBJECTS),$@,,  $(__WXLIB_HTML_NAME_p) $(__WXLIB_CORE_NAME_p) $(__WXLIB_BASE_NAME_p) wxtiff$(WX3RDPARTYLIBPOSTFIX).lib wxjpeg$(WX3RDPARTYLIBPOSTFIX).lib wxpng$(WX3RDPARTYLIBPOSTFIX).lib wxzlib$(WX3RDPARTYLIBPOSTFIX).lib wxregex$(WXLIBPOSTFIX).lib wxexpat$(WX3RDPARTYLIBPOSTFIX).lib ole2w32.lib odbc32.lib oleacc.lib import32.lib cw32.lib,, prpn_prpn.res
-|
+prpn.exe: $(PRPN_OBJECTS) prpn_prpn.res
+	link /NOLOGO /OUT:$@  /LIBPATH:$(WX_DIR)$(__WXLIBPATH_FILENAMES) /SUBSYSTEM:WINDOWS /DEBUG /pdb:"prpn.pdb"  /LIBPATH:"C:\Progra~1\GnuWin32\lib" $(LDFLAGS) @<<
+	$(PRPN_OBJECTS) $(PRPN_RESOURCES)  $(__LIBINTL_p) $(__WXLIB_HTML_NAME_p) $(__WXLIB_CORE_NAME_p) $(__WXLIB_BASE_NAME_p) wxtiff$(WX3RDPARTYLIBPOSTFIX).lib wxjpeg$(WX3RDPARTYLIBPOSTFIX).lib wxpng$(WX3RDPARTYLIBPOSTFIX).lib wxzlib$(WX3RDPARTYLIBPOSTFIX).lib wxregex$(WXLIBPOSTFIX).lib wxexpat$(WX3RDPARTYLIBPOSTFIX).lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib oleacc.lib
+<<
 
 prpnc.exe: $(PRPNC_OBJECTS)
-	ilink32 -Tpe -q  -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk -ap -v -L"C:\Progra~1\GnuWin32\lib" $(LDFLAGS) @&&|
-	c0x32.obj $(PRPNC_OBJECTS),$@,,  import32.lib cw32.lib,,
-|
+	link /NOLOGO /OUT:$@  /SUBSYSTEM:CONSOLE /DEBUG /pdb:"prpnc.pdb"  /LIBPATH:"C:\Progra~1\GnuWin32\lib" $(LDFLAGS) @<<
+	$(PRPNC_OBJECTS)   $(__LIBINTL_p)
+<<
 
 prpn_Main.obj: .\Main.cpp
-	$(CXX) -q -c -P -o$@ $(PRPN_CXXFLAGS) .\Main.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPN_CXXFLAGS) .\Main.cpp
 
 prpn_Compat.obj: .\Compat.cpp
-	$(CXX) -q -c -P -o$@ $(PRPN_CXXFLAGS) .\Compat.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPN_CXXFLAGS) .\Compat.cpp
 
 prpn_PGetOpt.obj: .\PGetOpt.cpp
-	$(CXX) -q -c -P -o$@ $(PRPN_CXXFLAGS) .\PGetOpt.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPN_CXXFLAGS) .\PGetOpt.cpp
 
 prpn_Scalar.obj: .\Scalar.cpp
-	$(CXX) -q -c -P -o$@ $(PRPN_CXXFLAGS) .\Scalar.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPN_CXXFLAGS) .\Scalar.cpp
 
 prpn_Stack.obj: .\Stack.cpp
-	$(CXX) -q -c -P -o$@ $(PRPN_CXXFLAGS) .\Stack.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPN_CXXFLAGS) .\Stack.cpp
 
 prpn_Variable.obj: .\Variable.cpp
-	$(CXX) -q -c -P -o$@ $(PRPN_CXXFLAGS) .\Variable.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPN_CXXFLAGS) .\Variable.cpp
 
 prpn_Parser.obj: .\Parser.cpp
-	$(CXX) -q -c -P -o$@ $(PRPN_CXXFLAGS) .\Parser.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPN_CXXFLAGS) .\Parser.cpp
 
 prpn_Ui.obj: .\Ui.cpp
-	$(CXX) -q -c -P -o$@ $(PRPN_CXXFLAGS) .\Ui.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPN_CXXFLAGS) .\Ui.cpp
 
 prpn_MyString.obj: .\MyString.cpp
-	$(CXX) -q -c -P -o$@ $(PRPN_CXXFLAGS) .\MyString.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPN_CXXFLAGS) .\MyString.cpp
 
 prpn_os_generic.obj: .\platform\os_generic.cpp
-	$(CXX) -q -c -P -o$@ $(PRPN_CXXFLAGS) .\platform\os_generic.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPN_CXXFLAGS) .\platform\os_generic.cpp
 
 prpn_UiImplConsole.obj: .\UiImplConsole.cpp
-	$(CXX) -q -c -P -o$@ $(PRPN_CXXFLAGS) .\UiImplConsole.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPN_CXXFLAGS) .\UiImplConsole.cpp
 
 prpn_UiImplWx.obj: .\UiImplWx.cpp
-	$(CXX) -q -c -P -o$@ $(PRPN_CXXFLAGS) .\UiImplWx.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPN_CXXFLAGS) .\UiImplWx.cpp
 
 prpn_prpn.res: .\prpn.rc
-	brcc32 -32 -r -fo$@ -i$(BCCDIR)\include  $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) -d__WXMSW__ -i$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) -i$(WX_DIR)\include -dENABLE_NLS=0 -dFOREIGN_MAIN -i"C:\Progra~1\GnuWin32\include" .\prpn.rc
+	rc /fo$@  /d WIN32 $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) /d __WXMSW__ /i $(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) /i $(WX_DIR)\include /d _WINDOWS /d ENABLE_NLS=$(WITH_NLS) /d _DEBUG /d FOREIGN_MAIN /i "C:\Progra~1\GnuWin32\include" .\prpn.rc
 
 prpnc_Main.obj: .\Main.cpp
-	$(CXX) -q -c -P -o$@ $(PRPNC_CXXFLAGS) .\Main.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPNC_CXXFLAGS) .\Main.cpp
 
 prpnc_Compat.obj: .\Compat.cpp
-	$(CXX) -q -c -P -o$@ $(PRPNC_CXXFLAGS) .\Compat.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPNC_CXXFLAGS) .\Compat.cpp
 
 prpnc_PGetOpt.obj: .\PGetOpt.cpp
-	$(CXX) -q -c -P -o$@ $(PRPNC_CXXFLAGS) .\PGetOpt.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPNC_CXXFLAGS) .\PGetOpt.cpp
 
 prpnc_Scalar.obj: .\Scalar.cpp
-	$(CXX) -q -c -P -o$@ $(PRPNC_CXXFLAGS) .\Scalar.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPNC_CXXFLAGS) .\Scalar.cpp
 
 prpnc_Stack.obj: .\Stack.cpp
-	$(CXX) -q -c -P -o$@ $(PRPNC_CXXFLAGS) .\Stack.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPNC_CXXFLAGS) .\Stack.cpp
 
 prpnc_Variable.obj: .\Variable.cpp
-	$(CXX) -q -c -P -o$@ $(PRPNC_CXXFLAGS) .\Variable.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPNC_CXXFLAGS) .\Variable.cpp
 
 prpnc_Parser.obj: .\Parser.cpp
-	$(CXX) -q -c -P -o$@ $(PRPNC_CXXFLAGS) .\Parser.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPNC_CXXFLAGS) .\Parser.cpp
 
 prpnc_Ui.obj: .\Ui.cpp
-	$(CXX) -q -c -P -o$@ $(PRPNC_CXXFLAGS) .\Ui.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPNC_CXXFLAGS) .\Ui.cpp
 
 prpnc_MyString.obj: .\MyString.cpp
-	$(CXX) -q -c -P -o$@ $(PRPNC_CXXFLAGS) .\MyString.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPNC_CXXFLAGS) .\MyString.cpp
 
 prpnc_os_generic.obj: .\platform\os_generic.cpp
-	$(CXX) -q -c -P -o$@ $(PRPNC_CXXFLAGS) .\platform\os_generic.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPNC_CXXFLAGS) .\platform\os_generic.cpp
 
 prpnc_UiImplConsole.obj: .\UiImplConsole.cpp
-	$(CXX) -q -c -P -o$@ $(PRPNC_CXXFLAGS) .\UiImplConsole.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPNC_CXXFLAGS) .\UiImplConsole.cpp
 
