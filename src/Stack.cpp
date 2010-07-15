@@ -1553,6 +1553,10 @@ static st_err_t bc_to_list(TransStack& ts, SIO *args, string&) {
 
 static st_err_t bc_list_to(TransStack& ts, SIO *args, string&) { return args[0].si->op_list_to(ts, args[0].ownership); }
 
+static st_err_t bc_get(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { return op1.op_get_generic(op2, ret); }
+
+static st_err_t bc_geti(TransStack& ts, SIO *args, string&) { return ST_ERR_OK; }
+
   // Variables
 
 static st_err_t bc_sto(TransStack& ts, SIO *args, string&) { return args[1].si->op_sto(ts, args[0]); }
@@ -2573,6 +2577,39 @@ st_err_t StackItemList::op_list_to(TransStack& ts, const tso_t& o) {
 	ts.transstack_push(new StackItemReal(Real(list.size())));
 	if (o == TSO_OUTSIDE_TS)
 		list.clear();
+	return ST_ERR_OK;
+}
+
+st_err_t StackItemList::get_coordinates(dim_t& d, int& x, int& y) {
+	size_t nb = get_nb_items();
+	if (nb < 1 || nb > 2)
+		return ST_ERR_BAD_ARGUMENT_VALUE;
+	st_err_t c;
+	int value;
+	for (int i = 0; i < nb; i++) {
+		c = list[i]->to_integer(value);
+		if (c != ST_ERR_OK)
+			break;
+		if (i == 0)
+			x = value;
+		else if (i == 1)
+			y = value;
+		else
+			throw(CalcFatal(__FILE__, __LINE__, "StackItemList::get_coordinates(): inconsistent values encountered!!!??"));
+	}
+	d = (nb == 1 ? DIM_VECTOR : DIM_MATRIX);
+	return ST_ERR_OK;
+}
+
+st_err_t StackItemList::op_get(StackItemList* sil, StackItem*& ret) {
+	dim_t d;
+	int x; int y;
+	st_err_t c = get_coordinates(d, x, y);
+	if (c == ST_ERR_OK && d == DIM_MATRIX)
+		return ST_ERR_BAD_ARGUMENT_VALUE;
+	if (x < 1 || x > sil->get_nb_items())
+		return ST_ERR_BAD_ARGUMENT_VALUE;
+	ret = sil->list[x - 1]->dup();
 	return ST_ERR_OK;
 }
 

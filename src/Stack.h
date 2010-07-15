@@ -258,6 +258,8 @@ public:
 
 	  // LIST
 	virtual st_err_t op_list_to(TransStack&, const tso_t&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_get_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_get(StackItemList*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	  // VARIABLES
 	virtual st_err_t op_sto(TransStack&, SIO&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_rcl(TransStack&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
@@ -651,6 +653,9 @@ public:
 	virtual bool same(StackItem*) const;
 	virtual void to_string(ToString&, const bool& = false) const;
 	virtual st_err_t op_list_to(TransStack&, const tso_t&);
+	virtual st_err_t get_coordinates(dim_t&, int&, int&);
+	virtual st_err_t op_get_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_get(this, ret); }
+	virtual st_err_t op_get(StackItemList*, StackItem*&);
 };
 
 

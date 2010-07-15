@@ -80,9 +80,11 @@ BuiltinCommandDescriptor builtinCommands[] = {
 	  // String
 	{1, BC_FUNCTION_WRAPPER, "->STR", 0, 0, &bc_to_str, 0, 0, _N("Convert to string")},
 	{0, BC_RAW, "STR->", &bc_str_to, 0, 0, 0, 0, _N("Convert from string")},
-	  // Lists
+	  // Lists and arrays
 	{1, BC_RAW, "->LIST", &bc_to_list, 0, 0, 0, 0, _N("Items to list")},
 	{1, BC_RAW, "LIST->", &bc_list_to, 0, 0, 0, 0, _N("Extract items from list")},
+	{2, BC_FUNCTION_WRAPPER, "GET", 0, 0, 0, &bc_get, 0, _N("Get an item from a list or array")},
+	{2, BC_RAW, "GETI", &bc_geti, 0, 0, 0, 0, _N("Get an item from a list or array by increments")},
 	  // Variables
 	{0, BC_RAW, "EVAL", &bc_eval, 0, 0, 0, 0, _N("Evaluate item")},
 	{2, BC_RAW, "STO", &bc_sto, 0, 0, 0, 0, _N("Store value in variable name")},
