@@ -1555,7 +1555,18 @@ static st_err_t bc_list_to(TransStack& ts, SIO *args, string&) { return args[0].
 
 static st_err_t bc_get(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { return op1.op_get_generic(op2, ret); }
 
-static st_err_t bc_geti(TransStack& ts, SIO *args, string&) { return ST_ERR_OK; }
+static st_err_t bc_geti(TransStack& ts, SIO *args, string& cmd_err) {
+	StackItem* ret;
+	st_err_t c = bc_get(*(args[0].si), *(args[1].si), ret, cmd_err);
+	if (c == ST_ERR_OK) {
+		ts.transstack_push(args[0].si);
+		args[1].ownership = TSO_OWNED_BY_TS;
+		ts.transstack_push(args[1].si);
+		args[1].ownership = TSO_OWNED_BY_TS;
+		ts.transstack_push(ret);
+	}
+	return c;
+}
 
   // Variables
 
@@ -2610,6 +2621,10 @@ st_err_t StackItemList::op_get(StackItemList* sil, StackItem*& ret) {
 	if (x < 1 || x > sil->get_nb_items())
 		return ST_ERR_BAD_ARGUMENT_VALUE;
 	ret = sil->list[x - 1]->dup();
+	return ST_ERR_OK;
+}
+
+st_err_t StackItemList::op_geti(StackItemList* sil, TransStack& ts) {
 	return ST_ERR_OK;
 }
 
