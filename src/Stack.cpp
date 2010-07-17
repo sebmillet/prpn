@@ -2624,10 +2624,6 @@ st_err_t StackItemList::op_get(StackItemList* sil, StackItem*& ret) {
 	return ST_ERR_OK;
 }
 
-st_err_t StackItemList::op_geti(StackItemList* sil, TransStack& ts) {
-	return ST_ERR_OK;
-}
-
 
 //
 // StackItemProgram
