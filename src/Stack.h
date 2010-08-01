@@ -273,6 +273,8 @@ public:
 	virtual st_err_t op_list_to(TransStack&, const tso_t&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_get_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_get(StackItemList*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_put_generic(StackItem&, SIO&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_put(StackItemList*, SIO&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	  // VARIABLES
 	virtual st_err_t op_sto(TransStack&, SIO&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_rcl(TransStack&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
@@ -672,8 +674,11 @@ public:
 	virtual st_err_t get_coordinates(Coordinates&);
 	virtual void to_string(ToString&, const bool& = false) const;
 	virtual st_err_t op_list_to(TransStack&, const tso_t&);
+	virtual st_err_t prepare_list_access(StackItemList *, Coordinates&);
 	virtual st_err_t op_get_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_get(this, ret); }
 	virtual st_err_t op_get(StackItemList*, StackItem*&);
+	virtual st_err_t op_put_generic(StackItem& arg2, SIO& s) { return arg2.op_put(this, s); }
+	virtual st_err_t op_put(StackItemList*, SIO&);
 };
 
 

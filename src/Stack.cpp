@@ -1581,28 +1581,54 @@ static st_err_t bc_list_to(TransStack& ts, SIO *args, string&) { return args[0].
 
 static st_err_t bc_get(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { return op1.op_get_generic(op2, ret); }
 
+static void pushback_incremented_bounds(TransStack& ts, SIO *args, const bool& push_args0) {
+	Coordinates bounds;
+	st_err_t c;
+	if ((c = args[0].si->get_bounds(bounds)) != ST_ERR_OK)
+		throw(CalcFatal(__FILE__, __LINE__, "pushback_incremented_bounds(): args[0].si should answer to get_bounds()!"));
+	if (push_args0)
+		ts.transstack_push_SIO(args[0]);
+	StackItem *ready_si;
+	get_ready_si(args[1], ready_si);
+	StackItemList *sil = dynamic_cast<StackItemList*>(ready_si);
+	if (sil == NULL)
+		throw(CalcFatal(__FILE__, __LINE__, "pushback_incremented_bounds(): ready_si should be of type StackItemList*!"));
+
+	  // Not necessary. Done to make sure we now use sil, not ready_si
+	ready_si = NULL;
+
+	if ((c = sil->increment_list(bounds)) != ST_ERR_OK)
+		throw(CalcFatal(__FILE__, __LINE__, "pushback_incremented_bounds(): increment() returned a bad error code!"));
+	ts.transstack_push(sil);
+}
+
+
 static st_err_t bc_geti(TransStack& ts, SIO *args, string& cmd_err) {
 	StackItem *ret;
 	StackItem *ready_si;
 	st_err_t c = bc_get(*(args[0].si), *(args[1].si), ret, cmd_err);
 	if (c == ST_ERR_OK) {
-		Coordinates bounds;
-		if ((c = args[0].si->get_bounds(bounds)) != ST_ERR_OK)
-			throw(CalcFatal(__FILE__, __LINE__, "bc_geti(): args[0].si should answer to get_bounds()!"));
-		ts.transstack_push_SIO(args[0]);
-		get_ready_si(args[1], ready_si);
-		StackItemList *sil = dynamic_cast<StackItemList*>(ready_si);
-		if (sil == NULL)
-			throw(CalcFatal(__FILE__, __LINE__, "bc_geti(): ready_si should be of type StackItemList*!"));
-
-		  // Not necessary. Done to make sure we now use sil, not ready_si
-		ready_si = NULL;
-
-		if ((c = sil->increment_list(bounds)) != ST_ERR_OK)
-			throw(CalcFatal(__FILE__, __LINE__, "bc_geti(): increment() returned a bad error code!"));
-		ts.transstack_push(sil);
+		pushback_incremented_bounds(ts, args, true);
 		ts.transstack_push(ret);
 	}
+	return c;
+}
+
+static st_err_t bc_put(TransStack& ts, SIO *args, string& cmd_err) {
+	StackItem *ready_si;
+	get_ready_si(args[0], ready_si);
+	st_err_t c = ready_si->op_put_generic(*(args[1].si), args[2]);
+	if (c == ST_ERR_OK)
+		ts.transstack_push(ready_si);
+	else if (args[0].si != ready_si)
+		delete ready_si;
+	return c;
+}
+
+static st_err_t bc_puti(TransStack& ts, SIO *args, string& cmd_err) {
+	st_err_t c = bc_put(ts, args, cmd_err);
+	if (c == ST_ERR_OK)
+		pushback_incremented_bounds(ts, args, false);
 	return c;
 }
 
@@ -2661,9 +2687,8 @@ st_err_t StackItemList::get_bounds(Coordinates& coord) const {
 	return ST_ERR_OK;
 }
 
-st_err_t StackItemList::op_get(StackItemList* sil, StackItem*& ret) {
+st_err_t StackItemList::prepare_list_access(StackItemList *sil, Coordinates& coord) {
 	Coordinates bounds;
-	Coordinates coord;
 	st_err_t c = get_coordinates(coord);
 	if (c != ST_ERR_OK)
 		return c;
@@ -2671,7 +2696,27 @@ st_err_t StackItemList::op_get(StackItemList* sil, StackItem*& ret) {
 		return c;
 	if ((c = check_coordinates(bounds, coord)) != ST_ERR_OK)
 		return c;
+	return ST_ERR_OK;
+}
+
+st_err_t StackItemList::op_get(StackItemList *sil, StackItem*& ret) {
+	Coordinates coord;
+	st_err_t c = prepare_list_access(sil, coord);
+	if (c != ST_ERR_OK)
+		return c;
 	ret = sil->list[coord.x - 1]->dup();
+	return ST_ERR_OK;
+}
+
+st_err_t StackItemList::op_put(StackItemList* sil, SIO& s) {
+	Coordinates coord;
+	st_err_t c = prepare_list_access(sil, coord);
+	if (c != ST_ERR_OK)
+		return c;
+	StackItem *si;
+	get_ready_si(s, si);
+	delete sil->list[coord.x - 1];
+	sil->list[coord.x - 1] = si;
 	return ST_ERR_OK;
 }
 

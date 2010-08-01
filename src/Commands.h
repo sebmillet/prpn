@@ -85,6 +85,8 @@ BuiltinCommandDescriptor builtinCommands[] = {
 	{1, BC_RAW, "LIST->", &bc_list_to, 0, 0, 0, 0, _N("Extract items from list")},
 	{2, BC_FUNCTION_WRAPPER, "GET", 0, 0, 0, &bc_get, 0, _N("Get an item from a list or array")},
 	{2, BC_RAW, "GETI", &bc_geti, 0, 0, 0, 0, _N("Get an item from a list or array by increments")},
+	{3, BC_RAW, "PUT", &bc_put, 0, 0, 0, 0, _N("Put an item into a list or array")},
+	{3, BC_RAW, "PUTI", &bc_puti, 0, 0, 0, 0, _N("Put an item into a list or array by increments")},
 	  // Variables
 	{0, BC_RAW, "EVAL", &bc_eval, 0, 0, 0, 0, _N("Evaluate item")},
 	{2, BC_RAW, "STO", &bc_sto, 0, 0, 0, 0, _N("Store value in variable name")},
