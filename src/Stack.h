@@ -113,6 +113,17 @@ void write_si(const tostring_t&, const StackItem*, std::ostream&);
 
 
 //
+// Coordinates
+//
+
+struct Coordinates {
+	dim_t d;
+	int x;
+	int y;
+};
+
+
+//
 // ToString
 //
 
@@ -190,6 +201,8 @@ public:
 
 	virtual bool is_varname() const;
 	virtual bool is_unquoted_varname() const;
+
+	virtual st_err_t get_bounds(Coordinates&) const { return ST_ERR_BAD_ARGUMENT_TYPE; }
 
 	virtual const std::string& get_varname() const;
 
@@ -309,7 +322,7 @@ public:
 	virtual int get_id() const { return builtin_id; }
 	virtual st_err_t eval(const eval_t&, TransStack&, manage_si_t&, std::string&);
 	virtual StackItem* dup() const;
-	sitype_t get_type() const;
+	virtual sitype_t get_type() const;
 	virtual bool same(StackItem*) const;
 
 	virtual void to_string(ToString&, const bool& = false) const;
@@ -328,7 +341,7 @@ public:
 	StackItemBinary(const Binary&);
 	virtual ~StackItemBinary();
 	virtual StackItem* dup() const;
-	sitype_t get_type() const;
+	virtual sitype_t get_type() const;
 	virtual bool same(StackItem*) const;
 	virtual void to_string(ToString&, const bool& = false) const;
 
@@ -369,10 +382,11 @@ public:
 	StackItemReal(const Real& cc) : sc(real_trim(cc.get_value())) { }
 	virtual ~StackItemReal() { }
 	virtual StackItem* dup() const;
-	sitype_t get_type() const;
+	virtual sitype_t get_type() const;
 	virtual bool same(StackItem*) const;
 
-	virtual Real get_Real() { return sc; }
+	virtual Real get_Real() const;
+	virtual void set_Real(const Real&);
 
 	virtual void to_string(ToString&, const bool& = false) const;
 	virtual st_err_t to_integer(int&) const;
@@ -441,7 +455,7 @@ public:
 	StackItemCplx(const Cplx& cc) : sc(Cplx(real_trim(cc.get_re()), real_trim(cc.get_im()))) { }
 	virtual ~StackItemCplx() { }
 	virtual StackItem* dup() const;
-	sitype_t get_type() const;
+	virtual sitype_t get_type() const;
 	virtual bool same(StackItem*) const;
 
 	virtual Cplx get_Cplx() { return sc; }
@@ -495,7 +509,7 @@ public:
 	StackItemMatrixReal(Matrix<Real>*);
 	virtual ~StackItemMatrixReal() { delete pmat; };
 	virtual StackItem* dup() const;
-	sitype_t get_type() const;
+	virtual sitype_t get_type() const;
 	virtual bool same(StackItem*) const;
 	virtual Matrix<Real>* get_matrix() const;
 
@@ -527,7 +541,7 @@ public:
 	StackItemMatrixCplx(Matrix<Cplx>*);
 	virtual ~StackItemMatrixCplx() { delete pmat; };
 	virtual StackItem* dup() const;
-	sitype_t get_type() const;
+	virtual sitype_t get_type() const;
 	virtual bool same(StackItem*) const;
 	virtual Matrix<Cplx>* get_matrix() const;
 
@@ -561,7 +575,7 @@ public:
 	}
 	virtual ~StackItemString() { }
 	virtual StackItem* dup() const;
-	sitype_t get_type() const;
+	virtual sitype_t get_type() const;
 	virtual bool same(StackItem*) const;
 
 	virtual void to_string(ToString& tostr, const bool& = false) const;
@@ -596,7 +610,7 @@ public:
 	StackItemExpression(const std::string&, const bool&);
 	virtual ~StackItemExpression() { }
 	virtual StackItem* dup() const;
-	sitype_t get_type() const;
+	virtual sitype_t get_type() const;
 	virtual bool same(StackItem*) const;
 	virtual st_err_t op_equal_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_equal(this, ret); }
 	virtual st_err_t op_notequal_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_notequal(this, ret); }
@@ -630,7 +644,7 @@ public:
 	StackItemMeta(const std::vector<StackItem*>&);
 	virtual ~StackItemMeta();
 	void copy_items();
-	sitype_t get_type() const;
+	virtual sitype_t get_type() const;
 	virtual bool same(StackItem*, const sitype_t&) const;
 
 	virtual void add_item(StackItem*);
@@ -649,11 +663,15 @@ public:
 	StackItemList(const std::vector<StackItem*>&);
 	virtual ~StackItemList() { }
 	virtual StackItem* dup() const;
-	sitype_t get_type() const;
+	virtual sitype_t get_type() const;
 	virtual bool same(StackItem*) const;
+
+	virtual st_err_t get_bounds(Coordinates&) const;
+	st_err_t increment_list(const Coordinates&);
+
+	virtual st_err_t get_coordinates(Coordinates&);
 	virtual void to_string(ToString&, const bool& = false) const;
 	virtual st_err_t op_list_to(TransStack&, const tso_t&);
-	virtual st_err_t get_coordinates(dim_t&, int&, int&);
 	virtual st_err_t op_get_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_get(this, ret); }
 	virtual st_err_t op_get(StackItemList*, StackItem*&);
 };
@@ -671,7 +689,7 @@ public:
 	StackItemProgram(const StackItemProgram&);
 	virtual ~StackItemProgram();
 	virtual StackItem* dup() const;
-	sitype_t get_type() const;
+	virtual sitype_t get_type() const;
 	virtual bool same(StackItem*) const;
 	virtual void to_string(ToString&, const bool& = false) const;
 	virtual VarDirectory* get_lvars(bool&) const;
@@ -699,7 +717,7 @@ public:
 
 	virtual void add_item(const int&, StackItem*);
 	virtual st_err_t eval(const eval_t&, TransStack&, manage_si_t& msi, std::string&);
-	sitype_t get_type() const;
+	virtual sitype_t get_type() const;
 	virtual bool same(StackItemBranch*) const;
 };
 
@@ -717,7 +735,7 @@ public:
 	virtual StackItem* dup() const;
 	virtual void to_string(ToString&, const bool& = false) const;
 	virtual st_err_t exec1(TransStack&, int&, std::string&);
-	sitype_t get_type() const;
+	virtual sitype_t get_type() const;
 	virtual bool same(StackItem*) const;
 };
 
@@ -735,7 +753,7 @@ public:
 	virtual StackItem* dup() const;
 	virtual void to_string(ToString&, const bool& = false) const;
 	virtual st_err_t exec1(TransStack&, int&, std::string&);
-	sitype_t get_type() const;
+	virtual sitype_t get_type() const;
 	virtual bool same(StackItem*) const;
 };
 
@@ -753,7 +771,7 @@ public:
 	virtual StackItem* dup() const;
 	virtual void to_string(ToString&, const bool& = false) const;
 	virtual st_err_t exec1(TransStack&, int&, std::string&);
-	sitype_t get_type() const;
+	virtual sitype_t get_type() const;
 	virtual bool same(StackItem*) const;
 };
 
@@ -788,7 +806,7 @@ public:
 	virtual void set_loop_varname(const std::string&);
 	virtual st_err_t eval(const eval_t&, TransStack&, manage_si_t&, std::string&);
 	virtual st_err_t exec1(TransStack&, int&, std::string&);
-	sitype_t get_type() const;
+	virtual sitype_t get_type() const;
 	virtual bool same(StackItem*) const;
 };
 
@@ -1006,6 +1024,7 @@ public:
 	virtual void set_modified_flag(const bool& m);
 
 	virtual int transstack_push(StackItem*);
+	virtual int transstack_push_SIO(SIO&);
 	virtual SIO transstack_pop();
 	virtual st_err_t read_integer(int&);
 

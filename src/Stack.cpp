@@ -146,12 +146,44 @@ int get_bin_size_from_flags() {
 	return r + 1;
 }
 
+  // Used by GET and similar commands
+st_err_t check_coordinates(const Coordinates& bounds, const Coordinates& coord) {
+	if (bounds.d != coord.d)
+		return ST_ERR_BAD_ARGUMENT_TYPE;
+	for (int i = 0; i < (bounds.d == DIM_VECTOR ? 1 : 2); i++) {
+		int b = (i == 0 ? bounds.x : bounds.y);
+		int v = (i == 0 ? coord.x : coord.y);
+		if (v < 1 || v > b)
+			return ST_ERR_BAD_ARGUMENT_VALUE;
+	}
+	return ST_ERR_OK;
+}
+
+  // Used to push back an item into the stack after copying it if necessary.
+  // Modify the ownership if need be (to avoid the item being cleaned up later.)
+void get_ready_si(SIO& s, StackItem*& si) {
+	if (s.ownership == TSO_OUTSIDE_TS) {
+		si = s.si;
+		s.ownership = TSO_OWNED_BY_TS;
+	} else {
+		si = s.si->dup();
+	}
+}
+
+  // Get a copy of the item, if necessary (= if it is not owned by the transstack)
+  // Leave the SIO object ownership untouched
+void get_si_dup_if_necessary(const SIO& s, StackItem*& si) {
+	si = s.si;
+	if (s.ownership == TSO_OWNED_BY_TS)
+		si = s.si->dup();
+}
+
 const string get_error_string(const st_err_t& c) { return st_errors[c]; }
 
   // Number of columns in a file containing StackItems
 #define RC_FILE_WIDTH			78
 
-void write_si(const tostring_t& tostring, const StackItem* csi, ostream& oss) {
+void write_si(const tostring_t& tostring, const StackItem *csi, ostream& oss) {
 	ToString tostr(tostring, 0, RC_FILE_WIDTH);
 	csi->to_string(tostr);
 	tostr.lock();
@@ -344,7 +376,7 @@ Stack::Stack(const Stack& s) : has_ownership(false) {
 void Stack::re_alloc(const size_t& new_alloc) {
 	if (new_alloc <= allocated)
 		return;
-	StackItem* *new_values = new StackItem*[new_alloc];
+	StackItem **new_values = new StackItem*[new_alloc];
 	for (size_t i = 0; i < allocated; i++)
 		new_values[i] = values[i];
 	if (allocated > 0)
@@ -973,6 +1005,11 @@ int TransStack::transstack_push(StackItem *si) {
 	return head->nodestack_push(si);
 }
 
+int TransStack::transstack_push_SIO(SIO& s) {
+	s.ownership = TSO_OWNED_BY_TS;
+	return transstack_push(s.si);
+}
+
 SIO TransStack::transstack_pop() {
 	set_modified_flag(true);
 	return head->nodestack_pop();
@@ -1094,11 +1131,11 @@ st_err_t TransStack::read_lvars(VarDirectory *v, string& cmd_err) {
 	SIO s;
 	vector<string> *by_order;
 	v->get_vars(by_order);
+	StackItem *si;
 	for (vector<string>::const_iterator it = by_order->begin(); it != by_order->end(); it++) {
 		s = transstack_pop();
-		if (s.ownership == TSO_OWNED_BY_TS)
-			s.si = s.si->dup();
-		if (v->sto(*it, s.si) != ST_ERR_OK)
+		get_si_dup_if_necessary(s, si);
+		if (v->sto(*it, si) != ST_ERR_OK)
 			throw(CalcFatal(__FILE__, __LINE__, "unable to execute lvars->sto()"));
 	}
 	return ST_ERR_OK;
@@ -1301,17 +1338,14 @@ static st_err_t bc_greater_or_equal(StackItem& op1, StackItem& op2, StackItem*& 
   // Stack manipulation commands
 
 static st_err_t bc_dup(TransStack& ts, SIO *args, string&) {
-	ts.transstack_push(args[0].si);
-	args[0].ownership = TSO_OWNED_BY_TS;
+	ts.transstack_push_SIO(args[0]);
 	ts.transstack_push(args[0].si->dup());
 	return ST_ERR_OK;
 }
 
 static st_err_t bc_swap(TransStack& ts, SIO *args, string&) {
-	ts.transstack_push(args[1].si);
-	args[1].ownership = TSO_OWNED_BY_TS;
-	ts.transstack_push(args[0].si);
-	args[0].ownership = TSO_OWNED_BY_TS;
+	ts.transstack_push_SIO(args[1]);
+	ts.transstack_push_SIO(args[0]);
 	return ST_ERR_OK;
 }
 
@@ -1324,19 +1358,15 @@ static st_err_t bc_clear(TransStack& ts, SIO*, string&) {
 }
 
 static st_err_t bc_over(TransStack& ts, SIO *args, string&) {
-	ts.transstack_push(args[0].si);
-	args[0].ownership = TSO_OWNED_BY_TS;
-	ts.transstack_push(args[1].si);
-	args[1].ownership = TSO_OWNED_BY_TS;
+	ts.transstack_push_SIO(args[0]);
+	ts.transstack_push_SIO(args[1]);
 	ts.transstack_push(args[0].si->dup());
 	return ST_ERR_OK;
 }
 
 static st_err_t bc_dup2(TransStack& ts, SIO *args, string&) {
-	ts.transstack_push(args[0].si);
-	args[0].ownership = TSO_OWNED_BY_TS;
-	ts.transstack_push(args[1].si);
-	args[1].ownership = TSO_OWNED_BY_TS;
+	ts.transstack_push_SIO(args[0]);
+	ts.transstack_push_SIO(args[1]);
 	for (int i = 0; i <= 1; i++)
 		ts.transstack_push(args[i].si->dup());
 	return ST_ERR_OK;
@@ -1347,12 +1377,9 @@ static st_err_t bc_dup2(TransStack& ts, SIO *args, string&) {
 static st_err_t bc_drop2(TransStack&, SIO*, string&) { return ST_ERR_OK; }
 
 static st_err_t bc_rot(TransStack& ts, SIO *args, string&) {
-	ts.transstack_push(args[1].si);
-	args[1].ownership = TSO_OWNED_BY_TS;
-	ts.transstack_push(args[2].si);
-	args[2].ownership = TSO_OWNED_BY_TS;
-	ts.transstack_push(args[0].si);
-	args[0].ownership = TSO_OWNED_BY_TS;
+	ts.transstack_push_SIO(args[1]);
+	ts.transstack_push_SIO(args[2]);
+	ts.transstack_push_SIO(args[0]);
 	return ST_ERR_OK;
 }
 
@@ -1539,12 +1566,11 @@ static st_err_t bc_to_list(TransStack& ts, SIO *args, string&) {
 	if (c == ST_ERR_OK && n >= 1)
 		throw(CalcFatal(__FILE__, __LINE__, "bc_to_list(): inconsistent data"));
 	StackItemList *sil = new StackItemList();
-	for (int i = 0; i < n; i++)
-		if (items[i].ownership == TSO_OUTSIDE_TS) {
-			sil->add_item(items[i].si);
-			items[i].ownership = TSO_OWNED_BY_TS;
-		} else
-			sil->add_item(items[i].si->dup());
+	StackItem *ready_si;
+	for (int i = 0; i < n; i++) {
+		get_ready_si(items[i], ready_si);
+		sil->add_item(ready_si);
+	}
 	ts.transstack_push(sil);
 	if (c == ST_ERR_EXIT)
 		delete []items;
@@ -1556,13 +1582,25 @@ static st_err_t bc_list_to(TransStack& ts, SIO *args, string&) { return args[0].
 static st_err_t bc_get(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { return op1.op_get_generic(op2, ret); }
 
 static st_err_t bc_geti(TransStack& ts, SIO *args, string& cmd_err) {
-	StackItem* ret;
+	StackItem *ret;
+	StackItem *ready_si;
 	st_err_t c = bc_get(*(args[0].si), *(args[1].si), ret, cmd_err);
 	if (c == ST_ERR_OK) {
-		ts.transstack_push(args[0].si);
-		args[1].ownership = TSO_OWNED_BY_TS;
-		ts.transstack_push(args[1].si);
-		args[1].ownership = TSO_OWNED_BY_TS;
+		Coordinates bounds;
+		if ((c = args[0].si->get_bounds(bounds)) != ST_ERR_OK)
+			throw(CalcFatal(__FILE__, __LINE__, "bc_geti(): args[0].si should answer to get_bounds()!"));
+		ts.transstack_push_SIO(args[0]);
+		get_ready_si(args[1], ready_si);
+		StackItemList *sil = dynamic_cast<StackItemList*>(ready_si);
+		if (sil == NULL)
+			throw(CalcFatal(__FILE__, __LINE__, "bc_geti(): ready_si should be of type StackItemList*!"));
+
+		  // Not necessary. Done to make sure we now use sil, not ready_si
+		ready_si = NULL;
+
+		if ((c = sil->increment_list(bounds)) != ST_ERR_OK)
+			throw(CalcFatal(__FILE__, __LINE__, "bc_geti(): increment() returned a bad error code!"));
+		ts.transstack_push(sil);
 		ts.transstack_push(ret);
 	}
 	return c;
@@ -2034,6 +2072,10 @@ bool StackItemReal::same(StackItem* si) const {
 	return false;
 }
 
+Real StackItemReal::get_Real() const { return sc; }
+
+void StackItemReal::set_Real(const Real& r) { sc = r; }
+
 void StackItemReal::to_string(ToString& tostr, const bool&) const { tostr.add_string(sc.to_string(tostr.get_type())); }
 
 st_err_t StackItemReal::to_integer(int& n) const {
@@ -2462,10 +2504,7 @@ st_err_t StackItemExpression::op_sto(TransStack& ts, SIO& arg1) {
 	if (!is_varname() || !quoted)
 		return ST_ERR_BAD_ARGUMENT_TYPE;
 	StackItem *si = arg1.si;
-	if (arg1.ownership == TSO_OWNED_BY_TS)
-		si = si->dup();
-	else
-		arg1.ownership = TSO_OWNED_BY_TS;
+	get_ready_si(arg1, si);
 	return ts.sto(e, si);
 }
 
@@ -2580,18 +2619,21 @@ void StackItemList::to_string(ToString& tostr, const bool&) const {
 }
 
 st_err_t StackItemList::op_list_to(TransStack& ts, const tso_t& o) {
-	for (size_t i = 0; i < list.size(); i++)
-		if (o == TSO_OUTSIDE_TS)
-			ts.transstack_push(list[i]);
-		else
-			ts.transstack_push(list[i]->dup());
+	SIO s;
+	s.ownership = o;
+	StackItem *si;
+	for (size_t i = 0; i < list.size(); i++) {
+		s.si = list[i];
+		get_si_dup_if_necessary(s, si);
+		ts.transstack_push(si);
+	}
 	ts.transstack_push(new StackItemReal(Real(list.size())));
 	if (o == TSO_OUTSIDE_TS)
 		list.clear();
 	return ST_ERR_OK;
 }
 
-st_err_t StackItemList::get_coordinates(dim_t& d, int& x, int& y) {
+st_err_t StackItemList::get_coordinates(Coordinates& coord) {
 	size_t nb = get_nb_items();
 	if (nb < 1 || nb > 2)
 		return ST_ERR_BAD_ARGUMENT_VALUE;
@@ -2602,25 +2644,71 @@ st_err_t StackItemList::get_coordinates(dim_t& d, int& x, int& y) {
 		if (c != ST_ERR_OK)
 			break;
 		if (i == 0)
-			x = value;
+			coord.x = value;
 		else if (i == 1)
-			y = value;
+			coord.y = value;
 		else
 			throw(CalcFatal(__FILE__, __LINE__, "StackItemList::get_coordinates(): inconsistent values encountered!!!??"));
 	}
-	d = (nb == 1 ? DIM_VECTOR : DIM_MATRIX);
+	coord.d = (nb == 1 ? DIM_VECTOR : DIM_MATRIX);
+	return ST_ERR_OK;
+}
+
+st_err_t StackItemList::get_bounds(Coordinates& coord) const {
+	coord.d = DIM_VECTOR;
+	coord.x = get_nb_items();
+	coord.y = -1;
 	return ST_ERR_OK;
 }
 
 st_err_t StackItemList::op_get(StackItemList* sil, StackItem*& ret) {
-	dim_t d;
-	int x; int y;
-	st_err_t c = get_coordinates(d, x, y);
-	if (c == ST_ERR_OK && d == DIM_MATRIX)
+	Coordinates bounds;
+	Coordinates coord;
+	st_err_t c = get_coordinates(coord);
+	if (c != ST_ERR_OK)
+		return c;
+	if ((c = sil->get_bounds(bounds)) != ST_ERR_OK)
+		return c;
+	if ((c = check_coordinates(bounds, coord)) != ST_ERR_OK)
+		return c;
+	ret = sil->list[coord.x - 1]->dup();
+	return ST_ERR_OK;
+}
+
+static void increment_coordinates(const Coordinates& bounds, Coordinates& coord) {
+	if (bounds.d != coord.d)
+		return;
+	coord.x++;
+	if (coord.x > bounds.x) {
+		coord.x = 1;
+		if (coord.d == DIM_MATRIX) {
+			coord.y++;
+			if (coord.y > bounds.y)
+				coord.y = 1;
+		}
+	}
+}
+
+st_err_t StackItemList::increment_list(const Coordinates& bounds) {
+	Coordinates coord;
+	st_err_t c = get_coordinates(coord);
+	if (c != ST_ERR_OK)
+		return c;
+	if (coord.d != bounds.d)
 		return ST_ERR_BAD_ARGUMENT_VALUE;
-	if (x < 1 || x > sil->get_nb_items())
-		return ST_ERR_BAD_ARGUMENT_VALUE;
-	ret = sil->list[x - 1]->dup();
+	if ((coord.d == DIM_VECTOR && get_nb_items() != 1) || (coord.d == DIM_MATRIX && get_nb_items() != 2))
+		throw(CalcFatal(__FILE__, __LINE__, "StackItemList::increment_list(): internal error"));
+	increment_coordinates(bounds, coord);
+	StackItemReal *sir = dynamic_cast<StackItemReal*>(list[0]);
+	if (sir == NULL)
+		throw(CalcFatal(__FILE__, __LINE__, "StackItemList::increment_list(): bad object type"));
+	sir->set_Real(Real(coord.x));
+	if (coord.d == DIM_MATRIX) {
+		sir = dynamic_cast<StackItemReal*>(list[1]);
+		if (sir == NULL)
+			throw(CalcFatal(__FILE__, __LINE__, "StackItemList::increment_list(): bad object type #2"));
+		sir->set_Real(Real(coord.y));
+	}
 	return ST_ERR_OK;
 }
 
