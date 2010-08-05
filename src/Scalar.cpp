@@ -25,6 +25,12 @@ void prepare_arith() { errno = 0; }
 real real_trim(const real& r) {
 	real r2;
 	string s = real_to_string(r, get_decimal_separator(false));
+	if (s == "-0")
+		s = "0";
+
+	//debug_write("s = ");
+	//debug_write(s.c_str());
+
 	istringstream iss(s);
 	iss >> r2;
 	return r2;
@@ -633,12 +639,13 @@ long CCMatrix::class_count = 0;
 #endif	// DEBUG_CLASS_COUNT
 
   // Normal constructor
-template<class Scalar> Matrix<Scalar>::Matrix(const dim_t& d, size_t l, size_t c) : dimension(d), nb_lines(l), nb_columns(c) {
+template<class Scalar> Matrix<Scalar>::Matrix(const dim_t& d, const int& l, const int& c, const Scalar& default_value) :
+		dimension(d), nb_lines(l), nb_columns(c) {
 #ifdef DEBUG_CLASS_COUNT
 	ccm = new CCMatrix();
 #endif
-	for (size_t i = 0; i < nb_lines; i++)
-		mat.push_back(new std::vector<Scalar>(nb_columns));
+	for (int i = 0; i < nb_lines; i++)
+		mat.push_back(new std::vector<Scalar>(nb_columns, default_value));
 }
 
   // Copy-constructor
@@ -646,12 +653,12 @@ template<class Scalar> Matrix<Scalar>::Matrix(const Matrix<Scalar>& m) : dimensi
 #ifdef DEBUG_CLASS_COUNT
 	ccm = new CCMatrix();
 #endif
-	for (size_t i = 0; i < nb_lines; i++)
+	for (int i = 0; i < nb_lines; i++)
 		mat.push_back(new std::vector<Scalar>(*m.mat[i]));
 }
 
   // Constructor from an input, stored in pm
-template<class Scalar> Matrix<Scalar>::Matrix(const mat_read_t*& pm, const dim_t& d, const size_t& l, const size_t& c)
+template<class Scalar> Matrix<Scalar>::Matrix(const mat_read_t*& pm, const dim_t& d, const int& l, const int& c)
 		: dimension(d), nb_lines(l), nb_columns(c) {
 #ifdef DEBUG_CLASS_COUNT
 	ccm = new CCMatrix();
@@ -662,10 +669,10 @@ template<class Scalar> Matrix<Scalar>::Matrix(const mat_read_t*& pm, const dim_t
 	ReadMatrixCell* pe;
 	Real* pr;
 	Cplx* pc;
-	for (size_t i = 0; i < nb_lines; i++)
+	for (int i = 0; i < nb_lines; i++)
 		mat.push_back(new std::vector<Scalar>(nb_columns));
-	for (size_t i = 0; i < nb_lines; i++) {
-		for (size_t j = 0; j < nb_columns; j++) {
+	for (int i = 0; i < nb_lines; i++) {
+		for (int j = 0; j < nb_columns; j++) {
 			if (j > pm->at(i)->size() - 1)
 				sc.zero();
 			else {
@@ -683,7 +690,7 @@ template<class Scalar> Matrix<Scalar>::Matrix(const mat_read_t*& pm, const dim_t
 			(*mat[i])[j] = sc;
 		}
 	}
-	for (size_t i = 0; i < nb_lines; i++)
+	for (int i = 0; i < nb_lines; i++)
 		if (mat[i]->size() != nb_columns)
 			throw(CalcFatal(__FILE__, __LINE__, "inconsistent line sizes during matrix build"));
 }
@@ -692,7 +699,7 @@ template<class Scalar> Matrix<Scalar>::~Matrix() {
 #ifdef DEBUG_CLASS_COUNT
 	delete ccm;
 #endif
-	for (size_t i = 0; i < nb_lines; i++)
+	for (int i = 0; i < nb_lines; i++)
 		delete mat[i];
 }
 
@@ -700,8 +707,8 @@ template<class Scalar> Matrix<Scalar>::~Matrix() {
 template<class Scalar> st_err_t Matrix<Scalar>::md(st_err_t (*f)(const Scalar&, const Scalar&, Scalar&), const Scalar& sc) {
 	st_err_t c = ST_ERR_OK;
 	Scalar res;
-	for (size_t i = 0; i < nb_lines; i++) {
-		for (size_t j = 0; j < nb_columns; j++) {
+	for (int i = 0; i < nb_lines; i++) {
+		for (int j = 0; j < nb_columns; j++) {
 			if ((c = (*f)((*mat[i])[j], sc, res)) != ST_ERR_OK)
 				break;
 			(*mat[i])[j] = res;
@@ -720,8 +727,8 @@ template<class Scalar> st_err_t Matrix<Scalar>::as(st_err_t (*f)(const Scalar&, 
 	st_err_t c = ST_ERR_OK;
 	Scalar res;
 	const std::vector< std::vector<Scalar>* >& m2 = op.mat;
-	for (size_t i = 0; i < nb_lines; i++) {
-		for (size_t j = 0; j < nb_columns; j++) {
+	for (int i = 0; i < nb_lines; i++) {
+		for (int j = 0; j < nb_columns; j++) {
 			if ((c = (*f)((*mat[i])[j], (*m2[i])[j], res)) != ST_ERR_OK)
 				break;
 			(*mat[i])[j] = res;
@@ -733,17 +740,77 @@ template<class Scalar> st_err_t Matrix<Scalar>::as(st_err_t (*f)(const Scalar&, 
 }
 
 template<class Scalar> void Matrix<Scalar>::trim() {
-	for (size_t i = 0; i < nb_lines; i++)
-		for (size_t j = 0; j < nb_columns; j++)
+	for (int i = 0; i < nb_lines; i++)
+		for (int j = 0; j < nb_columns; j++)
 			(*mat[i])[j].trim();
+}
+
+template<class Scalar> void Matrix<Scalar>::redim(const dim_t& new_dimension, const int& new_nb_lines, const int& new_nb_columns) {
+
+	//debug_write_i("new dimension = %i", (int)new_dimension);
+	//debug_write_i("new lines = %i", new_nb_lines);
+	//debug_write_i("new columns = %i", new_nb_columns);
+
+	dimension = new_dimension;
+	for (int i = new_nb_lines; i < nb_lines; i++) {
+		//debug_write_i("Deleting %i", (int)i);
+		delete mat[i];
+	}
+	if (new_nb_lines < nb_lines)
+		mat.resize(new_nb_lines);
+	for (int i = nb_lines; i < new_nb_lines; i++)
+		mat.push_back(new vector<Scalar>(new_nb_columns));
+	for (int i = 0; i < new_nb_lines; i++)
+		(*mat[i]).resize(new_nb_columns);
+	nb_lines = new_nb_lines;
+	nb_columns = new_nb_columns;
+	//debug_write_i("vector new lines = %i", (int)mat.size());
+	//debug_write_i("vector new columns = %i", (int)((*mat[0]).size()));
+}
+
+template<class Scalar> bool Matrix<Scalar>::index_to_ij(const int& index, int& i, int& j) {
+	i = index / nb_columns;
+	j = index % nb_columns;
+	//debug_write_i("index = %i", index);
+	//debug_write_i("line = %i", i);
+	//debug_write_i("column = %i", j);
+	return (i >= 0 && i < nb_lines && j >= 0 && j < nb_columns);
+}
+
+template<class Scalar> void Matrix<Scalar>::copy_linear(Matrix<Scalar>* orig) {
+	int idx = 0;
+	int orig_i, orig_j;
+	for (int i = 0; i < nb_lines; i++) {
+		for (int j = 0; j < nb_columns; j++) {
+			if (orig->index_to_ij(idx, orig_i, orig_j)) {
+				set_value(i, j, orig->get_value(orig_i, orig_j));
+			}
+			idx++;
+		}
+	}
+}
+
+template<class Scalar> st_err_t Matrix<Scalar>::create_transpose(Matrix<Scalar>*& ret) {
+	if (dimension != DIM_MATRIX)
+		return ST_ERR_INVALID_DIMENSION;
+	ret = new Matrix<Scalar>(DIM_MATRIX, nb_columns, nb_lines, Scalar(Real(0)));
+	Scalar sc;
+	for (int i = 0; i < nb_lines; i++) {
+		for (int j = 0; j < nb_columns; j++) {
+			sc = get_value(i, j);
+			sc.conj();
+			ret->set_value(j, i, sc);
+		}
+	}
+	return ST_ERR_OK;
 }
 
 template<class Scalar> int Matrix<Scalar>::cmp(const Matrix<Scalar>& op) const {
 	if (nb_lines != op.nb_lines || nb_columns != op.nb_columns || dimension != op.dimension)
 		return 1;
 	const std::vector< std::vector<Scalar>* >& m2 = op.mat;
-	for (size_t i = 0; i < nb_lines; i++) {
-		for (size_t j = 0; j < nb_columns; j++) {
+	for (int i = 0; i < nb_lines; i++) {
+		for (int j = 0; j < nb_columns; j++) {
 			if ((*mat[i])[j].cmp((*m2[i])[j]) != 0)
 				return 1;
 		}

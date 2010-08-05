@@ -80,6 +80,7 @@ BuiltinCommandDescriptor builtinCommands[] = {
 	  // String
 	{1, BC_FUNCTION_WRAPPER, "->STR", 0, 0, &bc_to_str, 0, 0, _N("Convert to string")},
 	{0, BC_RAW, "STR->", &bc_str_to, 0, 0, 0, 0, _N("Convert from string")},
+	{3, BC_FUNCTION_WRAPPER, "SUB", 0, 0, 0, 0, &bc_cmdsub, _N("Extract content from a string or a list")},
 	  // Lists and arrays
 	{1, BC_RAW, "->LIST", &bc_to_list, 0, 0, 0, 0, _N("Items to list")},
 	{1, BC_RAW, "LIST->", &bc_list_to, 0, 0, 0, 0, _N("Extract items from list")},
@@ -87,6 +88,13 @@ BuiltinCommandDescriptor builtinCommands[] = {
 	{2, BC_RAW, "GETI", &bc_geti, 0, 0, 0, 0, _N("Get an item from a list or array by increments")},
 	{3, BC_RAW, "PUT", &bc_put, 0, 0, 0, 0, _N("Put an item into a list or array")},
 	{3, BC_RAW, "PUTI", &bc_puti, 0, 0, 0, 0, _N("Put an item into a list or array by increments")},
+	{1, BC_FUNCTION_WRAPPER, "SIZE", 0, 0, &bc_size, 0, 0, _N("Dimension of a list or array")},
+	{1, BC_RAW, "ARRY->", &bc_arry_to, 0, 0, 0, 0, _N("Replace an array by all its elements")},
+	{1, BC_RAW, "->ARRY", &bc_to_arry, 0, 0, 0, 0, _N("Create an array from a list of elements")},
+	{2, BC_FUNCTION_WRAPPER, "CON", 0, 0, 0, &bc_con, 0, _N("Create a constant array")},
+	{1, BC_FUNCTION_WRAPPER, "TRN", 0, 0, &bc_trn, 0, 0, _N("Transpose a matrix-type array")},
+	{2, BC_FUNCTION_WRAPPER, "RDM", 0, 0, 0, &bc_rdm, 0, _N("Modify the dimension of an array")},
+	{1, BC_FUNCTION_WRAPPER, "IDN", 0, 0, &bc_idn, 0, 0, _N("Create an identity matrix")},
 	  // Variables
 	{0, BC_RAW, "EVAL", &bc_eval, 0, 0, 0, 0, _N("Evaluate item")},
 	{2, BC_RAW, "STO", &bc_sto, 0, 0, 0, 0, _N("Store value in variable name")},

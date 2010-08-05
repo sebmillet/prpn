@@ -1,0 +1,39 @@
+SIZE Error:
+Too Few Arguments
+SIZE Error:
+Bad Argument Type
+SIZE Error:
+Bad Argument Type
+SIZE Error:
+Bad Argument Type
+SIZE Error:
+Bad Argument Type
+SIZE Error:
+Bad Argument Type
+0
+(0,0)
+0
+'x'
+<< >>
+# 0d
+'h'
+0
+1
+1
+2
+10
+3
+{ 1 }
+{ 2 }
+{ 1 4 }
+{ 4 1 }
+{ 2 4 }
+{ 4 2 }
+"mark1"
+{ 1 }
+{ 2 }
+{ 1 4 }
+{ 4 1 }
+{ 2 4 }
+{ 4 2 }
+get_class_count() = 0 for watched classes

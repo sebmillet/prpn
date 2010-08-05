@@ -194,16 +194,49 @@ Exécute FS? et désactive l'option
 Exécute FC? et désactive l'option
 .TP
 .B ->STR\ (1)
-Convertit un élément en chaîne de caractères
+Convertis un élément en chaîne de caractères
 .TP
 .B STR->\ (0)
-Convertit une chaîne de caractère en éléments
+Convertis une chaîne de caractère en éléments
 .TP
 .B ->LIST\ (1)
 Mets les éléments dans une liste
 .TP
 .B LIST->\ (1)
-Convertit la liste en ses éléments
+Convertis la liste en ses éléments
+.TP
+.B GET\ (2)
+Extrais un élément d'une liste ou d'un tableau
+.TP
+.B GETI\ (2)
+Extrais un élément d'une liste ou d'un tableau par incréments
+.TP
+.B PUT\ (3)
+Remplace un élément dans une liste ou un tableau
+.TP
+.B PUTI\ (3)
+Remplace un élément dans une liste ou un tableau par incréments
+.TP
+.B SIZE\ (1)
+Dimension of a list or array
+.TP
+.B ARRY->\ (1)
+Replace an array by all its elements
+.TP
+.B ->ARRY\ (1)
+Create an array from a list of elements
+.TP
+.B CON\ (2)
+Create a constant array
+.TP
+.B TRN\ (1)
+Transpose a matrix-type array
+.TP
+.B RDM\ (2)
+Modify the dimension of an array
+.TP
+.B IDN\ (1)
+Create an identity matrix
 .TP
 .B EVAL\ (0)
 Évalue l'élément
@@ -251,10 +284,10 @@ Définis le nombre de bits des entiers binaires (de 1 à 64)
 Renvoie le nombre de bits des entiers binaires
 .TP
 .B B->R\ (1)
-Convertit un entier binaire en réel
+Convertis un entier binaire en réel
 .TP
 .B R->B\ (1)
-Convertit un réel en entier binaire
+Convertis un réel en entier binaire
 .TP
 .B RCLF\ (0)
 Enregistre l'état des options dans un entier binaire
@@ -266,10 +299,10 @@ Récupère l'état des options depuis un entier binaire
 Pause d'une durée définie en secondes
 .TP
 .B _READ\ (1)
-Lit le fichier et met son contenu dans la pile
+Lis le fichier et met son contenu dans la pile
 .TP
 .B _WRITE\ (2)
-Écrit le second élément de la pile dans le fichier nommé par le premier élément
+Écris le second élément de la pile dans le fichier nommé par le premier élément
 .TP
 .B UNDO\ (0)
 Annule la dernière commande, 50 niveaux par défaut

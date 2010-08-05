@@ -1,0 +1,48 @@
+{ } << 1 4 START "a" + NEXT >> EVAL
+<< { } 1 4 START "a" + NEXT >> EVAL
+{ { } 0 } << 1 4 START "a" + NEXT >> EVAL
+<< { { } 0 } 1 4 START "a" + NEXT >> EVAL
+{ } << 1 4 START "a" SWAP + NEXT >> EVAL
+<< { } 1 4 START "a" SWAP + NEXT >> EVAL
+{ { } 0 } << 1 4 START "a" SWAP + NEXT >> EVAL
+<< { { } 0 } 1 4 START "a" SWAP + NEXT >> EVAL
+{ } << 1 4 FOR i i + NEXT >> EVAL
+<< { } 1 4 FOR i i + NEXT >> EVAL
+{ { } 0 } << 1 4 FOR i i + NEXT >> EVAL
+<< { { } 0 } 1 4 FOR i i + NEXT >> EVAL
+{ } << 1 4 FOR i i SWAP + NEXT >> EVAL
+<< { } 1 4 FOR i i SWAP + NEXT >> EVAL
+{ { } 0 } << 1 4 FOR i i SWAP + NEXT >> EVAL
+<< { { } 0 } 1 4 FOR i i SWAP + NEXT >> EVAL
+{ } << 1 4 START { "a" } + NEXT >> EVAL
+<< { } 1 4 START { "a" } + NEXT >> EVAL
+{ { } 0 } << 1 4 START { "a" } + NEXT >> EVAL
+<< { { } 0 } 1 4 START { "a" } + NEXT >> EVAL
+{ } << 1 4 START { "a" } SWAP + NEXT >> EVAL
+<< { } 1 4 START { "a" } SWAP + NEXT >> EVAL
+{ { } 0 } << 1 4 START { "a" } SWAP + NEXT >> EVAL
+<< { { } 0 } 1 4 START { "a" } SWAP + NEXT >> EVAL
+{ } << 1 4 FOR i i 1 ->LIST + NEXT >> EVAL
+<< { } 1 4 FOR i i 1 ->LIST + NEXT >> EVAL
+{ { } 0 } << 1 4 FOR i i 1 ->LIST + NEXT >> EVAL
+<< { { } 0 } 1 4 FOR i i 1 ->LIST + NEXT >> EVAL
+{ } << 1 4 FOR i i 1 ->LIST SWAP + NEXT >> EVAL
+<< { } 1 4 FOR i i 1 ->LIST SWAP + NEXT >> EVAL
+{ { } 0 } << 1 4 FOR i i 1 ->LIST SWAP + NEXT >> EVAL
+<< { { } 0 } 1 4 FOR i i 1 ->LIST SWAP + NEXT >> EVAL
+{ } << 1 4 START { "a" { } } + NEXT >> EVAL
+<< { } 1 4 START { "a" { } } + NEXT >> EVAL
+{ { } 0 } << 1 4 START { "a" { } } + NEXT >> EVAL
+<< { { } 0 } 1 4 START { "a" { } } + NEXT >> EVAL
+{ } << 1 4 START { "a" { } } SWAP + NEXT >> EVAL
+<< { } 1 4 START { "a" { } } SWAP + NEXT >> EVAL
+{ { } 0 } << 1 4 START { "a" { } } SWAP + NEXT >> EVAL
+<< { { } 0 } 1 4 START { "a" { } } SWAP + NEXT >> EVAL
+{ } << 1 4 FOR i i { } 2 ->LIST + NEXT >> EVAL
+<< { } 1 4 FOR i i { } 2 ->LIST + NEXT >> EVAL
+{ { } 0 } << 1 4 FOR i i { } 2 ->LIST + NEXT >> EVAL
+<< { { } 0 } 1 4 FOR i i { } 2 ->LIST + NEXT >> EVAL
+{ } << 1 4 FOR i i { } 2 ->LIST SWAP + NEXT >> EVAL
+<< { } 1 4 FOR i i { } 2 ->LIST SWAP + NEXT >> EVAL
+{ { } 0 } << 1 4 FOR i i { } 2 ->LIST SWAP + NEXT >> EVAL
+<< { { } 0 } 1 4 FOR i i { } 2 ->LIST SWAP + NEXT >> EVAL

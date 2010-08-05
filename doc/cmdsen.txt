@@ -52,8 +52,20 @@ FS?C           (1): Do FS? then clear flag
 FC?C           (1): Do FC? then clear flag
 ->STR          (1): Convert to string
 STR->          (0): Convert from string
+SUB            (3): Extract content from a string or a list
 ->LIST         (1): Items to list
 LIST->         (1): Extract items from list
+GET            (2): Get an item from a list or array
+GETI           (2): Get an item from a list or array by increments
+PUT            (3): Put an item into a list or array
+PUTI           (3): Put an item into a list or array by increments
+SIZE           (1): Dimension of a list or array
+ARRY->         (1): Replace an array by all its elements
+->ARRY         (1): Create an array from a list of elements
+CON            (2): Create a constant array
+TRN            (1): Transpose a matrix-type array
+RDM            (2): Modify the dimension of an array
+IDN            (1): Create an identity matrix
 EVAL           (0): Evaluate item
 STO            (2): Store value in variable name
 RCL            (1): Recall value from variable name
@@ -99,14 +111,10 @@ Procedures
 Program                  << >>          << DUP + SWAP >>
 Algebraic                ' '            'X+2*Y=Z'
 
-"a"
-"é"
-"éé"
-"12345678910éééèâïëä"
-"éèâïëä"
-" 12345678910éé.éèâïë"
-1.2
-(3,-1.222)
-# 10010b
-{ 18 1.2 (3,-1.222) # 10010b }
+[[ 1 ]  [ 3 ]]
+[ 1 2 ]
+[[ 1 0 ]  [ 0 1 ]]
+[[ 1 0 0 ]  [ 0 1 0 ]  [ 0 0 1 ]]
+[[ 1 ]]
+[[ 1 0 ]  [ 0 1 ]]
 get_class_count() = 0 for watched classes

@@ -46,7 +46,7 @@ OPTIONS
 	      Debug mode, requires a parameter.
 
 COMMANDS
-       Commands  are  followed by the number of arguments they take, in paren‐
+       Commands  are  followed by the number of arguments they take, in paren
        thesis. These arguments are taken from the stack.
 
        _HELP (0)
@@ -195,6 +195,39 @@ COMMANDS
        LIST-> (1)
 	      Extract items from list
 
+       GET (2)
+	      Get an item from a list or array
+
+       GETI (2)
+	      Get an item from a list or array by increments
+
+       PUT (3)
+	      Put an item into a list or array
+
+       PUTI (3)
+	      Put an item into a list or array by increments
+
+       SIZE (1)
+	      Dimension of a list or array
+
+       ARRY-> (1)
+	      Replace an array by all its elements
+
+       ->ARRY (1)
+	      Create an array from a list of elements
+
+       CON (2)
+	      Create a constant array
+
+       TRN (1)
+	      Transpose a matrix-type array
+
+       RDM (2)
+	      Modify the dimension of an array
+
+       IDN (1)
+	      Create an identity matrix
+
        EVAL (0)
 	      Evaluate item
 
@@ -291,7 +324,7 @@ OBJECT TYPES
 
        Names
 
-       Name   ´ ´  ´CALC´
+       Name	 CALC
 
        Procedures
 
@@ -299,7 +332,7 @@ OBJECT TYPES
 	      << >>	<< DUP + SWAP >>
 
        Algebraic
-	      ´ ´  ´X+2*Y=Z´
+		 X+2*Y=Z
 
 INITIALIZATION FILES
        ~/.prpn/stackrc
@@ -309,7 +342,7 @@ INITIALIZATION FILES
 	      Variables structure, and actual working directory.
 
 AUTHOR
-       Written by Sébastien Millet <sebastien.millet1@club-internet.fr>.  Per‐
+       Written by Sbastien Millet <sebastien.millet1@club-internet.fr>.  Per
        mission	is  granted  to  copy,	distribute and/or modify this document
        under the terms of the GNU General Public License, Version 3  published
        by the Free Software Foundation.

@@ -32,10 +32,10 @@ OS_Dirs::OS_Dirs(const char *argv0) {
 	dirs[OSF_SMALL_STACKRC] = os_concatene(dirs[OSD_USER_CONF], STACKRC_FILE);
 	dirs[OSF_STACKRC] = os_concatene(dirs[OSD_USER_CONF], STACKRC_FILE);
 
-	for (int i = OS_BEGIN; i != OS_END; i++) {
+	/*for (int i = OS_BEGIN; i != OS_END; i++) {
 		debug_write_i("dir entry #%i", i);
 		debug_write(dirs[i].c_str());
-	}
+	}*/
 }
 
 OS_Dirs::~OS_Dirs() { }

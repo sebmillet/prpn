@@ -1,0 +1,137 @@
+GET Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+/ Error:
+Infinite Result
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+STR-> Error:
+Bad Argument Type
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+/ Error:
+Infinite Result
+GET Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+/ Error:
+Infinite Result
+PUT Error:
+Bad Argument Type
+PUTI Error:
+Bad Argument Type
+PUT Error:
+Bad Argument Type
+PUTI Error:
+Bad Argument Type
+get_class_count() = 0 for watched classes

@@ -113,17 +113,6 @@ void write_si(const tostring_t&, const StackItem*, std::ostream&);
 
 
 //
-// Coordinates
-//
-
-struct Coordinates {
-	dim_t d;
-	int x;
-	int y;
-};
-
-
-//
 // ToString
 //
 
@@ -187,6 +176,8 @@ public:
 #ifdef DEBUG_TRANSSTACK
 	int get_object_serial() const { return object_serial; }
 #endif
+
+	static StackItem* forge_list_size(const Coordinates&);
 
 	virtual st_err_t eval(const eval_t&, TransStack&, manage_si_t&, std::string&);
 	virtual VarDirectory* get_lvars(bool&) const;
@@ -269,12 +260,28 @@ public:
 	virtual st_err_t op_greater(StackItemString*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_greater_or_equal(StackItemString*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 
-	  // LIST
+	  // LIST AND ARRAYS
 	virtual st_err_t op_list_to(TransStack&, const tso_t&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_get_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_get(StackItemList*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_get(StackItemMatrixReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_get(StackItemMatrixCplx*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_put_generic(StackItem&, SIO&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_put(StackItemList*, SIO&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_put(StackItemMatrixReal*, SIO&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_put(StackItemMatrixCplx*, SIO&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_put_matrix(StackItemList*, StackItemMatrixReal*) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_put_matrix(StackItemList*, StackItemMatrixCplx*) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_size(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_arry_to(TransStack&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_to_arry(TransStack&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_con_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_con(StackItemList*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_rdm_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_rdm(StackItemMatrixReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_rdm(StackItemMatrixCplx*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_idn(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_trn(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	  // VARIABLES
 	virtual st_err_t op_sto(TransStack&, SIO&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_rcl(TransStack&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
@@ -283,6 +290,7 @@ public:
 	  // STRING
 	virtual st_err_t op_str_to(TransStack&, std::string&) { return ST_ERR_STR_TO_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_add(StackItemString*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_cmdsub(const int&, const int&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	  // BINARIES
 	virtual st_err_t op_b_to_r(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_r_to_b(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
@@ -297,6 +305,10 @@ public:
 
 	  // Program execution
 	virtual st_err_t exec1(TransStack&, int&, std::string&);
+
+	virtual st_err_t op_add(StackItemList*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_add(StackItemExpression*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_add(StackItemProgram*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 };
 
 
@@ -364,6 +376,8 @@ public:
 	virtual st_err_t op_lower_or_equal(StackItemBinary*, StackItem*&);
 	virtual st_err_t op_greater(StackItemBinary*, StackItem*&);
 	virtual st_err_t op_greater_or_equal(StackItemBinary*, StackItem*&);
+
+	virtual st_err_t op_add(StackItemList*, StackItem*&);
 };
 
 
@@ -442,6 +456,14 @@ public:
 	virtual st_err_t op_greater_or_equal(StackItemReal*, StackItem*&);
 
 	virtual st_err_t op_r_to_b(StackItem*&);
+
+	virtual st_err_t op_put_matrix(StackItemList*, StackItemMatrixReal*);
+	virtual st_err_t op_put_matrix(StackItemList*, StackItemMatrixCplx*);
+
+	virtual st_err_t op_add(StackItemList*, StackItem*&);
+
+	virtual st_err_t op_con(StackItemList*, StackItem*&);
+	virtual st_err_t op_idn(StackItem*&);
 };
 
 
@@ -496,8 +518,24 @@ public:
 	virtual st_err_t op_neg(StackItem*&);
 	virtual st_err_t op_sq(StackItem*&);
 	virtual st_err_t op_inv(StackItem*&);
+
+	virtual st_err_t op_put_matrix(StackItemList*, StackItemMatrixCplx*);
+
+	virtual st_err_t op_add(StackItemList*, StackItem*&);
+
+	virtual st_err_t op_con(StackItemList*, StackItem*&);
 };
 
+
+#define COORD_TO_MATRIX_IJ(coord, i, j) { \
+	if (coord.d == DIM_VECTOR) { \
+		i = 0; \
+		j = coord.i - 1; \
+	} else { \
+		i = coord.i - 1; \
+		j = coord.j - 1; \
+	} \
+}
 
 //
 // StackItemMatrixReal
@@ -506,7 +544,7 @@ public:
 class StackItemMatrixReal : public StackItem {
 	Matrix<Real>* pmat;
 public:
-	StackItemMatrixReal(const mat_read_t*, const dim_t&, const size_t&, const size_t&);
+	StackItemMatrixReal(const mat_read_t*, const dim_t&, const int&, const int&);
 	StackItemMatrixReal(const StackItemMatrixReal&);
 	StackItemMatrixReal(Matrix<Real>*);
 	virtual ~StackItemMatrixReal() { delete pmat; };
@@ -514,6 +552,17 @@ public:
 	virtual sitype_t get_type() const;
 	virtual bool same(StackItem*) const;
 	virtual Matrix<Real>* get_matrix() const;
+	virtual st_err_t get_bounds(Coordinates&) const;
+	Real get_value(const Coordinates& coord) const {
+		int i, j;
+		COORD_TO_MATRIX_IJ(coord, i, j);
+		return pmat->get_value(i, j);
+	}
+	void set_value(const Coordinates& coord, const Real& r) {
+		int i, j;
+		COORD_TO_MATRIX_IJ(coord, i, j);
+		pmat->set_value(i, j, r);
+	}
 
 	virtual void to_string(ToString&, const bool& = false) const;
 
@@ -527,6 +576,16 @@ public:
 	virtual st_err_t op_sub(StackItemMatrixReal*, StackItem*&);
 	virtual st_err_t op_add(StackItemMatrixCplx*, StackItem*&);
 	virtual st_err_t op_sub(StackItemMatrixCplx*, StackItem*&);
+
+	virtual st_err_t op_get_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_get(this, ret); }
+	virtual st_err_t op_put_generic(StackItem& arg2, SIO& s) { return arg2.op_put(this, s); }
+	virtual st_err_t op_size(StackItem*&);
+	virtual st_err_t op_arry_to(TransStack&);
+	virtual st_err_t op_rdm_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_rdm(this, ret); }
+
+	virtual st_err_t op_add(StackItemList*, StackItem*&);
+	virtual st_err_t op_trn(StackItem*&);
+	virtual void rdm(const dim_t&, const int&, const int&);
 };
 
 
@@ -538,7 +597,7 @@ public:
 class StackItemMatrixCplx : public StackItem {
 	Matrix<Cplx>* pmat;
 public:
-	StackItemMatrixCplx(const mat_read_t*, const dim_t&, const size_t&, const size_t&);
+	StackItemMatrixCplx(const mat_read_t*, const dim_t&, const int&, const int&);
 	StackItemMatrixCplx(const StackItemMatrixCplx&);
 	StackItemMatrixCplx(Matrix<Cplx>*);
 	virtual ~StackItemMatrixCplx() { delete pmat; };
@@ -546,6 +605,17 @@ public:
 	virtual sitype_t get_type() const;
 	virtual bool same(StackItem*) const;
 	virtual Matrix<Cplx>* get_matrix() const;
+	virtual st_err_t get_bounds(Coordinates&) const;
+	Cplx get_value(const Coordinates& coord) const {
+		int i, j;
+		COORD_TO_MATRIX_IJ(coord, i, j);
+		return pmat->get_value(i, j);
+	}
+	void set_value(const Coordinates& coord, const Cplx& c) {
+		int i, j;
+		COORD_TO_MATRIX_IJ(coord, i, j);
+		pmat->set_value(i, j, c);
+	}
 
 	virtual void to_string(ToString&, const bool& = false) const;
 
@@ -559,6 +629,16 @@ public:
 	virtual st_err_t op_sub(StackItemMatrixCplx*, StackItem*&);
 	virtual st_err_t op_add(StackItemMatrixReal*, StackItem*&);
 	virtual st_err_t op_sub(StackItemMatrixReal*, StackItem*&);
+
+	virtual st_err_t op_get_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_get(this, ret); }
+	virtual st_err_t op_put_generic(StackItem& arg2, SIO& s) { return arg2.op_put(this, s); }
+	virtual st_err_t op_size(StackItem*&);
+	virtual st_err_t op_arry_to(TransStack&);
+	virtual st_err_t op_rdm_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_rdm(this, ret); }
+
+	virtual st_err_t op_add(StackItemList*, StackItem*&);
+	virtual st_err_t op_trn(StackItem*&);
+	virtual void rdm(const dim_t&, const int&, const int&);
 };
 
 
@@ -597,6 +677,10 @@ public:
 
 	virtual st_err_t op_read(TransStack&);
 	virtual st_err_t op_write(StackItem&);
+
+	virtual st_err_t op_add(StackItemList*, StackItem*&);
+	virtual st_err_t op_size(StackItem*&);
+	virtual st_err_t op_cmdsub(const int&, const int&, StackItem*&);
 };
 
 
@@ -630,6 +714,10 @@ public:
 	virtual st_err_t op_crdir(TransStack&);
 
 	virtual st_err_t eval(const eval_t&, TransStack&, manage_si_t&, std::string&);
+
+	virtual st_err_t op_add_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_add(this, ret); }
+
+	virtual st_err_t op_add(StackItemList*, StackItem*&);
 };
 
 
@@ -649,7 +737,8 @@ public:
 	virtual sitype_t get_type() const;
 	virtual bool same(StackItem*, const sitype_t&) const;
 
-	virtual void add_item(StackItem*);
+	virtual void insert_item(StackItem*);
+	virtual void append_item(StackItem*);
 	virtual size_t get_nb_items() const;
 };
 
@@ -674,11 +763,34 @@ public:
 	virtual st_err_t get_coordinates(Coordinates&);
 	virtual void to_string(ToString&, const bool& = false) const;
 	virtual st_err_t op_list_to(TransStack&, const tso_t&);
-	virtual st_err_t prepare_list_access(StackItemList *, Coordinates&);
+	virtual st_err_t prepare_list_access(StackItem*, Coordinates&);
 	virtual st_err_t op_get_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_get(this, ret); }
 	virtual st_err_t op_get(StackItemList*, StackItem*&);
+	virtual st_err_t op_get(StackItemMatrixReal*, StackItem*&);
+	virtual st_err_t op_get(StackItemMatrixCplx*, StackItem*&);
 	virtual st_err_t op_put_generic(StackItem& arg2, SIO& s) { return arg2.op_put(this, s); }
 	virtual st_err_t op_put(StackItemList*, SIO&);
+	virtual st_err_t op_put(StackItemMatrixReal*, SIO&);
+	virtual st_err_t op_put(StackItemMatrixCplx*, SIO&);
+	virtual st_err_t op_size(StackItem*&);
+	virtual st_err_t op_to_arry(TransStack&);
+	virtual st_err_t op_con_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_con(this, ret); }
+	virtual st_err_t op_rdm(StackItemMatrixReal*, StackItem*&);
+	virtual st_err_t op_rdm(StackItemMatrixCplx*, StackItem*&);
+
+	virtual st_err_t list_add(const bool&, StackItem*, StackItem*&);
+	virtual st_err_t op_add_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_add(this, ret); }
+	virtual st_err_t op_add(StackItemBinary*, StackItem*&);
+	virtual st_err_t op_add(StackItemReal*, StackItem*&);
+	virtual st_err_t op_add(StackItemCplx*, StackItem*&);
+	virtual st_err_t op_add(StackItemMatrixReal*, StackItem*&);
+	virtual st_err_t op_add(StackItemMatrixCplx*, StackItem*&);
+	virtual st_err_t op_add(StackItemString*, StackItem*&);
+	virtual st_err_t op_add(StackItemExpression*, StackItem*&);
+	virtual st_err_t op_add(StackItemList*, StackItem*&);
+	virtual st_err_t op_add(StackItemProgram*, StackItem*&);
+
+	virtual st_err_t op_cmdsub(const int&, const int&, StackItem*&);
 };
 
 
@@ -701,6 +813,10 @@ public:
 	virtual void clear_lvars();
 	virtual st_err_t eval(const eval_t&, TransStack&, manage_si_t&, std::string&);
 	virtual st_err_t exec1(TransStack&, int&, std::string&);
+
+	virtual st_err_t op_add_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+
+	virtual st_err_t op_add(StackItemList*, StackItem*&);
 };
 
 

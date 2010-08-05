@@ -361,8 +361,8 @@ void ui_display_help(const int& dh) { ui_impl->display_help(dh); }
 
 static void erase_input(const bool& reset_everything) {
 
-	debug_write("erase_input()");
-	debug_write_i("typein_status = %i", typein_status);
+	//debug_write("erase_input()");
+	//debug_write_i("typein_status = %i", typein_status);
 
 	if (ui_dsl.get_status_shift()) {
 		ui_set_status_shift(false);
@@ -466,7 +466,7 @@ static void refresh_path() {
 	bool has_changed = ts->vars.update_si_path();
 	if (has_changed) {
 		cache_path = ts->vars.get_si_path_string();
-		debug_write("A1: ********** PATH REFRESHED **********");
+		//debug_write("A1: ********** PATH REFRESHED **********");
 	}
 
 	ui_impl->refresh_display_path(cache_path, has_changed);
@@ -489,12 +489,12 @@ static inline const string ui_get_ts_display_line(const int& line_number, bool& 
 
 static void refresh_stack(const int& enforced_nb_stack_elems_to_display) {
 
-	debug_write("A0: refresh_stack(): 0 (enter function)");
+	//debug_write("A0: refresh_stack(): 0 (enter function)");
 
 	if (!ui_impl->want_to_refresh_display() && !ui_get_refresh_stack_flag())
 		return;
 
-	debug_write("A0: refresh_stack(): 1 (stack refreshed)");
+	//debug_write("A0: refresh_stack(): 1 (stack refreshed)");
 
 	string l;
 
@@ -508,10 +508,10 @@ static void refresh_stack(const int& enforced_nb_stack_elems_to_display) {
 
 	if (get_recalc_stack_flag()) {
 		ui_shift.actual = 0;
-		debug_write("A0: refresh_stack(): 2 (get_recalc_stack_flag() == true)");
+		//debug_write("A0: refresh_stack(): 2 (get_recalc_stack_flag() == true)");
 	}
 
-	debug_write("");
+	//debug_write("");
 
 	bool recalc = get_recalc_stack_flag();
 	bool no_more_lines = false;
@@ -718,7 +718,7 @@ bool ui_notify_key_pressed(const int& k) {
 	}
 	ui_refresh_display();
 
-	debug_write_i("typein_status = %i", typein_status);
+	//debug_write_i("typein_status = %i", typein_status);
 
 	return event_stop;
 }
@@ -762,11 +762,11 @@ bool DisplayStackLayout::redim(const int& nb_newlines) {
 	int target = height - bmenu - nb_newlines - 1;
 	target = (target < 1 ? 1 : target);
 
-	debug_write_i("height = %i", height);
-	debug_write_i("min_stack = %i", min_stack);
-	debug_write_i("max_stack = %i", max_stack);
-	debug_write_i("nb_newlines = %i", nb_newlines);
-	debug_write_i("target = %i", target);
+	//debug_write_i("height = %i", height);
+	//debug_write_i("min_stack = %i", min_stack);
+	//debug_write_i("max_stack = %i", max_stack);
+	//debug_write_i("nb_newlines = %i", nb_newlines);
+	//debug_write_i("target = %i", target);
 
 	if (target != max_stack) {
 		if (min_stack == max_stack)

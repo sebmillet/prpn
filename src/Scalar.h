@@ -48,6 +48,17 @@ real numeric_abs(const real&);
 
 
 //
+// Coordinates
+//
+
+struct Coordinates {
+	dim_t d;
+	int i;
+	int j;
+};
+
+
+//
 // Binary
 //
 
@@ -154,6 +165,7 @@ public:
 	real get_value() const { return r; }
 	void trim();
 	void neg() { r = (r == 0 ? 0 : -r); }
+	void conj() { }
 	int cmp(const Real&) const;
 	st_err_t add(const Real&, Real&);
 	st_err_t sub(const Real&, Real&);
@@ -239,6 +251,7 @@ public:
 	void trim();
 	void zero() { re = 0; im = 0; }
 	void neg() { re = (re == 0 ? 0 : -re); im = (im == 0 ? 0 : -im); }
+	void conj() { im = -im; }
 	int cmp(const Cplx&) const;
 	st_err_t add(const Cplx&, Cplx&);
 	st_err_t sub(const Cplx&, Cplx&);
@@ -298,25 +311,35 @@ template<class Scalar> class Matrix {
 
 	dim_t dimension;
 	std::vector< std::vector<Scalar>* > mat;
-	size_t nb_lines;
-	size_t nb_columns;
+	int nb_lines;
+	int nb_columns;
 	Matrix& operator=(const Matrix&);
 public:
 
 	  // Empty matrix constructor
-	Matrix<Scalar>(const dim_t&, size_t, size_t);
+	Matrix<Scalar>(const dim_t&, const int&, const int&, const Scalar&);
 	  // Copy-constructor
 	Matrix(const Matrix<Scalar>&);
 	  // Constructor from an input, stored in pm
-	Matrix(const mat_read_t*&, const dim_t&, const size_t&, const size_t&);
+	Matrix(const mat_read_t*&, const dim_t&, const int&, const int&);
 
 	virtual ~Matrix();
 
 	virtual dim_t get_dimension() const { return dimension; }
-	virtual size_t get_nb_lines() const { return nb_lines; }
-	virtual size_t get_nb_columns() const { return nb_columns; }
-	virtual Scalar get_value(const size_t& i, const size_t& j) const { return (*mat[i])[j]; }
-	virtual void set_value(const size_t& i, const size_t& j, const Scalar& v) { (*mat[i])[j] = v; }
+	virtual int get_nb_lines() const { return nb_lines; }
+	virtual int get_nb_columns() const { return nb_columns; }
+	virtual Scalar get_value(const int& i, const int& j) const { return (*mat[i])[j]; }
+	virtual void set_value(const int& i, const int& j, const Scalar& v) { (*mat[i])[j] = v; }
+	virtual void redim(const dim_t&, const int&, const int&);
+	virtual bool index_to_ij(const int&, int&, int&);
+	virtual void copy_linear(Matrix<Scalar>*);
+	virtual st_err_t create_transpose(Matrix<Scalar>*&);
+	virtual st_err_t get_bounds(Coordinates& coord) {
+		coord.d = dimension;
+		coord.i = (dimension == DIM_VECTOR ? nb_columns : nb_lines);
+		coord.j = (dimension == DIM_VECTOR ? 1 : nb_columns);
+		return ST_ERR_OK;
+	}
 
 	virtual void trim();
 	virtual int cmp(const Matrix<Scalar>&) const;

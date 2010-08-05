@@ -995,7 +995,7 @@ bool Itemiser::get_item_recursive(ParserError& par, StackItem*& si0, VarDirector
 				}
 			} else if (si0 != 0) {
 				if (status == GET_LIST || status == GET_PROGRAM)
-					dynamic_cast<StackItemMeta*>(si0)->add_item(si);
+					dynamic_cast<StackItemMeta*>(si0)->append_item(si);
 				else if (status == GET_IF)
 					dynamic_cast<StackItemBranch*>(si0)->add_item(0, si);
 				else if (status == GET_THEN)

@@ -1,0 +1,207 @@
+[ 0 ]
+{ 1 }
+1
+PUT
+[ 0 ] { 1 } 2 PUT [ 0 ] { 1 } 3
+PUT
+<< [ 0 ] { 1 } 4 PUT >> EVAL
+<< << [ 0 ] { 1 } 5 PUT >> EVAL >> EVAL
+<< [ 0 ] { 1 } 6 PUT >>
+EVAL
+"<< [ 0 ] { 1 } 7 PUT >> EVAL" STR->
+"<< [ 0 ] { 1 } 8 PUT >> EVAL"
+STR->
+[ 0 0 ]
+{ 2 }
+1
+PUT
+[ 0 0 ] { 2 } 2 PUT [ 0 0 ] { 2 } 3
+PUT
+<< [ 0 0 ] { 2 } 4 PUT >> EVAL
+<< << [ 0 0 ] { 2 } 5 PUT >> EVAL >> EVAL
+<< [ 0 0 ] { 2 } 6 PUT >>
+EVAL
+"<< [ 0 0 ] { 2 } 7 PUT >> EVAL" STR->
+"<< [ 0 0 ] { 2 } 8 PUT >> EVAL"
+STR->
+[[ 0 ]]
+{ 1 1 }
+1
+PUT
+[[ 0 ]] { 1 1 } 2 PUT [[ 0 ]] { 1 1 } 3
+PUT
+<< [[ 0 ]] { 1 1 } 4 PUT >> EVAL
+<< << [[ 0 ]] { 1 1 } 5 PUT >> EVAL >> EVAL
+<< [[ 0 ]] { 1 1 } 6 PUT >>
+EVAL
+"<< [[ 0 ]] { 1 1 } 7 PUT >> EVAL" STR->
+"<< [[ 0 ]] { 1 1 } 8 PUT >> EVAL"
+STR->
+[[ 0 0 ]]
+{ 1 2 }
+1
+PUT
+[[ 0 0 ]] { 1 2 } 2 PUT [[ 0 0 ]] { 1 2 } 3
+PUT
+<< [[ 0 0 ]] { 1 2 } 4 PUT >> EVAL
+<< << [[ 0 0 ]] { 1 2 } 5 PUT >> EVAL >> EVAL
+<< [[ 0 0 ]] { 1 2 } 6 PUT >>
+EVAL
+"<< [[ 0 0 ]] { 1 2 } 7 PUT >> EVAL" STR->
+"<< [[ 0 0 ]] { 1 2 } 8 PUT >> EVAL"
+STR->
+[ (0, 0) ]
+{ 1 }
+1
+PUT
+[ (0, 0) ] { 1 } 2 PUT [ (0, 0) ] { 1 } 3
+PUT
+<< [ (0, 0) ] { 1 } 4 PUT >> EVAL
+<< << [ (0, 0) ] { 1 } 5 PUT >> EVAL >> EVAL
+<< [ (0, 0) ] { 1 } 6 PUT >>
+EVAL
+"<< [ (0, 0) ] { 1 } 7 PUT >> EVAL" STR->
+"<< [ (0, 0) ] { 1 } 8 PUT >> EVAL"
+STR->
+[ (0, 0) (0, 0) ]
+{ 2 }
+1
+PUT
+[ (0, 0) (0, 0) ] { 2 } 2 PUT [ (0, 0) (0, 0) ] { 2 } 3
+PUT
+<< [ (0, 0) (0, 0) ] { 2 } 4 PUT >> EVAL
+<< << [ (0, 0) (0, 0) ] { 2 } 5 PUT >> EVAL >> EVAL
+<< [ (0, 0) (0, 0) ] { 2 } 6 PUT >>
+EVAL
+"<< [ (0, 0) (0, 0) ] { 2 } 7 PUT >> EVAL" STR->
+"<< [ (0, 0) (0, 0) ] { 2 } 8 PUT >> EVAL"
+STR->
+[[ (0, 0) ]]
+{ 1 1 }
+1
+PUT
+[[ (0, 0) ]] { 1 1 } 2 PUT [[ (0, 0) ]] { 1 1 } 3
+PUT
+<< [[ (0, 0) ]] { 1 1 } 4 PUT >> EVAL
+<< << [[ (0, 0) ]] { 1 1 } 5 PUT >> EVAL >> EVAL
+<< [[ (0, 0) ]] { 1 1 } 6 PUT >>
+EVAL
+"<< [[ (0, 0) ]] { 1 1 } 7 PUT >> EVAL" STR->
+"<< [[ (0, 0) ]] { 1 1 } 8 PUT >> EVAL"
+STR->
+[[ (0, 0) (0, 0) ]]
+{ 1 2 }
+1
+PUT
+[[ (0, 0) (0, 0) ]] { 1 2 } 2 PUT [[ (0, 0) (0, 0) ]] { 1 2 } 3
+PUT
+<< [[ (0, 0) (0, 0) ]] { 1 2 } 4 PUT >> EVAL
+<< << [[ (0, 0) (0, 0) ]] { 1 2 } 5 PUT >> EVAL >> EVAL
+<< [[ (0, 0) (0, 0) ]] { 1 2 } 6 PUT >>
+EVAL
+"<< [[ (0, 0) (0, 0) ]] { 1 2 } 7 PUT >> EVAL" STR->
+"<< [[ (0, 0) (0, 0) ]] { 1 2 } 8 PUT >> EVAL"
+STR->
+[ (0, 0) ]
+{ 1 }
+(0, 1)
+PUT
+[ (0, 0) ] { 1 } (0, 2) PUT [ (0, 0) ] { 1 } (0, 3)
+PUT
+<< [ (0, 0) ] { 1 } (0, 4) PUT >> EVAL
+<< << [ (0, 0) ] { 1 } (0, 5) PUT >> EVAL >> EVAL
+<< [ (0, 0) ] { 1 } (0, 6) PUT >>
+EVAL
+"<< [ (0, 0) ] { 1 } (0, 7) PUT >> EVAL" STR->
+"<< [ (0, 0) ] { 1 } (0, 8) PUT >> EVAL"
+STR->
+[ (0, 0) (0, 0) ]
+{ 2 }
+(0, 1)
+PUT
+[ (0, 0) (0, 0) ] { 2 } (0, 2) PUT [ (0, 0) (0, 0) ] { 2 } (0, 3)
+PUT
+<< [ (0, 0) (0, 0) ] { 2 } (0, 4) PUT >> EVAL
+<< << [ (0, 0) (0, 0) ] { 2 } (0, 5) PUT >> EVAL >> EVAL
+<< [ (0, 0) (0, 0) ] { 2 } (0, 6) PUT >>
+EVAL
+"<< [ (0, 0) (0, 0) ] { 2 } (0, 7) PUT >> EVAL" STR->
+"<< [ (0, 0) (0, 0) ] { 2 } (0, 8) PUT >> EVAL"
+STR->
+[[ (0, 0) ]]
+{ 1 1 }
+(0, 1)
+PUT
+[[ (0, 0) ]] { 1 1 } (0, 2) PUT [[ (0, 0) ]] { 1 1 } (0, 3)
+PUT
+<< [[ (0, 0) ]] { 1 1 } (0, 4) PUT >> EVAL
+<< << [[ (0, 0) ]] { 1 1 } (0, 5) PUT >> EVAL >> EVAL
+<< [[ (0, 0) ]] { 1 1 } (0, 6) PUT >>
+EVAL
+"<< [[ (0, 0) ]] { 1 1 } (0, 7) PUT >> EVAL" STR->
+"<< [[ (0, 0) ]] { 1 1 } (0, 8) PUT >> EVAL"
+STR->
+[[ (0, 0) (0, 0) ]]
+{ 1 2 }
+(0, 1)
+PUT
+[[ (0, 0) (0, 0) ]] { 1 2 } (0, 2) PUT [[ (0, 0) (0, 0) ]] { 1 2 } (0, 3)
+PUT
+<< [[ (0, 0) (0, 0) ]] { 1 2 } (0, 4) PUT >> EVAL
+<< << [[ (0, 0) (0, 0) ]] { 1 2 } (0, 5) PUT >> EVAL >> EVAL
+<< [[ (0, 0) (0, 0) ]] { 1 2 } (0, 6) PUT >>
+EVAL
+"<< [[ (0, 0) (0, 0) ]] { 1 2 } (0, 7) PUT >> EVAL" STR->
+"<< [[ (0, 0) (0, 0) ]] { 1 2 } (0, 8) PUT >> EVAL"
+STR->
+{ 1 1 } GET DEPTH ROLLD
+{ 1 2 } GET DEPTH ROLLD
+7 ROLL { 1 1 } GET DEPTH ROLLD
+14 ROLL { 1 } GET DEPTH ROLLD
+14 ROLL { 2 } GET DEPTH ROLLD
+20 ROLL { 1 } GET DEPTH ROLLD
+59 ROLL 60 ROLL
+{ 1 1 } GET DEPTH ROLLD
+{ 1 2 } GET DEPTH ROLLD
+65 ROLL
+{ 1 1 } GET DEPTH ROLLD
+72 ROLL 73 ROLL
+{ 1 } GET DEPTH ROLLD
+{ 2 } GET DEPTH ROLLD
+78 ROLL
+{ 1 } GET DEPTH ROLLD
+[ -1 -2 -3]
+{ 1 } GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD DROP
+<< << { 1 } GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD >> EVAL >> EVAL DROP
+"<< << { 1 } GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD >> EVAL >> EVAL" STR->
+[ (0, -1) (0, -2) (0, -3) ]
+{ 1 } GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD DROP
+<< << { 1 } GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD >> EVAL >> EVAL DROP
+"<< << { 1 } GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD >> EVAL >> EVAL" STR->
+[[ -1 -2 -3 ][ -4 -5 -6]]
+{ 1 1 } GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD DROP
+<< << { 1 1 }  GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD >> EVAL >> EVAL DROP
+"<< << { 1 1 }  GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD >> EVAL >> EVAL" STR->
+[[ (0, -1) (0, -2) (0, -3) ][ (0, -4) (0, -5) (0, -6) ]]
+{ 1 1 } GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD DROP
+<< << { 1 1 } GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD >> EVAL >> EVAL DROP
+"<< << { 1 1 } GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD GETI DEPTH ROLLD >> EVAL >> EVAL" STR->
+20 PUTI 21 PUTI 22 PUTI 23 PUTI 24 PUTI 25 PUTI
+(0, 31) PUTI (0, 32) PUTI (0, 33) PUTI
+(0, 34) PUTI (0, 35) PUTI (0, 36) PUTI
+[ 1 2 3 4 5 6 ] { 1 } 0 'x' STO 1 6 START GETI x + 'x' STO NEXT x
+SWAP DROP SWAP
+1 'x' STO 1 6 FOR i DUP i 1 ->LIST GET x * 'x' STO NEXT x
+SWAP DROP
+[ (0, 1) 2 3 4 5 6 ] { 1 } 0 'x' STO 1 6 START GETI x + 'x' STO NEXT x
+SWAP DROP SWAP
+1 'x' STO 1 6 FOR i DUP i 1 ->LIST GET x * 'x' STO NEXT x
+SWAP DROP
+[[ 101 102 103 104 105 106 ][ 1 2 3 4 5 6 ]] { 2 1 } 0 'x' STO 1 6 START GETI x + 'x' STO NEXT x
+SWAP DROP SWAP
+1 'x' STO 1 6 FOR i DUP 2 i 2 ->LIST GET x * 'x' STO NEXT x
+SWAP DROP
+[[ 101 102 103 104 105 106 ][ (0, 1) 2 3 4 5 6 ]] { 2 1 } 0 'x' STO 1 6 START GETI x + 'x' STO NEXT x
+SWAP DROP SWAP
+1 'x' STO 1 6 FOR i DUP 2 i 2 ->LIST GET x * 'x' STO NEXT x
+SWAP DROP

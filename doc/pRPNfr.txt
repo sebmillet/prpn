@@ -3,8 +3,8 @@ pRPN(1) 							       pRPN(1)
 
 
 NAME
-       pRPN  -	une  calculatrice en notation polonaise inverse multi systèmes
-       d'exploitation
+       pRPN  -	une  calculatrice en notation polonaise inverse multi systmes
+       dexploitation
 
 
 SYNOPSIS
@@ -13,29 +13,29 @@ SYNOPSIS
 
 DESCRIPTION
        Le programme pRPN est une calculatrice en  notation  polonaise  inverse
-       inspirée des calculatrices HP de la fin des années 80.
+       inspire des calculatrices HP de la fin des annes 80.
 
 OPTIONS
        -h, --help
-	      Affiche l'aide et quitte.
+	      Affiche laide et quitte.
 
        -v --version
-	      Affiche le numéro de version et quitte.
+	      Affiche le numro de version et quitte.
 
        -c, --console
-	      Exécution en mode console.
+	      Excution en mode console.
 
        -w, --width width
-	      Définis  la largeur à width, mesurée en nombre de caractères. 23
-	      par défaut.
+	      Dfinis  la largeur  width, mesure en nombre de caractres. 23
+	      par dfaut.
 
        -h, --height height
-	      Définis la hauteur à height, mesurée en nombre de lignes. 5  par
-	      défaut.
+	      Dfinis la hauteur  height, mesure en nombre de lignes. 5	par
+	      dfaut.
 
        --min-stack-height min-stack-height
-	      Définis  la  hauteur  minimale  à  height,  mesurée en nombre de
-	      lignes. height par défaut. Uniquement en mode console.
+	      Dfinis  la  hauteur  minimale    height,	mesure en nombre de
+	      lignes. height par dfaut. Uniquement en mode console.
 
        -b, --batch
 	      Mode batch, implique le mode console.
@@ -44,17 +44,17 @@ OPTIONS
 	      Ignore les fichiers rc.
 
        -d, --debug debug_option
-	      Mode debug, prend un paramètre.
+	      Mode debug, prend un paramtre.
 
 COMMANDES
-       Les commandes sont suivies du  nombre  d'arguments  qu'elles  prennent,
-       entre parenthèses. Ces arguments sont pris dans la pile.
+       Les commandes sont suivies du  nombre  darguments  quelles  prennent,
+       entre parenthses. Ces arguments sont pris dans la pile.
 
        _HELP (0)
-	      Affiche un écran d'aide
+	      Affiche un cran daide
 
        _HELP_FLAGS (0)
-	      Affiche un écran d'aide sur les options
+	      Affiche un cran daide sur les options
 
        _EXIT (0)
 	      Quitte le programme
@@ -93,134 +93,167 @@ COMMANDES
 	      Exponentiel
 
        NEG (1)
-	      Opposé
+	      Oppos
 
-       IP (1) Partie entière
+       IP (1) Partie entire
 
        INV (1)
 	      1/x
 
-       SQ (1) Carré
+       SQ (1) Carr
 
        SQR (1)
-	      Racine carrée
+	      Racine carre
 
        R->C (2)
-	      Réel à complexe
+	      Rel  complexe
 
        C->R (1)
-	      Complexe à réel
+	      Complexe	rel
 
        SAME (2)
 	      Est identique
 
-       == (2) Est égal à
+       == (2) Est gal
 
-       <> (2) Est différent de
+       <> (2) Est diffrent de
 
        < (2)  Est plus petit que
 
-       <= (2) Est plus petit que, ou égal à
+       <= (2) Est plus petit que, ou gal
 
        > (2)  Est plus grand que
 
-       >= (2) Est plus grand que, ou égal à
+       >= (2) Est plus grand que, ou gal
 
        DUP (1)
-	      Copie le premier élément
+	      Copie le premier lment
 
        SWAP (2)
-	      Échange les deux premiers éléments
+	      change les deux premiers lments
 
        DROP (1)
-	      Supprime le premier élément
+	      Supprime le premier lment
 
        CLEAR (0)
 	      Efface la pile
 
        OVER (2)
-	      Copie le second élément
+	      Copie le second lment
 
        DUP2 (2)
-	      Copie les deux premiers éléments
+	      Copie les deux premiers lments
 
        DROP2 (2)
-	      Supprime les deux premiers éléments
+	      Supprime les deux premiers lments
 
        ROT (3)
-	      Déplace le troisième élément en première position
+	      Dplace le troisime lment en premire position
 
        ROLLD (1)
-	      Déplace le premier élément en Nième position
+	      Dplace le premier lment en Nime position
 
        ROLL (1)
-	      Déplace le Ne élément en première position
+	      Dplace le Ne lment en premire position
 
        PICK (1)
-	      Copie le Ne élément
+	      Copie le Ne lment
 
        DUPN (1)
-	      Copie les N premiers éléments
+	      Copie les N premiers lments
 
        DROPN (1)
-	      Supprime les N premiers éléments
+	      Supprime les N premiers lments
 
        DEPTH (0)
-	      Renvoie le nombre d'éléments dans la pile
+	      Renvoie le nombre dlments dans la pile
 
-       SF (1) Active l'option
+       SF (1) Active loption
 
-       CF (1) Désactive l'option
+       CF (1) Dsactive loption
 
        FS? (1)
-	      Renvoie 1 si l'option est activée, 0 sinon
+	      Renvoie 1 si loption est active, 0 sinon
 
        FC? (1)
-	      Renvoie 0 si l'option est activée, 1 sinon
+	      Renvoie 0 si loption est active, 1 sinon
 
        FS?C (1)
-	      Exécute FS? et désactive l'option
+	      Excute FS? et dsactive loption
 
        FC?C (1)
-	      Exécute FC? et désactive l'option
+	      Excute FC? et dsactive loption
 
        ->STR (1)
-	      Convertit un élément en chaîne de caractères
+	      Convertis un lment en chane de caractres
 
        STR-> (0)
-	      Convertit une chaîne de caractère en éléments
+	      Convertis une chane de caractre en lments
 
        ->LIST (1)
-	      Mets les éléments dans une liste
+	      Mets les lments dans une liste
 
        LIST-> (1)
-	      Convertit la liste en ses éléments
+	      Convertis la liste en ses lments
+
+       GET (2)
+	      Extrais un lment dune liste ou dun tableau
+
+       GETI (2)
+	      Extrais un lment dune liste ou dun tableau par incrments
+
+       PUT (3)
+	      Remplace un lment dans une liste ou un tableau
+
+       PUTI (3)
+	      Remplace un lment dans une liste ou un tableau par incrments
+
+       SIZE (1)
+	      Dimension of a list or array
+
+       ARRY-> (1)
+	      Replace an array by all its elements
+
+       ->ARRY (1)
+	      Create an array from a list of elements
+
+       CON (2)
+	      Create a constant array
+
+       TRN (1)
+	      Transpose a matrix-type array
+
+       RDM (2)
+	      Modify the dimension of an array
+
+       IDN (1)
+	      Create an identity matrix
 
        EVAL (0)
-	      Évalue l'élément
+	      value llment
 
        STO (2)
 	      Enregistre la valeur dans la variable
 
        RCL (1)
-	      Récupère la valeur de la variable
+	      Rcupre la valeur de la variable
 
        PURGE (1)
 	      Supprime la variable
 
        VARS (0)
-	      Renvoie la liste des variables dans le répertoire courant
+	      Renvoie la liste des variables dans le rpertoire courant
 
        PATH (0)
-	      Renvoie le répertoire en cours sous forme de liste
+	      Renvoie le rpertoire en cours sous forme de liste
 
        CRDIR (1)
-	      Crée un répertoire
+	      Cre un rpertoire
 
        HOME (0)
-	      Définis le répertoire racine comme répertoire courant
+	      Dfinis le rpertoire racine comme rpertoire courant
 
-       UP (0) Définis le répertoire parent comme répertoire courant
+       UP (0) Dfinis le rpertoire parent comme rpertoire courant
 
        BIN (0)
 	      Utilise le mode binaire pour les entiers binaires
@@ -229,52 +262,52 @@ COMMANDES
 	      Utilise le mode octal pour les entiers binaires
 
        DEC (0)
-	      Utilise le mode décimal pour les entiers binaires
+	      Utilise le mode dcimal pour les entiers binaires
 
        HEX (0)
-	      Utilise le mode hexadécimal pour les entiers binaires
+	      Utilise le mode hexadcimal pour les entiers binaires
 
        STWS (1)
-	      Définis le nombre de bits des entiers binaires (de 1 à 64)
+	      Dfinis le nombre de bits des entiers binaires (de 1  64)
 
        RCWS (0)
 	      Renvoie le nombre de bits des entiers binaires
 
        B->R (1)
-	      Convertit un entier binaire en réel
+	      Convertis un entier binaire en rel
 
        R->B (1)
-	      Convertit un réel en entier binaire
+	      Convertis un rel en entier binaire
 
        RCLF (0)
-	      Enregistre l'état des options dans un entier binaire
+	      Enregistre ltat des options dans un entier binaire
 
        STOF (1)
-	      Récupère l'état des options depuis un entier binaire
+	      Rcupre ltat des options depuis un entier binaire
 
        WAIT (1)
-	      Pause d'une durée définie en secondes
+	      Pause dune dure dfinie en secondes
 
        _READ (1)
-	      Lit le fichier et met son contenu dans la pile
+	      Lis le fichier et met son contenu dans la pile
 
        _WRITE (2)
-	      Écrit  le second élément de la pile dans le fichier nommé par le
-	      premier élément
+	      cris  le second lment de la pile dans le fichier nomm par le
+	      premier lment
 
        UNDO (0)
-	      Annule la dernière commande, 50 niveaux par défaut
+	      Annule la dernire commande, 50 niveaux par dfaut
 
        _UNDO_LEVELS (1)
-	      Définis le nombre de niveaux d'annulation
+	      Dfinis le nombre de niveaux dannulation
 
        _UNDO_LEVELS? (0)
-	      Renvoie le nombre de niveaux d'annulations
+	      Renvoie le nombre de niveaux dannulations
 
-TYPES D'OBJETS
-       Donnée
+TYPES OBJETS
+       Donne
 
-       Nombre réel
+       Nombre el
 	      1.23456e-25
 
        Nombre complexe
@@ -283,7 +316,7 @@ TYPES D'OBJETS
        Entier binaire
 	      #    # 123AB
 
-       Chaîne de caractères
+       Chne de caracres
 	      " "  "RESULT"
 
        Vecteur
@@ -296,34 +329,34 @@ TYPES D'OBJETS
 
        Noms
 
-       Nom    ´ ´  ´CALC´
+       Nom	 CALC
 
-       Procédures
+       Procdures
 
        Programme
 	      << >>	<< DUP + SWAP >>
 
-       Algébrique
-	      ´ ´  ´X+2*Y=Z´
+       Albrique
+		 X+2*Y=Z
 
-FICHIERS D'INITIALISATION
+FICHIERS INITIALISATION
        ~/.prpn/stackrc
-	      Réglages et contenu de la pile.
+	      Rglages et contenu de la pile.
 
        ~/.prpn/varsrc
-	      Structure contenant les variables, et répertoire courant.
+	      Structure contenant les variables, et rpertoire courant.
 
 AUTEUR
-       Écrit  par   Sébastien	Millet	 <sebastien.millet1@club-internet.fr>.
-       Autorisation  est  donnée de copier, distribuer et/ou modifier ce docu‐
+       crit  par   Sbastien   Millet   <sebastien.millet1@club-internet.fr>.
+       Autorisation  est  donne de copier, distribuer et/ou modifier ce docu
        ment selon les termes de la licence "GNU General  Public  License".  La
-       version 3 est publiée par la Free Software Foundation.
+       version 3 est publie par la Free Software Foundation.
 
 BUGS
        - Ce programme est en version 0.5.1...
 
-       -  Version  Windows  :  wx se déconnecte du terminal d'où il est lancé.
-       C'est pourquoi la compilation de la version Windows produit une version
+       -  Version  Windows  :  wx se dconnecte du terminal do il est lanc.
+       Cest pourquoi la compilation de la version Windows produit une version
        graphique, prpn.exe, et une version console, prpnc.exe.
 
 

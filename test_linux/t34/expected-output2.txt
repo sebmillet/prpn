@@ -1,0 +1,231 @@
+GET Error:
+Too Few Arguments
+PUT Error:
+Too Few Arguments
+GETI Error:
+Too Few Arguments
+PUTI Error:
+Too Few Arguments
+GET Error:
+Too Few Arguments
+PUT Error:
+Too Few Arguments
+GETI Error:
+Too Few Arguments
+PUTI Error:
+Too Few Arguments
+GET Error:
+Bad Argument Type
+PUT Error:
+Too Few Arguments
+GETI Error:
+Bad Argument Type
+PUTI Error:
+Too Few Arguments
+GET Error:
+Bad Argument Type
+PUT Error:
+Bad Argument Type
+GETI Error:
+Bad Argument Type
+PUTI Error:
+Bad Argument Type
+GET Error:
+Bad Argument Type
+GETI Error:
+Bad Argument Type
+PUT Error:
+Bad Argument Type
+PUTI Error:
+Bad Argument Type
+/ Error:
+Infinite Result
+GET Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+/ Error:
+Infinite Result
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+/ Error:
+Infinite Result
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+/ Error:
+Infinite Result
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+STR-> Error:
+Bad Argument Type
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+{ { } }
+{ "" }
+0
+{ { } }
+{ "" }
+0
+{ { } }
+{ [ 0 ] }
+0
+{ { } }
+{ [ 0 ] }
+0
+get_class_count() = 0 for watched classes

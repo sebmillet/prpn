@@ -1,0 +1,103 @@
+[ 0 ]
+{ }
+GET
+GETI
+0
+PUT
+PUTI
+CLEAR
+[ 0 ]
+{ 0 }
+GET
+GETI
+0
+PUT
+PUTI
+CLEAR
+[ 0 0 ]
+{ { } }
+GET
+GETI
+0
+PUT
+PUTI
+CLEAR
+[ 0 0 ]
+{ 3 }
+GET
+GETI
+0
+PUT
+PUTI
+CLEAR
+59 SF 1 0 /
+<< [ 0 ] { 2 } GET >> EVAL
+<< << [ 0 ] { 2 } GET >> EVAL >> EVAL
+"<< [ 0 ] { 2 } GET >> EVAL" STR->
+"<< << [ 0 ] { 2 } GET >> EVAL >> EVAL" STR->
+CLEAR
+<< [ 0 ] { 2 } GETI >> EVAL
+<< << [ 0 ] { 2 } GETI >> EVAL >> EVAL
+"<< [ 0 ] { 2 } GETI >> EVAL" STR->
+"<< << [ 0 ] { 2 } GETI >> EVAL >> EVAL" STR->
+CLEAR
+<< [ 0 ] { 2 } 0 PUT >> EVAL
+<< << [ 0 ] { 2 } 0 PUT >> EVAL >> EVAL
+"<< [ 0 ] { 2 } 0 PUT >> EVAL" STR->
+"<< << [ 0 ] { 2 } 0 PUT >> EVAL >> EVAL" STR->
+CLEAR
+<< [ 0 ] { 2 } 0 PUTI >> EVAL
+<< << [ 0 ] { 2 } 0 PUTI >> EVAL >> EVAL
+"<< [ 0 ] { 2 } 0 PUTI >> EVAL" STR->
+"<< << [ 0 ] { 2 } 0 PUTI >> EVAL >> EVAL" STR->
+0 STR->
+CLEAR
+<< [ 0 ] { "" } GET >> EVAL
+<< << [ 0 ] { "" } GET >> EVAL >> EVAL
+"<< [ 0 ] { [ 0 ] } GET >> EVAL" STR->
+"<< << [ 0 ] { [ 0 ] } GET >> EVAL >> EVAL" STR->
+CLEAR
+<< [ 0 ] { "" } GETI >> EVAL
+<< << [ 0 ] { "" } GETI >> EVAL >> EVAL
+"<< [ 0 ] { [ 0 ] } GETI >> EVAL" STR->
+"<< << [ 0 ] { [ 0 ] } GETI >> EVAL >> EVAL" STR->
+CLEAR
+<< [ 0 ] { "" } 0 PUT >> EVAL
+<< << [ 0 ] { "" } 0 PUT >> EVAL >> EVAL
+"<< [ 0 ] { [ 0 ] } 0 PUT >> EVAL" STR->
+"<< << [ 0 ] { [ 0 ] } 0 PUT >> EVAL >> EVAL" STR->
+CLEAR
+<< [ 0 ] { "" } 0 PUTI >> EVAL
+<< << [ 0 ] { "" } 0 PUTI >> EVAL >> EVAL
+"<< [ 0 ] { [ 0 ] } 0 PUTI >> EVAL" STR->
+"<< << [ 0 ] { [ 0 ] } 0 PUTI >> EVAL >> EVAL" STR->
+59 SF 1 0 /
+[[ 0 ]] { 1 }
+GET
+GETI
+1
+PUT
+PUTI
+CLEAR
+[ (0, 0) ] { 3 }
+GET
+GETI
+1
+PUT
+PUTI
+CLEAR
+[[ (0, 0) ]] { 3 }
+GET
+GETI
+1
+PUT
+PUTI
+CLEAR
+59 SF 1 0 /
+[ 0 ] { 1 } (0, 0)
+PUT
+PUTI
+[[ 0 ]] { 1 1 } (0, 0)
+PUT
+PUTI
+CLEAR
