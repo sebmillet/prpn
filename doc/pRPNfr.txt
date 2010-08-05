@@ -190,6 +190,9 @@ COMMANDES
        STR-> (0)
 	      Convertis une chane de caractre en lments
 
+       SUB (3)
+	      Extrais le contenu dune chane de caractres ou dune liste
+
        ->LIST (1)
 	      Mets les lments dans une liste
 
@@ -209,25 +212,25 @@ COMMANDES
 	      Remplace un lment dans une liste ou un tableau par incrments
 
        SIZE (1)
-	      Dimension of a list or array
+	      Dimension dune liste ou dun tableau
 
        ARRY-> (1)
-	      Replace an array by all its elements
+	      Remplace un tableau par ses lments
 
        ->ARRY (1)
-	      Create an array from a list of elements
+	      Cre un tableau avec les lments de la pile
 
        CON (2)
-	      Create a constant array
+	      Cre un tableau constant
 
        TRN (1)
-	      Transpose a matrix-type array
+	      Transpose une matrice
 
        RDM (2)
-	      Modify the dimension of an array
+	      Modifie les dimensions dun tableau
 
        IDN (1)
-	      Create an identity matrix
+	      Cre une matrice identit
 
        EVAL (0)
 	      value llment

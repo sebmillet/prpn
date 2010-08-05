@@ -1,0 +1,55 @@
+->ARRY Error:
+Too Few Arguments
+ARRY-> Error:
+Too Few Arguments
+->ARRY Error:
+Bad Argument Value
+ARRY-> Error:
+Bad Argument Type
+->ARRY Error:
+Too Few Arguments
+->ARRY Error:
+Bad Argument Value
+->ARRY Error:
+Bad Argument Value
+ARRY-> Error:
+Bad Argument Type
+ARRY-> Error:
+Bad Argument Type
+->ARRY Error:
+Bad Argument Type
+ARRY-> Error:
+Bad Argument Type
+->ARRY Error:
+Bad Argument Type
+ARRY-> Error:
+Bad Argument Type
+->ARRY Error:
+Bad Argument Type
+[ 0 ]
+[[ 0 ]]
+[ 1 2 ]
+[[ 1 2 ]]
+[[ 1 ]  [ 2 ]]
+[[ (1,0) (2,0) (3,0) ]  [ (4,0) (5,-5) (6,0) ]]
+0
+{ 1 }
+0
+{ 1 1 }
+1
+2
+{ 2 }
+1
+2
+{ 1 2 }
+1
+2
+{ 2 1 }
+1
+2
+3
+4
+5
+6
+{ 2 3 }
+get_class_count() = 0 for watched classes

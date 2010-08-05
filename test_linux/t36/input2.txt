@@ -1,0 +1,70 @@
+RDM
+TRN
+IDN
+[0] RDM
+TRN
+IDN
+1
+RDM
+TRN
+CLEAR
+"" 1 RDM
+CLEAR
+[0] { } RDM
+[0] { "" } RDM
+[0] { -1 } RDM
+CLEAR
+{ 1 } [ 0 ] RDM
+CLEAR
+{ } TRN
+IDN
+"" TRN
+IDN
+[9]
+DUP { 1 } RDM
+DUP { 2 } RDM
+DUP { 1 } RDM
+DUP { 1 1 } RDM
+DUP { 1 } RDM
+DUP { 1 2 } RDM
+DUP { 2 1 } RDM
+DUP { 2 2 } RDM
+[9] { 2 1 } RDM
+[9] { 2 2 } RDM
+DUP { 1 2 } RDM
+DUP { 1 1 } RDM
+DUP { 1 } RDM
+[9] { 2 3 } RDM
+DUP { 1 2 } RDM
+OVER { 2 1 } RDM
+3 PICK { 1 1 } RDM
+4 PICK { 1 } RDM
+[1 2 3]
+{ 1 } RDM
+[1 2 3]
+{ 1 1 } RDM
+[1 2 3]
+{ 2 } RDM
+[1 2 3]
+{ 1 2 } RDM
+[1 2 3]
+{ 2 1 } RDM
+[1 2 3]
+{ 4 } RDM
+[1 2 3]
+{ 1 4 } RDM
+[1 2 3]
+{ 4 1 } RDM
+[1 2 3]
+{ 4 2 } RDM
+[1 2 3]
+{ 2 4 } RDM
+DUP TRN
+DUP
+ARRY-> LIST-> 3 ROLLD SWAP ROT ->LIST ->ARRY
+ARRY-> LIST-> 3 ROLLD SWAP ROT ->LIST ->ARRY
+DUP2 SAME
+<< 1 10 FOR i i IDN NEXT >>
+EVAL
+DUP DUP TRN
+SAME

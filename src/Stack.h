@@ -277,6 +277,8 @@ public:
 	virtual st_err_t op_to_arry(TransStack&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_con_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_con(StackItemList*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_con(StackItemMatrixReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_con(StackItemMatrixCplx*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_rdm_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_rdm(StackItemMatrixReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_rdm(StackItemMatrixCplx*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
@@ -463,6 +465,8 @@ public:
 	virtual st_err_t op_add(StackItemList*, StackItem*&);
 
 	virtual st_err_t op_con(StackItemList*, StackItem*&);
+	virtual st_err_t op_con(StackItemMatrixReal*, StackItem*&);
+	virtual st_err_t op_con(StackItemMatrixCplx*, StackItem*&);
 	virtual st_err_t op_idn(StackItem*&);
 };
 
@@ -524,6 +528,7 @@ public:
 	virtual st_err_t op_add(StackItemList*, StackItem*&);
 
 	virtual st_err_t op_con(StackItemList*, StackItem*&);
+	virtual st_err_t op_con(StackItemMatrixCplx*, StackItem*&);
 };
 
 
@@ -582,6 +587,7 @@ public:
 	virtual st_err_t op_size(StackItem*&);
 	virtual st_err_t op_arry_to(TransStack&);
 	virtual st_err_t op_rdm_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_rdm(this, ret); }
+	virtual st_err_t op_con_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_con(this, ret); }
 
 	virtual st_err_t op_add(StackItemList*, StackItem*&);
 	virtual st_err_t op_trn(StackItem*&);
@@ -635,6 +641,7 @@ public:
 	virtual st_err_t op_size(StackItem*&);
 	virtual st_err_t op_arry_to(TransStack&);
 	virtual st_err_t op_rdm_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_rdm(this, ret); }
+	virtual st_err_t op_con_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_con(this, ret); }
 
 	virtual st_err_t op_add(StackItemList*, StackItem*&);
 	virtual st_err_t op_trn(StackItem*&);

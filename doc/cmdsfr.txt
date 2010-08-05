@@ -52,20 +52,20 @@ FS?C           (1): Exécute FS? et désactive l'option
 FC?C           (1): Exécute FC? et désactive l'option
 ->STR          (1): Convertis un élément en chaîne de caractères
 STR->          (0): Convertis une chaîne de caractère en éléments
-SUB            (3): Extract content from a string or a list
+SUB            (3): Extrais le contenu d'une chaîne de caractères ou d'une liste
 ->LIST         (1): Mets les éléments dans une liste
 LIST->         (1): Convertis la liste en ses éléments
 GET            (2): Extrais un élément d'une liste ou d'un tableau
 GETI           (2): Extrais un élément d'une liste ou d'un tableau par incréments
 PUT            (3): Remplace un élément dans une liste ou un tableau
 PUTI           (3): Remplace un élément dans une liste ou un tableau par incréments
-SIZE           (1): Dimension of a list or array
-ARRY->         (1): Replace an array by all its elements
-->ARRY         (1): Create an array from a list of elements
-CON            (2): Create a constant array
-TRN            (1): Transpose a matrix-type array
-RDM            (2): Modify the dimension of an array
-IDN            (1): Create an identity matrix
+SIZE           (1): Dimension d'une liste ou d'un tableau
+ARRY->         (1): Remplace un tableau par ses éléments
+->ARRY         (1): Crée un tableau avec les éléments de la pile
+CON            (2): Crée un tableau constant
+TRN            (1): Transpose une matrice
+RDM            (2): Modifie les dimensions d'un tableau
+IDN            (1): Crée une matrice identité
 EVAL           (0): Évalue l'élément
 STO            (2): Enregistre la valeur dans la variable
 RCL            (1): Récupère la valeur de la variable
@@ -117,4 +117,8 @@ Algébrique               ' '            'X+2*Y=Z'
 [[ 1 0 0 ]  [ 0 1 0 ]  [ 0 0 1 ]]
 [[ 1 ]]
 [[ 1 0 ]  [ 0 1 ]]
+{ { } { 1 } "a" 12 (0,1) }
+"abc"
+[ 12 ]
+{ 2 }
 get_class_count() = 0 for watched classes

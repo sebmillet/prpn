@@ -1,0 +1,25 @@
+CON
+"" CON
+<< >> CON
+CLEAR -1 { 1 }
+CON
+SWAP
+CON
+{ 1 } "" CON
+DROP2 { } -1 CON
+DROP2 { { } } -1 CON
+DROP2 { { } { } } -1 CON
+DROP2 { "" } -1 CON
+DROP2 { 0 } -1 CON
+DROP2 { 1 } -1 CON
+{ 1 1 } -1 CON
+{ 1 2 } -1 CON
+{ 2 1 } -1 CON
+{ 2 2 } -1 CON
+(0,1) CON
+DROP -2 CON
+SWAP -3 CON
+ROT -4 CON
+4 ROLL -5 CON
+5 ROLL -6 CON
+6 ROLL -7 CON

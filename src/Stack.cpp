@@ -2106,7 +2106,7 @@ st_err_t si_matrix_as3(st_err_t (*f)(const Cplx&, const Cplx&, Cplx&), Matrix<Cp
 	return c;
 }
 
-#define IMPLEMENT_SCALAR_OP_CON(SI, MATSI, SCALAR) \
+#define IMPLEMENT_SCALAR_OP_CON_LIST(MATSI, SI, SCALAR) \
 st_err_t SI::op_con(StackItemList* sil, StackItem*& ret) { \
 	Coordinates coord; \
 	st_err_t c = sil->get_coordinates(coord); \
@@ -2114,13 +2114,23 @@ st_err_t SI::op_con(StackItemList* sil, StackItem*& ret) { \
 		return c; \
 	int i, j; \
 	COORD_TO_MATRIX_IJ(coord, i, j); \
-	Matrix<SCALAR> *pmat = new Matrix<SCALAR>(coord.d, i, j, sc); \
+	Matrix<SCALAR> *pmat = new Matrix<SCALAR>(coord.d, i + 1, j + 1, sc); \
 	ret = new MATSI(pmat); \
 	return ST_ERR_OK; \
 }
-IMPLEMENT_SCALAR_OP_CON(StackItemReal, StackItemMatrixReal, Real)
-IMPLEMENT_SCALAR_OP_CON(StackItemCplx, StackItemMatrixCplx, Cplx)
+IMPLEMENT_SCALAR_OP_CON_LIST(StackItemMatrixReal, StackItemReal, Real)
+IMPLEMENT_SCALAR_OP_CON_LIST(StackItemMatrixCplx, StackItemCplx, Cplx)
 
+#define IMPLEMENT_SCALAR_OP_CON_MAT(MATSI, SI, SCALAR) \
+st_err_t SI::op_con(MATSI* sim, StackItem*& ret) { \
+	Matrix<SCALAR> *t = sim->get_matrix(); \
+	Matrix<SCALAR> *pmat = new Matrix<SCALAR>(t->get_dimension(), t->get_nb_lines(), t->get_nb_columns(), SCALAR(sc)); \
+	ret = new MATSI(pmat); \
+	return ST_ERR_OK; \
+}
+IMPLEMENT_SCALAR_OP_CON_MAT(StackItemMatrixReal, StackItemReal, Real)
+IMPLEMENT_SCALAR_OP_CON_MAT(StackItemMatrixCplx, StackItemReal, Cplx)
+IMPLEMENT_SCALAR_OP_CON_MAT(StackItemMatrixCplx, StackItemCplx, Cplx)
 
 //
 // StackItemReal

@@ -189,6 +189,9 @@ COMMANDS
        STR-> (0)
 	      Convert from string
 
+       SUB (3)
+	      Extract content from a string or a list
+
        ->LIST (1)
 	      Items to list
 

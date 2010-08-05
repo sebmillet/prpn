@@ -1,0 +1,80 @@
+RDM Error:
+Too Few Arguments
+TRN Error:
+Too Few Arguments
+IDN Error:
+Too Few Arguments
+RDM Error:
+Too Few Arguments
+TRN Error:
+Invalid Dimension
+IDN Error:
+Bad Argument Type
+RDM Error:
+Bad Argument Type
+TRN Error:
+Bad Argument Type
+RDM Error:
+Bad Argument Type
+RDM Error:
+Bad Argument Value
+RDM Error:
+Bad Argument Value
+RDM Error:
+Bad Argument Value
+RDM Error:
+Bad Argument Type
+TRN Error:
+Bad Argument Type
+IDN Error:
+Bad Argument Type
+TRN Error:
+Bad Argument Type
+IDN Error:
+Bad Argument Type
+{ }
+""
+[ 9 ]
+[ 9 ]
+[ 9 0 ]
+[ 9 ]
+[[ 9 ]]
+[ 9 ]
+[[ 9 0 ]]
+[[ 9 ]  [ 0 ]]
+[[ 9 0 ]  [ 0 0 ]]
+[[ 9 ]  [ 0 ]]
+[[ 9 0 ]  [ 0 0 ]]
+[[ 9 0 ]]
+[[ 9 ]]
+[ 9 ]
+[[ 9 0 0 ]  [ 0 0 0 ]]
+[[ 9 0 ]]
+[[ 9 ]  [ 0 ]]
+[[ 9 ]]
+[ 9 ]
+[ 1 ]
+[[ 1 ]]
+[ 1 2 ]
+[[ 1 2 ]]
+[[ 1 ]  [ 2 ]]
+[ 1 2 3 0 ]
+[[ 1 2 3 0 ]]
+[[ 1 ]  [ 2 ]  [ 3 ]  [ 0 ]]
+[[ 1 2 ]  [ 3 0 ]  [ 0 0 ]  [ 0 0 ]]
+[[ 1 2 3 0 ]  [ 0 0 0 0 ]]
+[[ 1 0 ]  [ 2 0 ]  [ 3 0 ]  [ 0 0 ]]
+[[ 1 0 ]  [ 2 0 ]  [ 3 0 ]  [ 0 0 ]]
+1
+[[ 1 ]]
+[[ 1 0 ]  [ 0 1 ]]
+[[ 1 0 0 ]  [ 0 1 0 ]  [ 0 0 1 ]]
+[[ 1 0 0 0 ]  [ 0 1 0 0 ]  [ 0 0 1 0 ]  [ 0 0 0 1 ]]
+[[ 1 0 0 0 0 ]  [ 0 1 0 0 0 ]  [ 0 0 1 0 0 ]  [ 0 0 0 1 0 ]  [ 0 0 0 0 1 ]]
+[[ 1 0 0 0 0 0 ]  [ 0 1 0 0 0 0 ]  [ 0 0 1 0 0 0 ]  [ 0 0 0 1 0 0 ]  [ 0 0 0 0 1 0 ]  [ 0 0 0 0 0 1 ]]
+[[ 1 0 0 0 0 0 0 ]  [ 0 1 0 0 0 0 0 ]  [ 0 0 1 0 0 0 0 ]  [ 0 0 0 1 0 0 0 ]  [ 0 0 0 0 1 0 0 ]  [ 0 0 0 0 0 1 0 ]  [ 0 0 0 0 0 0 1 ]]
+[[ 1 0 0 0 0 0 0 0 ]  [ 0 1 0 0 0 0 0 0 ]  [ 0 0 1 0 0 0 0 0 ]  [ 0 0 0 1 0 0 0 0 ]  [ 0 0 0 0 1 0 0 0 ]  [ 0 0 0 0 0 1 0 0 ]  [ 0 0 0 0 0 0 1 0 ]  [ 0 0 0 0 0 0 0 1 ]]
+[[ 1 0 0 0 0 0 0 0 0 ]  [ 0 1 0 0 0 0 0 0 0 ]  [ 0 0 1 0 0 0 0 0 0 ]  [ 0 0 0 1 0 0 0 0 0 ]  [ 0 0 0 0 1 0 0 0 0 ]  [ 0 0 0 0 0 1 0 0 0 ]  [ 0 0 0 0 0 0 1 0 0 ]  [ 0 0 0 0 0 0 0 1 0 ]  [ 0 0 0 0 0 0 0 0 1 ]]
+[[ 1 0 0 0 0 0 0 0 0 0 ]  [ 0 1 0 0 0 0 0 0 0 0 ]  [ 0 0 1 0 0 0 0 0 0 0 ]  [ 0 0 0 1 0 0 0 0 0 0 ]  [ 0 0 0 0 1 0 0 0 0 0 ]  [ 0 0 0 0 0 1 0 0 0 0 ]  [ 0 0 0 0 0 0 1 0 0 0 ]  [ 0 0 0 0 0 0 0 1 0 0 ]  [ 0 0 0 0 0 0 0 0 1 0 ]  [ 0 0 0 0 0 0 0 0 0 1 ]]
+1
+get_class_count() = 0 for watched classes

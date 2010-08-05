@@ -1,0 +1,29 @@
+CON Error:
+Too Few Arguments
+CON Error:
+Too Few Arguments
+CON Error:
+Bad Argument Type
+CON Error:
+Bad Argument Type
+CON Error:
+Bad Argument Type
+CON Error:
+Bad Argument Value
+CON Error:
+Bad Argument Value
+CON Error:
+Bad Argument Value
+CON Error:
+Bad Argument Value
+CON Error:
+Bad Argument Value
+CON Error:
+Bad Argument Type
+[[ -2 -2 ]  [ -2 -2 ]]
+[[ -3 ]  [ -3 ]]
+[[ -4 -4 ]]
+[[ -5 ]]
+[ -6 ]
+[ -7 ]
+get_class_count() = 0 for watched classes
