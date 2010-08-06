@@ -4,6 +4,7 @@
 	<include file="presets/wx.bkl"/>
 
 	<set var="WX_DEBUG">0</set>
+	<set var="BUILD">release</set>
 
 	<option name="WITH_NLS">
 		<values>0,1</values>
@@ -55,6 +56,8 @@
 		<define>FOREIGN_MAIN</define>
 		<define>DEBUG</define>
 		<define>DEBUG_FILE</define>
+		<define>WX_DEBUG=$(WX_DEBUG)</define>
+		<define>BUILD=$(BUILD)</define>
 		<include>"$(MYINCLUDE)"</include>
 		<lib-path>"$(MYLIB)"</lib-path>
 		<sys-lib>$(LIBINTL)</sys-lib>

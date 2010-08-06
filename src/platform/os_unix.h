@@ -53,6 +53,7 @@ OS_Dirs::OS_Dirs(const char *argv0) {
 	dirs[OSD_HC_BIN] = PKG_BINDIR;
 	dirs[OSD_HC_DOC] = PKG_DOCDIR;
 	dirs[OSD_HC_HTML] = PKG_HTMLDIR;
+	dirs[OSD_PKG_LOCALEDIR] = PKG_LOCALEDIR;
 
 	const char *h = getenv("HOME");
 	string p;

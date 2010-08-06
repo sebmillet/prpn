@@ -60,8 +60,9 @@ WITH_NLS = 1
 PRPN_CXXFLAGS = /MDd /DWIN32 $(__WXUNICODE_DEFINE_p) $(__WXDEBUG_DEFINE_p) \
 	/D__WXMSW__ /I$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) \
 	/I$(WX_DIR)\include /D_WINDOWS /DENABLE_NLS=$(WITH_NLS) /W4 /Zi /D_DEBUG \
-	/Fdprpn.pdb /Od /DFOREIGN_MAIN /DDEBUG /DDEBUG_FILE \
-	/I"C:\Progra~1\GnuWin32\include" /GR /EHsc $(CPPFLAGS) $(CXXFLAGS)
+	/Fdprpn.pdb /Od /DFOREIGN_MAIN /DDEBUG /DDEBUG_FILE /DWX_DEBUG=0 \
+	/DBUILD=release /I"C:\Progra~1\GnuWin32\include" /GR /EHsc $(CPPFLAGS) \
+	$(CXXFLAGS)
 PRPN_OBJECTS =  \
 	prpn_Main.obj \
 	prpn_Compat.obj \
@@ -222,7 +223,7 @@ prpn_UiImplWx.obj: .\UiImplWx.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(PRPN_CXXFLAGS) .\UiImplWx.cpp
 
 prpn_prpn.res: .\prpn.rc
-	rc /fo$@  /d WIN32 $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) /d __WXMSW__ /i $(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) /i $(WX_DIR)\include /d _WINDOWS /d ENABLE_NLS=$(WITH_NLS) /d _DEBUG /d FOREIGN_MAIN /d DEBUG /d DEBUG_FILE /i "C:\Progra~1\GnuWin32\include" .\prpn.rc
+	rc /fo$@  /d WIN32 $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) /d __WXMSW__ /i $(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) /i $(WX_DIR)\include /d _WINDOWS /d ENABLE_NLS=$(WITH_NLS) /d _DEBUG /d FOREIGN_MAIN /d DEBUG /d DEBUG_FILE /d WX_DEBUG=0 /d BUILD=release /i "C:\Progra~1\GnuWin32\include" .\prpn.rc
 
 prpnc_Main.obj: .\Main.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(PRPNC_CXXFLAGS) .\Main.cpp

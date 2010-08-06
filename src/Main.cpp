@@ -149,7 +149,7 @@ int prog_init(int argc, char **argv) {
 	actual_country_code = actual_locale;
 	if (actual_country_code.length() >= 3)
 		actual_country_code.erase(2);
-	bindtextdomain(PACKAGE, PKG_LOCALEDIR);
+	bindtextdomain(PACKAGE, osd->get_dir(OSD_PKG_LOCALEDIR).c_str());
 	textdomain(PACKAGE);
 #else
 	actual_locale = "en";

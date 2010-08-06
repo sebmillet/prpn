@@ -85,11 +85,13 @@ OS_Dirs::OS_Dirs(const char *argv0) {
 		dirs[OSD_HC_BIN] = inst_dir;
 		dirs[OSD_HC_DOC] = inst_dir;
 		dirs[OSD_HC_HTML] = inst_dir;
+		dirs[OSD_PKG_LOCALEDIR] = inst_dir;
 	} else {
 		dirs[OSD_HC_PREFIX] = dirs[OSD_RT_EXE];
 		dirs[OSD_HC_BIN] = dirs[OSD_RT_EXE];
 		dirs[OSD_HC_DOC] = dirs[OSD_RT_EXE];
 		dirs[OSD_HC_HTML] = dirs[OSD_RT_EXE];
+		dirs[OSD_PKG_LOCALEDIR] = dirs[OSD_RT_EXE];
 	}
 
 	string p;

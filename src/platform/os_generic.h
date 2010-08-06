@@ -39,6 +39,7 @@ enum {OSF_RT_ARGV0 = 0,	// Ex.: /usr/local/bin/prpn
 	OSD_HC_HTML,		// Ex.: /usr/local/share/doc/prpn
 	OSD_USER_HOME,		// Ex.: ~
 	OSD_USER_CONF,		// Ex.: ~/.prpn
+	OSD_PKG_LOCALEDIR,	// Ex.: /usr/local/share/locale
 	OSF_VARSRC,			// Ex.: /home/sebastien/.prpn/vars
 	OSF_SMALL_VARSRC,	// Ex.: ~/.prpn/vars
 	OSF_STACKRC,		// Ex.: /home/sebastien/.prpn/stack

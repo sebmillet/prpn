@@ -25,6 +25,7 @@ OS_Dirs::OS_Dirs(const char *argv0) {
 	dirs[OSD_HC_BIN] = ".";
 	dirs[OSD_HC_DOC] = ".";
 	dirs[OSD_HC_HTML] = ".";
+	dirs[OSD_PKG_LOCALEDIR] = ".";
 	dirs[OSD_USER_HOME] = ".";
 	dirs[OSD_USER_CONF] = "./.prpn";
 	dirs[OSF_SMALL_VARSRC] = os_concatene(dirs[OSD_USER_CONF], VARSRC_FILE);
