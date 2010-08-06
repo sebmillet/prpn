@@ -15,7 +15,7 @@
 #include <fstream>
 
 class DisplayStackLayout;
-class IntervalShift;
+struct IntervalShift;
 
   //
   // If STACK_USE_MAP is defined, use a map object to keep StackItem objets, otherwise use a simple flat array
@@ -94,7 +94,7 @@ class StackItemList;
 class StackItemProgram;
 class StackItemString;
 class StackItemExpression;
-class SIO;
+struct SIO;
 
 class Var;
 class VarFile;

@@ -113,7 +113,7 @@ real real_ip(const real& r) {
 }
 
 real get_max_real_from_bin_size(const int& m) {
-	return exp((real)m * log(2));
+	return exp((real)m * log(2.0));
 }
 
 
@@ -346,9 +346,9 @@ char int_to_digit(const int& i) {
 	if (i < 0)
 		return '!';
 	else if (i <= 9)
-		return '0' + i;
+		return '0' + static_cast<char>(i);
 	else if (i <= 15)
-		return 'A' + i - 10;
+		return 'A' + static_cast<char>(i) - 10;
 	else
 		return '!';
 }
@@ -673,7 +673,7 @@ template<class Scalar> Matrix<Scalar>::Matrix(const mat_read_t*& pm, const dim_t
 		mat.push_back(new std::vector<Scalar>(nb_columns));
 	for (int i = 0; i < nb_lines; i++) {
 		for (int j = 0; j < nb_columns; j++) {
-			if (j > pm->at(i)->size() - 1)
+			if (static_cast<size_t>(j) > pm->at(i)->size() - 1)
 				sc.zero();
 			else {
 				pe = &(pm->at(i)->at(j));
@@ -691,7 +691,7 @@ template<class Scalar> Matrix<Scalar>::Matrix(const mat_read_t*& pm, const dim_t
 		}
 	}
 	for (int i = 0; i < nb_lines; i++)
-		if (mat[i]->size() != nb_columns)
+		if (mat[i]->size() != static_cast<size_t>(nb_columns))
 			throw(CalcFatal(__FILE__, __LINE__, "inconsistent line sizes during matrix build"));
 }
 

@@ -32,11 +32,11 @@
 		<define>ENABLE_NLS=$(MY_NLS)</define>
 		<if cond="COMPILER=='bcc'">
 			<echo>WX => bcc in use => will remove a few Borland C++ warnings</echo>
-			<cxxflags>-w-8022 -DDEBUG -DDEBUG_FILE</cxxflags>
+			<cxxflags>-w-8022</cxxflags>
 		</if>
 		<if cond="COMPILER=='gcc'">
 			<echo>WX => gcc in use => adding some high level warning flags</echo>
-			<cxxflags>-Wextra -O -Wuninitialized -DDEBUG</cxxflags>
+			<cxxflags>-Wextra -O -Wuninitialized</cxxflags>
 		</if>
 		<headers>Common.h Scalar.h Stack.h Commands.h Variable.h Parser.h PGetOpt.h Ui.h
 			MyString.h
@@ -53,6 +53,8 @@
 		<debug-info>$(DEBUG_FLAG)</debug-info>
 		<optimize>$(OPTIMIZE_FLAG)</optimize>
 		<define>FOREIGN_MAIN</define>
+		<define>DEBUG</define>
+		<define>DEBUG_FILE</define>
 		<include>"$(MYINCLUDE)"</include>
 		<lib-path>"$(MYLIB)"</lib-path>
 		<sys-lib>$(LIBINTL)</sys-lib>
@@ -69,7 +71,7 @@
 			<define>ENABLE_NLS=$(MY_NLS)</define>
 			<if cond="COMPILER=='bcc'">
 				<echo>CONSOLE => bcc in use => will remove a few Borland C++ warnings</echo>
-				<cxxflags>-w-8022 -DDEBUG -DDEBUG_FILE</cxxflags>
+				<cxxflags>-w-8022</cxxflags>
 			</if>
 			<headers>Common.h Scalar.h Stack.h Commands.h Variable.h Parser.h PGetOpt.h Ui.h
 				MyString.h
@@ -84,6 +86,8 @@
 			<warnings>max</warnings>
 			<debug-info>$(DEBUG_FLAG)</debug-info>
 			<optimize>$(OPTIMIZE_FLAG)</optimize>
+			<define>DEBUG</define>
+			<define>DEBUG_FILE</define>
 			<include>"$(MYINCLUDE)"</include>
 			<lib-path>"$(MYLIB)"</lib-path>
 			<sys-lib>$(LIBINTL)</sys-lib>

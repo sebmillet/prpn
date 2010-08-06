@@ -149,8 +149,8 @@ void MyEncoding::ascii_append_padr(string& s, const string& a, const size_t& pad
 size_t MyEncoding::get_string_length(const char *sz) {
 	if (actual_encoding == MYENCODING_UTF8)
 		return utf8_get_string_length(sz);
-	else if (actual_encoding == MYENCODING_1BYTE)
-		return strlen(sz);
+	 // actual_encoding == MYENCODING_1BYTE
+	return strlen(sz);
 }
 
 void MyEncoding::append_padl(string& s, const string& a, const size_t& pad_length) {
@@ -170,13 +170,12 @@ void MyEncoding::append_padr(string& s, const string& a, const size_t& pad_lengt
 const string MyEncoding::substr(const string& s, size_t start, size_t length) {
 	if (actual_encoding == MYENCODING_UTF8)
 		return utf8_substr(s, start, length);
-	else if (actual_encoding == MYENCODING_1BYTE) {
-		if (start > s.length())
-			start = s.length();
-		if (length > s.length())
-			length = s.length();
-		return s.substr(start, length);
-	}
+	// actual_encoding == MYENCODING_1BYTE
+	if (start > s.length())
+		start = s.length();
+	if (length > s.length())
+		length = s.length();
+	return s.substr(start, length);
 }
 
 void MyEncoding::erase(string& s, size_t start, size_t length) {

@@ -1563,7 +1563,7 @@ static st_err_t bc_str_to(TransStack& ts, SIO*, string& cmd_err) {
 }
 
 static st_err_t bc_cmdsub(StackItem& op1, StackItem& op2, StackItem& op3, StackItem*& ret, string&) {
-	int n1, n2;
+	int n1, n2 = 0;
 	st_err_t c = op2.to_integer(n1);
 	if (c == ST_ERR_OK)
 		c = op3.to_integer(n2);
@@ -1622,7 +1622,8 @@ static void pushback_incremented_bounds(TransStack& ts, SIO *args, const bool& p
 	  // Not necessary. Done to make sure we now use sil, not ready_si
 	ready_si = NULL;
 
-	if ((c = sil->increment_list(bounds)) != ST_ERR_OK)
+	c = sil->increment_list(bounds);
+	if (c != ST_ERR_OK)
 		throw(CalcFatal(__FILE__, __LINE__, "pushback_incremented_bounds(): increment() returned a bad error code!"));
 	ts.transstack_push(sil);
 }
@@ -1630,7 +1631,6 @@ static void pushback_incremented_bounds(TransStack& ts, SIO *args, const bool& p
 
 static st_err_t bc_geti(TransStack& ts, SIO *args, string& cmd_err) {
 	StackItem *ret;
-	StackItem *ready_si;
 	st_err_t c = bc_get(*(args[0].si), *(args[1].si), ret, cmd_err);
 	if (c == ST_ERR_OK) {
 		pushback_incremented_bounds(ts, args, true);
@@ -1639,7 +1639,7 @@ static st_err_t bc_geti(TransStack& ts, SIO *args, string& cmd_err) {
 	return c;
 }
 
-static st_err_t bc_put(TransStack& ts, SIO *args, string& cmd_err) {
+static st_err_t bc_put(TransStack& ts, SIO *args, string&) {
 	StackItem *ready_si;
 	get_ready_si(args[0], ready_si);
 	st_err_t c = ready_si->op_put_generic(*(args[1].si), args[2]);
@@ -1659,9 +1659,9 @@ static st_err_t bc_puti(TransStack& ts, SIO *args, string& cmd_err) {
 
 static st_err_t bc_size(StackItem& op1, StackItem*& ret, string&) { return op1.op_size(ret); }
 
-static st_err_t bc_arry_to(TransStack& ts, SIO *args, string& cmd_err) { return args[0].si->op_arry_to(ts); }
+static st_err_t bc_arry_to(TransStack& ts, SIO *args, string&) { return args[0].si->op_arry_to(ts); }
 
-static st_err_t bc_to_arry(TransStack& ts, SIO *args, string& cmd_err) { return args[0].si->op_to_arry(ts); }
+static st_err_t bc_to_arry(TransStack& ts, SIO *args, string&) { return args[0].si->op_to_arry(ts); }
 
 static st_err_t bc_con(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { return op1.op_con_generic(op2, ret); }
 static st_err_t bc_trn(StackItem& op1, StackItem*& ret, string&) { return op1.op_trn(ret); }
@@ -1820,7 +1820,7 @@ static st_err_t bc_wait(StackItem& op1, StackItem*&, string&) {
 
 static st_err_t bc_read(TransStack& ts, SIO *args, string&) { return args[0].si->op_read(ts); }
 
-static st_err_t bc_write(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { return op2.op_write(op1); }
+static st_err_t bc_write(StackItem& op1, StackItem& op2, StackItem*&, string&) { return op2.op_write(op1); }
 
 static st_err_t bc_undo(TransStack& ts, SIO*, string&) {
 	if (!ts.get_modified_flag())
@@ -1836,7 +1836,10 @@ static st_err_t bc_undo_levels(StackItem& op1, StackItem*&, string&) {
 		return c;
 	if (n < -1)
 		n = -1;
-	if (HARD_MAX_UNDO_LEVELS >= 0 && n > HARD_MAX_UNDO_LEVELS)
+	  // z used to avoid a warning with Microsoft Visual C++ 2010 Express
+	  // "warning C4127: conditional expression is constant"
+	int z = 0;
+	if (HARD_MAX_UNDO_LEVELS >= z && n > HARD_MAX_UNDO_LEVELS)
 		n = HARD_MAX_UNDO_LEVELS;
 	cfg_undo_levels = n;
 	return ST_ERR_OK;
@@ -2398,6 +2401,8 @@ template<class Scalar> void matrix_to_string(Matrix<Scalar> *pmat, ToString& tos
 st_err_t MATSI::op_size(StackItem*& ret) { \
 	Coordinates coord; \
 	st_err_t c = get_bounds(coord); \
+	if (c != ST_ERR_OK) \
+		throw(CalcFatal(__FILE__, __LINE__, "MATSI::op_size(): get_bounds() returned an error!!?")); \
 	ret = forge_list_size(coord); \
 	return ST_ERR_OK; \
 }
@@ -2808,10 +2813,10 @@ st_err_t StackItemList::get_coordinates(Coordinates& coord) {
 	size_t nb = get_nb_items();
 	if (nb < 1 || nb > 2)
 		return ST_ERR_BAD_ARGUMENT_VALUE;
-	st_err_t c;
+	st_err_t c = ST_ERR_OK;
 	int value;
 	coord.j = -1;
-	for (int ii = 0; ii < nb; ii++) {
+	for (int ii = 0; static_cast<size_t>(ii) < nb; ii++) {
 		c = list[ii]->to_integer(value);
 		if (c != ST_ERR_OK || value < 1) {
 			c = ST_ERR_BAD_ARGUMENT_VALUE;
@@ -3013,7 +3018,7 @@ st_err_t StackItemList::op_to_arry(TransStack& ts) {
 	if (idx != n)
 		throw(CalcFatal(__FILE__, __LINE__, "StackItemList::op_to_arry(): guess what? I walked through items with a lot of discipline but I ended up upside down! There are missing or extra items, what a mess!"));
 
-	StackItem *si2;
+	StackItem *si2 = NULL;
 	if (matrix_type == SITYPE_MATRIX_REAL)
 		si2 = new StackItemMatrixReal(pmatr);
 	else if (matrix_type == SITYPE_MATRIX_COMPLEX)
@@ -3087,7 +3092,7 @@ IMPLEMENT_LIST_OP_RDM(StackItemMatrixCplx, Cplx)
 
 st_err_t StackItemList::op_cmdsub(const int& n1, const int& n2, StackItem*& ret) {
 	StackItemList *sil = new StackItemList();
-	for (int i = n1; i <= n2 && i <= get_nb_items(); i++)
+	for (int i = n1; i <= n2 && static_cast<size_t>(i) <= get_nb_items(); i++)
 		sil->append_item(list[i - 1]->dup());
 	ret = sil;
 	return ST_ERR_OK;

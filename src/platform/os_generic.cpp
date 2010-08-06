@@ -9,9 +9,6 @@
 #include "os_generic.h"
 
 using namespace std;
-  // Uncomment to test what happens if the OS is not identified
-//#undef PROG_WINDOWS
-//#undef PROG_UNIXLIKE
 
 MyEncoding *E = NULL;
 

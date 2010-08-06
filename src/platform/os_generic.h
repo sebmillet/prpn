@@ -102,3 +102,24 @@ extern OS_Dirs *osd;
 #define PROG_WINDOWS
 #endif
 
+  // Uncomment to test what happens if the OS is not identified
+//#undef PROG_WINDOWS
+//#undef PROG_UNIXLIKE
+
+
+//
+// Use guessed OS
+//
+
+#ifdef PROG_WINDOWS
+#ifdef _MSC_VER
+
+// Microsoft Visual C++ 2010 Express specific stuff
+
+#define snprintf(buf, sizeof_buf, format, ...) \
+	_snprintf_s(buf, sizeof_buf, _TRUNCATE, format, __VA_ARGS__)
+#define strncpy(dest, source, count) \
+	strncpy_s(dest, count, source, _TRUNCATE)
+
+#endif
+#endif

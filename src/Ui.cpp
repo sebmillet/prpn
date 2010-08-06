@@ -140,7 +140,7 @@ const BtnDescription btn_descriptions[] = {
 	{3, "EVAL", 80, "EVAL", "->NUM", 0, "->NUM"},
 	{4, "1", 0, "1", "", 0, ""},
 	{4, "2", 0, "2", "%", 0, "%"},
-	{4, "3", 0, "3", "\%CH", 0, "\%CH"},
+	{4, "3", 0, "3", "%%CH", 0, "%%CH"},
 	{4, "-", 0, "-", "SQR", 0, "SQR"},
 	{-1, "", 0, "", "", 0, ""},
 	{3, "ON", 0, "_ON", "OFF", 0, "_OFF"},
@@ -315,7 +315,7 @@ static int ascii_decode_2_hexdigits(const char *sz) {
 	char c;
 	int r[2];
 	for (int i = 0; i < 2; i++) {
-		c = tolower(sz[i]);
+		c = static_cast<char>(tolower(sz[i]));
 		if (c >= 'a' && c <= 'f')
 			r[i] = c - 'a' + 10;
 		else if (c >= '0' && c <= '9')
@@ -657,7 +657,7 @@ void ui_notify_button_pressed(const char *c) {
 		ui_set_status_shift(false);
 		ui_flush_input(ui_impl->get_string(), c);
 	} else if (beval != BEVAL_NULL) {
-		if (TYPEIN_EXPRESSION && beval != BEVAL_NEVER && !ui_impl->space_at_the_left_of_the_cursor())
+		if (beval != BEVAL_NEVER && !ui_impl->space_at_the_left_of_the_cursor())
 			ui_impl->insert_text(" ");
 		ui_set_status_shift(false);
 		ui_impl->insert_text(c);

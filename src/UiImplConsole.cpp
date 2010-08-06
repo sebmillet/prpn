@@ -19,7 +19,7 @@ extern bool debug_itemiser;
 extern void debug_test_tokeniser();
 extern void debug_test_itemiser();
 
-static int quit_requested = false;
+static bool quit_requested = false;
 
 
 //

@@ -323,7 +323,8 @@ void debug_test_tokeniser() {
 	i = 0;
 	while (r) {
 
-		if (!(r = tokenise.get_token(par, tok)))
+		r = tokenise.get_token(par, tok);
+		if (!r)
 			break;
 
 		cout << ":" << tok << ":  \t";

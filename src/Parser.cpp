@@ -33,7 +33,7 @@ const bool late_eof = true;
 void upper_case(string& s) {
 	for (string::iterator it = s.begin(); it != s.end(); it++)
 		if (*it >= 'a' && *it <= 'z')
-			*it = toupper(*it);
+			*it = static_cast<char>(toupper(*it));
 }
 
 
@@ -345,7 +345,7 @@ element_t string_to_binary(string tok, Binary*& pb, const int& nb_bits) {
 bool Elementiser::get_element(ParserError& par, Element& element) {
 
 	enum {COMP_NONE, COMP_WAITING_R1, COMP_WAITING_R2, COMP_WAITING_CLOSURE} comp_status;
-	real r0;
+	real r0 = 0.0;
 	Binary* pb0 = 0;
 	char c;
 
@@ -1106,8 +1106,7 @@ st_err_t read_rc_file(TransStack* ts, const tostring_t& tostring, const string& 
 
 		vector<SIO> vs;
 		Itemiser* itemise = new Itemiser(&ifs, tostring);
-		ParserError par;
-		par.set = false;
+		ParserError par = {false, 0, 0, 0, 0};
 		SIO s;
 		bool r = true;
 		string cmd_err;
