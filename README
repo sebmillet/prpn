@@ -121,7 +121,7 @@ Below is found information specific to this package.
 		executables, prpn.exe (GUI) and prpnc.exe (console.)
 
 - Known builds done so far
-    Ubuntu 9.10 / gcc x.y.z, 32 bits, WxWidgets 2.8.10
+    Ubuntu 9.10 / gcc 4.3.3, 32 bits, WxWidgets 2.8.10
     Ubuntu 10.4 beta / gcc 4.4.3, 64 bits, WxWidgets 2.8.10
 	Windows XP SP3 / mingw32-gcc 3.4.5 (mingw-vista special r3), 32 bits,
 	WxWidgets 2.8.10
