@@ -247,7 +247,7 @@ build\prpn.exe: $(PRPN_OBJECTS) build\prpn_prpn.res
 
 build\prpnc.exe: $(PRPNC_OBJECTS)
 	link /NOLOGO /OUT:$@  /SUBSYSTEM:CONSOLE $(__DEBUG_FLAG_0) /pdb:"build\prpnc.pdb" $(__DEBUG_FLAG_22) /LIBPATH:"C:\Progra~1\GnuWin32\lib" $(LDFLAGS) @<<
-	$(PRPNC_OBJECTS)   $(__LIBINTL_p)
+	$(PRPNC_OBJECTS)   $(__LIBINTL_p) Advapi32.lib Shell32.lib
 <<
 
 build\prpn_Main.obj: src\Main.cpp

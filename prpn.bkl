@@ -5,7 +5,6 @@
 
 	<set-srcdir>src</set-srcdir>
 	<set var="BUILDDIR">build</set>
-	<set var="WX_DEBUG">0</set>
 
 	<option name="WITH_NLS">
 		<values>0,1</values>
@@ -31,6 +30,11 @@
 		<if cond="DEBUG=='0'">size</if>
 		<if cond="DEBUG=='1'">off</if>
 	</set>
+	<set var="BUILD">
+		<if cond="DEBUG=='0'">release</if>
+		<if cond="DEBUG=='1'">debug</if>
+	</set>
+	<set var="WX_DEBUG">$(DEBUG)</set>
 
 	<exe id="prpn" template="wx">
 		<app-type>gui</app-type>
@@ -94,6 +98,8 @@
 			<include>"$(MYINCLUDE)"</include>
 			<lib-path>"$(MYLIB)"</lib-path>
 			<sys-lib>$(LIBINTL)</sys-lib>
+			<sys-lib>Advapi32</sys-lib>
+			<sys-lib>Shell32</sys-lib>
 		</exe>
 	</if>
 </makefile>

@@ -208,7 +208,7 @@ build\prpn.exe: $(PRPN_OBJECTS) build\prpn_prpn_rc.o
 	$(CXX) -o $@ $(PRPN_OBJECTS)  -mthreads -L$(WX_DIR)$(WXLIBPATH) -Wl,--subsystem,windows -mwindows $(__DEBUG_FLAG) -L"C:\Progra~1\GnuWin32\lib" $(LDFLAGS)  $(__LIBINTL_p) $(__WXLIB_HTML_NAME_p) $(__WXLIB_CORE_NAME_p) $(__WXLIB_BASE_NAME_p) -lwxtiff$(WX3RDPARTYLIBPOSTFIX) -lwxjpeg$(WX3RDPARTYLIBPOSTFIX) -lwxpng$(WX3RDPARTYLIBPOSTFIX) -lwxzlib$(WX3RDPARTYLIBPOSTFIX) -lwxregex$(WXLIBPOSTFIX) -lwxexpat$(WX3RDPARTYLIBPOSTFIX) -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lwinspool -lwinmm -lshell32 -lcomctl32 -lole32 -loleaut32 -luuid -lrpcrt4 -ladvapi32 -lwsock32 -lodbc32
 
 build\prpnc.exe: $(PRPNC_OBJECTS)
-	$(CXX) -o $@ $(PRPNC_OBJECTS)   $(__DEBUG_FLAG) -L"C:\Progra~1\GnuWin32\lib" $(LDFLAGS)  $(__LIBINTL_p)
+	$(CXX) -o $@ $(PRPNC_OBJECTS)   $(__DEBUG_FLAG) -L"C:\Progra~1\GnuWin32\lib" $(LDFLAGS)  $(__LIBINTL_p) -lAdvapi32 -lShell32
 
 build\prpn_Main.o: src/Main.cpp
 	$(CXX) -c -o $@ $(PRPN_CXXFLAGS) $(CPPDEPS) $<

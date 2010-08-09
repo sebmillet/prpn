@@ -222,7 +222,7 @@ build\prpn.exe: $(PRPN_OBJECTS)  build\prpn_prpn.res
 
 build\prpnc.exe: $(PRPNC_OBJECTS)
 	ilink32 -Tpe -q  -L$(BCCDIR)\lib -L$(BCCDIR)\lib\psdk -ap $(__DEBUG_FLAG) -L"C:\Progra~1\GnuWin32\lib" $(LDFLAGS) @&&|
-	c0x32.obj $(PRPNC_OBJECTS),$@,,  import32.lib cw32.lib,,
+	c0x32.obj $(PRPNC_OBJECTS),$@,,  Advapi32.lib Shell32.lib import32.lib cw32.lib,,
 |
 
 build\prpn_Main.obj: src\Main.cpp

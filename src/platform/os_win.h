@@ -10,6 +10,7 @@
 #include <windows.h>
 #include <stdlib.h>
 #include <shlobj.h>
+#include <winreg.h>
 
   // FIXME - BCC55 include files don't know this constant...
 #ifndef INVALID_FILE_ATTRIBUTES
