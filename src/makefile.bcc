@@ -54,6 +54,11 @@ WX_SHARED = 0
 WX_UNICODE = 0
 !endif
 
+# Use debug build of wxWidgets (define __WXDEBUG__)? [0,1]
+!ifndef WX_DEBUG
+WX_DEBUG = 1
+!endif
+
 # Version of the wx library to build against. 
 !ifndef WX_VERSION
 WX_VERSION = 28
@@ -81,8 +86,7 @@ PRPN_CXXFLAGS = -I$(BCCDIR)\include $(__WXUNICODE_DEFINE_p) \
 	$(__WXDEBUG_DEFINE_p) -D__WXMSW__ \
 	-I$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) \
 	-I$(WX_DIR)\include -DENABLE_NLS=0 -v -Od -DFOREIGN_MAIN -DDEBUG -DDEBUG_FILE \
-	-DWX_DEBUG=0 -DBUILD=release -I"C:\Progra~1\GnuWin32\include" -w-8022 \
-	$(CPPFLAGS) $(CXXFLAGS)
+	-I"C:\Progra~1\GnuWin32\include" -w-8022 $(CPPFLAGS) $(CXXFLAGS)
 PRPN_OBJECTS =  \
 	prpn_Main.obj \
 	prpn_Compat.obj \
@@ -240,7 +244,7 @@ prpn_UiImplWx.obj: .\UiImplWx.cpp
 	$(CXX) -q -c -P -o$@ $(PRPN_CXXFLAGS) .\UiImplWx.cpp
 
 prpn_prpn.res: .\prpn.rc
-	brcc32 -32 -r -fo$@ -i$(BCCDIR)\include  $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) -d__WXMSW__ -i$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) -i$(WX_DIR)\include -dENABLE_NLS=0 -dFOREIGN_MAIN -dDEBUG -dDEBUG_FILE -dWX_DEBUG=0 -dBUILD=release -i"C:\Progra~1\GnuWin32\include" .\prpn.rc
+	brcc32 -32 -r -fo$@ -i$(BCCDIR)\include  $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) -d__WXMSW__ -i$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) -i$(WX_DIR)\include -dENABLE_NLS=0 -dFOREIGN_MAIN -dDEBUG -dDEBUG_FILE -i"C:\Progra~1\GnuWin32\include" .\prpn.rc
 
 prpnc_Main.obj: .\Main.cpp
 	$(CXX) -q -c -P -o$@ $(PRPNC_CXXFLAGS) .\Main.cpp
