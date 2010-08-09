@@ -2,7 +2,7 @@
       pRPN, a portable RPN calculator inspired by HP.
       ===============================================
 
-$LastChangedDate: 2010-07-05 21:06:00 +0200 $
+$LastChangedDate$
 
 Contents:
 
@@ -113,17 +113,20 @@ Below is found information specific to this package.
         Under Linux, a single executable is produced, that enables both GUI
         version (default) and the console version when launched with the -c
         option in the command line.
-        Under Windows, things are different. By default, WxWidgets disconnects
-        itself from the controlling terminal, making it impossible to interact
-        with the console. Note this point is unclear to me, maybe it is more
-        of a Windows default behavior than WxWidgets... Any way.
+		Under Windows, things are different. By default, WxWidgets disconnects
+		itself from the controlling terminal, making it impossible to interact
+		with the console. Note this point is unclear to me, maybe it is more
+		of a Windows default behavior than WxWidgets... Any way.
 		To workaround this characteristic, Windows build produces two
 		executables, prpn.exe (GUI) and prpnc.exe (console.)
 
 - Known builds done so far
     Ubuntu 9.10 / gcc x.y.z, 32 bits, WxWidgets 2.8.10
     Ubuntu 10.4 beta / gcc 4.4.3, 64 bits, WxWidgets 2.8.10
-    Windows XP SP3 / mingw32-gcc x.y.z, 32 bits, WxWidgets a.b.c
-    Windows XP SP3 / bcc55 t.u.v, 32 bits, WxWidgets a.b.c compiled with
-        <<BUILD=release WX_DEBUG=0>> options (without surrounding << >>)
+	Windows XP SP3 / mingw32-gcc 3.4.5 (mingw-vista special r3), 32 bits,
+	WxWidgets 2.8.10
+	Windows XP SP3 / bcc55 5.5.1, 32 bits, WxWidgets 2.8.10 compiled with
+		<<BUILD=release WX_DEBUG=0>> options (without surrounding << >>)
+	Windows XP SP3 / Microsoft Visual C++ 2010 Express (16.00.303019.01 for
+	80x86)
 
