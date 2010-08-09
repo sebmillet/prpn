@@ -22,6 +22,8 @@ using namespace std;
 MyEncoding::MyEncoding(const myencoding_t& e) : actual_encoding(e) { }
 MyEncoding::~MyEncoding() { }
 
+myencoding_t MyEncoding::get_actual_encoding() const { return actual_encoding; }
+
 int MyEncoding::utf8_get_char_size(const char *it) {
 	if (it == NULL)
 		return 0;
@@ -149,7 +151,7 @@ void MyEncoding::ascii_append_padr(string& s, const string& a, const size_t& pad
 size_t MyEncoding::get_string_length(const char *sz) {
 	if (actual_encoding == MYENCODING_UTF8)
 		return utf8_get_string_length(sz);
-	 // actual_encoding == MYENCODING_1BYTE
+	// actual_encoding == MYENCODING_1BYTE
 	return strlen(sz);
 }
 

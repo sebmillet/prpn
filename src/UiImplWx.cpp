@@ -35,9 +35,26 @@
 
 using namespace std;
 
-#define string_to_wxString(s)		wxString::FromUTF8(s.c_str())
-#define const_char_to_wxString(s)	wxString::FromUTF8(s)
-#define wxString_to_string(s)		s.mb_str(wxConvUTF8)
+const wxString const_char_to_wxString(const char *sz) {
+	if (E->get_actual_encoding() == MYENCODING_UTF8)
+		return wxString::FromUTF8(sz);
+	else if (E->get_actual_encoding() == MYENCODING_1BYTE)
+		return wxString::From8BitData(sz);
+	else
+		throw(CalcFatal(__FILE__, __LINE__, "const_char_to_wxString(): unknown encoding returned by E->get_actual_encoding()"));
+
+}
+
+const wxString string_to_wxString(const string& s) { return const_char_to_wxString(s.c_str()); }
+
+const char* wxString_to_const_char(const wxString& wxs) {
+	if (E->get_actual_encoding() == MYENCODING_UTF8)
+		return wxs.mb_str(wxConvUTF8);
+	else if (E->get_actual_encoding() == MYENCODING_1BYTE)
+		return wxs.mb_str(wxConvLocal);
+	else
+		throw(CalcFatal(__FILE__, __LINE__, "wxString_to_string(): unknown encoding returned by E->get_actual_encoding()"));
+}
 
 
 //
@@ -127,7 +144,7 @@ static const string const_char_to_string(const char *inp) {
   // result is garbage. Only this type of invocation works...
   // FIXME: result in the copy of the control content
 static const string wxTextCtrl_to_string(wxTextCtrl *t) {
-	return const_char_to_string(wxString_to_string(t->GetValue()));
+	return const_char_to_string(wxString_to_const_char(t->GetValue()));
 }
 
   // Returns the number of newlines in a string.

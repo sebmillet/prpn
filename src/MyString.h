@@ -28,6 +28,7 @@ class MyEncoding {
 public:
 	MyEncoding(const myencoding_t&);
 	virtual ~MyEncoding();
+	myencoding_t get_actual_encoding() const;
 	size_t get_string_length(const char *);
 	void append_padl(std::string&, const std::string&, const size_t&);
 	void append_padr(std::string&, const std::string&, const size_t&);
