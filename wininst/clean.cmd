@@ -1,6 +1,9 @@
 del prpn.exe
 del prpnc.exe
-del pRPN.html
-del pRPN.txt
+del pRPNen.html
+del pRPNen.txt
+del pRPNfr.html
+del pRPNfr.txt
+del fr\LC_MESSAGES\prpn.mo
 del README.TXT
-del prpn-0.5.0.tar.gz
+del prpn-0.5.1.tar.gz

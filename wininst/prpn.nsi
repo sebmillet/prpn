@@ -11,7 +11,7 @@
 Name "pRPN"
 
 ; The file to write
-OutFile "pRPN-0.5.0-setup.exe"
+OutFile "pRPN-0.5.1-setup.exe"
 
 ; The default installation directory
 InstallDir $PROGRAMFILES\pRPN
@@ -50,8 +50,8 @@ LangString Sec3 ${LANG_ENGLISH} "Start Menu Shortcuts"
 LangString Sec3 ${LANG_FRENCH} "Raccourcis menu"
 
 ; Country code, to be written in the registry
-LangString LNCC ${LANG_ENGLISH} "EN"
-LangString LNCC ${LANG_FRENCH} "FR"
+LangString LNCC ${LANG_ENGLISH} "en"
+LangString LNCC ${LANG_FRENCH} "fr"
 
 ;--------------------------------
 
@@ -66,8 +66,10 @@ Section !$(Sec1)
 	; Put file there
 	File "prpn.exe"
 	File "prpnc.exe"
-	File "pRPN.html"
-	File "pRPN.txt"
+	File "pRPNen.html"
+	File "pRPNen.txt"
+	File "pRPNfr.html"
+	File "pRPNfr.txt"
 	File "README.TXT"
 
 	; Write the installation path into the registry
@@ -87,7 +89,7 @@ Section !$(Sec2)
 
 	SetOutPath $INSTDIR
 	; Put file there
-	File "prpn-0.5.0.tar.gz"
+	File "prpn-0.5.1.tar.gz"
 
 SectionEnd
 
@@ -97,7 +99,7 @@ Section !$(Sec3)
 	CreateDirectory "$SMPROGRAMS\pRPN"
 	CreateShortCut "$SMPROGRAMS\pRPN\pRPN.lnk" "$INSTDIR\prpn.exe" "" "$INSTDIR\prpn.exe" 0
 	CreateShortCut "$SMPROGRAMS\pRPN\pRPN console.lnk" "$INSTDIR\prpnc.exe" "" "$INSTDIR\prpnc.exe" 0
-	CreateShortCut "$SMPROGRAMS\pRPN\pRPN.html.lnk" "$INSTDIR\pRPN.html" "" "$INSTDIR\pRPN.html" 0
+	CreateShortCut "$SMPROGRAMS\pRPN\pRPN$(LNCC).html.lnk" "$INSTDIR\pRPN$(LNCC).html" "" "$INSTDIR\pRPN.html" 0
 	CreateShortCut "$SMPROGRAMS\pRPN\README.TXT.lnk" "$INSTDIR\README.TXT" "" "$INSTDIR\README.TXT" 0
 	CreateShortCut "$SMPROGRAMS\pRPN\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
 
@@ -118,8 +120,12 @@ Section "Uninstall"
 	Delete $INSTDIR\prpnc.exe
 	Delete $INSTDIR\pRPN.html
 	Delete $INSTDIR\pRPN.txt
+	Delete $INSTDIR\pRPNen.html
+	Delete $INSTDIR\pRPNen.txt
+	Delete $INSTDIR\pRPNfr.html
+	Delete $INSTDIR\pRPNfr.txt
 	Delete $INSTDIR\README.TXT
-	Delete $INSTDIR\prpn-0.5.0.tar.gz
+	Delete $INSTDIR\prpn-0.5.1.tar.gz
 	Delete $INSTDIR\uninstall.exe
 
 	; Remove shortcuts, if any
