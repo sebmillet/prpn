@@ -38,7 +38,17 @@
 #define MY_HELP_HTML_PREFIX			"pRPN"
 #define MY_HELP_HTML_PEXTENSION		".html"
 
+enum {ENCODING_UNKNOWN, ENCODING_1BYTE, ENCODING_UTF8};
+
 #define DEFAULT_ACTUAL_COUNTRY_CODE	"en"
+
+#ifdef DEBUG
+  // Uncomment the below to hard-code language or encoding
+  // I surround it with #ifdef DEBUG so you don't forget it while
+  // compiling for production... :-)
+//#define DEBUG_ENFORCE_ACTUAL_COUNTRY_CODE	"en"
+//#define DEBUG_ENFORCE_ENCODING			ENCODING_1BYTE
+#endif
 
   // Count objects creations and destruction, to detect leaks
 #define DEBUG_CLASS_COUNT
@@ -59,6 +69,8 @@ void my_append_padr(std::string&, const std::string&, const size_t&);
 
 void my_sleep_seconds(const int&);
 const std::string integer_to_string(const int&);
+
+void upper_case(std::string&);
 
 enum {
 	PROG_INIT_START_GUI,

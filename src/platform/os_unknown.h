@@ -14,7 +14,9 @@ const int os_to_be_continued_length = 3;
 
 int os_get_size_of_newline() { return 1; }
 
-void os_init() { E = new MyEncoding(MYENCODING_1BYTE); }
+void os_init() { }
+
+int os_get_default_encoding() { return ENCODING_UTF8; }
 
 const string os_concatene(const string& base, const string& added) { return concatene(SEP, base, added); }
 

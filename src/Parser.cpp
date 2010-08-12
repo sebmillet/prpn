@@ -26,16 +26,6 @@ extern int os_get_size_of_newline();
 
 const bool late_eof = true;
 
-//
-// FUNCTIONS
-//
-
-void upper_case(string& s) {
-	for (string::iterator it = s.begin(); it != s.end(); it++)
-		if (*it >= 'a' && *it <= 'z')
-			*it = static_cast<char>(toupper(*it));
-}
-
 
 //
 // TOKENS

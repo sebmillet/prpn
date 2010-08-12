@@ -47,11 +47,11 @@ const wxString const_char_to_wxString(const char *sz) {
 
 const wxString string_to_wxString(const string& s) { return const_char_to_wxString(s.c_str()); }
 
-const char* wxString_to_const_char(const wxString& wxs) {
+const string wxString_to_string(const wxString& wxs) {
 	if (E->get_actual_encoding() == MYENCODING_UTF8)
-		return wxs.mb_str(wxConvUTF8);
+		return string(wxs.mb_str(wxConvUTF8));
 	else if (E->get_actual_encoding() == MYENCODING_1BYTE)
-		return wxs.mb_str(wxConvLocal);
+		return string(wxs.mb_str(wxConvLocal));
 	else
 		throw(CalcFatal(__FILE__, __LINE__, "wxString_to_string(): unknown encoding returned by E->get_actual_encoding()"));
 }
@@ -144,7 +144,7 @@ static const string const_char_to_string(const char *inp) {
   // result is garbage. Only this type of invocation works...
   // FIXME: result in the copy of the control content
 static const string wxTextCtrl_to_string(wxTextCtrl *t) {
-	return const_char_to_string(wxString_to_const_char(t->GetValue()));
+	return wxString_to_string(t->GetValue());
 }
 
   // Returns the number of newlines in a string.

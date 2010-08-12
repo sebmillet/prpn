@@ -389,10 +389,10 @@ void ui_flush_input(const string& textin, const string& additional_command) {
 	vector<SIO> vs;
 	bool flag_erase_input = true;
 
-	/*debug_write("textin:");
+	debug_write("textin:");
 	debug_write(textin.c_str());
 	debug_write("additional_command:");
-	debug_write(additional_command.c_str());*/
+	debug_write(additional_command.c_str());
 
 // STEP 1 in 4: read items from inputs
 

@@ -37,8 +37,9 @@ int g_max_int;
   // Should be lower than, or equal to, G_HARD_MAX_NB_BITS
 int g_max_nb_bits = 64;
 
-string actual_locale = "";
-string actual_country_code = "";
+string actual_locale;
+string actual_country_code;
+int encoding;
 
 
 //
@@ -69,6 +70,12 @@ bool html_help_found = false;
 //
 // MAIN ROUTINES
 //
+
+void upper_case(string& s) {
+	for (string::iterator it = s.begin(); it != s.end(); it++)
+		if (*it >= 'a' && *it <= 'z')
+			*it = static_cast<char>(toupper(*it));
+}
 
 static int check_class_count();
 
@@ -136,8 +143,35 @@ static void read_opt_string_to_integer(const string& opt, int& val, const bool& 
 	}
 }
 
-int prog_init(int argc, char **argv) {
-	osd = new OS_Dirs(argv[0]);
+int get_encoding_from_locale(const string& l) {
+	string encoding = l;
+	if (l.length() >= 3) {
+		size_t p = l.find_last_of('.');
+		if (p != string::npos) {
+			encoding = l.substr(p + 1);
+		}
+	}
+	upper_case(encoding);
+	debug_write("encoding to parse = ");
+	debug_write(encoding.c_str());
+	if (encoding == "UTF8" || encoding == "UTF-8")
+		return ENCODING_UTF8;
+	if (encoding.substr(0, 5) == "LATIN" || encoding.substr(0, 9) == "ISO-8859-")
+		return ENCODING_1BYTE;
+	return ENCODING_UNKNOWN;
+}
+
+const string get_country_code_from_locale(const string& l) {
+	string r = "";
+	if (l.length() >= 2)
+		r = l.substr(0, 2);
+	return r;
+}
+
+  // Define actual_country_code and 
+void work_out_locale() {
+	actual_locale = "";
+	actual_country_code = "";
 
 // Initialize gettext part
 #if ENABLE_NLS
@@ -145,29 +179,82 @@ int prog_init(int argc, char **argv) {
 	if (sz != NULL)
 		actual_locale = sz;
 	else
-		actual_locale = "";
-	actual_country_code = actual_locale;
-	if (actual_country_code.length() >= 3)
-		actual_country_code.erase(2);
+
+	debug_write("actual_locale =");
+	debug_write(actual_locale.c_str());
+
 	bindtextdomain(PACKAGE, osd->get_dir(OSD_PKG_LOCALEDIR).c_str());
 	textdomain(PACKAGE);
 #else
-	actual_locale = "en";
-	actual_country_code = "en";
+	actual_locale = "";
+	actual_country_code = "";
+#endif
+	actual_country_code = get_country_code_from_locale(actual_locale);
+	encoding = get_encoding_from_locale(actual_locale);
+
+	  // Uncomment the two instructions below to see what happens when language
+	  // or encoding is still unknown after call to setlocale(). Note this
+	  // is what happens if ENABLE_NLS is set to 0.
+	//actual_country_code = "";
+	//encoding = ENCODING_UNKNOWN;
+
+	if (actual_country_code.empty() || encoding == ENCODING_UNKNOWN) {
+		  // setlocale() returned an empty string OR ENABLE_NLS is set to 0
+		  // OR no way to work out the encoding used from the locale
+		  //   => we are now trying to guess language and encoding from the environment
+		string env_lang = getenv("LANG");
+		debug_write("* USING LANG ENVIRONMENT VARIABLE");
+		debug_write(env_lang.c_str());
+		if (actual_country_code.empty())
+			actual_country_code = get_country_code_from_locale(env_lang);
+		if (encoding == ENCODING_UNKNOWN)
+			encoding = get_encoding_from_locale(env_lang);
+	}
+
+#ifdef DEBUG_ENFORCE_ACTUAL_COUNTRY_CODE
+	actual_country_code = DEBUG_ENFORCE_ACTUAL_COUNTRY_CODE;
+#endif
+#ifdef DEBUG_ENFORCE_ENCODING
+	encoding = DEBUG_ENFORCE_ENCODING;
 #endif
 
-	if (actual_locale == "C")
-		actual_locale = DEFAULT_ACTUAL_COUNTRY_CODE;
-	if (actual_country_code == "C")
-		actual_country_code = DEFAULT_ACTUAL_COUNTRY_CODE;
-	debug_write("actual_locale =");
-	debug_write(actual_locale.c_str());
-	debug_write("actual_country_code =");
+#ifdef DEBUG
+	debug_write("* GUESSED:");
+	if (encoding == ENCODING_UNKNOWN)
+		debug_write("encoding = UNKNOWN");
+	else if (encoding == ENCODING_1BYTE)
+		debug_write("encoding = 1BYTE");
+	else if (encoding == ENCODING_UTF8)
+		debug_write("encoding = UTF-8");
+	debug_write("actual country code = ");
 	debug_write(actual_country_code.c_str());
+#endif
+
+	if (encoding == ENCODING_UNKNOWN)
+		encoding = os_get_default_encoding();
+	if (actual_country_code == "")
+		actual_country_code = DEFAULT_ACTUAL_COUNTRY_CODE;
+
+#ifdef DEBUG
+	debug_write("* DEFINITIVE:");
+	if (encoding == ENCODING_1BYTE)
+		debug_write("encoding = 1BYTE");
+	else if (encoding == ENCODING_UTF8)
+		debug_write("encoding = UTF-8");
+	debug_write("actual country code = ");
+	debug_write(actual_country_code.c_str());
+#endif
+
+}
+
+int prog_init(int argc, char **argv) {
+	osd = new OS_Dirs(argv[0]);
+
+	work_out_locale();
 
 	html_help_found = false;
 	string h;
-	for (int i = 0; i < 2 && !html_help_found; i++) {
+	for (int i = 0; i < (actual_country_code != DEFAULT_ACTUAL_COUNTRY_CODE ? 2 : 1) && !html_help_found; i++) {
 		if (i == 0)
 			h = MY_HELP_HTML_PREFIX + actual_country_code + MY_HELP_HTML_PEXTENSION;
 		else if (i == 1)
@@ -252,6 +339,15 @@ int prog_init(int argc, char **argv) {
 		opt_height = 0;
 		opt_min_stack_height = 0;
 	}
+
+	myencoding_t myenc;
+	if (encoding == ENCODING_UTF8)
+		myenc = MYENCODING_UTF8;
+	else if (encoding == ENCODING_1BYTE)
+		myenc = MYENCODING_1BYTE;
+	else
+		throw(CalcFatal(__FILE__, __LINE__, "prog_init(): unknown encoding to use!!!?"));
+	E = new MyEncoding(myenc);
 
 	os_init();
 

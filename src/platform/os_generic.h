@@ -28,6 +28,7 @@ const std::string os_concatene(const std::string&, const std::string&);
 bool os_dir_exists(const char *);
 bool os_file_exists(const char *);
 int os_dir_create(const char *);
+int os_get_default_encoding();
 
 const int OS_BEGIN = 0;
 enum {OSF_RT_ARGV0 = 0,	// Ex.: /usr/local/bin/prpn
