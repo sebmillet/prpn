@@ -121,12 +121,19 @@ Below is found information specific to this package.
 		executables, prpn.exe (GUI) and prpnc.exe (console.)
 
 - Known builds done so far
+
     Ubuntu 9.10 / gcc 4.3.3, 32 bits, WxWidgets 2.8.10
+
     Ubuntu 10.4 beta / gcc 4.4.3, 64 bits, WxWidgets 2.8.10
+
 	Windows XP SP3 / mingw32-gcc 3.4.5 (mingw-vista special r3), 32 bits,
 	WxWidgets 2.8.10
-	Windows XP SP3 / bcc55 5.5.1, 32 bits, WxWidgets 2.8.10 compiled with
-		<<BUILD=release WX_DEBUG=0>> options (without surrounding << >>)
+		WxWidgets and prpn compiled with BUILD=release WX_DEBUG=0
+
+	Windows XP SP3 / bcc55 5.5.1 (Borland C++), 32 bits, WxWidgets 2.8.10
+		WxWidgets and prpn compiled with BUILD=release WX_DEBUG=0
+
 	Windows XP SP3 / Microsoft Visual C++ 2010 Express (16.00.303019.01 for
 	80x86)
+		WxWidgets and prpn compiled with BUILD=release WX_DEBUG=0
 
