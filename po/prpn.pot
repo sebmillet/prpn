@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: prpn 0.5.1\n"
 "Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
-"POT-Creation-Date: 2010-08-05 15:48+0200\n"
+"POT-Creation-Date: 2010-08-12 23:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,19 +16,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/Main.cpp:96
+#: src/Main.cpp:109
 msgid "Try `"
 msgstr ""
 
-#: src/Main.cpp:96
+#: src/Main.cpp:109
 msgid " --help' for more information."
 msgstr ""
 
-#: src/Main.cpp:100
+#: src/Main.cpp:113
 msgid "Usage: "
 msgstr ""
 
-#: src/Main.cpp:100
+#: src/Main.cpp:113
 msgid " [options]..."
 msgstr ""
 
@@ -149,11 +149,11 @@ msgstr ""
 msgid "Infinite Result processed as an exception"
 msgstr ""
 
-#: src/UiImplWx.cpp:492
+#: src/UiImplWx.cpp:503
 msgid "Help"
 msgstr ""
 
-#: src/UiImplWx.cpp:514 src/UiImplWx.cpp:527
+#: src/UiImplWx.cpp:525 src/UiImplWx.cpp:538
 msgid "OK"
 msgstr ""
 

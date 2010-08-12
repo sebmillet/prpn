@@ -132,6 +132,7 @@ Below is found information specific to this package.
 
 	Windows XP SP3 / bcc55 5.5.1 (Borland C++), 32 bits, WxWidgets 2.8.10
 		WxWidgets and prpn compiled with BUILD=release WX_DEBUG=0
+		* Borland doesn't work with NLS (gettext, setlocale(), ...) *
 
 	Windows XP SP3 / Microsoft Visual C++ 2010 Express (16.00.303019.01 for
 	80x86)
