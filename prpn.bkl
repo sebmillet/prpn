@@ -38,6 +38,10 @@
 
 	<exe id="prpn" template="wx">
 		<app-type>gui</app-type>
+		<echo>* ***************************************************** *</echo>
+		<echo>* WxWidgets must be compiled with the following options *</echo>
+		<echo>*   BUILD=release WX_DEBUG=0                            *</echo>
+		<echo>* ***************************************************** *</echo>
 		<if cond="COMPILER!='bcc'"><set var ="MY_NLS">$(WITH_NLS)</set></if>
 		<if cond="COMPILER=='bcc'"><set var ="MY_NLS">0</set></if>
 		<define>ENABLE_NLS=$(MY_NLS)</define>
@@ -64,6 +68,8 @@
 		<debug-info>$(DEBUG_FLAG)</debug-info>
 		<optimize>$(OPTIMIZE_FLAG)</optimize>
 		<define>FOREIGN_MAIN</define>
+		<define>WX_DEBUG=0</define>
+		<define>BUILD=release</define>
 		<include>"$(MYINCLUDE)"</include>
 		<lib-path>"$(MYLIB)"</lib-path>
 		<sys-lib>$(LIBINTL)</sys-lib>

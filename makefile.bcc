@@ -86,8 +86,8 @@ PRPN_CXXFLAGS = -I$(BCCDIR)\include $(__WXUNICODE_DEFINE_p) \
 	$(__WXDEBUG_DEFINE_p) -D__WXMSW__ \
 	-I$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) \
 	-I$(WX_DIR)\include -DENABLE_NLS=0 $(__DEBUG_FLAG) $(__OPTIMIZE_FLAG) \
-	-DFOREIGN_MAIN -I"C:\Progra~1\GnuWin32\include" -w-8022 $(CPPFLAGS) \
-	$(CXXFLAGS)
+	-DFOREIGN_MAIN -DWX_DEBUG=0 -DBUILD=release \
+	-I"C:\Progra~1\GnuWin32\include" -w-8022 $(CPPFLAGS) $(CXXFLAGS)
 PRPN_OBJECTS =  \
 	build\prpn_Main.obj \
 	build\prpn_Compat.obj \
@@ -262,7 +262,7 @@ build\prpn_UiImplWx.obj: src\UiImplWx.cpp
 	$(CXX) -q -c -P -o$@ $(PRPN_CXXFLAGS) src\UiImplWx.cpp
 
 build\prpn_prpn.res: src\prpn.rc
-	brcc32 -32 -r -fo$@ -i$(BCCDIR)\include  $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) -d__WXMSW__ -i$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) -i$(WX_DIR)\include -dENABLE_NLS=0 -dFOREIGN_MAIN -i"C:\Progra~1\GnuWin32\include" src\prpn.rc
+	brcc32 -32 -r -fo$@ -i$(BCCDIR)\include  $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) -d__WXMSW__ -i$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) -i$(WX_DIR)\include -dENABLE_NLS=0 -dFOREIGN_MAIN -dWX_DEBUG=0 -dBUILD=release -i"C:\Progra~1\GnuWin32\include" src\prpn.rc
 
 build\prpnc_Main.obj: src\Main.cpp
 	$(CXX) -q -c -P -o$@ $(PRPNC_CXXFLAGS) src\Main.cpp

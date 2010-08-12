@@ -134,12 +134,6 @@ static wxDialog *dlg = NULL;
 }*/
 #endif
 
-  // Returns a string from a const char*. The fact that it is a function call seems necessary sometimes!
-  // Don't ask me why.
-static const string const_char_to_string(const char *inp) {
-	return string(inp);
-}
-
   // Usefule to extract the string from a wxTextCtrl -> when doing it directly, the
   // result is garbage. Only this type of invocation works...
   // FIXME: result in the copy of the control content

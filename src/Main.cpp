@@ -21,7 +21,7 @@
 
 #include "platform/os_generic.h"
 
-OS_Dirs *osd;
+OS_Dirs *osd = NULL;
 
 #include "MyIntl.h"
 
@@ -75,6 +75,12 @@ void upper_case(string& s) {
 	for (string::iterator it = s.begin(); it != s.end(); it++)
 		if (*it >= 'a' && *it <= 'z')
 			*it = static_cast<char>(toupper(*it));
+}
+
+void lower_case(string& s) {
+	for (string::iterator it = s.begin(); it != s.end(); it++)
+		if (*it >= 'A' && *it <= 'Z')
+			*it = static_cast<char>(tolower(*it));
 }
 
 static int check_class_count();
@@ -143,7 +149,7 @@ static void read_opt_string_to_integer(const string& opt, int& val, const bool& 
 	}
 }
 
-int get_encoding_from_locale(const string& l) {
+static int get_encoding_from_locale(const string& l) {
 	string encoding = l;
 	if (l.length() >= 3) {
 		size_t p = l.find_last_of('.');
@@ -161,7 +167,7 @@ int get_encoding_from_locale(const string& l) {
 	return ENCODING_UNKNOWN;
 }
 
-const string get_country_code_from_locale(const string& l) {
+static const string get_country_code_from_locale(const string& l) {
 	string r = "";
 	if (l.length() >= 2)
 		r = l.substr(0, 2);
@@ -169,7 +175,14 @@ const string get_country_code_from_locale(const string& l) {
 }
 
   // Define actual_country_code and 
-void work_out_locale() {
+  //
+  // * IMPORTANT *
+  //   osd must be instanciated before calling work_out_locale()
+  //
+static void work_out_locale() {
+	if (osd == NULL)
+		throw(CalcFatal(__FILE__, __LINE__, "work_out_locale(): osd not yet created!!!?"));
+
 	actual_locale = "";
 	actual_country_code = "";
 
@@ -178,10 +191,12 @@ void work_out_locale() {
 	char *sz = setlocale(LC_ALL, "");
 	if (sz != NULL)
 		actual_locale = sz;
-	else
 
 	debug_write("actual_locale =");
 	debug_write(actual_locale.c_str());
+
+	actual_country_code = get_country_code_from_locale(actual_locale);
+	encoding = get_encoding_from_locale(actual_locale);
 
 	bindtextdomain(PACKAGE, osd->get_dir(OSD_PKG_LOCALEDIR).c_str());
 	textdomain(PACKAGE);
@@ -189,8 +204,6 @@ void work_out_locale() {
 	actual_locale = "";
 	actual_country_code = "";
 #endif
-	actual_country_code = get_country_code_from_locale(actual_locale);
-	encoding = get_encoding_from_locale(actual_locale);
 
 	  // Uncomment the two instructions below to see what happens when language
 	  // or encoding is still unknown after call to setlocale(). Note this
@@ -202,13 +215,16 @@ void work_out_locale() {
 		  // setlocale() returned an empty string OR ENABLE_NLS is set to 0
 		  // OR no way to work out the encoding used from the locale
 		  //   => we are now trying to guess language and encoding from the environment
-		string env_lang = getenv("LANG");
-		debug_write("* USING LANG ENVIRONMENT VARIABLE");
-		debug_write(env_lang.c_str());
-		if (actual_country_code.empty())
-			actual_country_code = get_country_code_from_locale(env_lang);
-		if (encoding == ENCODING_UNKNOWN)
-			encoding = get_encoding_from_locale(env_lang);
+		char *e = getenv(ENV_LANG);
+		if (e != NULL) {
+			string env_lang = e;
+			debug_write("* USING LANG ENVIRONMENT VARIABLE");
+			debug_write(env_lang.c_str());
+			if (actual_country_code.empty())
+				actual_country_code = get_country_code_from_locale(env_lang);
+			if (encoding == ENCODING_UNKNOWN)
+				encoding = get_encoding_from_locale(env_lang);
+		}
 	}
 
 #ifdef DEBUG_ENFORCE_ACTUAL_COUNTRY_CODE
@@ -229,6 +245,11 @@ void work_out_locale() {
 	debug_write("actual country code = ");
 	debug_write(actual_country_code.c_str());
 #endif
+
+	string t = os_get_install_language();
+	if (!t.empty())
+		actual_country_code = t;
+	lower_case(actual_country_code);
 
 	if (encoding == ENCODING_UNKNOWN)
 		encoding = os_get_default_encoding();

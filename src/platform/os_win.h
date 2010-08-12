@@ -19,9 +19,10 @@
 
 #define SEP					'\\'
 #define MAX_REGISTRY_KEY_VALUE_LENGTH	MAX_PATH
-#define INSTDIR_HKEY		HKEY_LOCAL_MACHINE
-#define INSTDIR_KEY_PATH	"SOFTWARE\\pRPN"
-#define INSTDIR_KEY_NAME	"InstallationDirectory"
+#define REG_ROOT_HKEY		HKEY_LOCAL_MACHINE
+#define REG_ROOT_PATH		"SOFTWARE\\pRPN"
+#define REG_KEY_INSTDIR		"InstallationDirectory"
+#define REG_KEY_LANGUAGE	"Language"
 #define USER_CONF			"pRPN"
 #define VARSRC_FILE			"varsrc"
 #define STACKRC_FILE		"stackrc"
@@ -30,9 +31,32 @@ const char *os_to_be_continued = "...";
 const int os_to_be_continued_length = 3;
 int os_get_size_of_newline() { return 2; }
 
+static LONG read_key_string(const HKEY& key_base, const string& key_path, const string& key_name,
+		string& key_value) {
+	char sz[MAX_REGISTRY_KEY_VALUE_LENGTH];
+	DWORD size_sz = sizeof(sz) / sizeof(*sz);
+	HKEY hKey;
+	LONG res  = RegOpenKeyEx(key_base, key_path.c_str(), 0L, KEY_QUERY_VALUE, &hKey);
+	if (res == ERROR_SUCCESS) {
+		res = RegQueryValueEx(hKey, key_name.c_str(), NULL, NULL, (BYTE*)&sz[0], &size_sz);
+		if (res == ERROR_SUCCESS)
+			key_value = sz;
+		RegCloseKey(hKey);
+	}
+	return res;
+}
+
 void os_init() { }
 
 int os_get_default_encoding() { return ENCODING_1BYTE; }
+
+const string os_get_install_language() {
+	string install_language;
+	if (read_key_string(REG_ROOT_HKEY, REG_ROOT_PATH, REG_KEY_LANGUAGE, install_language) == ERROR_SUCCESS)
+		return install_language;
+	else
+		return "";
+}
 
 extern const string os_concatene(const string& base, const string& added) {
 	return concatene('\\', base, added);
@@ -57,21 +81,6 @@ int os_dir_create(const char *sz) {
 	return r;
 }
 
-static LONG read_key_string(const HKEY& key_base, const string& key_path, const string& key_name,
-		string& key_value) {
-	char sz[MAX_REGISTRY_KEY_VALUE_LENGTH];
-	DWORD size_sz = sizeof(sz) / sizeof(*sz);
-	HKEY hKey;
-	LONG res  = RegOpenKeyEx(key_base, key_path.c_str(), 0L, KEY_QUERY_VALUE, &hKey);
-	if (res == ERROR_SUCCESS) {
-		res = RegQueryValueEx(hKey, key_name.c_str(), NULL, NULL, (BYTE*)&sz[0], &size_sz);
-		if (res == ERROR_SUCCESS)
-			key_value = sz;
-		RegCloseKey(hKey);
-	}
-	return res;
-}
-
 OS_Dirs::OS_Dirs(const char *argv0) {
 	TCHAR szPath[MAX_PATH];
 
@@ -83,7 +92,7 @@ OS_Dirs::OS_Dirs(const char *argv0) {
 		my_split(argv0, SEP, dirs[OSD_RT_EXE], dirs[OSF_RT_EXE]);
 	}
 	string inst_dir;
-	if (read_key_string(INSTDIR_HKEY, INSTDIR_KEY_PATH, INSTDIR_KEY_NAME, inst_dir) == ERROR_SUCCESS) {
+	if (read_key_string(REG_ROOT_HKEY, REG_ROOT_PATH, REG_KEY_INSTDIR, inst_dir) == ERROR_SUCCESS) {
 		dirs[OSD_HC_PREFIX] = inst_dir;
 		dirs[OSD_HC_BIN] = inst_dir;
 		dirs[OSD_HC_DOC] = inst_dir;

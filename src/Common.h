@@ -40,6 +40,7 @@
 
 enum {ENCODING_UNKNOWN, ENCODING_1BYTE, ENCODING_UTF8};
 
+#define ENV_LANG					"LANG"
 #define DEFAULT_ACTUAL_COUNTRY_CODE	"en"
 
 #ifdef DEBUG
@@ -71,6 +72,7 @@ void my_sleep_seconds(const int&);
 const std::string integer_to_string(const int&);
 
 void upper_case(std::string&);
+void lower_case(std::string&);
 
 enum {
 	PROG_INIT_START_GUI,

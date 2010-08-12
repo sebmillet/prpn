@@ -26,6 +26,8 @@ void os_init() { }
 
 int os_get_default_encoding() { return ENCODING_UTF8; }
 
+const string os_get_install_language() { return ""; }
+
 const string os_concatene(const string& base, const string& added) { return concatene(SEP, base, added); }
 
 static bool os_e_exists(const char *sz, const unsigned int& my_flag) {

@@ -18,6 +18,8 @@ void os_init() { }
 
 int os_get_default_encoding() { return ENCODING_UTF8; }
 
+const string os_get_install_language() { return ""; }
+
 const string os_concatene(const string& base, const string& added) { return concatene(SEP, base, added); }
 
 OS_Dirs::OS_Dirs(const char *argv0) {

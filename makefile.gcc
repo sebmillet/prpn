@@ -58,8 +58,9 @@ CPPDEPS = -MT$@ -MF$@.d -MD -MP
 PRPN_CXXFLAGS = -DHAVE_W32API_H $(__WXUNICODE_DEFINE_p) $(__WXDEBUG_DEFINE_p) \
 	-D__WXMSW__ -I$(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX) -I$(WX_DIR)\include \
 	-DENABLE_NLS=$(WITH_NLS) -W -Wall $(__DEBUG_FLAG) $(__OPTIMIZE_FLAG) \
-	-DFOREIGN_MAIN -I"C:\Progra~1\GnuWin32\include" -Wextra -Wuninitialized \
-	$(CPPFLAGS) $(CXXFLAGS)
+	-DFOREIGN_MAIN -DWX_DEBUG=0 -DBUILD=release \
+	-I"C:\Progra~1\GnuWin32\include" -Wextra -Wuninitialized $(CPPFLAGS) \
+	$(CXXFLAGS)
 PRPN_OBJECTS =  \
 	build\prpn_Main.o \
 	build\prpn_Compat.o \
@@ -247,7 +248,7 @@ build\prpn_UiImplWx.o: src/UiImplWx.cpp
 	$(CXX) -c -o $@ $(PRPN_CXXFLAGS) $(CPPDEPS) $<
 
 build\prpn_prpn_rc.o: src/prpn.rc
-	windres --use-temp-file -i$< -o$@  --define HAVE_W32API_H $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) --define __WXMSW__ --include-dir $(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX) --include-dir $(WX_DIR)/include --define ENABLE_NLS=$(WITH_NLS) --define FOREIGN_MAIN --include-dir "C:\Progra~1\GnuWin32\include"
+	windres --use-temp-file -i$< -o$@  --define HAVE_W32API_H $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) --define __WXMSW__ --include-dir $(WX_DIR)$(WXLIBPATH)\msw$(WXLIBPOSTFIX) --include-dir $(WX_DIR)/include --define ENABLE_NLS=$(WITH_NLS) --define FOREIGN_MAIN --define WX_DEBUG=0 --define BUILD=release --include-dir "C:\Progra~1\GnuWin32\include"
 
 build\prpnc_Main.o: src/Main.cpp
 	$(CXX) -c -o $@ $(PRPNC_CXXFLAGS) $(CPPDEPS) $<
