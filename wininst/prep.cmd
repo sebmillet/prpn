@@ -17,7 +17,7 @@ copy doc\pRPNen.html %MYREP%
 copy doc\pRPNen.txt %MYREP%
 copy doc\pRPNfr.html %MYREP%
 copy doc\pRPNfr.txt %MYREP%
-copy po\fr.gmo %MYREP%\fr\LC_MESSAGES\prpn.mo
+copy po\fr.gmo %MYREP%\fr.mo
 copy README %MYREP%\README.TXT
 
 cd %MYREP%
