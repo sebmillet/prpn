@@ -66,10 +66,19 @@ Section !$(Sec1)
 	; Put file there
 	File "prpn.exe"
 	File "prpnc.exe"
+	File "libiconv2.dll"
+	File "libintl3.dll"
+
+	StrCmp $(LNCC) "en" 0 +3
 	File "pRPNen.html"
 	File "pRPNen.txt"
+
+	StrCmp $(LNCC) "fr" 0 +5
 	File "pRPNfr.html"
 	File "pRPNfr.txt"
+	CreateDirectory $INSTDIR\$(LNCC)\LC_MESSAGES
+	File "/oname=$(LNCC)\LC_MESSAGES\prpn.mo" "fr.mo"
+
 	File "README.TXT"
 
 	; Write the installation path into the registry
@@ -118,12 +127,20 @@ Section "Uninstall"
 	; Remove files and uninstaller
 	Delete $INSTDIR\prpn.exe
 	Delete $INSTDIR\prpnc.exe
+	Delete $INSTDIR\libiconv2.dll
+	Delete $INSTDIR\libintl3.dll
+
+	; For previous installs
 	Delete $INSTDIR\pRPN.html
 	Delete $INSTDIR\pRPN.txt
+
 	Delete $INSTDIR\pRPNen.html
 	Delete $INSTDIR\pRPNen.txt
+
 	Delete $INSTDIR\pRPNfr.html
 	Delete $INSTDIR\pRPNfr.txt
+	RMDir /r $INSTDIR\fr
+
 	Delete $INSTDIR\README.TXT
 	Delete $INSTDIR\prpn-0.5.1.tar.gz
 	Delete $INSTDIR\uninstall.exe

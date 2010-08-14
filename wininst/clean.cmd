@@ -4,6 +4,6 @@ del pRPNen.html
 del pRPNen.txt
 del pRPNfr.html
 del pRPNfr.txt
-del fr\LC_MESSAGES\prpn.mo
+del fr.mo
 del README.TXT
 del prpn-0.5.1.tar.gz
