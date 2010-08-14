@@ -199,6 +199,12 @@ static void work_out_locale() {
 	encoding = get_encoding_from_locale(actual_locale);
 
 	bindtextdomain(PACKAGE, osd->get_dir(OSD_PKG_LOCALEDIR).c_str());
+
+	debug_write("text domain =");
+	debug_write(PACKAGE);
+	debug_write("OSD_PKG_LOCALEDIR =");
+	debug_write(osd->get_dir(OSD_PKG_LOCALEDIR).c_str());
+
 	textdomain(PACKAGE);
 #else
 	actual_locale = "";
