@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: prpn 0.5.1\n"
 "Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
-"POT-Creation-Date: 2010-08-12 23:45+0200\n"
+"POT-Creation-Date: 2010-08-15 18:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,6 +30,46 @@ msgstr ""
 
 #: src/Main.cpp:113
 msgid " [options]..."
+msgstr ""
+
+#: src/Main.cpp:114
+msgid "Print this usage and exit"
+msgstr ""
+
+#: src/Main.cpp:115
+msgid "Print version information and exit"
+msgstr ""
+
+#: src/Main.cpp:116
+msgid "Run in text mode"
+msgstr ""
+
+#: src/Main.cpp:117
+msgid "Width of the display, in characters (default: 23)"
+msgstr ""
+
+#: src/Main.cpp:118
+msgid "Height of the display, in lines (default: 5)"
+msgstr ""
+
+#: src/Main.cpp:119
+msgid "Minimum height of the stack display, in lines"
+msgstr ""
+
+#: src/Main.cpp:120
+msgid "Only in text mode"
+msgstr ""
+
+#: src/Main.cpp:121
+msgid "Batch mode = display the stack once before exiting"
+msgstr ""
+
+#: src/Main.cpp:122
+msgid "Ignore rc files"
+msgstr ""
+
+#: src/Main.cpp:123
+msgid "<debug options> Turn debugging on"
 msgstr ""
 
 #: src/PGetOpt.cpp:27

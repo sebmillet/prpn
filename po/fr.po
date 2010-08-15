@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: prpn 0.5.0\n"
 "Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
-"POT-Creation-Date: 2010-08-12 23:45+0200\n"
-"PO-Revision-Date: 2010-08-05 15:52+0100\n"
+"POT-Creation-Date: 2010-08-15 18:53+0200\n"
+"PO-Revision-Date: 2010-08-15 18:56+0100\n"
 "Last-Translator: Sébastien Millet <sebastien.millet1@club-internet.fr>\n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
@@ -32,6 +32,46 @@ msgstr "Utilisation : "
 #: src/Main.cpp:113
 msgid " [options]..."
 msgstr " [options]..."
+
+#: src/Main.cpp:114
+msgid "Print this usage and exit"
+msgstr "Affiche cet écran et termine"
+
+#: src/Main.cpp:115
+msgid "Print version information and exit"
+msgstr "Affiche la version et termine"
+
+#: src/Main.cpp:116
+msgid "Run in text mode"
+msgstr "Exécution en mode texte"
+
+#: src/Main.cpp:117
+msgid "Width of the display, in characters (default: 23)"
+msgstr "Largeur de l'affichage, en nombre de caractères (23 par défaut)"
+
+#: src/Main.cpp:118
+msgid "Height of the display, in lines (default: 5)"
+msgstr "Hauteur de l'affichage, en nombre de lignes (5 par défaut)"
+
+#: src/Main.cpp:119
+msgid "Minimum height of the stack display, in lines"
+msgstr "Hauteur minimale de la pile, en nombre de lignes"
+
+#: src/Main.cpp:120
+msgid "Only in text mode"
+msgstr "Uniquement en mode texte"
+
+#: src/Main.cpp:121
+msgid "Batch mode = display the stack once before exiting"
+msgstr "Mode batch = affiche la pile une fois avant de terminer"
+
+#: src/Main.cpp:122
+msgid "Ignore rc files"
+msgstr "Ignore les fichiers de démarrage (fichiers 'rc')"
+
+#: src/Main.cpp:123
+msgid "<debug options> Turn debugging on"
+msgstr "<options de debug> Active le déboggage"
 
 #: src/PGetOpt.cpp:27
 #, c-format
@@ -94,7 +134,8 @@ msgstr "Base numérique pour les entiers binaires"
 msgid "Level 1 display"
 msgstr "Affichage du niveau 1"
 
-#: src/Stack.cpp:41 src/Stack.cpp:42
+#: src/Stack.cpp:41
+#: src/Stack.cpp:42
 msgid "Reserved"
 msgstr "Réservé"
 
@@ -154,7 +195,8 @@ msgstr "Infinite Result (résultat infini) traité en exception"
 msgid "Help"
 msgstr "Aide"
 
-#: src/UiImplWx.cpp:525 src/UiImplWx.cpp:538
+#: src/UiImplWx.cpp:525
+#: src/UiImplWx.cpp:538
 msgid "OK"
 msgstr "OK"
 
@@ -508,9 +550,7 @@ msgstr "Lis le fichier et met son contenu dans la pile"
 
 #: src/Commands.h:123
 msgid "Write the second item into the file named by the first item"
-msgstr ""
-"Écris le second élément de la pile dans le fichier nommé par le premier "
-"élément"
+msgstr "Écris le second élément de la pile dans le fichier nommé par le premier élément"
 
 #: src/Commands.h:124
 msgid "Undo last command, 50 levels by default"
@@ -651,3 +691,4 @@ msgstr "Activé"
 #: src/Commands.h:191
 msgid "Unset"
 msgstr "Désactivé"
+

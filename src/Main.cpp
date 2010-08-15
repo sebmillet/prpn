@@ -111,16 +111,16 @@ void usage() {
 
 void help() {
 	std::cerr << _("Usage: ") << BIN_NAME << _(" [options]...") << std::endl;
-	std::cerr << "  -h  --help    Print this usage and exit" << std::endl;
-	std::cerr << "  -v  --version Print version information and exit" << std::endl;
-	std::cerr << "  -c  --console Run in text mode" << std::endl;
-	std::cerr << "  -w  --width   Width of the display, in characters (default: 23)" << std::endl;
-	std::cerr << "      --height  Height of the display, in lines (default: 5)" << std::endl;
-	std::cerr << "      --min-stack-height Minimum height of the stack display, in lines" << std::endl;
-	std::cerr << "                         Only in text mode" << std::endl;
-	std::cerr << "  -b  --batch   Batch mode = display the stack once before exiting" << std::endl;
-	std::cerr << "  -z  --dry-run Ignore rc files" << std::endl;
-	std::cerr << "  -d  --debug <debug options> Turn debugging on" << std::endl;
+	std::cerr << "  -h  --help    " << _("Print this usage and exit") << std::endl;
+	std::cerr << "  -v  --version " << _("Print version information and exit") << std::endl;
+	std::cerr << "  -c  --console " << _("Run in text mode") << std::endl;
+	std::cerr << "  -w  --width   " << _("Width of the display, in characters (default: 23)") << std::endl;
+	std::cerr << "      --height  " << _("Height of the display, in lines (default: 5)") << std::endl;
+	std::cerr << "      --min-stack-height " << _("Minimum height of the stack display, in lines") << std::endl;
+	std::cerr << "                         " << _("Only in text mode") << std::endl;
+	std::cerr << "  -b  --batch   " << _("Batch mode = display the stack once before exiting") << std::endl;
+	std::cerr << "  -z  --dry-run " << _("Ignore rc files") << std::endl;
+	std::cerr << "  -d  --debug " << _("<debug options> Turn debugging on") << std::endl;
 }
 
 void version() {
