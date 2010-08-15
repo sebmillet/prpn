@@ -249,10 +249,9 @@ dist_doc_DATA = ${HTMLPAGEEN} ${TEXTPAGEEN} \
 
 EXTRA_DIST = ${srcdir}/make-man-page.sh ${srcdir}/pRPN1en-prefix ${srcdir}/pRPN1en-postfix \
 	${srcdir}/pRPN1fr-prefix ${srcdir}/pRPN1fr-postfix \
-	${CMDSEN} ${CMDSFR}
+	${MANPAGEEN} ${MANPAGEFR}
 
-manfrdir = $(mandir)/fr
-dist_man_MANS = ${MANPAGEEN} ${MANPAGEFR}
+dist_man_MANS = ${MANPAGEEN}
 all: all-am
 
 .SUFFIXES:
@@ -481,6 +480,7 @@ uninstall-man: uninstall-man1
 	pdf-am ps ps-am uninstall uninstall-am uninstall-dist_docDATA \
 	uninstall-man uninstall-man1
 
+	${CMDSEN} ${CMDSFR}
 
 # Building the page manual requires the program being built. BUT if we put a
 # dependency with the executable, it'll trigger recreation of the manual page

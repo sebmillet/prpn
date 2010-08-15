@@ -15,10 +15,10 @@ dist_doc_DATA=${HTMLPAGEEN} ${TEXTPAGEEN} \
 
 EXTRA_DIST=${srcdir}/make-man-page.sh ${srcdir}/pRPN1en-prefix ${srcdir}/pRPN1en-postfix \
 	${srcdir}/pRPN1fr-prefix ${srcdir}/pRPN1fr-postfix \
+	${MANPAGEEN} ${MANPAGEFR}
 	${CMDSEN} ${CMDSFR}
 
-manfrdir = $(mandir)/fr
-dist_man_MANS=${MANPAGEEN} ${MANPAGEFR}
+dist_man_MANS=${MANPAGEEN}
 
 
 if BUILD_DOCS
