@@ -68,6 +68,7 @@ Section !$(Sec1)
 	File "prpnc.exe"
 	File "libiconv2.dll"
 	File "libintl3.dll"
+	File "mingwm10.dll"
 
 	StrCmp $(LNCC) "en" 0 +3
 	File "pRPNen.html"
@@ -129,6 +130,7 @@ Section "Uninstall"
 	Delete $INSTDIR\prpnc.exe
 	Delete $INSTDIR\libiconv2.dll
 	Delete $INSTDIR\libintl3.dll
+	Delete $INSTDIR\mingwm10.dll
 
 	; For previous installs
 	Delete $INSTDIR\pRPN.html
