@@ -1,11 +1,13 @@
 [Desktop Entry]
+Encoding=UTF-8
 Name=pRPN
+GenericName=pRPN
 Comment=Calculator using Reverse Polish Notation
 Comment[fr]=Calculatrice en Notation Polonaise Inverse
-TryExec=prpn
 Exec=prpn
+Icon=prpn.png
 Terminal=false
 Type=Application
 Icon=/usr/share/pixmaps/prpn.ico
-Categories=Utility;
+Categories=Application;Utility;
 StartupNotify=false
