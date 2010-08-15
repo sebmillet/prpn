@@ -8,6 +8,5 @@ Exec=prpn
 Icon=prpn.png
 Terminal=false
 Type=Application
-Icon=/usr/share/pixmaps/prpn.ico
 Categories=Application;Utility;
 StartupNotify=false
