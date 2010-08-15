@@ -15,7 +15,7 @@ dist_doc_DATA=${HTMLPAGEEN} ${TEXTPAGEEN} \
 
 EXTRA_DIST=${srcdir}/make-man-page.sh ${srcdir}/pRPN1en-prefix ${srcdir}/pRPN1en-postfix \
 	${srcdir}/pRPN1fr-prefix ${srcdir}/pRPN1fr-postfix \
-	${MANPAGEEN} ${MANPAGEFR}
+	${MANPAGEEN} ${MANPAGEFR} \
 	${CMDSEN} ${CMDSFR}
 
 dist_man_MANS=${MANPAGEEN}
