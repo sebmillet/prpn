@@ -138,8 +138,7 @@ msgstr "Base numérique pour les entiers binaires"
 msgid "Level 1 display"
 msgstr "Affichage du niveau 1"
 
-#: src/Stack.cpp:41
-#: src/Stack.cpp:42
+#: src/Stack.cpp:41 src/Stack.cpp:42
 msgid "Reserved"
 msgstr "Réservé"
 
@@ -199,8 +198,7 @@ msgstr "Infinite Result (résultat infini) traité en exception"
 msgid "Help"
 msgstr "Aide"
 
-#: src/UiImplWx.cpp:525
-#: src/UiImplWx.cpp:538
+#: src/UiImplWx.cpp:525 src/UiImplWx.cpp:538
 msgid "OK"
 msgstr "OK"
 
@@ -554,7 +552,9 @@ msgstr "Lis le fichier et met son contenu dans la pile"
 
 #: src/Commands.h:123
 msgid "Write the second item into the file named by the first item"
-msgstr "Écris le second élément de la pile dans le fichier nommé par le premier élément"
+msgstr ""
+"Écris le second élément de la pile dans le fichier nommé par le premier "
+"élément"
 
 #: src/Commands.h:124
 msgid "Undo last command, 50 levels by default"
@@ -695,4 +695,3 @@ msgstr "Activé"
 #: src/Commands.h:191
 msgid "Unset"
 msgstr "Désactivé"
-
