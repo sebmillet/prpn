@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: prpn 0.5.0\n"
 "Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
 "POT-Creation-Date: 2010-09-11 07:58+0200\n"
-"PO-Revision-Date: 2010-08-15 18:56+0100\n"
+"PO-Revision-Date: 2010-09-11 09:15+0100\n"
 "Last-Translator: Sébastien Millet <sebastien.millet1@club-internet.fr>\n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
@@ -70,9 +70,8 @@ msgid "Ignore rc files"
 msgstr "Ignore les fichiers de démarrage (fichiers 'rc')"
 
 #: src/Main.cpp:124
-#, fuzzy
 msgid "Display class count before exiting"
-msgstr "Mode batch = affiche la pile une fois avant de terminer"
+msgstr "Affiche le comptage des classes avant de terminer"
 
 #: src/Main.cpp:125
 msgid "<debug options> Turn debugging on"
@@ -139,7 +138,8 @@ msgstr "Base numérique pour les entiers binaires"
 msgid "Level 1 display"
 msgstr "Affichage du niveau 1"
 
-#: src/Stack.cpp:41 src/Stack.cpp:42
+#: src/Stack.cpp:41
+#: src/Stack.cpp:42
 msgid "Reserved"
 msgstr "Réservé"
 
@@ -199,7 +199,8 @@ msgstr "Infinite Result (résultat infini) traité en exception"
 msgid "Help"
 msgstr "Aide"
 
-#: src/UiImplWx.cpp:525 src/UiImplWx.cpp:538
+#: src/UiImplWx.cpp:525
+#: src/UiImplWx.cpp:538
 msgid "OK"
 msgstr "OK"
 
@@ -553,9 +554,7 @@ msgstr "Lis le fichier et met son contenu dans la pile"
 
 #: src/Commands.h:123
 msgid "Write the second item into the file named by the first item"
-msgstr ""
-"Écris le second élément de la pile dans le fichier nommé par le premier "
-"élément"
+msgstr "Écris le second élément de la pile dans le fichier nommé par le premier élément"
 
 #: src/Commands.h:124
 msgid "Undo last command, 50 levels by default"
@@ -696,3 +695,4 @@ msgstr "Activé"
 #: src/Commands.h:191
 msgid "Unset"
 msgstr "Désactivé"
+
