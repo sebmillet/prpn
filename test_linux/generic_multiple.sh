@@ -19,7 +19,7 @@ while [ $i -le $N ]; do
 	II="${INPUT}${i}${SUFFIXE}"
 	OO="${OUTPUT}${i}${SUFFIXE}"
 	RR="${REFERENCE}${i}${SUFFIXE}"
-	$PRG $PRGARGS -bz < $II > $OO 2>&1
+	$PRG $PRGARGS -abz < $II > $OO 2>&1
 	if [ "$8" = "--batch" ]; then
 		cmp $RR $OO 2>&1 > /dev/null
 		if [ "$?" -ne "0" ]; then

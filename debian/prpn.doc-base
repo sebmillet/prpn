@@ -7,8 +7,8 @@ Abstract: This manual describes what prpn is
 Section: utils
 
 Format: text
-Files: /usr/share/doc/prpn/pRPNen.txt /usr/share/doc/prpn/pRPNfr.txt /usr/share/doc/prpn/README
+Files: /usr/share/doc/prpn/prpnen.txt /usr/share/doc/prpn/prpnfr.txt /usr/share/doc/prpn/README
 
 Format: HTML
-Index: /usr/share/doc/prpn/pRPNen.html
-Files: /usr/share/doc/prpn/pRPNen.html /usr/share/doc/prpn/pRPNfr.html
+Index: /usr/share/doc/prpn/prpnen.html
+Files: /usr/share/doc/prpn/prpnen.html /usr/share/doc/prpn/prpnfr.html

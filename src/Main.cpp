@@ -51,6 +51,7 @@ static bool opt_version = false;
 
 bool opt_console = false;
 bool opt_batch = false;
+bool opt_class_count = false;
 static string opt_s_width;
 static string opt_s_height;
 static string opt_s_min_stack_height;
@@ -120,6 +121,7 @@ void help() {
 	std::cerr << "                         " << _("Only in text mode") << std::endl;
 	std::cerr << "  -b  --batch   " << _("Batch mode = display the stack once before exiting") << std::endl;
 	std::cerr << "  -z  --dry-run " << _("Ignore rc files") << std::endl;
+	std::cerr << "  -a  --class " << _("Display class count before exiting") << std::endl;
 	std::cerr << "  -d  --debug " << _("<debug options> Turn debugging on") << std::endl;
 }
 
@@ -326,6 +328,7 @@ int prog_init(int argc, char **argv) {
 	opt.add("", "min-stack-height", &opt_s_min_stack_height);
 	opt.add("b", "batch", &opt_batch);
 	opt.add("z", "dry-run", &opt_dry_run);
+	opt.add("a", "class", &opt_class_count);
 	opt.add("d", "debug", &opt_debug);
 
 	int r = opt.parse(argc, argv, nb_trailing_args, trailing_args, format, item_error, 0);
@@ -398,7 +401,8 @@ static int check_class_count() {
 	if (StackItem::get_class_count() + Stack::get_class_count() + NodeStack::get_class_count() + Real::get_class_count()
 			+ Cplx::get_class_count() + ReadMatrixCell::get_class_count() + CCMatrix::get_class_count()
 			+ ToString::get_class_count() + Var::get_class_count() + Tree::get_class_count() + Binary::get_class_count() + TransStack::get_class_count() == 0) {
-		std::cout << "get_class_count() = 0 for watched classes" << endl;
+		if (opt_class_count)
+			std::cout << "get_class_count() = 0 for watched classes" << endl;
 		return 0;
 	} else {
 		std::cout << "TransStack class_count: " << TransStack::get_class_count() << std::endl;

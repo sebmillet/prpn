@@ -7,7 +7,8 @@ EXTRA_DIST=ABOUT-NLS admin/config.rpath test_linux extracfg.h wininst images \
 	prpn.bkl src/dev.bkl \
 	makefile.bcc makefile.gcc makefile.vc \
 	src/makefile.bcc src/makefile.gcc src/makefile.vc \
-	prpn.desktop prpn.png
+	prpn.desktop prpn.png \
+	prpn.spec
 
 dist-hook:
 	rm -rf `find $(distdir) -name .svn`

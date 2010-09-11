@@ -7,7 +7,7 @@ INPUT=$2
 OUTPUT=$3
 REFERENCE=$4
 
-$PRG -bz < $INPUT > $OUTPUT
+$PRG -abz < $INPUT > $OUTPUT
 
 REP=$(pwd | sed 's/.*\///')
 

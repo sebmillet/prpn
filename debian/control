@@ -9,7 +9,7 @@ Homepage: http://prpn.origo.ethz.ch
 Package: prpn
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: A graphical Reverse Polish Notation calculator
+Description: A Reverse Polish Notation calculator
  pRPN is an RPN calculator based on WxWidgets for the GUI, that provides the
  following objects: Reals, Complex, Vectors, Matrices, Binaries, Lists,
  Expressions, Strings and Programs.

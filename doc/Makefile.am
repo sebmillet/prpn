@@ -1,24 +1,25 @@
 # EN
-MANPAGEEN=${srcdir}/pRPN.1
-HTMLPAGEEN=${srcdir}/pRPNen.html
-TEXTPAGEEN=${srcdir}/pRPNen.txt
+MANPAGEEN=${srcdir}/prpn.1
+HTMLPAGEEN=${srcdir}/prpnen.html
+TEXTPAGEEN=${srcdir}/prpnen.txt
 CMDSEN=${srcdir}/cmdsen.txt
 
 # FR
-MANPAGEFR=${srcdir}/pRPN.fr.1
-HTMLPAGEFR=${srcdir}/pRPNfr.html
-TEXTPAGEFR=${srcdir}/pRPNfr.txt
+MANPAGEFR=${srcdir}/prpn.fr.1
+HTMLPAGEFR=${srcdir}/prpnfr.html
+TEXTPAGEFR=${srcdir}/prpnfr.txt
 CMDSFR=${srcdir}/cmdsfr.txt
 
 dist_doc_DATA=${HTMLPAGEEN} ${TEXTPAGEEN} \
 	${HTMLPAGEFR} ${TEXTPAGEFR}
 
-EXTRA_DIST=${srcdir}/make-man-page.sh ${srcdir}/pRPN1en-prefix ${srcdir}/pRPN1en-postfix \
-	${srcdir}/pRPN1fr-prefix ${srcdir}/pRPN1fr-postfix \
+EXTRA_DIST=${srcdir}/make-man-page.sh ${srcdir}/prpn1en-prefix ${srcdir}/prpn1en-postfix \
+	${srcdir}/prpn1fr-prefix ${srcdir}/prpn1fr-postfix \
 	${MANPAGEEN} ${MANPAGEFR} \
 	${CMDSEN} ${CMDSFR}
 
 dist_man_MANS=${MANPAGEEN}
+dist_man_fr_MANS=${MANPAGEFR}
 
 
 if BUILD_DOCS
@@ -38,7 +39,7 @@ if BUILD_DOCS
 # C++ preprocessor.
 
 # EN
-${MANPAGEEN}: ${CMDSEN} ${srcdir}/pRPN1en-prefix ${srcdir}/pRPN1en-postfix ${srcdir}/make-man-page.sh
+${MANPAGEEN}: ${CMDSEN} ${srcdir}/prpn1en-prefix ${srcdir}/prpn1en-postfix ${srcdir}/make-man-page.sh
 	${srcdir}/make-man-page.sh "${srcdir}" en
 ${HTMLPAGEEN}: ${MANPAGEEN}
 	man2html ${MANPAGEEN} > $@
@@ -46,7 +47,7 @@ ${TEXTPAGEEN}: ${MANPAGEEN}
 	nroff -man ${MANPAGEEN} | col -b > $@
 
 # FR
-${MANPAGEFR}: ${CMDSFR} ${srcdir}/pRPN1fr-prefix ${srcdir}/pRPN1fr-postfix ${srcdir}/make-man-page.sh
+${MANPAGEFR}: ${CMDSFR} ${srcdir}/prpn1fr-prefix ${srcdir}/prpn1fr-postfix ${srcdir}/make-man-page.sh
 	${srcdir}/make-man-page.sh "${srcdir}" fr
 ${HTMLPAGEFR}: ${MANPAGEFR}
 	man2html ${MANPAGEFR} > $@

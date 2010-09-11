@@ -35,7 +35,7 @@
 #endif
 
 #define BIN_NAME					"prpn"
-#define MY_HELP_HTML_PREFIX			"pRPN"
+#define MY_HELP_HTML_PREFIX			"prpn"
 #define MY_HELP_HTML_PEXTENSION		".html"
 
 enum {ENCODING_UNKNOWN, ENCODING_1BYTE, ENCODING_UTF8};

@@ -3,7 +3,7 @@
 
 # Sébastien Millet, May 2010
 
-AC_PREREQ([2.63])
+AC_PREREQ([2.65])
 
 AC_INIT([pRPN], [0.5.1], [sebastien.millet1@club-internet.fr])
 

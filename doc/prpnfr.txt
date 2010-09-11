@@ -3,7 +3,8 @@ pRPN(1) 							       pRPN(1)
 
 
 NAME
-       pRPN - a portable RPN calculator
+       pRPN  -	une  calculatrice en notation polonaise inverse multi systèmes
+       d'exploitation
 
 
 SYNOPSIS
@@ -11,43 +12,43 @@ SYNOPSIS
 
 
 DESCRIPTION
-       The pRPN program is a RPN calculator inspired by HP calculators of late
-       80s.
+       Le programme pRPN est une calculatrice en  notation  polonaise  inverse
+       inspirée des calculatrices HP de la fin des années 80.
 
 OPTIONS
        -h, --help
-	      Display a quick help screen and exit.
+	      Affiche l'aide et quitte.
 
        -v --version
-	      Display version information and exit.
+	      Affiche le numéro de version et quitte.
 
        -c, --console
-	      Run in console mode.
+	      Exécution en mode console.
 
        -w, --width width
-	      Set width to width, measured in number of  characters.  Defaults
-	      to 23.
+	      Définis  la largeur à width, mesurée en nombre de caractères. 23
+	      par défaut.
 
        -h, --height height
-	      Set  height  to height, measured in number of lines. Defaults to
-	      5.
+	      Définis la hauteur à height, mesurée en nombre de lignes. 5  par
+	      défaut.
 
        --min-stack-height min-stack-height
-	      Set minimum stack height to height, measured in number of lines.
-	      Defaults to height. Only in console mode.
+	      Définis  la  hauteur  minimale  à  height,  mesurée en nombre de
+	      lignes. height par défaut. Uniquement en mode console.
 
        -b, --batch
-	      Batch mode, implies console mode.
+	      Mode batch, implique le mode console.
 
        -z, --dry-run
-	      Ignore rc files.
+	      Ignore les fichiers rc.
 
        -d, --debug debug_option
-	      Debug mode, requires a parameter.
+	      Mode debug, prend un paramètre.
 
-COMMANDS
-       Commands  are  followed by the number of arguments they take, in paren
-       thesis. These arguments are taken from the stack.
+COMMANDES
+       Les commandes sont suivies du  nombre  d'arguments  qu'elles  prennent,
+       entre parenthèses. Ces arguments sont pris dans la pile.
 
        _HELP (0)
 	      Display a help screen
@@ -305,58 +306,61 @@ COMMANDS
        _UNDO_LEVELS? (0)
 	      Get number of undo levels
 
-OBJECT TYPES
-       Data
+TYPES D'OBJETS
+       Donnée
 
-       Real Number
+       Nombre réel
 	      1.23456e-25
 
-       Complex Number
+       Nombre complexe
 	      ( )  (123.45, 678.90)
 
-       Binary Integer
+       Entier binaire
 	      #    # 123AB
 
-       String " "  "RESULT"
+       Chaîne de caractères
+	      " "  "RESULT"
 
-       Vector [ ]  [1.23 4.56 7.89]
+       Vecteur
+	      [ ]  [1.23 4.56 7.89]
 
-       Matrix [[ ]]	[[1.23 4.56] [6.54 3.21]]
+       Matrice
+	      [[ ]]	[[1.23 4.56] [6.54 3.21]]
 
-       List   { }  {1.23 "ABC" # 45d}
+       Liste  { }  {1.23 "ABC" # 45d}
 
-       Names
+       Noms
 
-       Name	 CALC
+       Nom    ´ ´  ´CALC´
 
-       Procedures
+       Procédures
 
-       Program
+       Programme
 	      << >>	<< DUP + SWAP >>
 
-       Algebraic
-		 X+2*Y=Z
+       Algébrique
+	      ´ ´  ´X+2*Y=Z´
 
-INITIALIZATION FILES
+FICHIERS D'INITIALISATION
        ~/.prpn/stackrc
-	      Settings and stack content.
+	      Réglages et contenu de la pile.
 
        ~/.prpn/varsrc
-	      Variables structure, and actual working directory.
+	      Structure contenant les variables, et répertoire courant.
 
-AUTHOR
-       Written by Sbastien Millet <sebastien.millet1@club-internet.fr>.  Per
-       mission	is  granted  to  copy,	distribute and/or modify this document
-       under the terms of the GNU General Public License, Version 3  published
-       by the Free Software Foundation.
+AUTEUR
+       Écrit   par   Sébastien	 Millet  <sebastien.millet1@club-internet.fr>.
+       Autorisation est donnée de copier, distribuer et/ou modifier  ce  docu‐
+       ment  selon  les  termes de la licence "GNU General Public License". La
+       version 3 est publiée par la Free Software Foundation.
 
 BUGS
-       - Program is in version 0.5.1...
+       - Ce programme est en version 0.5.1...
 
-       -  Windows  version: wx disconnects the program from the terminal it is
-       sent  from.  Therefore  Windows	generation  produces  a  GUI  version,
-       pRPN.exe, and a console version, pRPNc.exe.
+       - Version Windows : wx se déconnecte du terminal  d'où  il  est	lancé.
+       C'est pourquoi la compilation de la version Windows produit une version
+       graphique, prpn.exe, et une version console, prpnc.exe.
 
 
 
-July 05, 2010			 version 0.5.1			       pRPN(1)
+5 juillet 2010			 version 0.5.1			       pRPN(1)

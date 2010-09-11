@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: prpn 0.5.0\n"
 "Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
-"POT-Creation-Date: 2010-08-15 18:53+0200\n"
+"POT-Creation-Date: 2010-09-11 07:58+0200\n"
 "PO-Revision-Date: 2010-08-15 18:56+0100\n"
 "Last-Translator: Sébastien Millet <sebastien.millet1@club-internet.fr>\n"
 "Language-Team: French\n"
@@ -17,59 +17,64 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: src/Main.cpp:109
+#: src/Main.cpp:110
 msgid "Try `"
 msgstr "Essayez `"
 
-#: src/Main.cpp:109
+#: src/Main.cpp:110
 msgid " --help' for more information."
 msgstr " --help' pour plus d'information."
 
-#: src/Main.cpp:113
+#: src/Main.cpp:114
 msgid "Usage: "
 msgstr "Utilisation : "
 
-#: src/Main.cpp:113
+#: src/Main.cpp:114
 msgid " [options]..."
 msgstr " [options]..."
 
-#: src/Main.cpp:114
+#: src/Main.cpp:115
 msgid "Print this usage and exit"
 msgstr "Affiche cet écran et termine"
 
-#: src/Main.cpp:115
+#: src/Main.cpp:116
 msgid "Print version information and exit"
 msgstr "Affiche la version et termine"
 
-#: src/Main.cpp:116
+#: src/Main.cpp:117
 msgid "Run in text mode"
 msgstr "Exécution en mode texte"
 
-#: src/Main.cpp:117
+#: src/Main.cpp:118
 msgid "Width of the display, in characters (default: 23)"
 msgstr "Largeur de l'affichage, en nombre de caractères (23 par défaut)"
 
-#: src/Main.cpp:118
+#: src/Main.cpp:119
 msgid "Height of the display, in lines (default: 5)"
 msgstr "Hauteur de l'affichage, en nombre de lignes (5 par défaut)"
 
-#: src/Main.cpp:119
+#: src/Main.cpp:120
 msgid "Minimum height of the stack display, in lines"
 msgstr "Hauteur minimale de la pile, en nombre de lignes"
 
-#: src/Main.cpp:120
+#: src/Main.cpp:121
 msgid "Only in text mode"
 msgstr "Uniquement en mode texte"
 
-#: src/Main.cpp:121
+#: src/Main.cpp:122
 msgid "Batch mode = display the stack once before exiting"
 msgstr "Mode batch = affiche la pile une fois avant de terminer"
 
-#: src/Main.cpp:122
+#: src/Main.cpp:123
 msgid "Ignore rc files"
 msgstr "Ignore les fichiers de démarrage (fichiers 'rc')"
 
-#: src/Main.cpp:123
+#: src/Main.cpp:124
+#, fuzzy
+msgid "Display class count before exiting"
+msgstr "Mode batch = affiche la pile une fois avant de terminer"
+
+#: src/Main.cpp:125
 msgid "<debug options> Turn debugging on"
 msgstr "<options de debug> Active le déboggage"
 

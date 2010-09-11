@@ -11,7 +11,8 @@ Section: User Commands  (1)<BR>Updated: version 0.5.1<BR><A HREF="#index">Index<
 <A NAME="lbAB">&nbsp;</A>
 <H2>NAME</H2>
 
-pRPN - a portable RPN calculator
+pRPN - une calculatrice en notation polonaise inverse multi systèmes
+d'exploitation
 <P>
 <A NAME="lbAC">&nbsp;</A>
 <H2>SYNOPSIS</H2>
@@ -24,7 +25,7 @@ pRPN - a portable RPN calculator
 <A NAME="lbAD">&nbsp;</A>
 <H2>DESCRIPTION</H2>
 
-The <B>pRPN</B> program is a RPN calculator inspired by HP calculators of late 80s.
+Le programme <B>pRPN</B> est une calculatrice en notation polonaise inverse inspirée des calculatrices HP de la fin des années 80.
 <A NAME="lbAE">&nbsp;</A>
 <H2>OPTIONS</H2>
 
@@ -32,44 +33,44 @@ The <B>pRPN</B> program is a RPN calculator inspired by HP calculators of late 8
 <DT><B>-h,&nbsp;--help</B>
 
 <DD>
-Display a quick help screen and exit.
+Affiche l'aide et quitte.
 <DT><B>-v&nbsp;--version</B>
 
 <DD>
-Display version information and exit.
+Affiche le numéro de version et quitte.
 <DT><B>-c,&nbsp;--console</B>
 
 <DD>
-Run in console mode.
+Exécution en mode console.
 <DT><B>-w,&nbsp;--width&nbsp;</B><I>width</I>
 
 <DD>
-Set width to <I>width</I>, measured in number of characters. Defaults to 23.
+Définis la largeur à <I>width</I>, mesurée en nombre de caractères. 23 par défaut.
 <DT><B>-h,&nbsp;--height&nbsp;</B><I>height</I>
 
 <DD>
-Set height to <I>height</I>, measured in number of lines. Defaults to 5.
+Définis la hauteur à <I>height</I>, mesurée en nombre de lignes. 5 par défaut.
 <DT><B>--min-stack-height&nbsp;</B><I>min-stack-height</I>
 
 <DD>
-Set minimum stack height to <I>height</I>, measured in number of lines. Defaults to <I>height</I>. Only in console mode.
+Définis la hauteur minimale à <I>height</I>, mesurée en nombre de lignes. <I>height</I> par défaut. Uniquement en mode console.
 <DT><B>-b,&nbsp;--batch</B>
 
 <DD>
-Batch mode, implies console mode.
+Mode batch, implique le mode console.
 <DT><B>-z,&nbsp;--dry-run</B>
 
 <DD>
-Ignore rc files.
+Ignore les fichiers rc.
 <DT><B>-d,&nbsp;--debug&nbsp;</B><I>debug_option</I>
 
 <DD>
-Debug mode, requires a parameter.
+Mode debug, prend un paramètre.
 </DL>
 <A NAME="lbAF">&nbsp;</A>
-<H2>COMMANDS</H2>
+<H2>COMMANDES</H2>
 
-Commands are followed by the number of arguments they take, in parenthesis. These arguments are taken from the stack.
+Les commandes sont suivies du nombre d'arguments qu'elles prennent, entre parenthèses. Ces arguments sont pris dans la pile.
 <DL COMPACT>
 <DT><B>_HELP&nbsp;(0)</B>
 
@@ -437,82 +438,82 @@ Define number of undo levels
 Get number of undo levels
 </DL>
 <A NAME="lbAG">&nbsp;</A>
-<H2>OBJECT TYPES</H2>
+<H2>TYPES D'OBJETS</H2>
 
 <DL COMPACT>
-<DT><I>Data</I>
+<DT><I>Donnée</I>
 
 <DD>
-<DT><B>Real Number</B>
+<DT><B>Nombre réel</B>
 
 <DD>
 1.23456e-25    
-<DT><B>Complex Number</B>
+<DT><B>Nombre complexe</B>
 
 <DD>
 ( )<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>(123.45, 678.90)<BR>
-<DT><B>Binary Integer</B>
+<DT><B>Entier binaire</B>
 
 <DD>
 #<TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TT># 123AB<BR>
-<DT><B>String</B>
+<DT><B>Chaîne de caractères</B>
 
 <DD>
 &quot; &quot;<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>&quot;RESULT&quot;<BR>
-<DT><B>Vector</B>
+<DT><B>Vecteur</B>
 
 <DD>
 [ ]<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>[1.23 4.56 7.89]<BR>
-<DT><B>Matrix</B>
+<DT><B>Matrice</B>
 
 <DD>
 [[ ]]<TT>&nbsp;&nbsp;</TT>[[1.23 4.56] [6.54 3.21]]<BR>
-<DT><B>List</B>
+<DT><B>Liste</B>
 
 <DD>
 { }<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>{1.23 &quot;ABC&quot; # 45d}<BR>
-<DT><I>Names</I>
+<DT><I>Noms</I>
 
 <DD>
-<DT><B>Name</B>
+<DT><B>Nom</B>
 
 <DD>
 ' '<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>'CALC'<BR>
-<DT><I>Procedures</I>
+<DT><I>Procédures</I>
 
 <DD>
-<DT><B>Program</B>
+<DT><B>Programme</B>
 
 <DD>
 &lt;&lt; &gt;&gt;<TT>&nbsp;&nbsp;</TT>&lt;&lt; DUP + SWAP &gt;&gt;<BR>
-<DT><B>Algebraic</B>
+<DT><B>Algébrique</B>
 
 <DD>
 ' '<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>'X+2*Y=Z'<BR>
 </DL>
 <A NAME="lbAH">&nbsp;</A>
-<H2>INITIALIZATION FILES</H2>
+<H2>FICHIERS D'INITIALISATION</H2>
 
 <DL COMPACT>
 <DT><B>~/.prpn/stackrc</B>
 
 <DD>
-Settings and stack content.
+Réglages et contenu de la pile.
 <DT><B>~/.prpn/varsrc</B>
 
 <DD>
-Variables structure, and actual working directory.
+Structure contenant les variables, et répertoire courant.
 </DL>
 <A NAME="lbAI">&nbsp;</A>
-<H2>AUTHOR</H2>
+<H2>AUTEUR</H2>
 
-Written by Sébastien Millet &lt;<A HREF="mailto:sebastien.millet1@club-internet.fr">sebastien.millet1@club-internet.fr</A>&gt;. Permission is granted to copy, distribute and/or modify this document under the terms of the GNU General Public License, Version 3 published by the Free Software Foundation.
+Écrit par Sébastien Millet &lt;<A HREF="mailto:sebastien.millet1@club-internet.fr">sebastien.millet1@club-internet.fr</A>&gt;. Autorisation est donnée de copier, distribuer et/ou modifier ce document selon les termes de la licence &quot;GNU General Public License&quot;. La version 3 est publiée par la Free Software Foundation.
 <A NAME="lbAJ">&nbsp;</A>
 <H2>BUGS</H2>
 
 <DL COMPACT>
-<DT>- Program is in version 0.5.1...<DD>
-<DT>- Windows version: wx disconnects the program from the terminal it is sent from. Therefore Windows generation produces a GUI version, pRPN.exe, and a console version, pRPNc.exe.<DD>
+<DT>- Ce programme est en version 0.5.1...<DD>
+<DT>- Version Windows : wx se déconnecte du terminal d'où il est lancé. C'est pourquoi la compilation de la version Windows produit une version graphique, prpn.exe, et une version console, prpnc.exe.<DD>
 <P>
 </DL>
 
@@ -523,16 +524,16 @@ Written by Sébastien Millet &lt;<A HREF="mailto:sebastien.millet1@club-internet.
 <DT><A HREF="#lbAC">SYNOPSIS</A><DD>
 <DT><A HREF="#lbAD">DESCRIPTION</A><DD>
 <DT><A HREF="#lbAE">OPTIONS</A><DD>
-<DT><A HREF="#lbAF">COMMANDS</A><DD>
-<DT><A HREF="#lbAG">OBJECT TYPES</A><DD>
-<DT><A HREF="#lbAH">INITIALIZATION FILES</A><DD>
-<DT><A HREF="#lbAI">AUTHOR</A><DD>
+<DT><A HREF="#lbAF">COMMANDES</A><DD>
+<DT><A HREF="#lbAG">TYPES D'OBJETS</A><DD>
+<DT><A HREF="#lbAH">FICHIERS D'INITIALISATION</A><DD>
+<DT><A HREF="#lbAI">AUTEUR</A><DD>
 <DT><A HREF="#lbAJ">BUGS</A><DD>
 </DL>
 <HR>
 This document was created by
 <A HREF="/cgi-bin/man/man2html">man2html</A>,
 using the manual pages.<BR>
-Time: 13:53:01 GMT, August 05, 2010
+Time: 05:50:05 GMT, September 11, 2010
 </BODY>
 </HTML>

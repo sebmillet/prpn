@@ -5,7 +5,7 @@
 
 SRCDIR="$1"
 LG="$2"
-BASE=pRPN
+BASE=prpn
 
 if [ ${LG} = "en" ]; then
 	MANPAGE=${BASE}.1
@@ -13,8 +13,8 @@ else
 	MANPAGE=${BASE}.${LG}.1
 fi
 CMDS=${SRCDIR}/cmds${LG}.txt
-PREFIX=${SRCDIR}/pRPN1${LG}-prefix
-POSTFIX=${SRCDIR}/pRPN1${LG}-postfix
+PREFIX=${SRCDIR}/prpn1${LG}-prefix
+POSTFIX=${SRCDIR}/prpn1${LG}-postfix
 HTMLDOC=${BASE}${LG}.html
 TEXTDOC=${BASE}${LG}.txt
 cat ${PREFIX} > ${MANPAGE}
