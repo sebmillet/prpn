@@ -63,7 +63,7 @@ const string wxString_to_string(const wxString& wxs) {
 
   // Stack
 #define STACK_MIN_LINES					1
-#define MY_STACK_BACKGROUND_COLOUR		(wxColour(0xF4, 0xF4, 0xFA))
+#define MY_STACK_BACKGROUND_COLOUR		(wxColour(0xFA, 0xFA, 0xFA))
 #define MY_STACK_FOREGROUND_COLOUR		(*wxBLACK)
 #define MY_TYPEIN_BACKGROUND_COLOUR		MY_STACK_BACKGROUND_COLOUR
 #define MY_TYPEIN_FOREGROUND_COLOUR		(*wxBLACK)

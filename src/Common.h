@@ -14,7 +14,7 @@
 //   Binaries : écrire plan de test et opérations * et /
 //   opération + doit fonctionner entre une liste et n'importe quel élément
 //   Remplacer string par wstring ?
-//   Localisation ?
+//   { nom_variable } possible pour créer un tableau
 //
 // Programme de test :
 // 	 Intitulé de l'erreur si pas assez d'argument lors de l'exécution de << -> ... << >> >>

@@ -19,6 +19,12 @@ extern int opt_min_stack_height;
 extern bool has_gui;
 extern bool opt_dry_run;
 
+void ui_reset_clmf();
+void ui_set_clmf();
+bool ui_get_clmf();
+
+void ui_cllcd();
+
 const std::string stack_get_help(const int&);
 
 void ui_string_trim(std::string&, const size_t&, const DisplayStackLayout*);

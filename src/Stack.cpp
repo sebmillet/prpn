@@ -1818,6 +1818,16 @@ static st_err_t bc_wait(StackItem& op1, StackItem*&, string&) {
 
   // Misc
 
+static st_err_t bc_cllcd(TransStack& ts, SIO *args, string&) {
+	ui_cllcd();
+	return ST_ERR_OK;
+}
+
+static st_err_t bc_clmf(TransStack& ts, SIO *args, string&) {
+	ui_set_clmf();
+	return ST_ERR_OK;
+}
+
 static st_err_t bc_read(TransStack& ts, SIO *args, string&) { return args[0].si->op_read(ts); }
 
 static st_err_t bc_write(StackItem& op1, StackItem& op2, StackItem*&, string&) { return op2.op_write(op1); }

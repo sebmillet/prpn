@@ -37,6 +37,9 @@ Batch mode, implies console mode.
 .B \-z,\ \-\-dry\-run
 Ignore rc files.
 .TP
+.B \-a,\ \-\-class
+Display class count before exiting.
+.TP
 .B \-d,\ \-\-debug\ \fIdebug_option\fP
 Debug mode, requires a parameter.
 .SH COMMANDS

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: prpn 0.5.0\n"
 "Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
-"POT-Creation-Date: 2010-09-11 07:58+0200\n"
+"POT-Creation-Date: 2010-09-12 10:04+0200\n"
 "PO-Revision-Date: 2010-09-11 09:15+0100\n"
 "Last-Translator: Sébastien Millet <sebastien.millet1@club-internet.fr>\n"
 "Language-Team: French\n"
@@ -547,151 +547,161 @@ msgid "Wait a number of seconds"
 msgstr "Pause d'une durée définie en secondes"
 
 #: src/Commands.h:122
+#, fuzzy
+msgid "Clear the screen"
+msgstr "Efface la pile"
+
+#: src/Commands.h:123
+#, fuzzy
+msgid "Clear the message flag"
+msgstr "Efface la pile"
+
+#: src/Commands.h:124
 msgid "Read file and puts its content in the stack"
 msgstr "Lis le fichier et met son contenu dans la pile"
 
-#: src/Commands.h:123
+#: src/Commands.h:125
 msgid "Write the second item into the file named by the first item"
 msgstr ""
 "Écris le second élément de la pile dans le fichier nommé par le premier "
 "élément"
 
-#: src/Commands.h:124
+#: src/Commands.h:126
 msgid "Undo last command, 50 levels by default"
 msgstr "Annule la dernière commande, 50 niveaux par défaut"
 
-#: src/Commands.h:125
+#: src/Commands.h:127
 msgid "Define number of undo levels"
 msgstr "Définis le nombre de niveaux d'annulation"
 
-#: src/Commands.h:126
+#: src/Commands.h:128
 msgid "Get number of undo levels"
 msgstr "Renvoie le nombre de niveaux d'annulations"
 
-#: src/Commands.h:133
+#: src/Commands.h:135
 msgid "Command (number of arguments): description"
 msgstr "Commande (nombre d'arguments) : description"
 
-#: src/Commands.h:143
+#: src/Commands.h:145
 msgid "Object type"
 msgstr "Type d'objet"
 
-#: src/Commands.h:144
+#: src/Commands.h:146
 msgid "Symbol"
 msgstr "Symbole"
 
-#: src/Commands.h:144
+#: src/Commands.h:146
 msgid "Example"
 msgstr "Exemple"
 
-#: src/Commands.h:148
+#: src/Commands.h:150
 msgid "Data"
 msgstr "Donnée"
 
-#: src/Commands.h:149
+#: src/Commands.h:151
 msgid "Real Number"
 msgstr "Nombre réel"
 
-#: src/Commands.h:150
+#: src/Commands.h:152
 msgid "1.23456e-25"
 msgstr "1.23456e-25"
 
-#: src/Commands.h:151
+#: src/Commands.h:153
 msgid "Complex Number"
 msgstr "Nombre Complexe"
 
-#: src/Commands.h:152
+#: src/Commands.h:154
 msgid "(123.45, 678.90)"
 msgstr "(123.45, 678.90)"
 
-#: src/Commands.h:153
+#: src/Commands.h:155
 msgid "Binary Integer"
 msgstr "Entier Binaire"
 
-#: src/Commands.h:154
+#: src/Commands.h:156
 msgid "# 123AB"
 msgstr "# 123AB"
 
-#: src/Commands.h:155
+#: src/Commands.h:157
 msgid "String"
 msgstr "Chaîne de Caractères"
 
-#: src/Commands.h:156
+#: src/Commands.h:158
 msgid "\"RESULT\""
 msgstr "\"RÉSULTAT\""
 
-#: src/Commands.h:157
+#: src/Commands.h:159
 msgid "Vector"
 msgstr "Vecteur"
 
-#: src/Commands.h:158
+#: src/Commands.h:160
 msgid "[1.23 4.56 7.89]"
 msgstr "[1.23 4.56 7.89]"
 
-#: src/Commands.h:159
+#: src/Commands.h:161
 msgid "Matrix"
 msgstr "Matrice"
 
-#: src/Commands.h:160
+#: src/Commands.h:162
 msgid "[[1.23 4.56] [6.54 3.21]]"
 msgstr "[[1.23 4.56] [6.54 3.21]]"
 
-#: src/Commands.h:161
+#: src/Commands.h:163
 msgid "List"
 msgstr "Liste"
 
-#: src/Commands.h:162
+#: src/Commands.h:164
 msgid "{1.23 \"ABC\" # 45d}"
 msgstr "{1.23 \"ABC\" # 45d}"
 
-#: src/Commands.h:164
+#: src/Commands.h:166
 msgid "Names"
 msgstr "Noms"
 
-#: src/Commands.h:165
+#: src/Commands.h:167
 msgid "Name"
 msgstr "Nom"
 
-#: src/Commands.h:166
+#: src/Commands.h:168
 msgid "'CALC'"
 msgstr "'CALC'"
 
-#: src/Commands.h:168
+#: src/Commands.h:170
 msgid "Procedures"
 msgstr "Programmes"
 
-#: src/Commands.h:169
+#: src/Commands.h:171
 msgid "Program"
 msgstr "Programme"
 
-#: src/Commands.h:170
+#: src/Commands.h:172
 msgid "<< DUP + SWAP >>"
 msgstr "<< DUP + SWAP >>"
 
-#: src/Commands.h:171
+#: src/Commands.h:173
 msgid "Algebraic"
 msgstr "Algébrique"
 
-#: src/Commands.h:172
+#: src/Commands.h:174
 msgid "'X+2*Y=Z'"
 msgstr "'X+2*Y=Z'"
 
-#: src/Commands.h:177
+#: src/Commands.h:179
 msgid "Flag #"
 msgstr "Option #"
 
-#: src/Commands.h:178
+#: src/Commands.h:180
 msgid "Description"
 msgstr "Description"
 
-#: src/Commands.h:179
+#: src/Commands.h:181
 msgid "Status"
 msgstr "État"
 
-#: src/Commands.h:191
+#: src/Commands.h:193
 msgid "Set"
 msgstr "Activé"
 
-#: src/Commands.h:191
+#: src/Commands.h:193
 msgid "Unset"
 msgstr "Désactivé"

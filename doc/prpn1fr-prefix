@@ -38,6 +38,9 @@ Mode batch, implique le mode console.
 .B \-z,\ \-\-dry\-run
 Ignore les fichiers rc.
 .TP
+.B \-a,\ \-\-class
+Affiche le comptage des classes avant de terminer.
+.TP
 .B \-d,\ \-\-debug\ \fIdebug_option\fP
 Mode debug, prend un paramètre.
 .SH COMMANDES

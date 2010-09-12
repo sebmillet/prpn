@@ -42,11 +42,14 @@ OPTIONS
        -z, --dry-run
 	      Ignore rc files.
 
+       -a, --class
+	      Display class count before exiting.
+
        -d, --debug debug_option
 	      Debug mode, requires a parameter.
 
 COMMANDS
-       Commands  are  followed by the number of arguments they take, in paren‐
+       Commands  are  followed by the number of arguments they take, in paren
        thesis. These arguments are taken from the stack.
 
        _HELP (0)
@@ -290,6 +293,12 @@ COMMANDS
        WAIT (1)
 	      Wait a number of seconds
 
+       CLLCD (0)
+	      Clear the screen
+
+       CLMF (0)
+	      Clear the message flag
+
        _READ (1)
 	      Read file and puts its content in the stack
 
@@ -327,7 +336,7 @@ OBJECT TYPES
 
        Names
 
-       Name   ´ ´  ´CALC´
+       Name	 CALC
 
        Procedures
 
@@ -335,7 +344,7 @@ OBJECT TYPES
 	      << >>	<< DUP + SWAP >>
 
        Algebraic
-	      ´ ´  ´X+2*Y=Z´
+		 X+2*Y=Z
 
 INITIALIZATION FILES
        ~/.prpn/stackrc
@@ -345,7 +354,7 @@ INITIALIZATION FILES
 	      Variables structure, and actual working directory.
 
 AUTHOR
-       Written by Sébastien Millet <sebastien.millet1@club-internet.fr>.  Per‐
+       Written by Sbastien Millet <sebastien.millet1@club-internet.fr>.  Per
        mission	is  granted  to  copy,	distribute and/or modify this document
        under the terms of the GNU General Public License, Version 3  published
        by the Free Software Foundation.

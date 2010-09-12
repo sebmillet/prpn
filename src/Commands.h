@@ -119,6 +119,8 @@ BuiltinCommandDescriptor builtinCommands[] = {
 	  // Programs
 	{1, BC_COMMAND_WRAPPER, "WAIT", 0, 0, &bc_wait, 0, 0, _N("Wait a number of seconds")},
 	  // Misc
+	{0, BC_RAW, "CLLCD", &bc_cllcd, 0, 0, 0, 0, _N("Clear the screen")},
+	{0, BC_RAW, "CLMF", &bc_clmf, 0, 0, 0, 0, _N("Clear the message flag")},
 	{1, BC_RAW, PREFIX_NOSTD "READ", &bc_read, 0, 0, 0, 0, _N("Read file and puts its content in the stack")},
 	{2, BC_COMMAND_WRAPPER, PREFIX_NOSTD "WRITE", 0, 0, 0, &bc_write, 0, _N("Write the second item into the file named by the first item")},
 	{0, BC_RAW, "UNDO", &bc_undo, 0, 0, 0, 0, _N("Undo last command, 50 levels by default")},

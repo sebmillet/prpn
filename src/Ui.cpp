@@ -75,9 +75,28 @@ static string display_error_l2 = "";
   // Uncomment the below if you wish the calculator to display
   // a message on start-up
 /*static bool is_displaying_error = true;
-static string display_error_l1 = "HELP command for help";
+static string display_error_l1 = "_HELP command for help";
 static string display_error_l2 = "";
 */
+static bool clmf = false;
+static vector<string> disp;
+void ui_reset_clmf() {
+	if (clmf) {
+		set_refresh_stack_flag();
+		clmf = false;
+	}
+}
+void ui_set_clmf() {
+	if (!clmf) {
+		set_refresh_stack_flag();
+		clmf = true;
+	}
+}
+bool ui_get_clmf() { return clmf; }
+void ui_cllcd() {
+	for (vector<string>::iterator it = disp.begin(); it != disp.end(); it++)
+		*it = "";
+}
 
 static bool refresh_stack_flag = true;
 static void set_refresh_stack_flag() { refresh_stack_flag = true; }
@@ -494,7 +513,7 @@ static void refresh_stack(const int& enforced_nb_stack_elems_to_display) {
 	if (!ui_impl->want_to_refresh_display() && !ui_get_refresh_stack_flag())
 		return;
 
-	//debug_write("A0: refresh_stack(): 1 (stack refreshed)");
+	debug_write("A0: refresh_stack(): 1 (stack refreshed)");
 
 	string l;
 
@@ -510,23 +529,36 @@ static void refresh_stack(const int& enforced_nb_stack_elems_to_display) {
 		ui_shift.actual = 0;
 		//debug_write("A0: refresh_stack(): 2 (get_recalc_stack_flag() == true)");
 	}
-
 	//debug_write("");
 
-	bool recalc = get_recalc_stack_flag();
-	bool no_more_lines = false;
-	for (int i = 1; i <= i_upper && !no_more_lines; i++) {
+	if (i_upper >= 0)
+		disp.resize(i_upper);
+
+	if (!ui_get_clmf()) {
+		bool recalc = get_recalc_stack_flag();
+		bool no_more_lines = false;
+		int i;
 		string* ps;
-		if (is_displaying_error && i == 1)
-			ps = &display_error_l1;
-		else if (is_displaying_error && i == 2 && !display_error_l2.empty())
-			ps = &display_error_l2;
-		else {
-			l = ui_get_ts_display_line(i, recalc, no_more_lines);
-			ps = &l;
+		for (i = 1; i <= i_upper && !no_more_lines; i++) {
+			if (is_displaying_error && i == 1)
+				ps = &display_error_l1;
+			else if (is_displaying_error && i == 2 && !display_error_l2.empty())
+				ps = &display_error_l2;
+			else {
+				l = ui_get_ts_display_line(i, recalc, no_more_lines);
+				ps = &l;
+			}
+			disp[i - 1] = *ps;
 		}
-		ui_impl->set_line(i, *ps);
+		i_upper = i - 1;
+		if (i_upper < 0)
+			i_upper = 0;
+		disp.resize(i_upper);
 	}
+
+	for (int i = 1; i <= i_upper; i++)
+		ui_impl->set_line(i, disp[i - 1]);
+
 	reset_recalc_stack_flag();
 	reset_refresh_stack_flag();
 }
@@ -612,6 +644,7 @@ static void enter_edit_mode() {
 }
 
 void ui_notify_button_pressed(const char *c) {
+	ui_reset_clmf();
 	work_out_typein_status();
 	ui_reset_is_displaying_error();
 
@@ -672,6 +705,7 @@ bool ui_notify_key_pressed(const int& k) {
 
 	//debug_write_i("A1: ui_notify_key_pressed(): k = %i", static_cast<int>(k));
 
+	ui_reset_clmf();
 	work_out_typein_status();
 	int delta = 0;
 	if (typein_status == TYPEIN_EMPTY && (k == UIK_UP || k == UIK_DOWN)) {
