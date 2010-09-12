@@ -828,16 +828,29 @@ SIO NodeStack::nodestack_pop() {
 // Exec
 //
 
+#ifdef DEBUG_CLASS_COUNT
+long Exec::class_count = 0;
+#endif
+
 Exec::Exec(const SIO& ss, VarDirectory *l) : s(ss), lvars(l), ip(0) {
 	//cout << "Creation of a new exec level: " << s.ownership << " / " << s.si << endl;
+#ifdef DEBUG_CLASS_COUNT
+	class_count++;
+#endif
 }
 
 Exec::~Exec() {
 	//cout << "Deleting one Exec: " << this << "\n";
+#ifdef DEBUG_CLASS_COUNT
+	class_count--;
+#endif
 }
 
 Exec::Exec(const Exec& e) : s(e.s), lvars(e.lvars), ip(e.ip) {
 	//cout << "Creating one Exec: " << this << "\n";
+#ifdef DEBUG_CLASS_COUNT
+	class_count++;
+#endif
 }
 
 
@@ -896,12 +909,15 @@ void TransStack::TSVars::recall_pwd(VarDirectory* d) { tree->recall_pwd(d); }
 long TransStack::class_count = 0;
 #endif
 
-TransStack::TransStack() : count(0), modified_flag(true) {
+TransStack::TransStack(const bool& tc, const size_t& gl, vector<Exec> *ex) : count(0), modified_flag(true),
+	temporary_copy(tc), ground_level(gl), exec_stack(ex) {
 #ifdef DEBUG_CLASS_COUNT
 		class_count++;
 #endif
 	tail = new NodeStack(0, 0, 0);
 	head = tail;
+	if (exec_stack == NULL)
+		exec_stack = new vector<Exec>;
 }
 
 TransStack::~TransStack() {
@@ -911,6 +927,8 @@ TransStack::~TransStack() {
 #ifdef DEBUG_TRANSSTACK
 	cout << "TransStack::~TransStack() (start), count = " << count << endl;
 #endif // DEBUG_TRANSSTACK
+
+	delete exec_stack;
 
 	forward_head();
 	while (count > 0)
@@ -1054,7 +1072,7 @@ st_err_t TransStack::inner_push_eval(const eval_t& et, SIO& s, const bool& insid
 			VarDirectory *v = s.si->get_lvars(feed_with_stack);
 			if (s.ownership == TSO_OUTSIDE_TS)
 				s.ownership = TSO_OWNED_BY_TS;
-			exec_stack.push_back(Exec(s, v));
+			exec_stack->push_back(Exec(s, v));
 			if (feed_with_stack)
 				c = read_lvars(v, cmd_err);
 		} else if (msi != MANAGE_SI_EXEC && s.ownership == TSO_OWNED_BY_TS)
@@ -1065,7 +1083,7 @@ st_err_t TransStack::inner_push_eval(const eval_t& et, SIO& s, const bool& insid
 
 st_err_t TransStack::do_push_eval(SIO& s, const bool& inside_undo_sequence, string& cmd_err) {
 	st_err_t c = inner_push_eval(EVAL_SOFT, s, inside_undo_sequence, cmd_err);
-	while (c == ST_ERR_OK && !exec_stack.empty()) {
+	while (c == ST_ERR_OK && exec_stack->size() > ground_level) {
 		c = exec1(cmd_err);
 	}
 	clear_exec_stack();
@@ -1085,39 +1103,39 @@ const StackItem *TransStack::transstack_get_const_si(const int& stack_item_numbe
 }
 
 st_err_t TransStack::exec1(string& cmd_err) {
-	if (exec_stack.empty())
+	if (exec_stack->empty())
 		return ST_ERR_OK;
-	Exec& e = exec_stack.back();
+	Exec& e = exec_stack->back();
 
 	st_err_t c = e.s.si->exec1(*this, e.ip, cmd_err);
 
 	if (c != ST_ERR_OK)
 		return c;
-	Exec& e2 = exec_stack.back();
+	Exec& e2 = exec_stack->back();
 	if (e2.ip == IP_END)
 		pop_exec_stack();
 	return ST_ERR_OK;
 }
 
 void TransStack::push_exec_stack(SIO s, VarDirectory *lvars) {
-	exec_stack.push_back(Exec(s, lvars));
+	exec_stack->push_back(Exec(s, lvars));
 }
 
 void TransStack::clear_exec_stack() {
-	while (pop_exec_stack())
-		;
+	while (exec_stack->size() > ground_level)
+		pop_exec_stack();
 }
 
 size_t TransStack::pop_exec_stack() {
-	if (exec_stack.empty())
-		return 0;
-	Exec& e = exec_stack.back();
+	if (exec_stack->size() <= ground_level)
+		return exec_stack->size();
+	Exec& e = exec_stack->back();
 	if (e.s.ownership == TSO_OWNED_BY_TS)
 		delete e.s.si;
 	else
 		e.s.si->clear_lvars();
-	exec_stack.pop_back();
-	return exec_stack.size();
+	exec_stack->pop_back();
+	return exec_stack->size();
 }
 
 st_err_t TransStack::read_lvars(VarDirectory *v, string& cmd_err) {
@@ -1142,7 +1160,7 @@ st_err_t TransStack::read_lvars(VarDirectory *v, string& cmd_err) {
 
 VarFile *TransStack::get_local_var(const string& s) {
 	Var *e;
-	for (std::vector<Exec>::reverse_iterator it = exec_stack.rbegin(); it != exec_stack.rend(); it++) {
+	for (std::vector<Exec>::reverse_iterator it = exec_stack->rbegin(); it != exec_stack->rend(); it++) {
 		if (it->lvars != NULL && (e = it->lvars->get_var(s)) != NULL) {
 			if (e->get_type() == VAR_FILE)
 				return dynamic_cast<VarFile*>(e);
@@ -1604,7 +1622,14 @@ static st_err_t bc_to_list(TransStack& ts, SIO *args, string&) {
 
 static st_err_t bc_list_to(TransStack& ts, SIO *args, string&) { return args[0].si->op_list_to(ts, args[0].ownership); }
 
-static st_err_t bc_get(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { return op1.op_get_generic(op2, ret); }
+static st_err_t bc_get(TransStack& ts, SIO *args, string& cmd_err) {
+	StackItem *ret;
+	st_err_t c = args[0].si->op_get_generic(ts, *(args[1].si), ret);
+	if (c == ST_ERR_OK)
+		ts.transstack_push(ret);
+	return c;
+}
+//static st_err_t bc_get(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { return op1.op_get_generic(ts, op2, ret); }
 
 static void pushback_incremented_bounds(TransStack& ts, SIO *args, const bool& push_args0) {
 	Coordinates bounds;
@@ -1622,16 +1647,15 @@ static void pushback_incremented_bounds(TransStack& ts, SIO *args, const bool& p
 	  // Not necessary. Done to make sure we now use sil, not ready_si
 	ready_si = NULL;
 
-	c = sil->increment_list(bounds);
+	c = sil->increment_list(ts, bounds);
 	if (c != ST_ERR_OK)
 		throw(CalcFatal(__FILE__, __LINE__, "pushback_incremented_bounds(): increment() returned a bad error code!"));
 	ts.transstack_push(sil);
 }
 
-
 static st_err_t bc_geti(TransStack& ts, SIO *args, string& cmd_err) {
 	StackItem *ret;
-	st_err_t c = bc_get(*(args[0].si), *(args[1].si), ret, cmd_err);
+	st_err_t c = args[0].si->op_get_generic(ts, *(args[1].si), ret);
 	if (c == ST_ERR_OK) {
 		pushback_incremented_bounds(ts, args, true);
 		ts.transstack_push(ret);
@@ -1642,7 +1666,7 @@ static st_err_t bc_geti(TransStack& ts, SIO *args, string& cmd_err) {
 static st_err_t bc_put(TransStack& ts, SIO *args, string&) {
 	StackItem *ready_si;
 	get_ready_si(args[0], ready_si);
-	st_err_t c = ready_si->op_put_generic(*(args[1].si), args[2]);
+	st_err_t c = ready_si->op_put_generic(ts, *(args[1].si), args[2]);
 	if (c == ST_ERR_OK)
 		ts.transstack_push(ready_si);
 	else if (args[0].si != ready_si)
@@ -1663,9 +1687,21 @@ static st_err_t bc_arry_to(TransStack& ts, SIO *args, string&) { return args[0].
 
 static st_err_t bc_to_arry(TransStack& ts, SIO *args, string&) { return args[0].si->op_to_arry(ts); }
 
-static st_err_t bc_con(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { return op1.op_con_generic(op2, ret); }
+static st_err_t bc_con(TransStack& ts, SIO *args, string& cmd_err) {
+	StackItem *ret;
+	st_err_t c = args[0].si->op_con_generic(ts, *(args[1].si), ret);
+	if (c == ST_ERR_OK)
+		ts.transstack_push(ret);
+	return c;
+}
 static st_err_t bc_trn(StackItem& op1, StackItem*& ret, string&) { return op1.op_trn(ret); }
-static st_err_t bc_rdm(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { return op1.op_rdm_generic(op2, ret); }
+static st_err_t bc_rdm(TransStack& ts, SIO *args, string& cmd_err) {
+	StackItem *ret;
+	st_err_t c = args[0].si->op_rdm_generic(ts, *(args[1].si), ret);
+	if (c == ST_ERR_OK)
+		ts.transstack_push(ret);
+	return c;
+}
 static st_err_t bc_idn(StackItem& op1, StackItem*& ret, string&) { return op1.op_idn(ret); }
 
   // Variables
@@ -1827,6 +1863,8 @@ static st_err_t bc_clmf(TransStack& ts, SIO *args, string&) {
 	ui_set_clmf();
 	return ST_ERR_OK;
 }
+
+static st_err_t bc_disp(StackItem& op1, StackItem& op2, StackItem*&, string&) { return op2.op_disp(op1); }
 
 static st_err_t bc_read(TransStack& ts, SIO *args, string&) { return args[0].si->op_read(ts); }
 
@@ -2120,9 +2158,9 @@ st_err_t si_matrix_as3(st_err_t (*f)(const Cplx&, const Cplx&, Cplx&), Matrix<Cp
 }
 
 #define IMPLEMENT_SCALAR_OP_CON_LIST(MATSI, SI, SCALAR) \
-st_err_t SI::op_con(StackItemList* sil, StackItem*& ret) { \
+st_err_t SI::op_con(TransStack& ts, StackItemList* sil, StackItem*& ret) { \
 	Coordinates coord; \
-	st_err_t c = sil->get_coordinates(coord); \
+	st_err_t c = sil->get_coordinates(ts, coord); \
 	if (c != ST_ERR_OK) \
 		return c; \
 	int i, j; \
@@ -2135,7 +2173,7 @@ IMPLEMENT_SCALAR_OP_CON_LIST(StackItemMatrixReal, StackItemReal, Real)
 IMPLEMENT_SCALAR_OP_CON_LIST(StackItemMatrixCplx, StackItemCplx, Cplx)
 
 #define IMPLEMENT_SCALAR_OP_CON_MAT(MATSI, SI, SCALAR) \
-st_err_t SI::op_con(MATSI* sim, StackItem*& ret) { \
+st_err_t SI::op_con(TransStack& ts, MATSI* sim, StackItem*& ret) { \
 	Matrix<SCALAR> *t = sim->get_matrix(); \
 	Matrix<SCALAR> *pmat = new Matrix<SCALAR>(t->get_dimension(), t->get_nb_lines(), t->get_nb_columns(), SCALAR(sc)); \
 	ret = new MATSI(pmat); \
@@ -2304,9 +2342,9 @@ st_err_t StackItemReal::op_r_to_b(StackItem*& ret) {
 }
 
 #define IMPLEMENT_OP_PUT_MATRIX(MATSI, SI, Scalar) \
-st_err_t SI::op_put_matrix(StackItemList* sil, MATSI* sim) { \
+st_err_t SI::op_put_matrix(TransStack& ts, StackItemList* sil, MATSI* sim) { \
 	Coordinates coord; \
-	st_err_t c = sil->prepare_list_access(sim, coord); \
+	st_err_t c = sil->prepare_list_access(ts, sim, coord); \
 	if (c != ST_ERR_OK) \
 		return c; \
 	sim->set_value(coord, Scalar(sc)); \
@@ -2327,6 +2365,18 @@ st_err_t StackItemReal::op_idn(StackItem*& ret) {
 	for (int i = 0; i < n; i++)
 		pmat->set_value(i, i, Real(1));
 	ret = new StackItemMatrixReal(pmat);
+	return ST_ERR_OK;
+}
+
+st_err_t StackItemReal::op_disp(StackItem& arg1) {
+	int n;
+	st_err_t c = to_integer(n);
+	if (c != ST_ERR_OK)
+		return c;
+	string s = simple_string(&arg1);
+	if (s.length() >= 2 && s.at(0) == '"' && s.at(s.length() - 1) == '"')
+		s = s.substr(1, s.length() - 2);
+	ui_disp(n, s);
 	return ST_ERR_OK;
 }
 
@@ -2819,7 +2869,8 @@ st_err_t StackItemList::op_list_to(TransStack& ts, const tso_t& o) {
 	return ST_ERR_OK;
 }
 
-st_err_t StackItemList::get_coordinates(Coordinates& coord) {
+st_err_t StackItemList::get_coordinates(TransStack& ts, Coordinates& coord) {
+	//TransStack *tmpts = new TransStack(true, );
 	size_t nb = get_nb_items();
 	if (nb < 1 || nb > 2)
 		return ST_ERR_BAD_ARGUMENT_VALUE;
@@ -2855,9 +2906,9 @@ st_err_t StackItemList::op_size(StackItem*& ret) {
 	return ST_ERR_OK;
 }
 
-st_err_t StackItemList::prepare_list_access(StackItem *si, Coordinates& coord) {
+st_err_t StackItemList::prepare_list_access(TransStack& ts, StackItem *si, Coordinates& coord) {
 	Coordinates bounds;
-	st_err_t c = get_coordinates(coord);
+	st_err_t c = get_coordinates(ts, coord);
 	if (c != ST_ERR_OK)
 		return c;
 	if ((c = si->get_bounds(bounds)) != ST_ERR_OK)
@@ -2867,9 +2918,9 @@ st_err_t StackItemList::prepare_list_access(StackItem *si, Coordinates& coord) {
 	return ST_ERR_OK;
 }
 
-st_err_t StackItemList::op_get(StackItemList *sil, StackItem*& ret) {
+st_err_t StackItemList::op_get(TransStack& ts, StackItemList *sil, StackItem*& ret) {
 	Coordinates coord;
-	st_err_t c = prepare_list_access(sil, coord);
+	st_err_t c = prepare_list_access(ts, sil, coord);
 	if (c != ST_ERR_OK)
 		return c;
 	ret = sil->list[coord.i - 1]->dup();
@@ -2877,9 +2928,9 @@ st_err_t StackItemList::op_get(StackItemList *sil, StackItem*& ret) {
 }
 
 #define IMPLEMENT_SCALAR_OP_GET(MATSI, SI) \
-st_err_t StackItemList::op_get(MATSI* sim, StackItem*& ret) { \
+st_err_t StackItemList::op_get(TransStack& ts, MATSI* sim, StackItem*& ret) { \
 	Coordinates coord; \
-	st_err_t c = prepare_list_access(sim, coord); \
+	st_err_t c = prepare_list_access(ts, sim, coord); \
 	if (c != ST_ERR_OK) \
 		return c; \
 	ret = new SI(sim->get_value(coord)); \
@@ -2888,9 +2939,9 @@ st_err_t StackItemList::op_get(MATSI* sim, StackItem*& ret) { \
 IMPLEMENT_SCALAR_OP_GET(StackItemMatrixReal, StackItemReal)
 IMPLEMENT_SCALAR_OP_GET(StackItemMatrixCplx, StackItemCplx)
 
-st_err_t StackItemList::op_put(StackItemList* sil, SIO& s) {
+st_err_t StackItemList::op_put(TransStack& ts, StackItemList* sil, SIO& s) {
 	Coordinates coord;
-	st_err_t c = prepare_list_access(sil, coord);
+	st_err_t c = prepare_list_access(ts, sil, coord);
 	if (c != ST_ERR_OK)
 		return c;
 	StackItem *si;
@@ -2900,8 +2951,8 @@ st_err_t StackItemList::op_put(StackItemList* sil, SIO& s) {
 	return ST_ERR_OK;
 }
 
-st_err_t StackItemList::op_put(StackItemMatrixReal* simr, SIO& s) { return s.si->op_put_matrix(this, simr); }
-st_err_t StackItemList::op_put(StackItemMatrixCplx* simc, SIO& s) { return s.si->op_put_matrix(this, simc); }
+st_err_t StackItemList::op_put(TransStack& ts, StackItemMatrixReal* simr, SIO& s) { return s.si->op_put_matrix(ts, this, simr); }
+st_err_t StackItemList::op_put(TransStack& ts, StackItemMatrixCplx* simc, SIO& s) { return s.si->op_put_matrix(ts, this, simc); }
 
 static void increment_coordinates(const Coordinates& bounds, Coordinates& coord) {
 	if (bounds.d != coord.d)
@@ -2924,9 +2975,9 @@ static void increment_coordinates(const Coordinates& bounds, Coordinates& coord)
 	}
 }
 
-st_err_t StackItemList::increment_list(const Coordinates& bounds) {
+st_err_t StackItemList::increment_list(TransStack& ts, const Coordinates& bounds) {
 	Coordinates coord;
-	st_err_t c = get_coordinates(coord);
+	st_err_t c = get_coordinates(ts, coord);
 	if (c != ST_ERR_OK)
 		return c;
 	if (coord.d != bounds.d)
@@ -2949,7 +3000,7 @@ st_err_t StackItemList::increment_list(const Coordinates& bounds) {
 
 st_err_t StackItemList::op_to_arry(TransStack& ts) {
 	Coordinates coord;
-	st_err_t c = get_coordinates(coord);
+	st_err_t c = get_coordinates(ts, coord);
 	if (c != ST_ERR_OK)
 		return c;
 	if (coord.i < 1)
@@ -3076,9 +3127,9 @@ st_err_t StackItemList::op_add(StackItemExpression* si, StackItem*& ret) { retur
 st_err_t StackItemList::op_add(StackItemProgram* si, StackItem*& ret) { return list_add(true, si, ret); }
 
 #define IMPLEMENT_LIST_OP_RDM(MATSI, SCALAR) \
-st_err_t StackItemList::op_rdm(MATSI* sim, StackItem*& ret) { \
+st_err_t StackItemList::op_rdm(TransStack& ts, MATSI* sim, StackItem*& ret) { \
 	Coordinates coord; \
-	st_err_t c = get_coordinates(coord); \
+	st_err_t c = get_coordinates(ts, coord); \
 	if (c != ST_ERR_OK) \
 		return c; \
 	int i, j; \

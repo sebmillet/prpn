@@ -47,19 +47,19 @@ Mode debug, prend un paramètre.
 Les commandes sont suivies du nombre d'arguments qu'elles prennent, entre parenthèses. Ces arguments sont pris dans la pile.
 .TP
 .B _HELP\ (0)
-Affiche un écran d'aide
+Display a help screen
 .TP
 .B _HELP_FLAGS\ (0)
-Affiche un écran d'aide sur les options
+Display a help screen about flags
 .TP
 .B _EXIT\ (0)
-Quitte le programme
+Quit program
 .TP
 .B +\ (2)
 Addition
 .TP
 .B -\ (2)
-Soustraction
+Subtraction
 .TP
 .B *\ (2)
 Multiplication
@@ -68,241 +68,241 @@ Multiplication
 Division
 .TP
 .B ^\ (2)
-Puissance
+Power
 .TP
 .B COS\ (1)
-Cosinus
+Cosine
 .TP
 .B SIN\ (1)
-Sinus
+Sine
 .TP
 .B TAN\ (1)
-Tangente
+Tangent
 .TP
 .B ACOS\ (1)
-Arc-cosinus
+Arccos
 .TP
 .B ASIN\ (1)
-Arc-sinus
+Arcsin
 .TP
 .B ATAN\ (1)
-Arc-tangente
+Arctan
 .TP
 .B LN\ (1)
-Logarithme (base e)
+Logarihtm (e base)
 .TP
 .B EXP\ (1)
-Exponentiel
+Exponential
 .TP
 .B NEG\ (1)
-Opposé
+Opposite
 .TP
 .B IP\ (1)
-Partie entière
+Integer part
 .TP
 .B INV\ (1)
 1/x
 .TP
 .B SQ\ (1)
-Carré
+Square
 .TP
 .B SQR\ (1)
-Racine carrée
+Square root
 .TP
 .B R->C\ (2)
-Réel à complexe
+Real to complex
 .TP
 .B C->R\ (1)
-Complexe à réel
+Complex to real
 .TP
 .B SAME\ (2)
-Est identique
+Is identical
 .TP
 .B ==\ (2)
-Est égal à
+Equal to
 .TP
 .B <>\ (2)
-Est différent de
+Different from
 .TP
 .B <\ (2)
-Est plus petit que
+Lower than
 .TP
 .B <=\ (2)
-Est plus petit que, ou égal à
+Lower than or equal to
 .TP
 .B >\ (2)
-Est plus grand que
+Greater than
 .TP
 .B >=\ (2)
-Est plus grand que, ou égal à
+Greater than or equal to
 .TP
 .B DUP\ (1)
-Copie le premier élément
+Copy the first item
 .TP
 .B SWAP\ (2)
-Échange les deux premiers éléments
+Exchange the first two items
 .TP
 .B DROP\ (1)
-Supprime le premier élément
+Delete the first item
 .TP
 .B CLEAR\ (0)
-Efface la pile
+Clear the stack
 .TP
 .B OVER\ (2)
-Copie le second élément
+Copy the second item
 .TP
 .B DUP2\ (2)
-Copie les deux premiers éléments
+Copy the first two items
 .TP
 .B DROP2\ (2)
-Supprime les deux premiers éléments
+Delete the first two items
 .TP
 .B ROT\ (3)
-Déplace le troisième élément en première position
+Move the third item to the first position
 .TP
 .B ROLLD\ (1)
-Déplace le premier élément en Nième position
+Move the first item to the Nth position
 .TP
 .B ROLL\ (1)
-Déplace le Ne élément en première position
+Move the Nth item to the first position
 .TP
 .B PICK\ (1)
-Copie le Ne élément
+Copy the Nth item
 .TP
 .B DUPN\ (1)
-Copie les N premiers éléments
+Copy the n first items
 .TP
 .B DROPN\ (1)
-Supprime les N premiers éléments
+Delete the n first items
 .TP
 .B DEPTH\ (0)
-Renvoie le nombre d'éléments dans la pile
+Get the number of items
 .TP
 .B SF\ (1)
-Active l'option
+Set flag
 .TP
 .B CF\ (1)
-Désactive l'option
+Clear flag
 .TP
 .B FS?\ (1)
-Renvoie 1 si l'option est activée, 0 sinon
+Return 1 if flag is set, 0 otherwise
 .TP
 .B FC?\ (1)
-Renvoie 0 si l'option est activée, 1 sinon
+Return 0 if flag is set, 1 otherwise
 .TP
 .B FS?C\ (1)
-Exécute FS? et désactive l'option
+Do FS? then clear flag
 .TP
 .B FC?C\ (1)
-Exécute FC? et désactive l'option
+Do FC? then clear flag
 .TP
 .B ->STR\ (1)
-Convertis un élément en chaîne de caractères
+Convert to string
 .TP
 .B STR->\ (0)
-Convertis une chaîne de caractère en éléments
+Convert from string
 .TP
 .B SUB\ (3)
-Extrais le contenu d'une chaîne de caractères ou d'une liste
+Extract content from a string or a list
 .TP
 .B ->LIST\ (1)
-Mets les éléments dans une liste
+Items to list
 .TP
 .B LIST->\ (1)
-Convertis la liste en ses éléments
+Extract items from list
 .TP
 .B GET\ (2)
-Extrais un élément d'une liste ou d'un tableau
+Get an item from a list or array
 .TP
 .B GETI\ (2)
-Extrais un élément d'une liste ou d'un tableau par incréments
+Get an item from a list or array by increments
 .TP
 .B PUT\ (3)
-Remplace un élément dans une liste ou un tableau
+Put an item into a list or array
 .TP
 .B PUTI\ (3)
-Remplace un élément dans une liste ou un tableau par incréments
+Put an item into a list or array by increments
 .TP
 .B SIZE\ (1)
-Dimension d'une liste ou d'un tableau
+Dimension of a list or array
 .TP
 .B ARRY->\ (1)
-Remplace un tableau par ses éléments
+Replace an array by all its elements
 .TP
 .B ->ARRY\ (1)
-Crée un tableau avec les éléments de la pile
+Create an array from a list of elements
 .TP
 .B CON\ (2)
-Crée un tableau constant
+Create a constant array
 .TP
 .B TRN\ (1)
-Transpose une matrice
+Transpose a matrix-type array
 .TP
 .B RDM\ (2)
-Modifie les dimensions d'un tableau
+Modify the dimension of an array
 .TP
 .B IDN\ (1)
-Crée une matrice identité
+Create an identity matrix
 .TP
 .B EVAL\ (0)
-Évalue l'élément
+Evaluate item
 .TP
 .B STO\ (2)
-Enregistre la valeur dans la variable
+Store value in variable name
 .TP
 .B RCL\ (1)
-Récupère la valeur de la variable
+Recall value from variable name
 .TP
 .B PURGE\ (1)
-Supprime la variable
+Remove a variable
 .TP
 .B VARS\ (0)
-Renvoie la liste des variables dans le répertoire courant
+Get the list of variables in current directory
 .TP
 .B PATH\ (0)
-Renvoie le répertoire en cours sous forme de liste
+Get the list from root to current directory
 .TP
 .B CRDIR\ (1)
-Crée un répertoire
+Create a directory
 .TP
 .B HOME\ (0)
-Définis le répertoire racine comme répertoire courant
+Set root directory as the current one
 .TP
 .B UP\ (0)
-Définis le répertoire parent comme répertoire courant
+Make the parent directory the current one
 .TP
 .B BIN\ (0)
-Utilise le mode binaire pour les entiers binaires
+Use binary mode for binary integers
 .TP
 .B OCT\ (0)
-Utilise le mode octal pour les entiers binaires
+Use octal mode for binary integers
 .TP
 .B DEC\ (0)
-Utilise le mode décimal pour les entiers binaires
+Use decimal mode for binary integers
 .TP
 .B HEX\ (0)
-Utilise le mode hexadécimal pour les entiers binaires
+Use hexadecimal mode for binary integers
 .TP
 .B STWS\ (1)
-Définis le nombre de bits des entiers binaires (de 1 à 64)
+Define the number of bits in binary integers (1 to 64)
 .TP
 .B RCWS\ (0)
-Renvoie le nombre de bits des entiers binaires
+Get the number of bits in binary integers
 .TP
 .B B->R\ (1)
-Convertis un entier binaire en réel
+Convert a binary integer into a real
 .TP
 .B R->B\ (1)
-Convertis un réel en entier binaire
+Convert a real into a binary integer
 .TP
 .B RCLF\ (0)
-Enregistre l'état des options dans un entier binaire
+Save flag states in a binary integer
 .TP
 .B STOF\ (1)
-Récupère l'état des options depuis un entier binaire
+Read flag states from a binary integer
 .TP
 .B WAIT\ (1)
-Pause d'une durée définie en secondes
+Wait a number of seconds
 .TP
 .B CLLCD\ (0)
 Clear the screen
@@ -310,20 +310,23 @@ Clear the screen
 .B CLMF\ (0)
 Clear the message flag
 .TP
+.B DISP\ (2)
+Display an item on a line of the screen
+.TP
 .B _READ\ (1)
-Lis le fichier et met son contenu dans la pile
+Read file and puts its content in the stack
 .TP
 .B _WRITE\ (2)
-Écris le second élément de la pile dans le fichier nommé par le premier élément
+Write the second item into the file named by the first item
 .TP
 .B UNDO\ (0)
-Annule la dernière commande, 50 niveaux par défaut
+Undo last command, 50 levels by default
 .TP
 .B _UNDO_LEVELS\ (1)
-Définis le nombre de niveaux d'annulation
+Define number of undo levels
 .TP
 .B _UNDO_LEVELS?\ (0)
-Renvoie le nombre de niveaux d'annulations
+Get number of undo levels
 .SH "TYPES D'OBJETS"
 .TP
 .I Donnée

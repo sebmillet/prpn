@@ -84,16 +84,16 @@ BuiltinCommandDescriptor builtinCommands[] = {
 	  // Lists and arrays
 	{1, BC_RAW, "->LIST", &bc_to_list, 0, 0, 0, 0, _N("Items to list")},
 	{1, BC_RAW, "LIST->", &bc_list_to, 0, 0, 0, 0, _N("Extract items from list")},
-	{2, BC_FUNCTION_WRAPPER, "GET", 0, 0, 0, &bc_get, 0, _N("Get an item from a list or array")},
+	{2, BC_RAW, "GET", &bc_get, 0, 0, 0, 0, _N("Get an item from a list or array")},
 	{2, BC_RAW, "GETI", &bc_geti, 0, 0, 0, 0, _N("Get an item from a list or array by increments")},
 	{3, BC_RAW, "PUT", &bc_put, 0, 0, 0, 0, _N("Put an item into a list or array")},
 	{3, BC_RAW, "PUTI", &bc_puti, 0, 0, 0, 0, _N("Put an item into a list or array by increments")},
 	{1, BC_FUNCTION_WRAPPER, "SIZE", 0, 0, &bc_size, 0, 0, _N("Dimension of a list or array")},
 	{1, BC_RAW, "ARRY->", &bc_arry_to, 0, 0, 0, 0, _N("Replace an array by all its elements")},
 	{1, BC_RAW, "->ARRY", &bc_to_arry, 0, 0, 0, 0, _N("Create an array from a list of elements")},
-	{2, BC_FUNCTION_WRAPPER, "CON", 0, 0, 0, &bc_con, 0, _N("Create a constant array")},
+	{2, BC_RAW, "CON", &bc_con, 0, 0, 0, 0, _N("Create a constant array")},
 	{1, BC_FUNCTION_WRAPPER, "TRN", 0, 0, &bc_trn, 0, 0, _N("Transpose a matrix-type array")},
-	{2, BC_FUNCTION_WRAPPER, "RDM", 0, 0, 0, &bc_rdm, 0, _N("Modify the dimension of an array")},
+	{2, BC_RAW, "RDM", &bc_rdm, 0, 0, 0, 0, _N("Modify the dimension of an array")},
 	{1, BC_FUNCTION_WRAPPER, "IDN", 0, 0, &bc_idn, 0, 0, _N("Create an identity matrix")},
 	  // Variables
 	{0, BC_RAW, "EVAL", &bc_eval, 0, 0, 0, 0, _N("Evaluate item")},
@@ -121,6 +121,7 @@ BuiltinCommandDescriptor builtinCommands[] = {
 	  // Misc
 	{0, BC_RAW, "CLLCD", &bc_cllcd, 0, 0, 0, 0, _N("Clear the screen")},
 	{0, BC_RAW, "CLMF", &bc_clmf, 0, 0, 0, 0, _N("Clear the message flag")},
+	{2, BC_COMMAND_WRAPPER, "DISP", 0, 0, 0, &bc_disp, 0, _N("Display an item on a line of the screen")},
 	{1, BC_RAW, PREFIX_NOSTD "READ", &bc_read, 0, 0, 0, 0, _N("Read file and puts its content in the stack")},
 	{2, BC_COMMAND_WRAPPER, PREFIX_NOSTD "WRITE", 0, 0, 0, &bc_write, 0, _N("Write the second item into the file named by the first item")},
 	{0, BC_RAW, "UNDO", &bc_undo, 0, 0, 0, 0, _N("Undo last command, 50 levels by default")},

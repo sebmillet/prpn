@@ -97,6 +97,13 @@ void ui_cllcd() {
 	for (vector<string>::iterator it = disp.begin(); it != disp.end(); it++)
 		*it = "";
 }
+void ui_disp(int line, const std::string& s) {
+	if (line < 1)
+		line = 1;
+	if (line > disp.size())
+		line = disp.size();
+	disp[line - 1] = s;
+}
 
 static bool refresh_stack_flag = true;
 static void set_refresh_stack_flag() { refresh_stack_flag = true; }
@@ -527,7 +534,7 @@ static void refresh_stack(const int& enforced_nb_stack_elems_to_display) {
 
 	if (get_recalc_stack_flag()) {
 		ui_shift.actual = 0;
-		//debug_write("A0: refresh_stack(): 2 (get_recalc_stack_flag() == true)");
+		debug_write("A0: refresh_stack(): 2 (get_recalc_stack_flag() == true)");
 	}
 	//debug_write("");
 
@@ -559,8 +566,10 @@ static void refresh_stack(const int& enforced_nb_stack_elems_to_display) {
 	for (int i = 1; i <= i_upper; i++)
 		ui_impl->set_line(i, disp[i - 1]);
 
-	reset_recalc_stack_flag();
-	reset_refresh_stack_flag();
+	if (!ui_get_clmf()) {
+		reset_recalc_stack_flag();
+		reset_refresh_stack_flag();
+	}
 }
 
 void ui_refresh_display(const int& enforced_nb_stack_elems_to_display) {

@@ -262,26 +262,26 @@ public:
 
 	  // LIST AND ARRAYS
 	virtual st_err_t op_list_to(TransStack&, const tso_t&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
-	virtual st_err_t op_get_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
-	virtual st_err_t op_get(StackItemList*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
-	virtual st_err_t op_get(StackItemMatrixReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
-	virtual st_err_t op_get(StackItemMatrixCplx*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
-	virtual st_err_t op_put_generic(StackItem&, SIO&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
-	virtual st_err_t op_put(StackItemList*, SIO&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
-	virtual st_err_t op_put(StackItemMatrixReal*, SIO&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
-	virtual st_err_t op_put(StackItemMatrixCplx*, SIO&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
-	virtual st_err_t op_put_matrix(StackItemList*, StackItemMatrixReal*) { return ST_ERR_BAD_ARGUMENT_TYPE; }
-	virtual st_err_t op_put_matrix(StackItemList*, StackItemMatrixCplx*) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_get_generic(TransStack&, StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_get(TransStack&, StackItemList*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_get(TransStack&, StackItemMatrixReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_get(TransStack&, StackItemMatrixCplx*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_put_generic(TransStack&, StackItem&, SIO&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_put(TransStack&, StackItemList*, SIO&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_put(TransStack&, StackItemMatrixReal*, SIO&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_put(TransStack&, StackItemMatrixCplx*, SIO&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_put_matrix(TransStack&, StackItemList*, StackItemMatrixReal*) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_put_matrix(TransStack&, StackItemList*, StackItemMatrixCplx*) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_size(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_arry_to(TransStack&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_to_arry(TransStack&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
-	virtual st_err_t op_con_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
-	virtual st_err_t op_con(StackItemList*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
-	virtual st_err_t op_con(StackItemMatrixReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
-	virtual st_err_t op_con(StackItemMatrixCplx*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
-	virtual st_err_t op_rdm_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
-	virtual st_err_t op_rdm(StackItemMatrixReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
-	virtual st_err_t op_rdm(StackItemMatrixCplx*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_con_generic(TransStack&, StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_con(TransStack&, StackItemList*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_con(TransStack&, StackItemMatrixReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_con(TransStack&, StackItemMatrixCplx*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_rdm_generic(TransStack&, StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_rdm(TransStack&, StackItemMatrixReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_rdm(TransStack&, StackItemMatrixCplx*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_idn(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_trn(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	  // VARIABLES
@@ -304,6 +304,8 @@ public:
 	  // _READ, _WRITE
 	virtual st_err_t op_read(TransStack&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_write(StackItem&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+
+	virtual st_err_t op_disp(StackItem&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 
 	  // Program execution
 	virtual st_err_t exec1(TransStack&, int&, std::string&);
@@ -459,15 +461,17 @@ public:
 
 	virtual st_err_t op_r_to_b(StackItem*&);
 
-	virtual st_err_t op_put_matrix(StackItemList*, StackItemMatrixReal*);
-	virtual st_err_t op_put_matrix(StackItemList*, StackItemMatrixCplx*);
+	virtual st_err_t op_put_matrix(TransStack&, StackItemList*, StackItemMatrixReal*);
+	virtual st_err_t op_put_matrix(TransStack&, StackItemList*, StackItemMatrixCplx*);
 
 	virtual st_err_t op_add(StackItemList*, StackItem*&);
 
-	virtual st_err_t op_con(StackItemList*, StackItem*&);
-	virtual st_err_t op_con(StackItemMatrixReal*, StackItem*&);
-	virtual st_err_t op_con(StackItemMatrixCplx*, StackItem*&);
+	virtual st_err_t op_con(TransStack&, StackItemList*, StackItem*&);
+	virtual st_err_t op_con(TransStack&, StackItemMatrixReal*, StackItem*&);
+	virtual st_err_t op_con(TransStack&, StackItemMatrixCplx*, StackItem*&);
 	virtual st_err_t op_idn(StackItem*&);
+
+	virtual st_err_t op_disp(StackItem&);
 };
 
 
@@ -523,12 +527,12 @@ public:
 	virtual st_err_t op_sq(StackItem*&);
 	virtual st_err_t op_inv(StackItem*&);
 
-	virtual st_err_t op_put_matrix(StackItemList*, StackItemMatrixCplx*);
+	virtual st_err_t op_put_matrix(TransStack&, StackItemList*, StackItemMatrixCplx*);
 
 	virtual st_err_t op_add(StackItemList*, StackItem*&);
 
-	virtual st_err_t op_con(StackItemList*, StackItem*&);
-	virtual st_err_t op_con(StackItemMatrixCplx*, StackItem*&);
+	virtual st_err_t op_con(TransStack&, StackItemList*, StackItem*&);
+	virtual st_err_t op_con(TransStack&, StackItemMatrixCplx*, StackItem*&);
 };
 
 
@@ -582,12 +586,12 @@ public:
 	virtual st_err_t op_add(StackItemMatrixCplx*, StackItem*&);
 	virtual st_err_t op_sub(StackItemMatrixCplx*, StackItem*&);
 
-	virtual st_err_t op_get_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_get(this, ret); }
-	virtual st_err_t op_put_generic(StackItem& arg2, SIO& s) { return arg2.op_put(this, s); }
+	virtual st_err_t op_get_generic(TransStack& ts, StackItem& arg2, StackItem*& ret) { return arg2.op_get(ts, this, ret); }
+	virtual st_err_t op_put_generic(TransStack& ts, StackItem& arg2, SIO& s) { return arg2.op_put(ts, this, s); }
 	virtual st_err_t op_size(StackItem*&);
 	virtual st_err_t op_arry_to(TransStack&);
-	virtual st_err_t op_rdm_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_rdm(this, ret); }
-	virtual st_err_t op_con_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_con(this, ret); }
+	virtual st_err_t op_rdm_generic(TransStack& ts, StackItem& arg2, StackItem*& ret) { return arg2.op_rdm(ts, this, ret); }
+	virtual st_err_t op_con_generic(TransStack& ts, StackItem& arg2, StackItem*& ret) { return arg2.op_con(ts, this, ret); }
 
 	virtual st_err_t op_add(StackItemList*, StackItem*&);
 	virtual st_err_t op_trn(StackItem*&);
@@ -636,12 +640,12 @@ public:
 	virtual st_err_t op_add(StackItemMatrixReal*, StackItem*&);
 	virtual st_err_t op_sub(StackItemMatrixReal*, StackItem*&);
 
-	virtual st_err_t op_get_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_get(this, ret); }
-	virtual st_err_t op_put_generic(StackItem& arg2, SIO& s) { return arg2.op_put(this, s); }
+	virtual st_err_t op_get_generic(TransStack& ts, StackItem& arg2, StackItem*& ret) { return arg2.op_get(ts, this, ret); }
+	virtual st_err_t op_put_generic(TransStack& ts, StackItem& arg2, SIO& s) { return arg2.op_put(ts, this, s); }
 	virtual st_err_t op_size(StackItem*&);
 	virtual st_err_t op_arry_to(TransStack&);
-	virtual st_err_t op_rdm_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_rdm(this, ret); }
-	virtual st_err_t op_con_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_con(this, ret); }
+	virtual st_err_t op_rdm_generic(TransStack& ts, StackItem& arg2, StackItem*& ret) { return arg2.op_rdm(ts, this, ret); }
+	virtual st_err_t op_con_generic(TransStack& ts, StackItem& arg2, StackItem*& ret) { return arg2.op_con(ts, this, ret); }
 
 	virtual st_err_t op_add(StackItemList*, StackItem*&);
 	virtual st_err_t op_trn(StackItem*&);
@@ -765,25 +769,25 @@ public:
 	virtual bool same(StackItem*) const;
 
 	virtual st_err_t get_bounds(Coordinates&) const;
-	st_err_t increment_list(const Coordinates&);
+	st_err_t increment_list(TransStack&, const Coordinates&);
 
-	virtual st_err_t get_coordinates(Coordinates&);
+	virtual st_err_t get_coordinates(TransStack&, Coordinates&);
 	virtual void to_string(ToString&, const bool& = false) const;
 	virtual st_err_t op_list_to(TransStack&, const tso_t&);
-	virtual st_err_t prepare_list_access(StackItem*, Coordinates&);
-	virtual st_err_t op_get_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_get(this, ret); }
-	virtual st_err_t op_get(StackItemList*, StackItem*&);
-	virtual st_err_t op_get(StackItemMatrixReal*, StackItem*&);
-	virtual st_err_t op_get(StackItemMatrixCplx*, StackItem*&);
-	virtual st_err_t op_put_generic(StackItem& arg2, SIO& s) { return arg2.op_put(this, s); }
-	virtual st_err_t op_put(StackItemList*, SIO&);
-	virtual st_err_t op_put(StackItemMatrixReal*, SIO&);
-	virtual st_err_t op_put(StackItemMatrixCplx*, SIO&);
+	virtual st_err_t prepare_list_access(TransStack&, StackItem*, Coordinates&);
+	virtual st_err_t op_get_generic(TransStack& ts, StackItem& arg2, StackItem*& ret) { return arg2.op_get(ts, this, ret); }
+	virtual st_err_t op_get(TransStack&, StackItemList*, StackItem*&);
+	virtual st_err_t op_get(TransStack&, StackItemMatrixReal*, StackItem*&);
+	virtual st_err_t op_get(TransStack&, StackItemMatrixCplx*, StackItem*&);
+	virtual st_err_t op_put_generic(TransStack& ts, StackItem& arg2, SIO& s) { return arg2.op_put(ts, this, s); }
+	virtual st_err_t op_put(TransStack&, StackItemList*, SIO&);
+	virtual st_err_t op_put(TransStack&, StackItemMatrixReal*, SIO&);
+	virtual st_err_t op_put(TransStack&, StackItemMatrixCplx*, SIO&);
 	virtual st_err_t op_size(StackItem*&);
 	virtual st_err_t op_to_arry(TransStack&);
-	virtual st_err_t op_con_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_con(this, ret); }
-	virtual st_err_t op_rdm(StackItemMatrixReal*, StackItem*&);
-	virtual st_err_t op_rdm(StackItemMatrixCplx*, StackItem*&);
+	virtual st_err_t op_con_generic(TransStack& ts, StackItem& arg2, StackItem*& ret) { return arg2.op_con(ts, this, ret); }
+	virtual st_err_t op_rdm(TransStack&, StackItemMatrixReal*, StackItem*&);
+	virtual st_err_t op_rdm(TransStack&, StackItemMatrixCplx*, StackItem*&);
 
 	virtual st_err_t list_add(const bool&, StackItem*, StackItem*&);
 	virtual st_err_t op_add_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_add(this, ret); }
@@ -1081,6 +1085,12 @@ public:
 const int IP_END = -1;
 
 class Exec {
+private:
+
+#ifdef DEBUG_CLASS_COUNT
+	static long class_count;
+#endif
+
 public:
 	SIO s;
 	VarDirectory* lvars;
@@ -1089,6 +1099,11 @@ public:
 	Exec(const SIO&, VarDirectory*);
 	Exec(const Exec&);
 	virtual ~Exec();
+
+#ifdef DEBUG_CLASS_COUNT
+	static int get_class_count() { return class_count; }
+#endif
+
 };
 
 
@@ -1106,7 +1121,9 @@ class TransStack {
 	bool modified_flag;
 	NodeStack* tail;
 	NodeStack* head;
-	std::vector<Exec> exec_stack;
+	std::vector<Exec> *exec_stack;
+	bool temporary_copy;
+	size_t ground_level;
 
 	virtual st_err_t exec1(std::string&);
 	virtual VarFile* get_local_var(const std::string&);
@@ -1136,7 +1153,7 @@ public:
 
 	//sitype_t si_get_type(StackItem* const &);
 
-	TransStack();
+	TransStack(const bool& = false, const size_t& = 0, std::vector<Exec>* = NULL);
 	virtual ~TransStack();
 
 #ifdef DEBUG_CLASS_COUNT
