@@ -35,16 +35,16 @@ Flag flags[] = {
 	{true, _N("Symbolic constants evaluation"), true},	// FL_CONST_EVAL	35
 	{true, _N("Symbolic functions evaluation"), true},	// FL_FUNC_EVAL		36
 	{true, "", true}, {true, "", true}, {true, "", true}, {true, "", true}, {true, "", true},
-		{true, _N("Binary integers word size"), true},	// FL_BIN_SIZE		37-42
-	{false, "", false}, {false, _N("Numeric base for binary integers"), false},		// FL_BIN_BASE		43-44
+		{true, _N("Binary integers word size"), true},	// FL_BIN_SIZE_6		37-42
+	{false, "", false}, {false, _N("Numeric base for binary integers"), false},		// FL_BIN_BASE_2		43-44
 	{true, _N("Level 1 display"), true},	// FL_DISPLAY_L1	45
 	{false, _N("Reserved"), false},	// FL_RESERVED1		46
 	{false, _N("Reserved"), false},	// FL_RESERVED2		47
 	{false, _N("Decimal separator"), false},	// FL_DECIMAL_SEP	48
-	{false, "", false}, {false, _N("Real numbers format"), false},						// FL_REAL_FORMAT	49-50
+	{false, "", false}, {false, _N("Real numbers format"), false},						// FL_REAL_FORMAT_2	49-50
 	{false, _N("Tone"), false},	// FL_TONE			51
 	{false, _N("Fast printing"), false},	// FL_FAST_PRINT	52
-	{false, "", false}, {false, "", false}, {false, "", false}, {false, _N("Number of decimals"), false},			// FL_REAL_NB_DECS	53-56
+	{false, "", false}, {false, "", false}, {false, "", false}, {false, _N("Number of decimals"), false},			// FL_REAL_NB_DECS_4	53-56
 	{false, _N("Underflow processed normally"), false},	// FL_UNDERFLOW_OK	57
 	{false, _N("Overflow processed normally"), false},					// FL_OVERFLOW_OK	58
 	{true, _N("Infinite Result processed normally"), true},			// FL_INFINITE		59
@@ -81,8 +81,11 @@ static string st_errors[] = {
 };
 
 static const int DEFAULT_UNDO_LEVELS = 50;
+  // Built-in maximum of undo levels.
+  // A negative value means "no maximum"
 static const int HARD_MAX_UNDO_LEVELS = -1;
 static int cfg_undo_levels = DEFAULT_UNDO_LEVELS;
+int cfg_get_undo_levels() { return cfg_undo_levels; }
 
 enum {RDM_HP, RDM_TABLE};
 static const bool DEFAULT_RDM_BEHAVIOR = RDM_HP;
@@ -1085,8 +1088,8 @@ st_err_t TransStack::inner_push_eval(const eval_t& et, SIO& s, const bool& insid
 	return c;
 }
 
-st_err_t TransStack::do_push_eval(SIO& s, const bool& inside_undo_sequence, string& cmd_err) {
-	st_err_t c = inner_push_eval(EVAL_SOFT, s, inside_undo_sequence, cmd_err);
+st_err_t TransStack::do_push_eval(SIO& s, const bool& inside_undo_sequence, string& cmd_err, const eval_t& et) {
+	st_err_t c = inner_push_eval(et, s, inside_undo_sequence, cmd_err);
 	while (c == ST_ERR_OK && exec_stack->size() > ground_level) {
 		c = exec1(cmd_err);
 	}
@@ -2881,16 +2884,35 @@ st_err_t StackItemList::get_coordinates(TransStack& ts, Coordinates& coord) {
 	string cmd_err;
 	st_err_t c = ST_ERR_OK;
 	SIO s;
+
+#ifdef DEBUG
+	for (vector<StackItem*>::iterator it = list.begin(); it != list.end() && c == ST_ERR_OK; it++) {
+		debug_write("Item to evaluate separately: ");
+		string x = simple_string(*it);
+		debug_write(x.c_str());
+	}
+#endif
+
 	for (vector<StackItem*>::iterator it = list.begin(); it != list.end() && c == ST_ERR_OK; it++) {
 		s.ownership = TSO_OWNED_BY_TS;
 		s.si = (*it)->dup();
-		c = tmpts->do_push_eval(s, inside_undo_sequence, cmd_err);
+		c = tmpts->do_push_eval(s, inside_undo_sequence, cmd_err, EVAL_HARD);
 	}
 	if (c == ST_ERR_OK) {
 		int n = static_cast<int>(tmpts->stack_get_count());
+
+#ifdef DEBUG
+		const StackItem *csi;
+		for (int i = 1; i <= n; i++) {
+			csi = tmpts->transstack_get_const_si(i);
+			debug_write_i("Result: item number %i", i);
+			debug_write(simple_string(const_cast<StackItem*>(csi)).c_str());
+		}
+#endif
+
 		if (n >= 1 && n <= 2) {
 			SIO *items = new SIO[n];
-			for (int i = n - 1; i >= 0; i--)
+			for (int i = 0; i < n; i++)
 				items[i] = tmpts->transstack_pop();
 			int value;
 			for (int i = 0; i < n; i++) {
@@ -2900,22 +2922,33 @@ st_err_t StackItemList::get_coordinates(TransStack& ts, Coordinates& coord) {
 						coord.i = value;
 					else
 						coord.j = value;
-				} else
+				} else {
+					c = ST_ERR_BAD_ARGUMENT_VALUE;
 					break;
+				}
 			}
-			if (c == ST_ERR_OK) {
-				for (int i = 0; i < n; i++)
-					items[i].cleanup();
-				coord.d = (n == 1 ? DIM_VECTOR : DIM_MATRIX);
-			} else
-				c = ST_ERR_BAD_ARGUMENT_VALUE;
+			for (int i = 0; i < n; i++)
+				items[i].cleanup();
 			delete []items;
+			if (c == ST_ERR_OK)
+				coord.d = (n == 1 ? DIM_VECTOR : DIM_MATRIX);
+			else
+				c = ST_ERR_BAD_ARGUMENT_VALUE;
 		} else {
 			c = ST_ERR_BAD_ARGUMENT_VALUE;
 		}
 	}
 	delete tmpts;
 
+#ifdef DEBUG
+	debug_write("coord.d:");
+	if (coord.d == DIM_VECTOR)
+		debug_write("vector");
+	else
+		debug_write("matrix");
+	debug_write_i("coord.i = %i", coord.i);
+	debug_write_i("coord.j = %i", coord.j);
+#endif
 
 	/*size_t nb = get_nb_items();
 	if (nb < 1 || nb > 2)
@@ -3031,15 +3064,19 @@ st_err_t StackItemList::increment_list(TransStack& ts, const Coordinates& bounds
 	if ((coord.d == DIM_VECTOR && get_nb_items() != 1) || (coord.d == DIM_MATRIX && get_nb_items() != 2))
 		throw(CalcFatal(__FILE__, __LINE__, "StackItemList::increment_list(): internal error"));
 	increment_coordinates(bounds, coord);
-	StackItemReal *sir = dynamic_cast<StackItemReal*>(list[0]);
-	if (sir == NULL)
-		throw(CalcFatal(__FILE__, __LINE__, "StackItemList::increment_list(): bad object type"));
-	sir->set_Real(Real(coord.i));
+	if (list[0]->get_type() == SITYPE_REAL)
+		dynamic_cast<StackItemReal*>(list[0])->set_Real(Real(coord.i));
+	else {
+		delete list[0];
+		list[0] = new StackItemReal(Real(coord.i));
+	}
 	if (coord.d == DIM_MATRIX) {
-		sir = dynamic_cast<StackItemReal*>(list[1]);
-		if (sir == NULL)
-			throw(CalcFatal(__FILE__, __LINE__, "StackItemList::increment_list(): bad object type #2"));
-		sir->set_Real(Real(coord.j));
+		if (list[1]->get_type() == SITYPE_REAL)
+			dynamic_cast<StackItemReal*>(list[1])->set_Real(Real(coord.j));
+		else {
+			delete list[1];
+			list[1] = new StackItemReal(Real(coord.j));
+		}
 	}
 	return ST_ERR_OK;
 }

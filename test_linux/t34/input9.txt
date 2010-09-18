@@ -1,0 +1,52 @@
+[ 0 ] { m } 1 PUT
+[ 0 ] { m n } 1 PUT
+[ (0, 0) ] { m } 1 PUT
+[ (0, 0) ] { m n } 1 PUT
+[[ 0 ]] { m } 1 PUT
+[[ 0 ]] { m n } 1 PUT
+[[ (0, 0) ]] { m } 1 PUT
+[[ (0, 0) ]] { m n } 1 PUT
+{ 0 } { m } 1 PUT
+{ 0 } { m n } 1 PUT
+59 SF
+1 0 /
+CLEAR
+[ 0 ] { m } GET
+[ 0 ] { m n } GET
+[ (0, 0) ] { m } GET
+[ (0, 0) ] { m n } GET
+[[ 0 ]] { m } GET
+[[ 0 ]] { m n } GET
+[[ (0, 0) ]] { m } GET
+[[ (0, 0) ]] { m n } GET
+{ 0 } { m } GET
+{ 0 } { m n } GET
+59 SF
+1 0 /
+CLEAR
+[ 0 ] { m } 1 PUTI
+[ 0 ] { m n } 1 PUTI
+[ (0, 0) ] { m } 1 PUTI
+[ (0, 0) ] { m n } 1 PUTI
+[[ 0 ]] { m } 1 PUTI
+[[ 0 ]] { m n } 1 PUTI
+[[ (0, 0) ]] { m } 1 PUTI
+[[ (0, 0) ]] { m n } 1 PUTI
+{ 0 } { m } 1 PUTI
+{ 0 } { m n } 1 PUTI
+59 SF
+1 0 /
+CLEAR
+[ 0 ] { m } GETI
+[ 0 ] { m n } GETI
+[ (0, 0) ] { m } GETI
+[ (0, 0) ] { m n } GETI
+[[ 0 ]] { m } GETI
+[[ 0 ]] { m n } GETI
+[[ (0, 0) ]] { m } GETI
+[[ (0, 0) ]] { m n } GETI
+{ 0 } { m } GETI
+{ 0 } { m n } GETI
+59 SF
+1 0 /
+CLEAR

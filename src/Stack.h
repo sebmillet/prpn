@@ -1177,7 +1177,7 @@ public:
 
 	virtual const std::string transstack_get_display_line(const DisplayStackLayout&, const int&, IntervalShift&, bool&, bool&);
 	virtual st_err_t inner_push_eval(const eval_t&, SIO&, const bool&, std::string&);
-	virtual st_err_t do_push_eval(SIO&, const bool&, std::string&);
+	virtual st_err_t do_push_eval(SIO&, const bool&, std::string&, const eval_t& = EVAL_SOFT);
 	virtual size_t stack_get_count() const;
 	virtual const StackItem *transstack_get_const_si(const int&) const;
 

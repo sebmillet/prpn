@@ -1,0 +1,81 @@
+[ 0 ] { << 1 >> } 1 PUT
+[ 0 ] { << 1 0 + >> } 2 PUT
+[ 0 ] { << 1 -> x << x >> >> } 3 PUT
+[ 0 0 ] { << 2 >> } 1 PUT
+[ 0 0 ] { << 1 1 + >> } 2 PUT
+[ 0 0 ] { << 2 -> x << x >> >> } 3 PUT
+[ (0, 0) ] { << 1 >> } 1 PUT
+[ (0, 0) ] { << 1 0 + >> } 2 PUT
+[ (0, 0) ] { << 1 -> x << x >> >> } 3 PUT
+[ (0, 0) (0, 0) ] { << 2 >> } 1 PUT
+[ (0, 0) (0, 0) ] { << 1 1 + >> } 2 PUT
+[ (0, 0) (0, 0) ] { << 2 -> x << x >> >> } 3 PUT
+{ 0 } { << 1 >> } 1 PUT
+{ 0 } { << 1 0 + >> } 2 PUT
+{ 0 } { << 1 -> x << x >> >> } 3 PUT
+{ 0 0 } { << 2 >> } 1 PUT
+{ 0 0 } { << 1 1 + >> } 2 PUT
+{ 0 0 } { << 2 -> x << x >> >> } 3 PUT
+[ 0 ] { << 1 -> x << 1 1000 FOR i NEXT x 1 + 1 - >> >> } 4 PUT
+[ 0 0 ] { << 2 -> x << 1 1000 FOR i NEXT x 1 + 1 - >> >> } 5 PUT
+[ (0, 0) ] { << 1 -> x << 1 1000 FOR i NEXT x 1 + 1 - >> >> } 4 PUT
+[ (0, 0) (0, 0) ] { << 2 -> x << 1 1000 FOR i NEXT x 1 + 1 - >> >> } 5 PUT
+[ 0 ] { << 1 >> } 1 PUTI -1 PUTI DROP
+[ 0 ] { << 1 0 + >> } 2 PUTI -2 PUTI DROP
+[ 0 ] { << 1 -> x << x >> >> } 3 PUTI -3 PUTI DROP
+[ 0 0 ] { << 2 >> } 1 PUTI -4 PUTI DROP
+[ 0 0 ] { << 1 1 + >> } 2 PUTI -5 PUTI DROP
+[ 0 0 ] { << 2 -> x << x >> >> } 3 PUTI -6 PUTI DROP
+[ (0, 0) ] { << 1 >> } 1 PUTI -7 PUTI DROP
+[ (0, 0) ] { << 1 0 + >> } 2 PUTI -8 PUTI DROP
+[ (0, 0) ] { << 1 -> x << x >> >> } 3 PUTI -9 PUTI DROP
+[ (0, 0) (0, 0) ] { << 2 >> } 1 PUTI -10 PUTI DROP
+[ (0, 0) (0, 0) ] { << 1 1 + >> } 2 PUTI -11 PUTI DROP
+[ (0, 0) (0, 0) ] { << 2 -> x << x >> >> } 3 PUTI -12 PUTI DROP
+{ 0 } { << 1 >> } 1 PUTI -1 PUTI DROP
+{ 0 } { << 1 0 + >> } 2 PUTI -2 PUTI DROP
+{ 0 } { << 1 -> x << x >> >> } 3 PUTI -3 PUTI DROP
+{ 0 0 } { << 2 >> } 1 PUTI -4 PUTI DROP
+{ 0 0 } { << 1 1 + >> } 2 PUTI -5 PUTI DROP
+{ 0 0 } { << 2 -> x << x >> >> } 3 PUTI -6 PUTI DROP
+[ 1 ] { << 1 >> } GET
+[ 2 ] { << 1 0 + >> } GET
+[ 3 ] { << 1 -> x << x >> >> } GET
+[ 0 4 ] { << 2 >> } GET
+[ 0 5 ] { << 1 1 + >> } GET
+[ 0 6 ] { << 2 -> x << x >> >> } GET
+[ (7, 0) ] { << 1 >> } GET
+[ (8, 0) ] { << 1 0 + >> } GET
+[ (9, 0) ] { << 1 -> x << x >> >> } GET
+[ (0, 0) (10, 0) ] { << 2 >> } GET
+[ (0, 0) (11, 0) ] { << 1 1 + >> } GET
+[ (0, 0) (12, 0) ] { << 2 -> x << x >> >> } GET
+{ 13 } { << 1 >> } GET
+{ 14 } { << 1 0 + >> } GET
+{ 15 } { << 1 -> x << x >> >> } GET
+{ 0 16 } { << 2 >> } GET
+{ 0 17 } { << 1 1 + >> } GET
+{ 0 18 } { << 2 -> x << x >> >> } GET
+[ 19 ] { << 1 -> x << 1 1000 FOR i NEXT x 1 + 1 - >> >> } GET
+[ 0 20 ] { << 2 -> x << 1 1000 FOR i NEXT x 1 + 1 - >> >> } GET
+[ (21, 0) ] { << 1 -> x << 1 1000 FOR i NEXT x 1 + 1 - >> >> } GET
+[ (0, 0) (22, 0) ] { << 2 -> x << 1 1000 FOR i NEXT x 1 + 1 - >> >> } GET
+[ 1 ] { << 1 >> } GETI DROP GETI ->STR 'x' STO DROP
+[ 2 ] { << 1 0 + >> } GETI DROP GETI ->STR x SWAP + 'x' STO DROP
+[ 3 ] { << 1 -> x << x >> >> } GETI DROP GETI ->STR x SWAP + 'x' STO DROP
+[ 0 4 ] { << 1 >> } GETI DROP GETI ->STR x SWAP + 'x' STO DROP
+[ 0 5 ] { << 2 1 - >> } GETI DROP GETI ->STR x SWAP + 'x' STO DROP
+[ 0 6 ] { << 1 -> x << x >> >> } GETI DROP GETI ->STR x SWAP + 'x' STO DROP
+[ (7, 0) ] { << 1 >> } GETI DROP GETI ->STR x SWAP + 'x' STO DROP
+[ (8, 0) ] { << 1 0 + >> } GETI DROP GETI ->STR x SWAP + 'x' STO DROP
+[ (9, 0) ] { << 1 -> x << x >> >> } GETI DROP GETI ->STR x SWAP + 'x' STO DROP
+[ (0, 0) (10, 0) ] { << 1 >> } GETI DROP GETI ->STR x SWAP + 'x' STO DROP
+[ (0, 0) (11, 0) ] { << -1 2 + >> } GETI DROP GETI ->STR x SWAP + 'x' STO DROP
+[ (0, 0) (12, 0) ] { << 1 -> x << x >> >> } GETI DROP GETI ->STR x SWAP + 'x' STO DROP
+{ 13 } { << 1 >> } GETI DROP GETI ->STR x SWAP + 'x' STO DROP
+{ 14 } { << 1 0 + >> } GETI DROP GETI ->STR x SWAP + 'x' STO DROP
+{ 15 } { << 1 -> x << x >> >> } GETI DROP GETI ->STR x SWAP + 'x' STO DROP
+{ 0 16 } { << 1 >> } GETI DROP GETI ->STR x SWAP + 'x' STO DROP
+{ 0 17 } { << 1 0 + >> } GETI DROP GETI ->STR x SWAP + 'x' STO DROP
+{ 0 18 } { << 1 -> x << x >> >> } GETI DROP GETI ->STR x SWAP + 'x' STO DROP
+x

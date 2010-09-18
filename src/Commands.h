@@ -15,16 +15,11 @@
 #include <string>
 #include <iostream>
 
-  // Commands that do not exist as per standard start with this string
-#ifndef PREFIX_NOSTD
-#define PREFIX_NOSTD "_"
-#endif
-
 BuiltinCommandDescriptor builtinCommands[] = {
 	  // Base
-	{0, BC_RAW, PREFIX_NOSTD "HELP", &bc_help, 0, 0, 0, 0, _N("Display a help screen")},
-	{0, BC_RAW, PREFIX_NOSTD "HELP_FLAGS", &bc_help_flags, 0, 0, 0, 0, _N("Display a help screen about flags")},
-	{0, BC_RAW, PREFIX_NOSTD "EXIT", &bc_exit, 0, 0, 0, 0, _N("Quit program")},
+	{0, BC_RAW, CMD_PREFIX_NOSTD "HELP", &bc_help, 0, 0, 0, 0, _N("Display a help screen")},
+	{0, BC_RAW, CMD_PREFIX_NOSTD "HELP_FLAGS", &bc_help_flags, 0, 0, 0, 0, _N("Display a help screen about flags")},
+	{0, BC_RAW, CMD_PREFIX_NOSTD "EXIT", &bc_exit, 0, 0, 0, 0, _N("Quit program")},
 	  // Arithmetic
 	{2, BC_FUNCTION_WRAPPER, "+", 0, 0, 0, &bc_add, 0, _N("Addition")},
 	{2, BC_FUNCTION_WRAPPER, "-", 0, 0, 0, &bc_sub, 0, _N("Subtraction")},
@@ -122,11 +117,11 @@ BuiltinCommandDescriptor builtinCommands[] = {
 	{0, BC_RAW, "CLLCD", &bc_cllcd, 0, 0, 0, 0, _N("Clear the screen")},
 	{0, BC_RAW, "CLMF", &bc_clmf, 0, 0, 0, 0, _N("Clear the message flag")},
 	{2, BC_COMMAND_WRAPPER, "DISP", 0, 0, 0, &bc_disp, 0, _N("Display an item on a line of the screen")},
-	{1, BC_RAW, PREFIX_NOSTD "READ", &bc_read, 0, 0, 0, 0, _N("Read file and puts its content in the stack")},
-	{2, BC_COMMAND_WRAPPER, PREFIX_NOSTD "WRITE", 0, 0, 0, &bc_write, 0, _N("Write the second item into the file named by the first item")},
+	{1, BC_RAW, CMD_PREFIX_NOSTD "READ", &bc_read, 0, 0, 0, 0, _N("Read file and puts its content in the stack")},
+	{2, BC_COMMAND_WRAPPER, CMD_PREFIX_NOSTD "WRITE", 0, 0, 0, &bc_write, 0, _N("Write the second item into the file named by the first item")},
 	{0, BC_RAW, "UNDO", &bc_undo, 0, 0, 0, 0, _N("Undo last command, 50 levels by default")},
-	{1, BC_COMMAND_WRAPPER, PREFIX_NOSTD "UNDO_LEVELS", 0, 0, &bc_undo_levels, 0, 0, _N("Define number of undo levels")},
-	{0, BC_FUNCTION_WRAPPER, PREFIX_NOSTD "UNDO_LEVELS?", 0, &bc_undo_levels_get, 0, 0, 0, _N("Get number of undo levels")}
+	{1, BC_COMMAND_WRAPPER, CMD_PREFIX_NOSTD "UNDO_LEVELS", 0, 0, &bc_undo_levels, 0, 0, _N("Define number of undo levels")},
+	{0, BC_FUNCTION_WRAPPER, CMD_PREFIX_NOSTD "UNDO_LEVELS?", 0, &bc_undo_levels_get, 0, 0, 0, _N("Get number of undo levels")}
 };
 extern const unsigned int sizeof_builtinCommands = sizeof(builtinCommands) / sizeof(*builtinCommands);
 

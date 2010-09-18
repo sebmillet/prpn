@@ -24,7 +24,7 @@ void prepare_arith() { errno = 0; }
 
 real real_trim(const real& r) {
 	real r2;
-	string s = real_to_string(r, get_decimal_separator(false));
+	string s = real_to_string(r);
 	if (s == "-0")
 		s = "0";
 
@@ -36,22 +36,76 @@ real real_trim(const real& r) {
 	return r2;
 }
 
-const string real_to_string(const real& r, const char& ds) {
+const string real_to_string(const real& r) {
 	ostringstream o;
 	o.precision(12);
 	o << r;
 	string s = o.str();
+	return s;
+}
+
+const string user_real_to_string(const real& r, const tostring_t& t) {
+	string s = real_to_string(r);
+
+	  // Without the sign, and before "E"
+	string part_mantisse;
+	  // After "E"
+	int part_exp;
+	  // -1 or +1
+	int part_sign;
+	  // Before .
+	string part_mantisse_int;
+	  // After .
+	string part_mantisse_dec;
+
 	size_t p;
+	if ((p = s.find_first_of("eE")) != string::npos) {
+		part_mantisse = s.substr(0, p - 1);
+		part_exp = string_to_integer(s.substr(p + 1));
+	} else {
+		part_mantisse = s;
+		part_exp = 0;
+	}
+	if (part_mantisse.length() >= 1) {
+		if (part_mantisse.at(0) == '-') {
+			part_sign = -1;
+			part_mantisse.erase(0, 1);
+		} else if (part_mantisse.at(0) == '+') {
+			part_sign = 1;
+			part_mantisse.erase(0, 1);
+		} else {
+			part_sign = 1;
+		}
+	}
+	if ((p = s.find_first_of('.')) != string::npos) {
+		part_mantisse_int = s.substr(0, p - 1);
+		part_mantisse_dec = s.substr(p + 1);
+	} else {
+		part_mantisse_int = part_mantisse;
+		part_mantisse_dec = "";
+	}
+
+	if ((p = part_mantisse_int.find_first_not_of('0')) != string::npos)
+		part_mantisse_int.erase(0, p);
+	else
+		part_mantisse_int = "";
+	if ((p = part_mantisse_dec.find_first_not_of('0')) == string::npos)
+		part_mantisse_dec = "";
+
+
+
+
+
 	if ((p = s.find_first_of("eE")) != string::npos) {
 		if (s.substr(p + 1, 1) == "+")
 			s.erase(p + 1, 1);
 	}
+	char ds = get_decimal_separator(t != TOSTRING_PORTABLE);
 	if (ds != '.') {
-		size_t p = s.find_first_of('.');
+		p = s.find_first_of('.');
 		if (p != string::npos)
 			s[p] = ds;
 	}
-	return s;
 }
 
 st_err_t real_check_bounds(const bool& can_be_zero, const int& sign, real& r, const bool& force_strict) {
@@ -487,7 +541,7 @@ long Real::class_count = 0;
 #endif
 
 const string Real::to_string(const tostring_t& t) const {
-	return real_to_string(r, get_decimal_separator(t != TOSTRING_PORTABLE));
+	return user_real_to_string(r, t);
 }
 
 Real& Real::operator=(const Cplx& rv) {
@@ -527,8 +581,8 @@ long Cplx::class_count = 0;
 #endif
 
 const string Cplx::to_string(const tostring_t& t) const {
-	const char ds = get_decimal_separator(t != TOSTRING_PORTABLE);
-	return "(" + real_to_string(re, ds) + get_complex_separator(t != TOSTRING_PORTABLE) + real_to_string(im, ds) + ")";
+	return "(" + user_real_to_string(re, t) + get_complex_separator(t != TOSTRING_PORTABLE) +
+		user_real_to_string(im, t) + ")";
 }
 
 Cplx& Cplx::operator=(const Cplx& rv) {

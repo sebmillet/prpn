@@ -68,6 +68,13 @@ size_t my_get_string_length(const char *);
 void my_append_padl(std::string&, const std::string&, const size_t&);
 void my_append_padr(std::string&, const std::string&, const size_t&);
 
+  // Commands that do not exist as per standard start with this string
+#ifndef CMD_PREFIX_NOSTD
+#define CMD_PREFIX_NOSTD "_"
+#endif
+
+int cfg_get_undo_levels();
+
 void my_sleep_seconds(const int&);
 const std::string integer_to_string(const int&);
 
@@ -148,8 +155,14 @@ typedef enum {TOSTRING_DISPLAY, TOSTRING_EDIT, TOSTRING_PORTABLE} tostring_t;
 
 class DisplayStackLayout;
 
+int string_to_integer(const std::string&);
+
 char get_decimal_separator(const bool&);
 char get_complex_separator(const bool&);
+
+typedef enum {REALDISP_STD, REALDISP_SCI, REALDISP_FIX, REALDISP_ENG} realdisp_t;
+void get_realdisp(const bool&, realdisp_t&, int&);
+
 
   //
   // WARNING

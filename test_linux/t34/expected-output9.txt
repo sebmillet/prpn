@@ -1,0 +1,89 @@
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+/ Error:
+Infinite Result
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+/ Error:
+Infinite Result
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+/ Error:
+Infinite Result
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+/ Error:
+Infinite Result
+get_class_count() = 0 for watched classes

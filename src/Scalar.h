@@ -19,7 +19,7 @@ typedef enum {DIM_VECTOR, DIM_MATRIX} dim_t;
 
   // General functions
 real real_trim(const real&);
-const std::string real_to_string(const real&, const char&);
+const std::string real_to_string(const real&);
 st_err_t real_check_bounds(const bool&, const int&, real&, const bool& = false);
 int real_sign(const real&);
 real real_ip(const real&);

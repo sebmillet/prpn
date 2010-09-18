@@ -29,3 +29,10 @@ ROT (0, -14) CON
 4 ROLL -15 CON
 5 ROLL -16 CON
 6 ROLL -17 CON
+{ << 2 >> } (-1, 0) CON
+{ << 2 1 >> } (-2, 0) CON
+{ << 1 -> x << 1 5 START x 1 + 'x' STO NEXT x >> >> } (-3, 0) CON
+3 << -> x << { x } (-4, 0) CON >> >> EVAL
+4 << -> x << { x x } (-5, 0) CON >> >> EVAL
+3 << -> x << { y } (-4, 0) CON >> >> EVAL
+4 << -> x << { y y } (-5, 0) CON >> >> EVAL

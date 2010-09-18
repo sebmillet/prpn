@@ -64,3 +64,16 @@ DUP
 ARRY-> LIST-> 3 ROLLD SWAP ROT ->LIST ->ARRY
 ARRY-> LIST-> 3 ROLLD SWAP ROT ->LIST ->ARRY
 DUP2 SAME
+[ (-1, 0) ] { << 2 >> } RDM
+[[ (-1, 0) ]] { << 2 1 >> } RDM
+[ (-1, 0) ] { << 2 >> } RDM
+[[ (-1, 0) ]] { << 2 1 >> } RDM
+[ (-1, 0) ] { << 1 -> x << 1 5 START x 1 + 'x' STO NEXT x >> >> } RDM
+[[ (-1, 0) ]] { << 1 -> x << 1 5 START x 1 + 'x' STO NEXT 2 x >> >> } RDM
+[[ (-1, 0) ]] { << 1 -> x << 1 5 START x 1 + 'x' STO NEXT x 1 - x 2 - >> >> } RDM
+[ (-1, 0) ] { << 1 -> x << 1 5 START x 1 + 'x' STO NEXT x >> >> } RDM
+[[ (-1, 0) ]] { << 1 -> x << 1 5 START x 1 + 'x' STO NEXT x 1 - x 2 - >> >> } RDM
+[ (-1, 0) ] << 4 -> x << { x } RDM >> >> EVAL
+[ (-1, 0) ] << 3 -> x << { x x } RDM >> >> EVAL
+[ (-1, 0) ] << 4 -> x << { y } RDM >> >> EVAL
+[ (-1, 0) ] << 3 -> x << { y y } RDM >> >> EVAL

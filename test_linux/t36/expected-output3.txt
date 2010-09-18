@@ -20,10 +20,23 @@ CON Error:
 Bad Argument Value
 CON Error:
 Bad Argument Type
+CON Error:
+Bad Argument Value
+CON Error:
+Bad Argument Value
 [[ -2 -2 ]  [ -2 -2 ]]
 [[ -3 ]  [ -3 ]]
 [[ -4 -4 ]]
 [[ -5 ]]
 [ -6 ]
 [ -7 ]
+[ -1 -1 ]
+[[ -2 ]  [ -2 ]]
+[ -3 -3 -3 -3 -3 -3 ]
+[ -4 -4 -4 ]
+[[ -5 -5 -5 -5 ]  [ -5 -5 -5 -5 ]  [ -5 -5 -5 -5 ]  [ -5 -5 -5 -5 ]]
+{ y }
+-4
+{ y y }
+-5
 get_class_count() = 0 for watched classes

@@ -100,6 +100,38 @@ char get_complex_separator(const bool& user_setting) {
 	return user_setting ? (flags[FL_DECIMAL_SEP].value ? ';' : ',') : ',';
 }
 
+void get_realdisp(const bool& user_setting, realdisp_t& rd, int& nb) {
+
+//
+// The conversion from flags 49 and 50 to the formatting of reals is as follows.
+// Status\Flag	49		50
+//				unset	unset	STD
+//				unset	set		SCI
+//				set		unset	FIX
+//				set		set		ENG
+//
+// The number of decimals to display is coded as follows.
+// val(f53) + val(f54) * 2 + val(f55) * 4 + val(f56) * 8
+// Where val(fxx) is 1 is flag number xx is set, 0 otherwise.
+//
+
+	rd = user_setting ? (flags[FL_REAL_FORMAT_2].value ?
+			(flags[FL_REAL_FORMAT_2 + 1].value ? REALDISP_ENG : REALDISP_FIX) :
+			(flags[FL_REAL_FORMAT_2 + 1].value ? REALDISP_SCI : REALDISP_STD)) :
+		REALDISP_STD;
+	if (rd == REALDISP_STD)
+		nb = -1;
+	else {
+		nb = 0;
+		int base_power = 1;
+		for (int i = 0; i < 4; i++) {
+			if (flags[FL_REAL_NB_DECS_4 + i].value)
+				nb += base_power;
+			base_power += base_power;
+		}
+	}
+}
+
 const string CalcFatal::get_description() const {
 	std::ostringstream o;
 	o << "Error caught, file: " << file << ", line: " << line << ", message: " << message;
@@ -135,7 +167,7 @@ void version() {
 
 }
 
-static int string_to_integer(const string& s) { return atoi(s.c_str()); }
+int string_to_integer(const string& s) { return atoi(s.c_str()); }
 
 const string integer_to_string(const int& i) {
 	ostringstream oss;
@@ -417,6 +449,7 @@ static int check_class_count() {
 		std::cout << "Var class_count: " << Var::get_class_count() << std::endl;
 		std::cout << "Tree class_count: " << Tree::get_class_count() << std::endl;
 		std::cout << "Binary class_count: " << Binary::get_class_count() << std::endl;
+		std::cout << "Exec class_count: " << Exec::get_class_count() << std::endl;
 		return 99;
 	}
 #else	// !DEBUG_CLASS_COUNT
