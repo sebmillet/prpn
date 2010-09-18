@@ -909,8 +909,8 @@ void TransStack::TSVars::recall_pwd(VarDirectory* d) { tree->recall_pwd(d); }
 long TransStack::class_count = 0;
 #endif
 
-TransStack::TransStack(const bool& tc, const size_t& gl, vector<Exec> *ex) : count(0), modified_flag(true),
-	temporary_copy(tc), ground_level(gl), exec_stack(ex) {
+TransStack::TransStack(const bool& tc, vector<Exec> *ex) : count(0), modified_flag(true),
+	temporary_copy(tc), exec_stack(ex) {
 #ifdef DEBUG_CLASS_COUNT
 		class_count++;
 #endif
@@ -918,6 +918,7 @@ TransStack::TransStack(const bool& tc, const size_t& gl, vector<Exec> *ex) : cou
 	head = tail;
 	if (exec_stack == NULL)
 		exec_stack = new vector<Exec>;
+	ground_level = exec_stack->size();
 }
 
 TransStack::~TransStack() {
@@ -928,7 +929,10 @@ TransStack::~TransStack() {
 	cout << "TransStack::~TransStack() (start), count = " << count << endl;
 #endif // DEBUG_TRANSSTACK
 
-	delete exec_stack;
+	clear_exec_stack();
+
+	if (!temporary_copy)
+		delete exec_stack;
 
 	forward_head();
 	while (count > 0)
@@ -2870,8 +2874,50 @@ st_err_t StackItemList::op_list_to(TransStack& ts, const tso_t& o) {
 }
 
 st_err_t StackItemList::get_coordinates(TransStack& ts, Coordinates& coord) {
-	//TransStack *tmpts = new TransStack(true, );
-	size_t nb = get_nb_items();
+
+
+	TransStack *tmpts = new TransStack(true, ts.get_exec_stack());
+	bool inside_undo_sequence = false;
+	string cmd_err;
+	st_err_t c = ST_ERR_OK;
+	SIO s;
+	for (vector<StackItem*>::iterator it = list.begin(); it != list.end() && c == ST_ERR_OK; it++) {
+		s.ownership = TSO_OWNED_BY_TS;
+		s.si = (*it)->dup();
+		c = tmpts->do_push_eval(s, inside_undo_sequence, cmd_err);
+	}
+	if (c == ST_ERR_OK) {
+		int n = static_cast<int>(tmpts->stack_get_count());
+		if (n >= 1 && n <= 2) {
+			SIO *items = new SIO[n];
+			for (int i = n - 1; i >= 0; i--)
+				items[i] = tmpts->transstack_pop();
+			int value;
+			for (int i = 0; i < n; i++) {
+				c = items[i].si->to_integer(value);
+				if (c == ST_ERR_OK && value >= 1) {
+					if (n - 1 - i == 0)
+						coord.i = value;
+					else
+						coord.j = value;
+				} else
+					break;
+			}
+			if (c == ST_ERR_OK) {
+				for (int i = 0; i < n; i++)
+					items[i].cleanup();
+				coord.d = (n == 1 ? DIM_VECTOR : DIM_MATRIX);
+			} else
+				c = ST_ERR_BAD_ARGUMENT_VALUE;
+			delete []items;
+		} else {
+			c = ST_ERR_BAD_ARGUMENT_VALUE;
+		}
+	}
+	delete tmpts;
+
+
+	/*size_t nb = get_nb_items();
 	if (nb < 1 || nb > 2)
 		return ST_ERR_BAD_ARGUMENT_VALUE;
 	st_err_t c = ST_ERR_OK;
@@ -2890,7 +2936,7 @@ st_err_t StackItemList::get_coordinates(TransStack& ts, Coordinates& coord) {
 		else
 			throw(CalcFatal(__FILE__, __LINE__, "StackItemList::get_coordinates(): inconsistent values encountered!!!??"));
 	}
-	coord.d = (nb == 1 ? DIM_VECTOR : DIM_MATRIX);
+	coord.d = (nb == 1 ? DIM_VECTOR : DIM_MATRIX);*/
 	return c;
 }
 

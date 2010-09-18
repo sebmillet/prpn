@@ -1153,12 +1153,14 @@ public:
 
 	//sitype_t si_get_type(StackItem* const &);
 
-	TransStack(const bool& = false, const size_t& = 0, std::vector<Exec>* = NULL);
+	TransStack(const bool& = false, std::vector<Exec>* = NULL);
 	virtual ~TransStack();
 
 #ifdef DEBUG_CLASS_COUNT
 	static int get_class_count() { return class_count; }
 #endif
+
+	std::vector<Exec> *get_exec_stack() const { return exec_stack; }
 
 	virtual void forward_tail();
 	virtual void control_undos_chain_size();
