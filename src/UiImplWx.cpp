@@ -742,7 +742,7 @@ void UiImplWx::neg() {
 	}
 
 	char c = ' ';
-	char char_decimal_sep = get_decimal_separator(true);
+	char char_decimal_sep = F->get_decimal_separator(true);
 	bool number_seen = false;
 	while (idx >= 0) {
 		c = s.at(idx);

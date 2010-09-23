@@ -1,0 +1,101 @@
+1 STWS
+HEX
+# FFh
+->STR
+# 1h
+->STR
+# 0h
+->STR
+# 123h
+->STR
+# 77o
+->STR
+# 1o
+->STR
+# 0o
+->STR
+# 123o
+->STR
+# 11111b
+->STR
+# 1b
+->STR
+# 0b
+->STR
+# 10101b
+->STR
+DEC
+# FFh
+->STR
+# 1h
+->STR
+# 0h
+->STR
+# 123h
+->STR
+# 77o
+->STR
+# 1o
+->STR
+# 0o
+->STR
+# 123o
+->STR
+# 11111b
+->STR
+# 1b
+->STR
+# 0b
+->STR
+# 10101b
+->STR
+OCT
+# FFh
+->STR
+# 1h
+->STR
+# 0h
+->STR
+# 123h
+->STR
+# 77o
+->STR
+# 1o
+->STR
+# 0o
+->STR
+# 123o
+->STR
+# 11111b
+->STR
+# 1b
+->STR
+# 0b
+->STR
+# 10101b
+->STR
+BIN
+# FFh
+->STR
+# 1h
+->STR
+# 0h
+->STR
+# 123h
+->STR
+# 77o
+->STR
+# 1o
+->STR
+# 0o
+->STR
+# 123o
+->STR
+# 11111b
+->STR
+# 1b
+->STR
+# 0b
+->STR
+# 10101b
+->STR

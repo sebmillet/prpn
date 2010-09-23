@@ -115,13 +115,8 @@ typedef enum {
   // Help display type
 enum {DH_MAIN, DH_FLAGS};
 
-  // State of flags, referred to with FL_ enumeration
-struct Flag {
-	bool value;
-	const char* description;
-	bool default_value;
-};
-extern Flag flags[];
+typedef enum {REALDISP_STD, REALDISP_SCI, REALDISP_FIX, REALDISP_ENG} realdisp_t;
+
 enum {
 	FL_TAG_IT_BEGIN = 31,
 	FL_LAST = 31,
@@ -151,17 +146,50 @@ enum {
 	FL_TAG_IT_END = 64
 };
 
+  // State of flags, referred to with FL_ enumeration
+struct Flag1 {
+	bool value;
+	const char* description;
+	bool default_value;
+};
+
+class Flags {
+
+	  // FIXME - Temporary stuff
+	  // Unused.
+	  // Defined to hide the global "F" and avoid using F-> in the object implementation
+	  // I keep it so long as Flags is being modified regularly...
+	  // You may wonder why there's an issue with this object in particular?
+	  // It has been created late and most of the code (get_ and set_ member-functions) are
+	  // copy-paste of code that used to seat outside of the class. In such a code,
+	  // F-> appear. As F is global, it works perfectly inside the Flags class implementation...
+	static char F;
+
+	Flag1 flags[FL_TAG_IT_END + 1];
+	void set_bin_base_flags(const bool&, const bool&);
+public:
+	Flags();
+	~Flags();
+	bool get(const int&) const;
+	void set(const int&, const bool&);
+	bool get_default(const int&) const;
+	const char *get_description(const int&) const;
+	char get_decimal_separator(const bool&) const;
+	char get_complex_separator(const bool&) const;
+	void get_realdisp(const bool&, realdisp_t&, int&) const;
+	int get_binary_format() const;
+	void set_binary_format(const int&);
+	int get_bin_size() const;
+	void set_bin_size(int);
+};
+
+extern Flags *F;
+
 typedef enum {TOSTRING_DISPLAY, TOSTRING_EDIT, TOSTRING_PORTABLE} tostring_t;
 
 class DisplayStackLayout;
 
 int string_to_integer(const std::string&);
-
-char get_decimal_separator(const bool&);
-char get_complex_separator(const bool&);
-
-typedef enum {REALDISP_STD, REALDISP_SCI, REALDISP_FIX, REALDISP_ENG} realdisp_t;
-void get_realdisp(const bool&, realdisp_t&, int&);
 
 
   //

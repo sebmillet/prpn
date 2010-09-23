@@ -1,0 +1,25 @@
+"# 12h"
+"# 18d"
+"# 22o"
+"# 10010b"
+# 18d
+# 18d
+# 18d
+# 18d
+# 0d
+# 1d
+# 2d
+# 4d
+# 0d
+# 1d
+# 8d
+# 64d
+# 0d
+# 1d
+# 10d
+# 100d
+# 0d
+# 1d
+# 16d
+# 256d
+get_class_count() = 0 for watched classes

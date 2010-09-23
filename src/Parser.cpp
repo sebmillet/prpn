@@ -54,7 +54,7 @@ bool Tokeniser::get_token(ParserError& par, string& tok) {
 	};
 	// End of automat definition
 
-	char decimal_separator = get_decimal_separator(t != TOSTRING_PORTABLE);
+	char decimal_separator = F->get_decimal_separator(t != TOSTRING_PORTABLE);
 	int size_of_newline = os_get_size_of_newline();
 
 	//cout << "Tokeniser::get_token(): entering function\n";
@@ -168,7 +168,7 @@ element_t string_to_real(string tok, real& r, const tostring_t& t) {
 	string e = "";
 	size_t p;
 
-	char decimal_separator = get_decimal_separator(t != TOSTRING_PORTABLE);
+	char decimal_separator = F->get_decimal_separator(t != TOSTRING_PORTABLE);
 
 	if (tok == "")
 		return EL_ERROR;
@@ -295,7 +295,7 @@ element_t string_to_binary(string tok, Binary*& pb, const int& nb_bits) {
 
 	int base = base_letter_to_int(tok.at(tok.length() - 1));
 	if (base == -1)
-		base = get_base_from_flags();
+		base = F->get_binary_format();
 	else
 		tok.erase(tok.length() - 1, 1);
 	if (tok.empty()) {
@@ -339,8 +339,8 @@ bool Elementiser::get_element(ParserError& par, Element& element) {
 	Binary* pb0 = 0;
 	char c;
 
-	char decimal_separator = get_decimal_separator(t != TOSTRING_PORTABLE);
-	char complex_separator = get_complex_separator(t != TOSTRING_PORTABLE);
+	char decimal_separator = F->get_decimal_separator(t != TOSTRING_PORTABLE);
+	char complex_separator = F->get_complex_separator(t != TOSTRING_PORTABLE);
 
 	if (!tok_exists)
 		tok_exists = tokenise.get_token(pe, actual_tok);
@@ -360,7 +360,7 @@ bool Elementiser::get_element(ParserError& par, Element& element) {
 		if (isdigit(c) || c == decimal_separator)
 			el = string_to_real(actual_tok, r0, t);
 		else if (c == '#') {
-			el = string_to_binary(actual_tok, pb0, get_bin_size_from_flags());
+			el = string_to_binary(actual_tok, pb0, F->get_bin_size());
 		} else if (isalpha(c) || c == '_' || c == '+' || c == '-' || c == '*' || c == '/' || c == '^' || c == '<' || c == '>' || c == '?' ||
 				c == '{' || c == '}' || c == '%' || c == '=') {
 			el = EL_WORD;

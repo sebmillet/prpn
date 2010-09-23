@@ -23,6 +23,8 @@
 
 OS_Dirs *osd = NULL;
 
+Flags *F = NULL;
+
 #include "MyIntl.h"
 
 using namespace std;
@@ -91,46 +93,6 @@ extern void ui_terminate();
 
 void debug_test_tokeniser();
 void debug_test_itemiser();
-
-char get_decimal_separator(const bool& user_setting) {
-	return user_setting ? (flags[FL_DECIMAL_SEP].value ? ',' : '.') : '.';
-}
-
-char get_complex_separator(const bool& user_setting) {
-	return user_setting ? (flags[FL_DECIMAL_SEP].value ? ';' : ',') : ',';
-}
-
-void get_realdisp(const bool& user_setting, realdisp_t& rd, int& nb) {
-
-//
-// The conversion from flags 49 and 50 to the formatting of reals is as follows.
-// Status\Flag	49		50
-//				unset	unset	STD
-//				unset	set		SCI
-//				set		unset	FIX
-//				set		set		ENG
-//
-// The number of decimals to display is coded as follows.
-// val(f53) + val(f54) * 2 + val(f55) * 4 + val(f56) * 8
-// Where val(fxx) is 1 is flag number xx is set, 0 otherwise.
-//
-
-	rd = user_setting ? (flags[FL_REAL_FORMAT_2].value ?
-			(flags[FL_REAL_FORMAT_2 + 1].value ? REALDISP_ENG : REALDISP_FIX) :
-			(flags[FL_REAL_FORMAT_2 + 1].value ? REALDISP_SCI : REALDISP_STD)) :
-		REALDISP_STD;
-	if (rd == REALDISP_STD)
-		nb = -1;
-	else {
-		nb = 0;
-		int base_power = 1;
-		for (int i = 0; i < 4; i++) {
-			if (flags[FL_REAL_NB_DECS_4 + i].value)
-				nb += base_power;
-			base_power += base_power;
-		}
-	}
-}
 
 const string CalcFatal::get_description() const {
 	std::ostringstream o;
@@ -311,6 +273,8 @@ static void work_out_locale() {
 int prog_init(int argc, char **argv) {
 	osd = new OS_Dirs(argv[0]);
 
+// STAGE 1 -> from now on, we can rely on osd (standard directories)
+
 	work_out_locale();
 
 	html_help_found = false;
@@ -411,6 +375,12 @@ int prog_init(int argc, char **argv) {
 		throw(CalcFatal(__FILE__, __LINE__, "prog_init(): unknown encoding to use!!!?"));
 	E = new MyEncoding(myenc);
 
+// STAGE 2 -> from now on, we can rely on E (encoding management)
+
+	F = new Flags();
+
+// STAGE 3 -> from now on, we can rely on F (calculator flags)
+
 	os_init();
 
 	ui_init();
@@ -423,6 +393,8 @@ int prog_init(int argc, char **argv) {
 
 int prog_terminate() {
 	ui_terminate();
+	if (E != NULL)
+		delete E;
 	if (osd != NULL)
 		delete osd;
 	return check_class_count();

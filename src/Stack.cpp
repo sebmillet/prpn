@@ -20,41 +20,6 @@
 
 using namespace std;
 
-Flag flags[] = {
-	{false, "", false}, {false, "", false}, {false, "", false}, {false, "", false}, {false, "", false},
-	{false, "", false}, {false, "", false}, {false, "", false}, {false, "", false}, {false, "", false},
-	{false, "", false}, {false, "", false}, {false, "", false}, {false, "", false}, {false, "", false},
-	{false, "", false}, {false, "", false}, {false, "", false}, {false, "", false}, {false, "", false},
-	{false, "", false}, {false, "", false}, {false, "", false}, {false, "", false}, {false, "", false},
-	{false, "", false}, {false, "", false}, {false, "", false}, {false, "", false}, {false, "", false},
-	{false, "", false},
-	{true, _N("Allow LAST function"), true},	// FL_LAST			31
-	{false, _N("Automatic print mode"), false},	// FL_AUTO_PRINT	32
-	{false, _N("Automatic CR"), false},	// FL_CR_AUTOMATIC	33
-	{false, _N("Principal value (definition range)"), false},	// FL_MAIN_VALUE	34
-	{true, _N("Symbolic constants evaluation"), true},	// FL_CONST_EVAL	35
-	{true, _N("Symbolic functions evaluation"), true},	// FL_FUNC_EVAL		36
-	{true, "", true}, {true, "", true}, {true, "", true}, {true, "", true}, {true, "", true},
-		{true, _N("Binary integers word size"), true},	// FL_BIN_SIZE_6		37-42
-	{false, "", false}, {false, _N("Numeric base for binary integers"), false},		// FL_BIN_BASE_2		43-44
-	{true, _N("Level 1 display"), true},	// FL_DISPLAY_L1	45
-	{false, _N("Reserved"), false},	// FL_RESERVED1		46
-	{false, _N("Reserved"), false},	// FL_RESERVED2		47
-	{false, _N("Decimal separator"), false},	// FL_DECIMAL_SEP	48
-	{false, "", false}, {false, _N("Real numbers format"), false},						// FL_REAL_FORMAT_2	49-50
-	{false, _N("Tone"), false},	// FL_TONE			51
-	{false, _N("Fast printing"), false},	// FL_FAST_PRINT	52
-	{false, "", false}, {false, "", false}, {false, "", false}, {false, _N("Number of decimals"), false},			// FL_REAL_NB_DECS_4	53-56
-	{false, _N("Underflow processed normally"), false},	// FL_UNDERFLOW_OK	57
-	{false, _N("Overflow processed normally"), false},					// FL_OVERFLOW_OK	58
-	{true, _N("Infinite Result processed normally"), true},			// FL_INFINITE		59
-	{false, _N("Angle"), false},										// FL_ANGLE			60
-	{false, _N("Underflow- processed as an exception"), false},			// FL_UNDERFLOW_NEG_EXCEPT	61
-	{false, _N("Underdlow+ processed as an exception"), false},			// FL_UNDERFLOW_POS_EXCEPT	62
-	{false, _N("Overflow processed as an exception"), false},			// FL_OVERFLOW_EXCEPT		63
-	{false, _N("Infinite Result processed as an exception"), false}	// FL_INFINITE_EXCEPT		64
-};
-
 const int DEFAULT_PORTABLE_BIN_BASE = 16;
 
 static string st_errors[] = {
@@ -113,19 +78,6 @@ static void lvars_to_string(VarDirectory* const &lvars, ToString& tostr) {
 		tostr.add_string(*it);
 }
 
-int get_base_from_flags() {
-	if (!flags[FL_BIN_BASE_2].value && !flags[FL_BIN_BASE_2 + 1].value)
-		return 10;
-	else if (!flags[FL_BIN_BASE_2].value && flags[FL_BIN_BASE_2 + 1].value)
-		return 2;
-	else if (flags[FL_BIN_BASE_2].value && !flags[FL_BIN_BASE_2 + 1].value)
-		return 8;
-	else if (flags[FL_BIN_BASE_2].value && flags[FL_BIN_BASE_2 + 1].value)
-		return 16;
-	  // Never happens ; written to avoid a warning
-	return -1;
-}
-
 const string base_int_to_letter(const int& base) {
 	switch (base) {
 		case 2:
@@ -139,17 +91,6 @@ const string base_int_to_letter(const int& base) {
 		default:
 			return "?";
 	}
-}
-
-int get_bin_size_from_flags() {
-	int r = 0;
-	int m = 1;
-	for (int i = FL_BIN_SIZE_6; i <= FL_BIN_SIZE_6 + 5; i++) {
-		if (flags[i].value)
-			r += m;
-		m *= 2;
-	}
-	return r + 1;
 }
 
   // Used by GET and similar commands
@@ -205,6 +146,157 @@ void write_si(const tostring_t& tostring, const StackItem *csi, ostream& oss) {
 
 
 //
+// Flags
+//
+
+static Flag1 default_flags[FL_TAG_IT_END + 1] = {
+	{false, "", false}, {false, "", false}, {false, "", false}, {false, "", false}, {false, "", false},
+	{false, "", false}, {false, "", false}, {false, "", false}, {false, "", false}, {false, "", false},
+	{false, "", false}, {false, "", false}, {false, "", false}, {false, "", false}, {false, "", false},
+	{false, "", false}, {false, "", false}, {false, "", false}, {false, "", false}, {false, "", false},
+	{false, "", false}, {false, "", false}, {false, "", false}, {false, "", false}, {false, "", false},
+	{false, "", false}, {false, "", false}, {false, "", false}, {false, "", false}, {false, "", false},
+	{false, "", false},
+	{true, _N("Allow LAST function"), true},	// FL_LAST			31
+	{false, _N("Automatic print mode"), false},	// FL_AUTO_PRINT	32
+	{false, _N("Automatic CR"), false},	// FL_CR_AUTOMATIC	33
+	{false, _N("Principal value (definition range)"), false},	// FL_MAIN_VALUE	34
+	{true, _N("Symbolic constants evaluation"), true},	// FL_CONST_EVAL	35
+	{true, _N("Symbolic functions evaluation"), true},	// FL_FUNC_EVAL		36
+	{true, "", true}, {true, "", true}, {true, "", true}, {true, "", true}, {true, "", true},
+		{true, _N("Binary integers word size"), true},	// FL_BIN_SIZE_6		37-42
+	{false, "", false}, {false, _N("Numeric base for binary integers"), false},		// FL_BIN_BASE_2		43-44
+	{true, _N("Level 1 display"), true},	// FL_DISPLAY_L1	45
+	{false, _N("Reserved"), false},	// FL_RESERVED1		46
+	{false, _N("Reserved"), false},	// FL_RESERVED2		47
+	{false, _N("Decimal separator"), false},	// FL_DECIMAL_SEP	48
+	{false, "", false}, {false, _N("Real numbers format"), false},						// FL_REAL_FORMAT_2	49-50
+	{false, _N("Tone"), false},	// FL_TONE			51
+	{false, _N("Fast printing"), false},	// FL_FAST_PRINT	52
+	{false, "", false}, {false, "", false}, {false, "", false}, {false, _N("Number of decimals"), false},			// FL_REAL_NB_DECS_4	53-56
+	{false, _N("Underflow processed normally"), false},	// FL_UNDERFLOW_OK	57
+	{false, _N("Overflow processed normally"), false},					// FL_OVERFLOW_OK	58
+	{true, _N("Infinite Result processed normally"), true},			// FL_INFINITE		59
+	{false, _N("Angle"), false},										// FL_ANGLE			60
+	{false, _N("Underflow- processed as an exception"), false},			// FL_UNDERFLOW_NEG_EXCEPT	61
+	{false, _N("Underdlow+ processed as an exception"), false},			// FL_UNDERFLOW_POS_EXCEPT	62
+	{false, _N("Overflow processed as an exception"), false},			// FL_OVERFLOW_EXCEPT		63
+	{false, _N("Infinite Result processed as an exception"), false}	// FL_INFINITE_EXCEPT		64
+};
+
+Flags::Flags() {
+	for (int i = 0; i < sizeof(flags) / sizeof(*flags); i++)
+		flags[i] = default_flags[i];
+}
+
+Flags::~Flags() { }
+
+bool Flags::get(const int& i) const { return flags[i].value; }
+
+void Flags::set(const int& i, const bool& v) { flags[i].value = v; }
+
+bool Flags::get_default(const int& i) const { return flags[i].default_value; }
+
+const char* Flags::get_description(const int& i) const { return flags[i].description; }
+
+char Flags::get_decimal_separator(const bool& user_setting) const {
+	return user_setting ? (get(FL_DECIMAL_SEP) ? ',' : '.') : '.';
+}
+
+char Flags::get_complex_separator(const bool& user_setting) const {
+	return user_setting ? (get(FL_DECIMAL_SEP) ? ';' : ',') : ',';
+}
+
+void Flags::set_bin_base_flags(const bool& flag1, const bool& flag2) {
+	set(FL_BIN_BASE_2, flag1);
+	set(FL_BIN_BASE_2 + 1, flag2);
+}
+
+void Flags::set_binary_format(const int& new_base) {
+	switch (new_base) {
+		case 2:
+			set_bin_base_flags(false, true);
+			break;
+		case 8:
+			set_bin_base_flags(true, false);
+			break;
+		case 10:
+			set_bin_base_flags(false, false);
+			break;
+		case 16:
+			set_bin_base_flags(true, true);
+			break;
+		default:
+			throw(CalcFatal(__FILE__, __LINE__, "Flags::set_binary_format(): unknown base"));
+	}
+}
+
+int Flags::get_binary_format() const {
+	if (!get(FL_BIN_BASE_2) && !get(FL_BIN_BASE_2 + 1))
+		return 10;
+	else if (!get(FL_BIN_BASE_2) && get(FL_BIN_BASE_2 + 1))
+		return 2;
+	else if (get(FL_BIN_BASE_2) && !get(FL_BIN_BASE_2 + 1))
+		return 8;
+	else if (get(FL_BIN_BASE_2) && get(FL_BIN_BASE_2 + 1))
+		return 16;
+	  // Never happens ; written to avoid a warning
+	return -1;
+}
+
+int Flags::get_bin_size() const {
+	int r = 0;
+	int m = 1;
+	for (int i = FL_BIN_SIZE_6; i <= FL_BIN_SIZE_6 + 5; i++) {
+		if (get(i))
+			r += m;
+		m *= 2;
+	}
+	return r + 1;
+}
+
+void Flags::set_bin_size(int n) {
+	n--;
+	for (int i = FL_BIN_SIZE_6; i <= FL_BIN_SIZE_6 + 5; i++) {
+		set(i, n % 2 != 0);
+		n = n / 2;
+	}
+}
+
+void Flags::get_realdisp(const bool& user_setting, realdisp_t& rd, int& nb) const {
+
+//
+// The conversion from flags 49 and 50 to the formatting of reals is as follows.
+// Status\Flag	49		50
+//				unset	unset	STD
+//				unset	set		SCI
+//				set		unset	FIX
+//				set		set		ENG
+//
+// The number of decimals to display is coded as follows.
+// val(f53) + val(f54) * 2 + val(f55) * 4 + val(f56) * 8
+// Where val(fxx) is 1 is flag number xx is set, 0 otherwise.
+//
+
+	rd = user_setting ? (get(FL_REAL_FORMAT_2) ?
+			(get(FL_REAL_FORMAT_2 + 1) ? REALDISP_ENG : REALDISP_FIX) :
+			(get(FL_REAL_FORMAT_2 + 1) ? REALDISP_SCI : REALDISP_STD)) :
+		REALDISP_STD;
+	if (rd == REALDISP_STD)
+		nb = -1;
+	else {
+		nb = 0;
+		int base_power = 1;
+		for (int i = 0; i < 4; i++) {
+			if (get(FL_REAL_NB_DECS_4 + i))
+				nb += base_power;
+			base_power += base_power;
+		}
+	}
+}
+
+
+//
 // ToString
 //
 
@@ -235,7 +327,7 @@ bool ToString::add_string(const std::string& s, const bool& new_line) {
 	if (locked)
 		throw(CalcFatal(__FILE__, __LINE__, "*ToString::add_string(): object is locked"));
 	bool v_updated = false;
-	char complex_separator = get_complex_separator(type != TOSTRING_PORTABLE);
+	char complex_separator = F->get_complex_separator(type != TOSTRING_PORTABLE);
 	if (v.empty()) {
 		v.push_back("");
 		if (max_height != 1 && max_width >= 1 && s.length() >= 2 && s.at(0) == '(' && s.at(s.length() - 1) == ')') {
@@ -454,7 +546,7 @@ const string Stack::get_display_line(const DisplayStackLayout& dsl, const int& l
 		n = get_count();
 		ToString tostr(TOSTRING_DISPLAY,
 						dsl.get_max_stack() >= 1 ?
-							(flags[FL_DISPLAY_L1].value && dsl.get_max_stack() >= 1 ? dsl.get_max_stack()
+							(F->get(FL_DISPLAY_L1) && dsl.get_max_stack() >= 1 ? dsl.get_max_stack()
 							 :
 							1)
 						: 1,
@@ -1519,7 +1611,7 @@ static st_err_t update_flag(const StackItem& op, bool value) {
 	int n;
 	st_err_t c = get_flag_number(op, n);
 	if (c == ST_ERR_OK)
-		flags[n].value = value;
+		F->set(n, value);
 	return c;
 }
 
@@ -1527,7 +1619,7 @@ static st_err_t get_flag_value(const StackItem& op, StackItem*& ret, const bool&
 	int n;
 	st_err_t c = get_flag_number(op, n);
 	if (c == ST_ERR_OK) {
-		ret = new StackItemReal(Real(flags[n].value == value ? 1 : 0));
+		ret = new StackItemReal(Real(F->get(n) == value ? 1 : 0));
 	}
 	return c;
 }
@@ -1536,8 +1628,8 @@ static st_err_t get_flag_value_and_update(const StackItem& op, StackItem*& ret, 
 	int n;
 	st_err_t c = get_flag_number(op, n);
 	if (c == ST_ERR_OK) {
-		ret = new StackItemReal(Real(flags[n].value == value ? 1 : 0));
-		flags[n].value = false;
+		ret = new StackItemReal(Real(F->get(n) == value ? 1 : 0));
+		F->set(n, false);
 	}
 	return c;
 }
@@ -1579,7 +1671,7 @@ static st_err_t bc_str_to(TransStack& ts, SIO*, string& cmd_err) {
 		ts.backward_head();
 		s.cleanup();
 		cmd_err = "STR->";
-	} else if (c == ST_ERR_STR_TO_BAD_ARGUMENT_TYPE && flags[FL_LAST].value)
+	} else if (c == ST_ERR_STR_TO_BAD_ARGUMENT_TYPE && F->get(FL_LAST))
 		ts.transstack_push(s.si);
 	else
 		s.cleanup();
@@ -1763,28 +1855,23 @@ static st_err_t bc_eval(TransStack& ts, SIO*, string& cmd_err) {
 
   // Binaries
 
-static void set_bin_base_flags(const bool& flag1, const bool& flag2) {
-	flags[FL_BIN_BASE_2].value = flag1;
-	flags[FL_BIN_BASE_2 + 1].value = flag2;
-}
-
 static st_err_t bc_bin(TransStack&, SIO*, string&) {
-	set_bin_base_flags(false, true);
+	F->set_binary_format(2);
 	return ST_ERR_OK;
 }
 
 static st_err_t bc_oct(TransStack&, SIO*, string&) {
-	set_bin_base_flags(true, false);
+	F->set_binary_format(8);
 	return ST_ERR_OK;
 }
 
 static st_err_t bc_dec(TransStack&, SIO*, string&) {
-	set_bin_base_flags(false, false);
+	F->set_binary_format(10);
 	return ST_ERR_OK;
 }
 
 static st_err_t bc_hex(TransStack&, SIO*, string&) {
-	set_bin_base_flags(true, true);
+	F->set_binary_format(16);
 	return ST_ERR_OK;
 }
 
@@ -1797,16 +1884,12 @@ static st_err_t bc_stws(StackItem& op1, StackItem*&, string&) {
 		n = 1;
 	if (n > g_max_nb_bits)
 		n = g_max_nb_bits;
-	n--;
-	for (int i = FL_BIN_SIZE_6; i <= FL_BIN_SIZE_6 + 5; i++) {
-		flags[i].value = (n % 2 != 0);
-		n = n / 2;
-	}
+	F->set_bin_size(n);
 	return ST_ERR_OK;
 }
 
 static st_err_t bc_rcws(StackItem*& si, string&) {
-	si = new StackItemReal(Real(get_bin_size_from_flags()));
+	si = new StackItemReal(Real(F->get_bin_size()));
 	return ST_ERR_OK;
 }
 
@@ -1817,14 +1900,14 @@ static st_err_t lowlevel_bc_rclf(StackItem*& si, const int& nb_bits) {
 	bitset<G_HARD_MAX_NB_BITS> bits;
 
 	for (int p = 0; p < nb_bits; p++)
-		bits[p] = flags[p + 1].value;
+		bits[p] = F->get(p + 1);
 
 	si = new StackItemBinary(bits);
 	return ST_ERR_OK;
 }
 
 static st_err_t bc_rclf(StackItem*& si, string&) {
-	return lowlevel_bc_rclf(si, get_bin_size_from_flags());
+	return lowlevel_bc_rclf(si, F->get_bin_size());
 }
 
 const string get_rclf_portable_string() {
@@ -1960,7 +2043,7 @@ st_err_t StackItemBuiltinCommand::eval(const eval_t&, TransStack& ts, manage_si_
 	} else if (bc.type == BC_RAW)
 		resp = bc.functionS(ts, args, cmd_err);
 
-	if (resp != ST_ERR_OK && resp != ST_ERR_EXIT && flags[FL_LAST].value) {
+	if (resp != ST_ERR_OK && resp != ST_ERR_EXIT && F->get(FL_LAST)) {
 		for (size_t i = 0; i < bc.nb_args; i++)
 			ts.transstack_push(args[i].si);
 	} else
@@ -1968,7 +2051,7 @@ st_err_t StackItemBuiltinCommand::eval(const eval_t&, TransStack& ts, manage_si_
 			args[i].cleanup();
 
 	if (bc.type == BC_FUNCTION_WRAPPER || bc.type == BC_COMMAND_WRAPPER)
-		if (resp != ST_ERR_OK && resp != ST_ERR_EXIT && flags[FL_LAST].value)
+		if (resp != ST_ERR_OK && resp != ST_ERR_EXIT && F->get(FL_LAST))
 			ts.set_modified_flag(m);
 	if (resp == ST_ERR_OK || resp == ST_ERR_EXIT)
 		cmd_err = "";
@@ -2022,20 +2105,20 @@ bool StackItemBinary::same(StackItem* si) const {
 }
 
 void StackItemBinary::to_string(ToString& tostr, const bool&) const {
-	int b = (tostr.get_type() == TOSTRING_PORTABLE ? DEFAULT_PORTABLE_BIN_BASE : get_base_from_flags());
-	tostr.add_string("# "  + bin.to_string(b, get_bin_size_from_flags()) + base_int_to_letter(b));
+	int b = (tostr.get_type() == TOSTRING_PORTABLE ? DEFAULT_PORTABLE_BIN_BASE : F->get_binary_format());
+	tostr.add_string("# "  + bin.to_string(b, F->get_bin_size()) + base_int_to_letter(b));
 }
 
 st_err_t StackItemBinary::op_b_to_r(StackItem*& ret) {
-	ret = new StackItemReal(Real(bin.to_real(get_bin_size_from_flags())));
+	ret = new StackItemReal(Real(bin.to_real(F->get_bin_size())));
 	return ST_ERR_OK;
 }
 
 st_err_t StackItemBinary::op_stof(TransStack&) {
-	for (int p = 0; p < get_bin_size_from_flags() && p + 1 <= FL_TAG_IT_END; p++)
-		flags[p + 1].value = bin.get_bit(p);
-	for (int p = get_bin_size_from_flags(); p + 1 <= FL_TAG_IT_END; p++)
-		flags[p + 1].value = false;
+	for (int p = 0; p < F->get_bin_size() && p + 1 <= FL_TAG_IT_END; p++)
+		F->set(p + 1, bin.get_bit(p));
+	for (int p = F->get_bin_size(); p + 1 <= FL_TAG_IT_END; p++)
+		F->set(p + 1, false);
 	return ST_ERR_OK;
 }
 
@@ -2323,7 +2406,7 @@ st_err_t StackItemReal::op_greater_or_equal(StackItemReal *arg1, StackItem*& ret
 st_err_t StackItemReal::op_r_to_b(StackItem*& ret) {
 	real r = real_ip(sc.get_value() + .5);
 	bitset<G_HARD_MAX_NB_BITS> bits;
-	int max = get_bin_size_from_flags();
+	int max = F->get_bin_size();
 
 	real real_max = get_max_real_from_bin_size(max);
 

@@ -502,8 +502,8 @@ static void refresh_path() {
 }
 
 static void refresh_status() {
-	if (status_actual_base != get_base_from_flags()) {
-		status_actual_base = get_base_from_flags();
+	if (status_actual_base != F->get_binary_format()) {
+		status_actual_base = F->get_binary_format();
 		set_refresh_status_flag();
 	}
 	if (get_refresh_status_flag()) {
@@ -832,7 +832,7 @@ void DisplayStackLayout::set_status_shift(const bool& b) { status_shift = b; }
 
 bool DisplayStackLayout::get_status_shift() const { return status_shift; }
 
-int DisplayStackLayout::get_base() const { return get_base_from_flags(); }
+int DisplayStackLayout::get_base() const { return F->get_binary_format(); }
 
 
 //

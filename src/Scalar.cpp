@@ -14,6 +14,8 @@
 
 using namespace std;
 
+const int REAL_PRECISION = 12;
+
 extern const real MINR = 1e-199;
 extern const real MAXR = 9.99999999999e199;
 
@@ -38,14 +40,39 @@ real real_trim(const real& r) {
 
 const string real_to_string(const real& r) {
 	ostringstream o;
-	o.precision(12);
+	o.precision(REAL_PRECISION);
 	o << r;
 	string s = o.str();
 	return s;
 }
 
+void ascii_integer_string_round(string& s, const int& nb_digits) {
+	if (s.length() > nb_digits) {
+		char c = s.at(nb_digits);
+		s.erase(nb_digits);
+		if (c >= '5') {
+			int r;
+			int carry = 1;
+			for (int i = nb_digits - 1; i >= 0 && carry == 1; i--) {
+				r = (s[i] - '0') + 1;
+				s[i] = '0' + (r % 10);
+				carry = (r >= 10);
+			}
+			if (carry == 1)
+				s.insert(0, "1");
+		}
+	}
+	  // Ha! Infinite loop? Hope it'll never happen
+	if (s.length() > nb_digits)
+		ascii_integer_string_round(s, nb_digits);
+}
+
 const string user_real_to_string(const real& r, const tostring_t& t) {
 	string s = real_to_string(r);
+	size_t p;
+
+	/*debug_write("Start string:");
+	debug_write(s.c_str());
 
 	  // Without the sign, and before "E"
 	string part_mantisse;
@@ -58,14 +85,18 @@ const string user_real_to_string(const real& r, const tostring_t& t) {
 	  // After .
 	string part_mantisse_dec;
 
-	size_t p;
+// Mantisse
+
 	if ((p = s.find_first_of("eE")) != string::npos) {
-		part_mantisse = s.substr(0, p - 1);
+		part_mantisse = s.substr(0, p);
 		part_exp = string_to_integer(s.substr(p + 1));
 	} else {
 		part_mantisse = s;
 		part_exp = 0;
 	}
+
+// Sign
+
 	if (part_mantisse.length() >= 1) {
 		if (part_mantisse.at(0) == '-') {
 			part_sign = -1;
@@ -77,14 +108,16 @@ const string user_real_to_string(const real& r, const tostring_t& t) {
 			part_sign = 1;
 		}
 	}
-	if ((p = s.find_first_of('.')) != string::npos) {
-		part_mantisse_int = s.substr(0, p - 1);
-		part_mantisse_dec = s.substr(p + 1);
+
+// Integer and decimal parts of the mantisse
+
+	if ((p = part_mantisse.find_first_of('.')) != string::npos) {
+		part_mantisse_int = part_mantisse.substr(0, p);
+		part_mantisse_dec = part_mantisse.substr(p + 1);
 	} else {
 		part_mantisse_int = part_mantisse;
 		part_mantisse_dec = "";
 	}
-
 	if ((p = part_mantisse_int.find_first_not_of('0')) != string::npos)
 		part_mantisse_int.erase(0, p);
 	else
@@ -92,20 +125,56 @@ const string user_real_to_string(const real& r, const tostring_t& t) {
 	if ((p = part_mantisse_dec.find_first_not_of('0')) == string::npos)
 		part_mantisse_dec = "";
 
+	debug_write("Mantisse:");
+	debug_write(part_mantisse.c_str());
+	debug_write_i("Sign: %i", part_sign);
+	debug_write("Mantisse INT:");
+	debug_write(part_mantisse_int.c_str());
+	debug_write("Mantisse DEC:");
+	debug_write(part_mantisse_dec.c_str());
+	debug_write_i("Exp: %i", part_exp);
 
-
-
-
-	if ((p = s.find_first_of("eE")) != string::npos) {
-		if (s.substr(p + 1, 1) == "+")
-			s.erase(p + 1, 1);
+	string target1 = part_mantisse_int + part_mantisse_dec;
+	part_exp += part_mantisse_int.length() - 1;
+	if ((p = target1.find_first_not_of('0')) != string::npos && p != 0) {
+		part_exp -= p;
+		target1.erase(0, p);
 	}
-	char ds = get_decimal_separator(t != TOSTRING_PORTABLE);
+	ascii_integer_string_round(target1, REAL_PRECISION);
+
+	debug_write("Target1:");
+	debug_write(target1.c_str());
+
+	string disp_eex_noround;
+	if (target1.length() == 0 || target1 == "0")
+		disp_eex_noround = "0.";
+	else {
+		disp_eex_noround = target1;
+		disp_eex_noround.insert(1, ".");
+	}
+	if (disp_eex_noround.length() < REAL_PRECISION + 1)
+		disp_eex_noround.append(string(REAL_PRECISION + 1 - disp_eex_noround.length(), '0'));
+
+	disp_eex_noround.append("E" + integer_to_string(part_exp));
+
+	debug_write("EEX notation, not rounded:");
+	debug_write(disp_eex_noround.c_str());
+
+	string target2 = disp_eex_noround;*/
+	string target2 = s;
+
+	if ((p = target2.find_first_of("eE")) != string::npos) {
+		if (target2.substr(p + 1, 1) == "+")
+			target2.erase(p + 1, 1);
+	}
+	char ds = F->get_decimal_separator(t != TOSTRING_PORTABLE);
 	if (ds != '.') {
-		p = s.find_first_of('.');
+		p = target2.find_first_of('.');
 		if (p != string::npos)
-			s[p] = ds;
+			target2[p] = ds;
 	}
+
+	return target2;
 }
 
 st_err_t real_check_bounds(const bool& can_be_zero, const int& sign, real& r, const bool& force_strict) {
@@ -126,25 +195,25 @@ st_err_t real_check_bounds(const bool& can_be_zero, const int& sign, real& r, co
 		case VALID:
 			break;
 		case OVERFLOW_NEG:
-			if (flags[FL_OVERFLOW_OK].value || force_strict)
+			if (F->get(FL_OVERFLOW_OK) || force_strict)
 				return ST_ERR_OVERFLOW;
 			else
 				r = -MAXR;
 			break;
 		case OVERFLOW_POS:
-			if (flags[FL_OVERFLOW_OK].value || force_strict)
+			if (F->get(FL_OVERFLOW_OK) || force_strict)
 				return ST_ERR_OVERFLOW;
 			else
 				r = MAXR;
 			break;
 		case UNDERFLOW_NEG:
-			if (flags[FL_UNDERFLOW_OK].value || force_strict)
+			if (F->get(FL_UNDERFLOW_OK) || force_strict)
 				return ST_ERR_UNDERFLOW_NEG;
 			else
 				r = 0;
 			break;
 		case UNDERFLOW_POS:
-			if (flags[FL_UNDERFLOW_OK].value || force_strict)
+			if (F->get(FL_UNDERFLOW_OK) || force_strict)
 				return ST_ERR_UNDERFLOW_POS;
 			else
 				r = 0;
@@ -222,7 +291,7 @@ void numeric_div(const real& r1, const real& r2, st_err_t& c, real& res) {
 	if (r2 == 0) {
 		if (r1 == 0)
 			c = ST_ERR_UNDEFINED_RESULT;
-		else if (flags[FL_INFINITE].value)
+		else if (F->get(FL_INFINITE))
 			c = ST_ERR_INFINITE_RESULT;
 		else {
 			res = (real_sign(r1) < 0 ? -MAXR : MAXR);
@@ -242,7 +311,7 @@ void numeric_ln(const real& r, st_err_t& c, real& res) {
 	else if (r == 0) {
 		c = ST_ERR_OK;
 		res = -MAXR;
-		if (flags[FL_INFINITE].value)
+		if (F->get(FL_INFINITE))
 			c = ST_ERR_INFINITE_RESULT;
 	} else {
 		res = log(r);
@@ -581,7 +650,7 @@ long Cplx::class_count = 0;
 #endif
 
 const string Cplx::to_string(const tostring_t& t) const {
-	return "(" + user_real_to_string(re, t) + get_complex_separator(t != TOSTRING_PORTABLE) +
+	return "(" + user_real_to_string(re, t) + F->get_complex_separator(t != TOSTRING_PORTABLE) +
 		user_real_to_string(im, t) + ")";
 }
 
@@ -640,7 +709,7 @@ st_err_t Cplx_div(const Cplx& lv, const Cplx& rv, Cplx& res) {
 	st_err_t c = ST_ERR_OK;
 
 	if (rv.re == 0 && rv.im == 0 && (lv.re != 0 || lv.im != 0)) {
-		if (flags[FL_INFINITE].value)
+		if (F->get(FL_INFINITE))
 			return ST_ERR_INFINITE_RESULT;
 		if (lv.re == 0)
 			res.re = 0;

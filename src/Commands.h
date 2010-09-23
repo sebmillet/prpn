@@ -175,18 +175,20 @@ const string stack_get_help(const int& dh) {
 		s.erase(); E->append_padr(s, _("Flag #"), 12); sout << s;
 		s.erase(); E->append_padr(s, _("Description"), 75); sout << s;
 		sout << _("Status") << endl << endl;
+		const char *d;
 		for (int i = FL_TAG_IT_BEGIN; i <= FL_TAG_IT_END; i++) {
-			if (string(flags[i].description) == "" && c == "") {
+			d = F->get_description(i);
+			if (string(d) == "" && c == "") {
 				ostringstream o;
 				o.width(2);
 				o << i << " - ";
 				c = o.str();
-			} else if (string(flags[i].description) != "") {
+			} else if (string(d) != "") {
 				ostringstream o;
 				s.erase(); E->append_padr(s, integer_to_string(i), 12 - E->get_string_length(c.c_str())); o << s;
 				sout << c + o.str();
-				s.erase(); E->append_padr(s, _(flags[i].description), 75); sout << s;
-				sout << (flags[i].default_value ? _("Set") : _("Unset"));
+				s.erase(); E->append_padr(s, _(d), 75); sout << s;
+				sout << (F->get_default(i) ? _("Set") : _("Unset"));
 				//if (i != FL_TAG_IT_END)
 				sout << endl;
 				c = "";

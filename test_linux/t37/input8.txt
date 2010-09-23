@@ -1,0 +1,40 @@
+64 STWS
+HEX
+#12h
+->STR
+DEC
+#12h
+->STR
+OCT
+#12h
+->STR
+BIN
+#12h
+->STR
+4 DUPN
+STR-> 4 ROLLD
+STR-> 4 ROLLD
+STR-> 4 ROLLD
+STR-> 4 ROLLD
+DEC
+BIN
+#0
+#1
+#10
+#100
+OCT
+#0
+#1
+#10
+#100
+DEC
+#0
+#1
+#10
+#100
+HEX
+#0
+#1
+#10
+#100
+DEC
