@@ -177,6 +177,7 @@ public:
 	char get_decimal_separator(const bool&) const;
 	char get_complex_separator(const bool&) const;
 	void get_realdisp(const bool&, realdisp_t&, int&) const;
+	void set_realdisp(const realdisp_t&, int);
 	int get_binary_format() const;
 	void set_binary_format(const int&);
 	int get_bin_size() const;

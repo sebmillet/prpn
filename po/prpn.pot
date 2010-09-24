@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: prpn 0.5.1\n"
 "Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
-"POT-Creation-Date: 2010-09-12 18:56+0200\n"
+"POT-Creation-Date: 2010-09-24 23:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,63 +16,63 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/Main.cpp:110
+#: src/Main.cpp:104
 msgid "Try `"
 msgstr ""
 
-#: src/Main.cpp:110
+#: src/Main.cpp:104
 msgid " --help' for more information."
 msgstr ""
 
-#: src/Main.cpp:114
+#: src/Main.cpp:108
 msgid "Usage: "
 msgstr ""
 
-#: src/Main.cpp:114
+#: src/Main.cpp:108
 msgid " [options]..."
 msgstr ""
 
-#: src/Main.cpp:115
+#: src/Main.cpp:109
 msgid "Print this usage and exit"
 msgstr ""
 
-#: src/Main.cpp:116
+#: src/Main.cpp:110
 msgid "Print version information and exit"
 msgstr ""
 
-#: src/Main.cpp:117
+#: src/Main.cpp:111
 msgid "Run in text mode"
 msgstr ""
 
-#: src/Main.cpp:118
+#: src/Main.cpp:112
 msgid "Width of the display, in characters (default: 23)"
 msgstr ""
 
-#: src/Main.cpp:119
+#: src/Main.cpp:113
 msgid "Height of the display, in lines (default: 5)"
 msgstr ""
 
-#: src/Main.cpp:120
+#: src/Main.cpp:114
 msgid "Minimum height of the stack display, in lines"
 msgstr ""
 
-#: src/Main.cpp:121
+#: src/Main.cpp:115
 msgid "Only in text mode"
 msgstr ""
 
-#: src/Main.cpp:122
+#: src/Main.cpp:116
 msgid "Batch mode = display the stack once before exiting"
 msgstr ""
 
-#: src/Main.cpp:123
+#: src/Main.cpp:117
 msgid "Ignore rc files"
 msgstr ""
 
-#: src/Main.cpp:124
+#: src/Main.cpp:118
 msgid "Display class count before exiting"
 msgstr ""
 
-#: src/Main.cpp:125
+#: src/Main.cpp:119
 msgid "<debug options> Turn debugging on"
 msgstr ""
 
@@ -101,95 +101,95 @@ msgstr ""
 msgid "trailing arguments%s"
 msgstr ""
 
-#: src/Stack.cpp:31
+#: src/Stack.cpp:160
 msgid "Allow LAST function"
 msgstr ""
 
-#: src/Stack.cpp:32
+#: src/Stack.cpp:161
 msgid "Automatic print mode"
 msgstr ""
 
-#: src/Stack.cpp:33
+#: src/Stack.cpp:162
 msgid "Automatic CR"
 msgstr ""
 
-#: src/Stack.cpp:34
+#: src/Stack.cpp:163
 msgid "Principal value (definition range)"
 msgstr ""
 
-#: src/Stack.cpp:35
+#: src/Stack.cpp:164
 msgid "Symbolic constants evaluation"
 msgstr ""
 
-#: src/Stack.cpp:36
+#: src/Stack.cpp:165
 msgid "Symbolic functions evaluation"
 msgstr ""
 
-#: src/Stack.cpp:38
+#: src/Stack.cpp:167
 msgid "Binary integers word size"
 msgstr ""
 
-#: src/Stack.cpp:39
+#: src/Stack.cpp:168
 msgid "Numeric base for binary integers"
 msgstr ""
 
-#: src/Stack.cpp:40
+#: src/Stack.cpp:169
 msgid "Level 1 display"
 msgstr ""
 
-#: src/Stack.cpp:41 src/Stack.cpp:42
+#: src/Stack.cpp:170 src/Stack.cpp:171
 msgid "Reserved"
 msgstr ""
 
-#: src/Stack.cpp:43
+#: src/Stack.cpp:172
 msgid "Decimal separator"
 msgstr ""
 
-#: src/Stack.cpp:44
+#: src/Stack.cpp:173
 msgid "Real numbers format"
 msgstr ""
 
-#: src/Stack.cpp:45
+#: src/Stack.cpp:174
 msgid "Tone"
 msgstr ""
 
-#: src/Stack.cpp:46
+#: src/Stack.cpp:175
 msgid "Fast printing"
 msgstr ""
 
-#: src/Stack.cpp:47
+#: src/Stack.cpp:176
 msgid "Number of decimals"
 msgstr ""
 
-#: src/Stack.cpp:48
+#: src/Stack.cpp:177
 msgid "Underflow processed normally"
 msgstr ""
 
-#: src/Stack.cpp:49
+#: src/Stack.cpp:178
 msgid "Overflow processed normally"
 msgstr ""
 
-#: src/Stack.cpp:50
+#: src/Stack.cpp:179
 msgid "Infinite Result processed normally"
 msgstr ""
 
-#: src/Stack.cpp:51
+#: src/Stack.cpp:180
 msgid "Angle"
 msgstr ""
 
-#: src/Stack.cpp:52
+#: src/Stack.cpp:181
 msgid "Underflow- processed as an exception"
 msgstr ""
 
-#: src/Stack.cpp:53
+#: src/Stack.cpp:182
 msgid "Underdlow+ processed as an exception"
 msgstr ""
 
-#: src/Stack.cpp:54
+#: src/Stack.cpp:183
 msgid "Overflow processed as an exception"
 msgstr ""
 
-#: src/Stack.cpp:55
+#: src/Stack.cpp:184
 msgid "Infinite Result processed as an exception"
 msgstr ""
 
@@ -201,506 +201,514 @@ msgstr ""
 msgid "OK"
 msgstr ""
 
-#: src/Commands.h:25
+#: src/Commands.h:20
 msgid "Display a help screen"
 msgstr ""
 
-#: src/Commands.h:26
+#: src/Commands.h:21
 msgid "Display a help screen about flags"
 msgstr ""
 
-#: src/Commands.h:27
+#: src/Commands.h:22
 msgid "Quit program"
 msgstr ""
 
-#: src/Commands.h:29
+#: src/Commands.h:24
 msgid "Addition"
 msgstr ""
 
-#: src/Commands.h:30
+#: src/Commands.h:25
 msgid "Subtraction"
 msgstr ""
 
-#: src/Commands.h:31
+#: src/Commands.h:26
 msgid "Multiplication"
 msgstr ""
 
-#: src/Commands.h:32
+#: src/Commands.h:27
 msgid "Division"
 msgstr ""
 
-#: src/Commands.h:33
+#: src/Commands.h:28
 msgid "Power"
 msgstr ""
 
-#: src/Commands.h:35
+#: src/Commands.h:30
 msgid "Cosine"
 msgstr ""
 
-#: src/Commands.h:36
+#: src/Commands.h:31
 msgid "Sine"
 msgstr ""
 
-#: src/Commands.h:37
+#: src/Commands.h:32
 msgid "Tangent"
 msgstr ""
 
-#: src/Commands.h:38
+#: src/Commands.h:33
 msgid "Arccos"
 msgstr ""
 
-#: src/Commands.h:39
+#: src/Commands.h:34
 msgid "Arcsin"
 msgstr ""
 
-#: src/Commands.h:40
+#: src/Commands.h:35
 msgid "Arctan"
 msgstr ""
 
-#: src/Commands.h:41
+#: src/Commands.h:36
 msgid "Logarihtm (e base)"
 msgstr ""
 
-#: src/Commands.h:42
+#: src/Commands.h:37
 msgid "Exponential"
 msgstr ""
 
-#: src/Commands.h:43
+#: src/Commands.h:38
 msgid "Opposite"
 msgstr ""
 
-#: src/Commands.h:44
+#: src/Commands.h:39
 msgid "Integer part"
 msgstr ""
 
-#: src/Commands.h:45
+#: src/Commands.h:40
 msgid "1/x"
 msgstr ""
 
-#: src/Commands.h:46
+#: src/Commands.h:41
 msgid "Square"
 msgstr ""
 
-#: src/Commands.h:47
+#: src/Commands.h:42
 msgid "Square root"
 msgstr ""
 
-#: src/Commands.h:48
+#: src/Commands.h:43
 msgid "Real to complex"
 msgstr ""
 
-#: src/Commands.h:49
+#: src/Commands.h:44
 msgid "Complex to real"
 msgstr ""
 
-#: src/Commands.h:51
+#: src/Commands.h:46
 msgid "Is identical"
 msgstr ""
 
-#: src/Commands.h:52
+#: src/Commands.h:47
 msgid "Equal to"
 msgstr ""
 
-#: src/Commands.h:53
+#: src/Commands.h:48
 msgid "Different from"
 msgstr ""
 
-#: src/Commands.h:54
+#: src/Commands.h:49
 msgid "Lower than"
 msgstr ""
 
-#: src/Commands.h:55
+#: src/Commands.h:50
 msgid "Lower than or equal to"
 msgstr ""
 
-#: src/Commands.h:56
+#: src/Commands.h:51
 msgid "Greater than"
 msgstr ""
 
-#: src/Commands.h:57
+#: src/Commands.h:52
 msgid "Greater than or equal to"
 msgstr ""
 
-#: src/Commands.h:59
+#: src/Commands.h:54
 msgid "Copy the first item"
 msgstr ""
 
-#: src/Commands.h:60
+#: src/Commands.h:55
 msgid "Exchange the first two items"
 msgstr ""
 
-#: src/Commands.h:61
+#: src/Commands.h:56
 msgid "Delete the first item"
 msgstr ""
 
-#: src/Commands.h:62
+#: src/Commands.h:57
 msgid "Clear the stack"
 msgstr ""
 
-#: src/Commands.h:63
+#: src/Commands.h:58
 msgid "Copy the second item"
 msgstr ""
 
-#: src/Commands.h:64
+#: src/Commands.h:59
 msgid "Copy the first two items"
 msgstr ""
 
-#: src/Commands.h:65
+#: src/Commands.h:60
 msgid "Delete the first two items"
 msgstr ""
 
-#: src/Commands.h:66
+#: src/Commands.h:61
 msgid "Move the third item to the first position"
 msgstr ""
 
-#: src/Commands.h:67
+#: src/Commands.h:62
 msgid "Move the first item to the Nth position"
 msgstr ""
 
-#: src/Commands.h:68
+#: src/Commands.h:63
 msgid "Move the Nth item to the first position"
 msgstr ""
 
-#: src/Commands.h:69
+#: src/Commands.h:64
 msgid "Copy the Nth item"
 msgstr ""
 
-#: src/Commands.h:70
+#: src/Commands.h:65
 msgid "Copy the n first items"
 msgstr ""
 
-#: src/Commands.h:71
+#: src/Commands.h:66
 msgid "Delete the n first items"
 msgstr ""
 
-#: src/Commands.h:72
+#: src/Commands.h:67
 msgid "Get the number of items"
 msgstr ""
 
-#: src/Commands.h:74
+#: src/Commands.h:69
 msgid "Set flag"
 msgstr ""
 
-#: src/Commands.h:75
+#: src/Commands.h:70
 msgid "Clear flag"
 msgstr ""
 
-#: src/Commands.h:76
+#: src/Commands.h:71
 msgid "Return 1 if flag is set, 0 otherwise"
 msgstr ""
 
-#: src/Commands.h:77
+#: src/Commands.h:72
 msgid "Return 0 if flag is set, 1 otherwise"
 msgstr ""
 
-#: src/Commands.h:78
+#: src/Commands.h:73
 msgid "Do FS? then clear flag"
 msgstr ""
 
-#: src/Commands.h:79
+#: src/Commands.h:74
 msgid "Do FC? then clear flag"
 msgstr ""
 
-#: src/Commands.h:81
+#: src/Commands.h:76
 msgid "Convert to string"
 msgstr ""
 
-#: src/Commands.h:82
+#: src/Commands.h:77
 msgid "Convert from string"
 msgstr ""
 
-#: src/Commands.h:83
+#: src/Commands.h:78
 msgid "Extract content from a string or a list"
 msgstr ""
 
-#: src/Commands.h:85
+#: src/Commands.h:80
 msgid "Items to list"
 msgstr ""
 
-#: src/Commands.h:86
+#: src/Commands.h:81
 msgid "Extract items from list"
 msgstr ""
 
-#: src/Commands.h:87
+#: src/Commands.h:82
 msgid "Get an item from a list or array"
 msgstr ""
 
-#: src/Commands.h:88
+#: src/Commands.h:83
 msgid "Get an item from a list or array by increments"
 msgstr ""
 
-#: src/Commands.h:89
+#: src/Commands.h:84
 msgid "Put an item into a list or array"
 msgstr ""
 
-#: src/Commands.h:90
+#: src/Commands.h:85
 msgid "Put an item into a list or array by increments"
 msgstr ""
 
-#: src/Commands.h:91
+#: src/Commands.h:86
 msgid "Dimension of a list or array"
 msgstr ""
 
-#: src/Commands.h:92
+#: src/Commands.h:87
 msgid "Replace an array by all its elements"
 msgstr ""
 
-#: src/Commands.h:93
+#: src/Commands.h:88
 msgid "Create an array from a list of elements"
 msgstr ""
 
-#: src/Commands.h:94
+#: src/Commands.h:89
 msgid "Create a constant array"
 msgstr ""
 
-#: src/Commands.h:95
+#: src/Commands.h:90
 msgid "Transpose a matrix-type array"
 msgstr ""
 
-#: src/Commands.h:96
+#: src/Commands.h:91
 msgid "Modify the dimension of an array"
 msgstr ""
 
-#: src/Commands.h:97
+#: src/Commands.h:92
 msgid "Create an identity matrix"
 msgstr ""
 
-#: src/Commands.h:99
+#: src/Commands.h:94
 msgid "Evaluate item"
 msgstr ""
 
-#: src/Commands.h:100
+#: src/Commands.h:95
 msgid "Store value in variable name"
 msgstr ""
 
-#: src/Commands.h:101
+#: src/Commands.h:96
 msgid "Recall value from variable name"
 msgstr ""
 
-#: src/Commands.h:102
+#: src/Commands.h:97
 msgid "Remove a variable"
 msgstr ""
 
-#: src/Commands.h:103
+#: src/Commands.h:98
 msgid "Get the list of variables in current directory"
 msgstr ""
 
-#: src/Commands.h:104
+#: src/Commands.h:99
 msgid "Get the list from root to current directory"
 msgstr ""
 
-#: src/Commands.h:105
+#: src/Commands.h:100
 msgid "Create a directory"
 msgstr ""
 
-#: src/Commands.h:106
+#: src/Commands.h:101
 msgid "Set root directory as the current one"
 msgstr ""
 
-#: src/Commands.h:107
+#: src/Commands.h:102
 msgid "Make the parent directory the current one"
 msgstr ""
 
-#: src/Commands.h:109
+#: src/Commands.h:104
 msgid "Use binary mode for binary integers"
 msgstr ""
 
-#: src/Commands.h:110
+#: src/Commands.h:105
 msgid "Use octal mode for binary integers"
 msgstr ""
 
-#: src/Commands.h:111
+#: src/Commands.h:106
 msgid "Use decimal mode for binary integers"
 msgstr ""
 
-#: src/Commands.h:112
+#: src/Commands.h:107
 msgid "Use hexadecimal mode for binary integers"
 msgstr ""
 
-#: src/Commands.h:113
+#: src/Commands.h:108
 msgid "Define the number of bits in binary integers (1 to 64)"
 msgstr ""
 
-#: src/Commands.h:114
+#: src/Commands.h:109
 msgid "Get the number of bits in binary integers"
 msgstr ""
 
-#: src/Commands.h:115
+#: src/Commands.h:110
 msgid "Convert a binary integer into a real"
 msgstr ""
 
-#: src/Commands.h:116
+#: src/Commands.h:111
 msgid "Convert a real into a binary integer"
 msgstr ""
 
-#: src/Commands.h:117
+#: src/Commands.h:112
 msgid "Save flag states in a binary integer"
 msgstr ""
 
-#: src/Commands.h:118
+#: src/Commands.h:113
 msgid "Read flag states from a binary integer"
 msgstr ""
 
-#: src/Commands.h:120
+#: src/Commands.h:115
 msgid "Wait a number of seconds"
 msgstr ""
 
-#: src/Commands.h:122
+#: src/Commands.h:117
+msgid "Set reals display to 'standard'"
+msgstr ""
+
+#: src/Commands.h:118
+msgid "Set reals display to 'scientific'"
+msgstr ""
+
+#: src/Commands.h:119
 msgid "Clear the screen"
 msgstr ""
 
-#: src/Commands.h:123
+#: src/Commands.h:120
 msgid "Clear the message flag"
 msgstr ""
 
-#: src/Commands.h:124
+#: src/Commands.h:121
 msgid "Display an item on a line of the screen"
 msgstr ""
 
-#: src/Commands.h:125
+#: src/Commands.h:122
 msgid "Read file and puts its content in the stack"
 msgstr ""
 
-#: src/Commands.h:126
+#: src/Commands.h:123
 msgid "Write the second item into the file named by the first item"
 msgstr ""
 
-#: src/Commands.h:127
+#: src/Commands.h:124
 msgid "Undo last command, 50 levels by default"
 msgstr ""
 
-#: src/Commands.h:128
+#: src/Commands.h:125
 msgid "Define number of undo levels"
 msgstr ""
 
-#: src/Commands.h:129
+#: src/Commands.h:126
 msgid "Get number of undo levels"
 msgstr ""
 
-#: src/Commands.h:136
+#: src/Commands.h:133
 msgid "Command (number of arguments): description"
 msgstr ""
 
-#: src/Commands.h:146
+#: src/Commands.h:143
 msgid "Object type"
 msgstr ""
 
-#: src/Commands.h:147
+#: src/Commands.h:144
 msgid "Symbol"
 msgstr ""
 
-#: src/Commands.h:147
+#: src/Commands.h:144
 msgid "Example"
 msgstr ""
 
-#: src/Commands.h:151
+#: src/Commands.h:148
 msgid "Data"
 msgstr ""
 
-#: src/Commands.h:152
+#: src/Commands.h:149
 msgid "Real Number"
 msgstr ""
 
-#: src/Commands.h:153
+#: src/Commands.h:150
 msgid "1.23456e-25"
 msgstr ""
 
-#: src/Commands.h:154
+#: src/Commands.h:151
 msgid "Complex Number"
 msgstr ""
 
-#: src/Commands.h:155
+#: src/Commands.h:152
 msgid "(123.45, 678.90)"
 msgstr ""
 
-#: src/Commands.h:156
+#: src/Commands.h:153
 msgid "Binary Integer"
 msgstr ""
 
-#: src/Commands.h:157
+#: src/Commands.h:154
 msgid "# 123AB"
 msgstr ""
 
-#: src/Commands.h:158
+#: src/Commands.h:155
 msgid "String"
 msgstr ""
 
-#: src/Commands.h:159
+#: src/Commands.h:156
 msgid "\"RESULT\""
 msgstr ""
 
-#: src/Commands.h:160
+#: src/Commands.h:157
 msgid "Vector"
 msgstr ""
 
-#: src/Commands.h:161
+#: src/Commands.h:158
 msgid "[1.23 4.56 7.89]"
 msgstr ""
 
-#: src/Commands.h:162
+#: src/Commands.h:159
 msgid "Matrix"
 msgstr ""
 
-#: src/Commands.h:163
+#: src/Commands.h:160
 msgid "[[1.23 4.56] [6.54 3.21]]"
 msgstr ""
 
-#: src/Commands.h:164
+#: src/Commands.h:161
 msgid "List"
 msgstr ""
 
-#: src/Commands.h:165
+#: src/Commands.h:162
 msgid "{1.23 \"ABC\" # 45d}"
 msgstr ""
 
-#: src/Commands.h:167
+#: src/Commands.h:164
 msgid "Names"
 msgstr ""
 
-#: src/Commands.h:168
+#: src/Commands.h:165
 msgid "Name"
 msgstr ""
 
-#: src/Commands.h:169
+#: src/Commands.h:166
 msgid "'CALC'"
 msgstr ""
 
-#: src/Commands.h:171
+#: src/Commands.h:168
 msgid "Procedures"
 msgstr ""
 
-#: src/Commands.h:172
+#: src/Commands.h:169
 msgid "Program"
 msgstr ""
 
-#: src/Commands.h:173
+#: src/Commands.h:170
 msgid "<< DUP + SWAP >>"
 msgstr ""
 
-#: src/Commands.h:174
+#: src/Commands.h:171
 msgid "Algebraic"
 msgstr ""
 
-#: src/Commands.h:175
+#: src/Commands.h:172
 msgid "'X+2*Y=Z'"
 msgstr ""
 
-#: src/Commands.h:180
+#: src/Commands.h:177
 msgid "Flag #"
 msgstr ""
 
-#: src/Commands.h:181
+#: src/Commands.h:178
 msgid "Description"
 msgstr ""
 
-#: src/Commands.h:182
+#: src/Commands.h:179
 msgid "Status"
 msgstr ""
 
-#: src/Commands.h:194
+#: src/Commands.h:193
 msgid "Set"
 msgstr ""
 
-#: src/Commands.h:194
+#: src/Commands.h:193
 msgid "Unset"
 msgstr ""

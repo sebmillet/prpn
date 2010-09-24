@@ -86,6 +86,8 @@ R->B           (1): Convert a real into a binary integer
 RCLF           (0): Save flag states in a binary integer
 STOF           (1): Read flag states from a binary integer
 WAIT           (1): Wait a number of seconds
+STD            (0): Set reals display to 'standard'
+SCI            (1): Set reals display to 'scientific'
 CLLCD          (0): Clear the screen
 CLMF           (0): Clear the message flag
 DISP           (2): Display an item on a line of the screen
@@ -118,3 +120,4 @@ Algebraic                ' '            'X+2*Y=Z'
 << CLLCD CLMF "a" 1 DISP 5 WAIT "b" 1 DISP 5 WAIT >>
 'x'
 1
+1.23

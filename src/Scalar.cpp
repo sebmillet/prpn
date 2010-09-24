@@ -62,7 +62,7 @@ void ascii_integer_string_round(string& s, const int& nb_digits) {
 				s.insert(0, "1");
 		}
 	}
-	  // Ha! Infinite loop? Hope it'll never happen
+	  // Ha! Infinite loop? This should not happen
 	if (s.length() > nb_digits)
 		ascii_integer_string_round(s, nb_digits);
 }
@@ -71,97 +71,115 @@ const string user_real_to_string(const real& r, const tostring_t& t) {
 	string s = real_to_string(r);
 	size_t p;
 
-	/*debug_write("Start string:");
+	debug_write("Start string:");
 	debug_write(s.c_str());
 
-	  // Without the sign, and before "E"
-	string part_mantisse;
-	  // After "E"
-	int part_exp;
-	  // -1 or +1
-	int part_sign;
-	  // Before .
-	string part_mantisse_int;
-	  // After .
-	string part_mantisse_dec;
+	realdisp_t setting_rd;
+	int setting_nbdecs;
+	F->get_realdisp(t != TOSTRING_PORTABLE, setting_rd, setting_nbdecs);
+
+	debug_write_i("rd = %i", setting_rd);
+	debug_write_i("nbdecs = %i", setting_nbdecs);
+
+	string target2;
+
+	if (setting_rd != REALDISP_STD) {
+		  // Without the sign, and before "E"
+		string part_mantisse;
+		  // After "E"
+		int part_exp;
+		  // -1 or +1
+		int part_sign;
+		  // Before .
+		string part_mantisse_int;
+		  // After .
+		string part_mantisse_dec;
 
 // Mantisse
 
-	if ((p = s.find_first_of("eE")) != string::npos) {
-		part_mantisse = s.substr(0, p);
-		part_exp = string_to_integer(s.substr(p + 1));
-	} else {
-		part_mantisse = s;
-		part_exp = 0;
-	}
+		if ((p = s.find_first_of("eE")) != string::npos) {
+			part_mantisse = s.substr(0, p);
+			part_exp = string_to_integer(s.substr(p + 1));
+		} else {
+			part_mantisse = s;
+			part_exp = 0;
+		}
 
 // Sign
 
-	if (part_mantisse.length() >= 1) {
-		if (part_mantisse.at(0) == '-') {
-			part_sign = -1;
-			part_mantisse.erase(0, 1);
-		} else if (part_mantisse.at(0) == '+') {
-			part_sign = 1;
-			part_mantisse.erase(0, 1);
-		} else {
-			part_sign = 1;
+		if (part_mantisse.length() >= 1) {
+			if (part_mantisse.at(0) == '-') {
+				part_sign = -1;
+				part_mantisse.erase(0, 1);
+			} else if (part_mantisse.at(0) == '+') {
+				part_sign = 1;
+				part_mantisse.erase(0, 1);
+			} else {
+				part_sign = 1;
+			}
 		}
-	}
 
 // Integer and decimal parts of the mantisse
 
-	if ((p = part_mantisse.find_first_of('.')) != string::npos) {
-		part_mantisse_int = part_mantisse.substr(0, p);
-		part_mantisse_dec = part_mantisse.substr(p + 1);
+		if ((p = part_mantisse.find_first_of('.')) != string::npos) {
+			part_mantisse_int = part_mantisse.substr(0, p);
+			part_mantisse_dec = part_mantisse.substr(p + 1);
+		} else {
+			part_mantisse_int = part_mantisse;
+			part_mantisse_dec = "";
+		}
+		if ((p = part_mantisse_int.find_first_not_of('0')) != string::npos)
+			part_mantisse_int.erase(0, p);
+		else
+			part_mantisse_int = "";
+		if ((p = part_mantisse_dec.find_first_not_of('0')) == string::npos)
+			part_mantisse_dec = "";
+
+		debug_write("Mantisse:");
+		debug_write(part_mantisse.c_str());
+		debug_write_i("Sign: %i", part_sign);
+		debug_write("Mantisse INT:");
+		debug_write(part_mantisse_int.c_str());
+		debug_write("Mantisse DEC:");
+		debug_write(part_mantisse_dec.c_str());
+		debug_write_i("Exp: %i", part_exp);
+
+		string target1 = part_mantisse_int + part_mantisse_dec;
+		part_exp += part_mantisse_int.length() - 1;
+		if ((p = target1.find_first_not_of('0')) != string::npos && p != 0) {
+			part_exp -= p;
+			target1.erase(0, p);
+		}
+		ascii_integer_string_round(target1, REAL_PRECISION);
+
+		debug_write("Target1:");
+		debug_write(target1.c_str());
+
+		string disp_eex_noround;
+		if (target1.length() == 0 || target1 == "0") {
+			disp_eex_noround = "0";
+			part_exp = 0;
+			part_sign = 1;
+		} else {
+			disp_eex_noround = target1;
+		}
+		if (disp_eex_noround.length() < setting_nbdecs + 1)
+			disp_eex_noround.append(string(setting_nbdecs + 1 - disp_eex_noround.length(), '0'));
+		ascii_integer_string_round(disp_eex_noround, setting_nbdecs + 1);
+		if (disp_eex_noround.length() > 1)
+			disp_eex_noround.insert(1, ".");
+
+		disp_eex_noround.append("E" + integer_to_string(part_exp));
+
+		debug_write("EEX notation, not rounded:");
+		debug_write(disp_eex_noround.c_str());
+
+		if (part_sign < 0)
+			target2 = "-";
+		target2.append(disp_eex_noround);
 	} else {
-		part_mantisse_int = part_mantisse;
-		part_mantisse_dec = "";
+		target2 = s;
 	}
-	if ((p = part_mantisse_int.find_first_not_of('0')) != string::npos)
-		part_mantisse_int.erase(0, p);
-	else
-		part_mantisse_int = "";
-	if ((p = part_mantisse_dec.find_first_not_of('0')) == string::npos)
-		part_mantisse_dec = "";
-
-	debug_write("Mantisse:");
-	debug_write(part_mantisse.c_str());
-	debug_write_i("Sign: %i", part_sign);
-	debug_write("Mantisse INT:");
-	debug_write(part_mantisse_int.c_str());
-	debug_write("Mantisse DEC:");
-	debug_write(part_mantisse_dec.c_str());
-	debug_write_i("Exp: %i", part_exp);
-
-	string target1 = part_mantisse_int + part_mantisse_dec;
-	part_exp += part_mantisse_int.length() - 1;
-	if ((p = target1.find_first_not_of('0')) != string::npos && p != 0) {
-		part_exp -= p;
-		target1.erase(0, p);
-	}
-	ascii_integer_string_round(target1, REAL_PRECISION);
-
-	debug_write("Target1:");
-	debug_write(target1.c_str());
-
-	string disp_eex_noround;
-	if (target1.length() == 0 || target1 == "0")
-		disp_eex_noround = "0.";
-	else {
-		disp_eex_noround = target1;
-		disp_eex_noround.insert(1, ".");
-	}
-	if (disp_eex_noround.length() < REAL_PRECISION + 1)
-		disp_eex_noround.append(string(REAL_PRECISION + 1 - disp_eex_noround.length(), '0'));
-
-	disp_eex_noround.append("E" + integer_to_string(part_exp));
-
-	debug_write("EEX notation, not rounded:");
-	debug_write(disp_eex_noround.c_str());
-
-	string target2 = disp_eex_noround;*/
-	string target2 = s;
 
 	if ((p = target2.find_first_of("eE")) != string::npos) {
 		if (target2.substr(p + 1, 1) == "+")

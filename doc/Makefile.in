@@ -270,8 +270,9 @@ EXTRA_DIST = ${srcdir}/make-man-page.sh ${srcdir}/prpn1en-prefix ${srcdir}/prpn1
 	${MANPAGEEN} ${MANPAGEFR} \
 	${CMDSEN} ${CMDSFR}
 
-dist_man_MANS = ${MANPAGEEN}
-dist_man_fr_MANS = ${MANPAGEFR}
+
+# manfrdir=$(mandir)/fr
+dist_man_MANS = ${MANPAGEEN} ${MANPAGEFR}
 all: all-am
 
 .SUFFIXES:

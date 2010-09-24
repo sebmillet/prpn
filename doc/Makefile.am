@@ -18,8 +18,8 @@ EXTRA_DIST=${srcdir}/make-man-page.sh ${srcdir}/prpn1en-prefix ${srcdir}/prpn1en
 	${MANPAGEEN} ${MANPAGEFR} \
 	${CMDSEN} ${CMDSFR}
 
-dist_man_MANS=${MANPAGEEN}
-dist_man_fr_MANS=${MANPAGEFR}
+# manfrdir=$(mandir)/fr
+dist_man_MANS=${MANPAGEEN} ${MANPAGEFR}
 
 
 if BUILD_DOCS

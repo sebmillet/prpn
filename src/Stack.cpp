@@ -257,9 +257,13 @@ int Flags::get_bin_size() const {
 
 void Flags::set_bin_size(int n) {
 	n--;
-	for (int i = FL_BIN_SIZE_6; i <= FL_BIN_SIZE_6 + 5; i++) {
+	if (n < 0)
+		n = 0;
+	if (n > 63)
+		n = 63;
+	for (int i = FL_BIN_SIZE_6; i < FL_BIN_SIZE_6 + 6; i++) {
 		set(i, n % 2 != 0);
-		n = n / 2;
+		n /= 2;
 	}
 }
 
@@ -292,6 +296,38 @@ void Flags::get_realdisp(const bool& user_setting, realdisp_t& rd, int& nb) cons
 				nb += base_power;
 			base_power += base_power;
 		}
+	}
+}
+
+void Flags::set_realdisp(const realdisp_t& rd, int nb) {
+	switch (rd) {
+		case REALDISP_STD:
+			set(FL_REAL_FORMAT_2, false);
+			set(FL_REAL_FORMAT_2 + 1, false);
+			break;
+		case REALDISP_SCI:
+			set(FL_REAL_FORMAT_2, false);
+			set(FL_REAL_FORMAT_2 + 1, true);
+			break;
+		case REALDISP_FIX:
+			set(FL_REAL_FORMAT_2, true);
+			set(FL_REAL_FORMAT_2 + 1, false);
+			break;
+		case REALDISP_ENG:
+			set(FL_REAL_FORMAT_2, true);
+			set(FL_REAL_FORMAT_2 + 1, true);
+			break;
+		default:
+			throw(CalcFatal(__FILE__, __LINE__, "Flags::set_realdisp(): unknown display type!"));
+	}
+
+	if (nb < 0)
+		nb = 0;
+	if (nb > 11)
+		nb = 11;
+	for (int i = FL_REAL_NB_DECS_4; i < FL_REAL_NB_DECS_4 + 4; i++) {
+		set(i, nb % 2 != 0);
+		nb /= 2;
 	}
 }
 
@@ -1943,6 +1979,20 @@ static st_err_t bc_wait(StackItem& op1, StackItem*&, string&) {
 }
 
   // Misc
+
+static st_err_t bc_std(TransStack& ts, SIO *args, string&) {
+	F->set_realdisp(REALDISP_STD, 0);
+	return ST_ERR_OK;
+}
+
+static st_err_t bc_sci(StackItem& op1, StackItem*&, string&) {
+	int n;
+	st_err_t c = op1.to_integer(n);
+	if (c != ST_ERR_OK)
+		return c;
+	F->set_realdisp(REALDISP_SCI, n);
+	return ST_ERR_OK;
+}
 
 static st_err_t bc_cllcd(TransStack& ts, SIO *args, string&) {
 	ui_cllcd();
