@@ -73,8 +73,6 @@ void my_append_padr(std::string&, const std::string&, const size_t&);
 #define CMD_PREFIX_NOSTD "_"
 #endif
 
-int cfg_get_undo_levels();
-
 void my_sleep_seconds(const int&);
 const std::string integer_to_string(const int&);
 

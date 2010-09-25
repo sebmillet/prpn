@@ -67,6 +67,19 @@ void ascii_integer_string_round(string& s, const int& nb_digits) {
 		ascii_integer_string_round(s, nb_digits);
 }
 
+  // Remove useless zeros left after the decimal separator ('.')
+  // This function presumes there IS a decimal separator somwhere, don't
+  // apply it on litteral integers.
+void ascii_remove_trailing_zeros(string& s, const bool& enforce_remove_trailing_dots = false) {
+	int i;
+	for (i = s.length() - 1; i >= 0 && s.at(i) == '0'; i--)
+		;
+	s.erase(i + 1);
+	if (cfg_realdisp_remove_trailing_dot || enforce_remove_trailing_dots)
+		if (s.at(s.length() - 1) == '.')
+			s.erase(s.length() - 1);
+}
+
 const string user_real_to_string(const real& r, const tostring_t& t) {
 	string s = real_to_string(r);
 	size_t p;
@@ -80,10 +93,12 @@ const string user_real_to_string(const real& r, const tostring_t& t) {
 
 	debug_write_i("rd = %i", setting_rd);
 	debug_write_i("nbdecs = %i", setting_nbdecs);
+	if (setting_nbdecs < 0)
+		setting_nbdecs = REAL_PRECISION - 1;
 
 	string target2;
 
-	if (setting_rd != REALDISP_STD) {
+	if (setting_rd != REALDISP_STD || cfg_realdisp_manage_std) {
 		  // Without the sign, and before "E"
 		string part_mantisse;
 		  // After "E"
@@ -165,18 +180,51 @@ const string user_real_to_string(const real& r, const tostring_t& t) {
 		}
 		if (disp_eex_noround.length() < setting_nbdecs + 1)
 			disp_eex_noround.append(string(setting_nbdecs + 1 - disp_eex_noround.length(), '0'));
-		ascii_integer_string_round(disp_eex_noround, setting_nbdecs + 1);
-		if (disp_eex_noround.length() > 1)
-			disp_eex_noround.insert(1, ".");
+		target2 = disp_eex_noround;
 
-		disp_eex_noround.append("E" + integer_to_string(part_exp));
+		ascii_integer_string_round(target2, setting_nbdecs + 1);
 
-		debug_write("EEX notation, not rounded:");
-		debug_write(disp_eex_noround.c_str());
+		bool done = false;
+
+		if (setting_rd == REALDISP_STD) {
+			if (part_exp < 0) {
+				if ((p = target2.find_last_not_of('0')) != string::npos) {
+					if (static_cast<int>(p) + 1 - part_exp <= REAL_PRECISION + 1) {
+						target2.insert(0, string(-part_exp - 1, '0'));
+						target2.erase(REAL_PRECISION);
+						target2.insert(0, ".");
+						ascii_remove_trailing_zeros(target2);
+						done = true;
+					}
+				} else {
+					throw(CalcFatal(__FILE__, __LINE__, "user_real_to_string(): inconsistent data!"));
+				}
+			} else {
+				if (part_exp <= REAL_PRECISION - 1) {
+					if (part_exp < REAL_PRECISION - 1) {
+						target2.insert(part_exp + 1, ".");
+						ascii_remove_trailing_zeros(target2, true);
+					}
+					done = true;
+				}
+			}
+		}
+
+		if (!done) {
+			if (target2.length() > 1) {
+				target2.insert(1, ".");
+				if (setting_rd == REALDISP_STD)
+					ascii_remove_trailing_zeros(target2);
+			}
+			target2.append("E" + integer_to_string(part_exp));
+		}
 
 		if (part_sign < 0)
-			target2 = "-";
-		target2.append(disp_eex_noround);
+			target2.insert(0, "-");
+
+		debug_write("target2:");
+		debug_write(target2.c_str());
+
 	} else {
 		target2 = s;
 	}

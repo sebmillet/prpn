@@ -64,6 +64,8 @@ extern int g_display_width;
 extern int g_display_stack_min_lines;
 extern int g_display_stack_max_lines;
 
+int cfg_get_undo_levels();
+
 typedef enum {
 	BC_FUNCTION_WRAPPER,	// Returns a StackItem*, example: +, COS
 	BC_COMMAND_WRAPPER,		// Same as above, but doesn't return a value, example: SF, CF

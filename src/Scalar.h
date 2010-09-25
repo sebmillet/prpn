@@ -14,6 +14,20 @@
 #include <bitset>
 #include <vector>
 
+  // If the constant below is false, then, the "STD" display mode of
+  // reals just uses C++ built-in language = the following code:
+  // 	ostringstream o;
+  // 	o.precision(REAL_PRECISION);
+  // 	o << r;
+  // 	string s = o.str();
+  // If true, then, the "STD" mode to display reals is driven by
+  // prpn itself, regardless of what C++ code above returns.
+  // This code is written in the function user_real_to_string().
+const bool cfg_realdisp_manage_std = true;
+  // Should we display certain reals like "1.E-13" (false => HP-28S flavor)
+  // or like "1E-13" (true)?
+const bool cfg_realdisp_remove_trailing_dot = false;
+
 typedef enum {SCALAR_UNDEF, SCALAR_REAL, SCALAR_COMPLEX} scalar_t;
 typedef enum {DIM_VECTOR, DIM_MATRIX} dim_t;
 
