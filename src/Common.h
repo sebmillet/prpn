@@ -34,6 +34,12 @@
 #include <iostream>
 #endif
 
+#ifdef DEBUG
+#define DEBUG_VERSION_STRING		"d"
+#else
+#define DEBUG_VERSION_STRING		""
+#endif
+
 #define BIN_NAME					"prpn"
 #define MY_HELP_HTML_PREFIX			"prpn"
 #define MY_HELP_HTML_PEXTENSION		".html"

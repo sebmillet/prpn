@@ -1,4 +1,4 @@
-Test done with Linux scripts
+Tests to do with Linux scripts
 
 - Run ./tt.sh to have all tests run and results displayed. It requires
 the binary executable to be available in ../src, as per default build.
