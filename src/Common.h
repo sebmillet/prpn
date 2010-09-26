@@ -15,6 +15,13 @@
 //   opération + doit fonctionner entre une liste et n'importe quel élément
 //   Remplacer string par wstring ?
 //   { nom_variable } possible pour créer un tableau
+//   Trouver une solution à des erreurs d'arrondi provoqués par la librairie "math". Ainsi le nombre
+//     50000000000.15 une fois arrondi à 12 décimales vaut 50000000000.2 alors que le nombre
+//     90000000000.15 une fois arrondi à 12 décimales vaut 90000000000.1
+//     Une solution serait d'arrondir à 13 décimales puis d'enlever la dernière... Mais je cherche
+//     une solution plus élégante.
+//     Autre exemple : 10000.15946805 devient 10000.1594681 alors que
+//                     50000.15946805 devient 50000.159468
 //
 // Programme de test :
 // 	 Intitulé de l'erreur si pas assez d'argument lors de l'exécution de << -> ... << >> >>

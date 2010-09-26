@@ -23,9 +23,14 @@
   // If true, then, the "STD" mode to display reals is driven by
   // prpn itself, regardless of what C++ code above returns.
   // This code is written in the function user_real_to_string().
+  // An example of difference between managed and language-builtin is:
+  // Managed: 1.E-13     .0000001
+  // Builtin: 1e-13      1e-07
 const bool cfg_realdisp_manage_std = true;
   // Should we display certain reals like "1.E-13" (false => HP-28S flavor)
   // or like "1E-13" (true)?
+  // I am used to HP-28S flavor although removing trailing dot is cleaner...
+  // Note if you put true below, the tests suite will fail in several tests.
 const bool cfg_realdisp_remove_trailing_dot = false;
 
 typedef enum {SCALAR_UNDEF, SCALAR_REAL, SCALAR_COMPLEX} scalar_t;
