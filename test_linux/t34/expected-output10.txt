@@ -1,0 +1,95 @@
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+PUT Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+GET Error:
+Bad Argument Value
+/ Error:
+Infinite Result
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+PUTI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+GETI Error:
+Bad Argument Value
+[ 2 ]
+{ << 1 1 0 / >> }
+5
+[[ 2 ]]
+{ << 1 1 0 / >> }
+5
+[ (0,2) ]
+{ << 1 1 0 / >> }
+5
+[[ (0,2) ]]
+{ << 1 1 0 / >> }
+5
+{ (1,-1) }
+{ << 1 1 0 / >> }
+5
+[ 2 ]
+{ << 1 1 0 / >> }
+[[ 2 ]]
+{ << 1 1 0 / >> }
+[ (0,2) ]
+{ << 1 1 0 / >> }
+[[ (0,2) ]]
+{ << 1 1 0 / >> }
+{ (1,-1) }
+{ << 1 1 0 / >> }
+1
+0
+[ 2 ]
+{ << 1 1 0 / >> }
+5
+[[ 2 ]]
+{ << 1 1 0 / >> }
+5
+[ (0,2) ]
+{ << 1 1 0 / >> }
+5
+[[ (0,2) ]]
+{ << 1 1 0 / >> }
+5
+{ (1,-1) }
+{ << 1 1 0 / >> }
+5
+[ 2 ]
+{ << 1 1 0 / >> }
+[[ 2 ]]
+{ << 1 1 0 / >> }
+[ (0,2) ]
+{ << 1 1 0 / >> }
+[[ (0,2) ]]
+{ << 1 1 0 / >> }
+{ (1,-1) }
+{ << 1 1 0 / >> }
+get_class_count() = 0 for watched classes

@@ -178,39 +178,75 @@ const string user_real_to_string(const real& r, const tostring_t& t) {
 		} else {
 			disp_eex_noround = target1;
 		}
-		if (disp_eex_noround.length() < setting_nbdecs + 1)
-			disp_eex_noround.append(string(setting_nbdecs + 1 - disp_eex_noround.length(), '0'));
+		int my_nbdecs = setting_rd == REALDISP_FIX ? REAL_PRECISION : (setting_nbdecs + 1);
+		if (disp_eex_noround.length() < my_nbdecs)
+			disp_eex_noround.append(string(my_nbdecs - disp_eex_noround.length(), '0'));
 		target2 = disp_eex_noround;
+		ascii_integer_string_round(target2, my_nbdecs);
 
-		ascii_integer_string_round(target2, setting_nbdecs + 1);
+		bool work_done = false;
 
-		bool done = false;
+		debug_write("** target2:");
+		debug_write(target2.c_str());
+		debug_write_i("** part_exp: %i", part_exp);
 
-		if (setting_rd == REALDISP_STD) {
-			if (part_exp < 0) {
-				if ((p = target2.find_last_not_of('0')) != string::npos) {
-					if (static_cast<int>(p) + 1 - part_exp <= REAL_PRECISION + 1) {
-						target2.insert(0, string(-part_exp - 1, '0'));
-						target2.erase(REAL_PRECISION);
-						target2.insert(0, ".");
-						ascii_remove_trailing_zeros(target2);
-						done = true;
+		switch (setting_rd) {
+			case REALDISP_STD:
+				if (part_exp < 0) {
+					if ((p = target2.find_last_not_of('0')) != string::npos) {
+						if (static_cast<int>(p) + 1 - part_exp <= REAL_PRECISION + 1) {
+							target2.insert(0, string(-part_exp - 1, '0'));
+							target2.erase(REAL_PRECISION);
+							target2.insert(0, ".");
+							ascii_remove_trailing_zeros(target2);
+							work_done = true;
+						}
+					} else {
+						throw(CalcFatal(__FILE__, __LINE__, "user_real_to_string(): inconsistent data!"));
 					}
 				} else {
-					throw(CalcFatal(__FILE__, __LINE__, "user_real_to_string(): inconsistent data!"));
-				}
-			} else {
-				if (part_exp <= REAL_PRECISION - 1) {
-					if (part_exp < REAL_PRECISION - 1) {
-						target2.insert(part_exp + 1, ".");
-						ascii_remove_trailing_zeros(target2, true);
+					if (part_exp <= REAL_PRECISION - 1) {
+						if (part_exp < REAL_PRECISION - 1) {
+							target2.insert(part_exp + 1, ".");
+							ascii_remove_trailing_zeros(target2, true);
+						}
+						work_done = true;
 					}
-					done = true;
 				}
-			}
+				break;
+			case REALDISP_FIX:
+				if (part_exp < 0) {
+					if (-part_exp <= setting_nbdecs + 1) {
+						string t = string(-part_exp - 1, '0') + target2;
+						ascii_integer_string_round(t, setting_nbdecs);
+						if ((p = t.find_last_not_of('0')) != string::npos) {
+							target2 = '.' + t;
+							work_done = true;
+						}
+					}
+				} else {
+					if (part_exp <= REAL_PRECISION - 1) {
+						if (part_exp + 1 + setting_nbdecs < REAL_PRECISION)
+							ascii_integer_string_round(target2, part_exp + setting_nbdecs + 1);
+						target2.insert(part_exp + 1, ".");
+						work_done = true;
+					}
+				}
+				if (!work_done) {
+					if (target2.length() < setting_nbdecs + 1)
+						target2.append(string(setting_nbdecs + 1 - target2.length(), '0'));
+					ascii_integer_string_round(target2, setting_nbdecs + 1);
+				}
+				break;
+			case REALDISP_ENG:
+				break;
+			case REALDISP_SCI:
+				break;
+			default:
+				throw(CalcFatal(__FILE__, __LINE__, "user_real_to_string(): unknown real display type!!"));
 		}
 
-		if (!done) {
+		if (!work_done) {
 			if (target2.length() > 1) {
 				target2.insert(1, ".");
 				if (setting_rd == REALDISP_STD)

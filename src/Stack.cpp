@@ -1985,14 +1985,18 @@ static st_err_t bc_std(TransStack& ts, SIO *args, string&) {
 	return ST_ERR_OK;
 }
 
-static st_err_t bc_sci(StackItem& op1, StackItem*&, string&) {
+static st_err_t set_realdisp_n(StackItem& op1, const realdisp_t& rd) {
 	int n;
 	st_err_t c = op1.to_integer(n);
 	if (c != ST_ERR_OK)
 		return c;
-	F->set_realdisp(REALDISP_SCI, n);
+	F->set_realdisp(rd, n);
 	return ST_ERR_OK;
 }
+
+static st_err_t bc_sci(StackItem& op1, StackItem*&, string&) { return set_realdisp_n(op1, REALDISP_SCI); }
+static st_err_t bc_fix(StackItem& op1, StackItem*&, string&) { return set_realdisp_n(op1, REALDISP_FIX); }
+static st_err_t bc_eng(StackItem& op1, StackItem*&, string&) { return set_realdisp_n(op1, REALDISP_ENG); }
 
 static st_err_t bc_cllcd(TransStack& ts, SIO *args, string&) {
 	ui_cllcd();
@@ -3010,99 +3014,104 @@ st_err_t StackItemList::op_list_to(TransStack& ts, const tso_t& o) {
 }
 
 st_err_t StackItemList::get_coordinates(TransStack& ts, Coordinates& coord) {
-
-
-	TransStack *tmpts = new TransStack(true, ts.get_exec_stack());
-	bool inside_undo_sequence = false;
-	string cmd_err;
 	st_err_t c = ST_ERR_OK;
-	SIO s;
 
-#ifdef DEBUG
-	for (vector<StackItem*>::iterator it = list.begin(); it != list.end() && c == ST_ERR_OK; it++) {
-		debug_write("Item to evaluate separately: ");
-		string x = simple_string(*it);
-		debug_write(x.c_str());
-	}
-#endif
-
-	for (vector<StackItem*>::iterator it = list.begin(); it != list.end() && c == ST_ERR_OK; it++) {
-		s.ownership = TSO_OWNED_BY_TS;
-		s.si = (*it)->dup();
-		c = tmpts->do_push_eval(s, inside_undo_sequence, cmd_err, EVAL_HARD);
-	}
-	if (c == ST_ERR_OK) {
-		int n = static_cast<int>(tmpts->stack_get_count());
-
-#ifdef DEBUG
-		const StackItem *csi;
-		for (int i = 1; i <= n; i++) {
-			csi = tmpts->transstack_get_const_si(i);
-			debug_write_i("Result: item number %i", i);
-			debug_write(simple_string(const_cast<StackItem*>(csi)).c_str());
-		}
-#endif
-
-		if (n >= 1 && n <= 2) {
-			SIO *items = new SIO[n];
-			for (int i = 0; i < n; i++)
-				items[i] = tmpts->transstack_pop();
-			int value;
-			for (int i = 0; i < n; i++) {
-				c = items[i].si->to_integer(value);
-				if (c == ST_ERR_OK && value >= 1) {
-					if (n - 1 - i == 0)
-						coord.i = value;
-					else
-						coord.j = value;
-				} else {
-					c = ST_ERR_BAD_ARGUMENT_VALUE;
-					break;
-				}
-			}
-			for (int i = 0; i < n; i++)
-				items[i].cleanup();
-			delete []items;
-			if (c == ST_ERR_OK)
-				coord.d = (n == 1 ? DIM_VECTOR : DIM_MATRIX);
-			else
+	size_t nb = get_nb_items();
+	if (nb >= 1 && nb <= 2) {
+		int value;
+		coord.j = -1;
+		for (int ii = 0; static_cast<size_t>(ii) < nb; ii++) {
+			c = list[ii]->to_integer(value);
+			if (c != ST_ERR_OK || value < 1) {
 				c = ST_ERR_BAD_ARGUMENT_VALUE;
-		} else {
-			c = ST_ERR_BAD_ARGUMENT_VALUE;
+				break;
+			}
+			if (ii == 0)
+				coord.i = value;
+			else if (ii == 1)
+				coord.j = value;
+			else
+				throw(CalcFatal(__FILE__, __LINE__, "StackItemList::get_coordinates(): inconsistent values encountered!!!??"));
 		}
-	}
-	delete tmpts;
+		coord.d = (nb == 1 ? DIM_VECTOR : DIM_MATRIX);
+	} else
+		c = ST_ERR_BAD_ARGUMENT_VALUE;
+
+	if (c != ST_ERR_OK) {
+		TransStack *tmpts = new TransStack(true, ts.get_exec_stack());
+		bool inside_undo_sequence = false;
+		string cmd_err;
+		c = ST_ERR_OK;
+		SIO s;
 
 #ifdef DEBUG
-	debug_write("coord.d:");
-	if (coord.d == DIM_VECTOR)
-		debug_write("vector");
-	else
-		debug_write("matrix");
-	debug_write_i("coord.i = %i", coord.i);
-	debug_write_i("coord.j = %i", coord.j);
+		for (vector<StackItem*>::iterator it = list.begin(); it != list.end() && c == ST_ERR_OK; it++) {
+			debug_write("Item to evaluate separately: ");
+			string x = simple_string(*it);
+			debug_write(x.c_str());
+		}
 #endif
 
-	/*size_t nb = get_nb_items();
-	if (nb < 1 || nb > 2)
-		return ST_ERR_BAD_ARGUMENT_VALUE;
-	st_err_t c = ST_ERR_OK;
-	int value;
-	coord.j = -1;
-	for (int ii = 0; static_cast<size_t>(ii) < nb; ii++) {
-		c = list[ii]->to_integer(value);
-		if (c != ST_ERR_OK || value < 1) {
-			c = ST_ERR_BAD_ARGUMENT_VALUE;
-			break;
+		for (vector<StackItem*>::iterator it = list.begin(); it != list.end() && c == ST_ERR_OK; it++) {
+			s.ownership = TSO_OWNED_BY_TS;
+			s.si = (*it)->dup();
+			c = tmpts->do_push_eval(s, inside_undo_sequence, cmd_err, EVAL_HARD);
 		}
-		if (ii == 0)
-			coord.i = value;
-		else if (ii == 1)
-			coord.j = value;
+		if (c != ST_ERR_OK) {
+			c = ST_ERR_BAD_ARGUMENT_VALUE;
+		} else {
+			int n = static_cast<int>(tmpts->stack_get_count());
+
+#ifdef DEBUG
+			const StackItem *csi;
+			for (int i = 1; i <= n; i++) {
+				csi = tmpts->transstack_get_const_si(i);
+				debug_write_i("Result: item number %i", i);
+				debug_write(simple_string(const_cast<StackItem*>(csi)).c_str());
+			}
+#endif
+
+			if (n >= 1 && n <= 2) {
+				SIO *items = new SIO[n];
+				for (int i = 0; i < n; i++)
+					items[i] = tmpts->transstack_pop();
+				int value;
+				for (int i = 0; i < n; i++) {
+					c = items[i].si->to_integer(value);
+					if (c == ST_ERR_OK && value >= 1) {
+						if (n - 1 - i == 0)
+							coord.i = value;
+						else
+							coord.j = value;
+					} else {
+						c = ST_ERR_BAD_ARGUMENT_VALUE;
+						break;
+					}
+				}
+				for (int i = 0; i < n; i++)
+					items[i].cleanup();
+				delete []items;
+				if (c == ST_ERR_OK)
+					coord.d = (n == 1 ? DIM_VECTOR : DIM_MATRIX);
+				else
+					c = ST_ERR_BAD_ARGUMENT_VALUE;
+			} else {
+				c = ST_ERR_BAD_ARGUMENT_VALUE;
+			}
+		}
+		delete tmpts;
+
+#ifdef DEBUG
+		debug_write("coord.d:");
+		if (coord.d == DIM_VECTOR)
+			debug_write("vector");
 		else
-			throw(CalcFatal(__FILE__, __LINE__, "StackItemList::get_coordinates(): inconsistent values encountered!!!??"));
+			debug_write("matrix");
+		debug_write_i("coord.i = %i", coord.i);
+		debug_write_i("coord.j = %i", coord.j);
+#endif
 	}
-	coord.d = (nb == 1 ? DIM_VECTOR : DIM_MATRIX);*/
+
 	return c;
 }
 

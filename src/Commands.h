@@ -116,6 +116,8 @@ BuiltinCommandDescriptor builtinCommands[] = {
 	  // Misc
 	{0, BC_RAW, "STD", &bc_std, 0, 0, 0, 0, _N("Set reals display to 'standard'")},
 	{1, BC_COMMAND_WRAPPER, "SCI", 0, 0, &bc_sci, 0, 0, _N("Set reals display to 'scientific'")},
+	{1, BC_COMMAND_WRAPPER, "FIX", 0, 0, &bc_fix, 0, 0, _N("Set reals display to 'fixed number of decimals'")},
+	{1, BC_COMMAND_WRAPPER, "ENG", 0, 0, &bc_eng, 0, 0, _N("Set reals display to 'engineering'")},
 	{0, BC_RAW, "CLLCD", &bc_cllcd, 0, 0, 0, 0, _N("Clear the screen")},
 	{0, BC_RAW, "CLMF", &bc_clmf, 0, 0, 0, 0, _N("Clear the message flag")},
 	{2, BC_COMMAND_WRAPPER, "DISP", 0, 0, 0, &bc_disp, 0, _N("Display an item on a line of the screen")},
