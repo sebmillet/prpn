@@ -2014,6 +2014,24 @@ static st_err_t bc_read(TransStack& ts, SIO *args, string&) { return args[0].si-
 
 static st_err_t bc_write(StackItem& op1, StackItem& op2, StackItem*&, string&) { return op2.op_write(op1); }
 
+static st_err_t bc_hack_mgmt_std(StackItem& op1, StackItem*&, string&) {
+	int n;
+	st_err_t c = op1.to_integer(n);
+	if (c != ST_ERR_OK)
+		return c;
+	cfg_realdisp_manage_std = (n != 0);
+	return ST_ERR_OK;
+}
+
+static st_err_t bc_hack_remove_trailing_dot(StackItem& op1, StackItem*&, string&) {
+	int n;
+	st_err_t c = op1.to_integer(n);
+	if (c != ST_ERR_OK)
+		return c;
+	cfg_realdisp_remove_trailing_dot = (n != 0);
+	return ST_ERR_OK;
+}
+
 static st_err_t bc_undo(TransStack& ts, SIO*, string&) {
 	if (!ts.get_modified_flag())
 		ts.backward_head();

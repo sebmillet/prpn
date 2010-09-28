@@ -123,6 +123,8 @@ BuiltinCommandDescriptor builtinCommands[] = {
 	{2, BC_COMMAND_WRAPPER, "DISP", 0, 0, 0, &bc_disp, 0, _N("Display an item on a line of the screen")},
 	{1, BC_RAW, CMD_PREFIX_NOSTD "READ", &bc_read, 0, 0, 0, 0, _N("Read file and puts its content in the stack")},
 	{2, BC_COMMAND_WRAPPER, CMD_PREFIX_NOSTD "WRITE", 0, 0, 0, &bc_write, 0, _N("Write the second item into the file named by the first item")},
+	{1, BC_COMMAND_WRAPPER, CMD_PREFIX_NOSTD "HACK-REAL-MGMT", 0, 0, &bc_hack_mgmt_std, 0, 0, _N("Internal: tune real 'standard' display management")},
+	{1, BC_COMMAND_WRAPPER, CMD_PREFIX_NOSTD "HACK-REAL-DOT", 0, 0, &bc_hack_remove_trailing_dot, 0, 0, _N("Internal: set whether or not to keep a trailing dot in reals display")},
 	{0, BC_RAW, "UNDO", &bc_undo, 0, 0, 0, 0, _N("Undo last command, 50 levels by default")},
 	{1, BC_COMMAND_WRAPPER, CMD_PREFIX_NOSTD "UNDO_LEVELS", 0, 0, &bc_undo_levels, 0, 0, _N("Define number of undo levels")},
 	{0, BC_FUNCTION_WRAPPER, CMD_PREFIX_NOSTD "UNDO_LEVELS?", 0, &bc_undo_levels_get, 0, 0, 0, _N("Get number of undo levels")}

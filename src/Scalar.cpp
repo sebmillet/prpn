@@ -19,6 +19,37 @@ const int REAL_PRECISION = 12;
 extern const real MINR = 1e-199;
 extern const real MAXR = 9.99999999999e199;
 
+  // If the constant below is false, then, the "STD" display mode of
+  // reals just uses C++ built-in language = the following code:
+  // 	ostringstream o;
+  // 	o.precision(REAL_PRECISION);
+  // 	o << r;
+  // 	string s = o.str();
+  // If true, then, the "STD" mode to display reals is driven by
+  // prpn itself, regardless of what C++ code above returns.
+  // This code is written in the function user_real_to_string().
+  // An example of difference between managed and language-builtin is:
+  // Managed: 1.E-13     .0000001
+  // Builtin: 1e-13      1e-07
+  //
+  // * NOTE IF YOU PUT FALSE BELOW, THE TESTS SERIES WILL FAIL IN SEVERAL TESTS *
+  //
+  // This variable can be modified using the
+  //   _HACK-REAL-MGMT
+  // command.
+bool cfg_realdisp_manage_std = true;
+
+  // Should we display certain reals like "1.E-13" (false => HP-28S flavor)
+  // or like "1E-13" (true)?
+  // I am used to HP-28S flavor although removing trailing dot is cleaner...
+  //
+  // * NOTE IF YOU PUT TRUE BELOW, THE TESTS SERIES WILL FAIL IN SEVERAL TESTS *
+  //
+  // This variable can be modified using the
+  //   _HACK-REAL-DOT
+  // command.
+bool cfg_realdisp_remove_trailing_dot = false;
+
 
 // General functions
 
@@ -178,11 +209,10 @@ const string user_real_to_string(const real& r, const tostring_t& t) {
 		} else {
 			disp_eex_noround = target1;
 		}
-		int my_nbdecs = setting_rd == REALDISP_FIX ? REAL_PRECISION : (setting_nbdecs + 1);
-		if (disp_eex_noround.length() < my_nbdecs)
-			disp_eex_noround.append(string(my_nbdecs - disp_eex_noround.length(), '0'));
+		if (disp_eex_noround.length() < REAL_PRECISION)
+			disp_eex_noround.append(string(REAL_PRECISION - disp_eex_noround.length(), '0'));
+		ascii_integer_string_round(disp_eex_noround, REAL_PRECISION);
 		target2 = disp_eex_noround;
-		ascii_integer_string_round(target2, my_nbdecs);
 
 		bool work_done = false;
 
@@ -217,10 +247,11 @@ const string user_real_to_string(const real& r, const tostring_t& t) {
 			case REALDISP_FIX:
 				if (part_exp < 0) {
 					if (-part_exp <= setting_nbdecs + 1) {
-						string t = string(-part_exp - 1, '0') + target2;
-						ascii_integer_string_round(t, setting_nbdecs);
+						string t = string(-part_exp, '0') + target2;
+						ascii_integer_string_round(t, setting_nbdecs + 1);
 						if ((p = t.find_last_not_of('0')) != string::npos) {
-							target2 = '.' + t;
+							target2 = t;
+							target2.insert(1, ".");
 							work_done = true;
 						}
 					}
@@ -232,11 +263,6 @@ const string user_real_to_string(const real& r, const tostring_t& t) {
 						work_done = true;
 					}
 				}
-				if (!work_done) {
-					if (target2.length() < setting_nbdecs + 1)
-						target2.append(string(setting_nbdecs + 1 - target2.length(), '0'));
-					ascii_integer_string_round(target2, setting_nbdecs + 1);
-				}
 				break;
 			case REALDISP_ENG:
 				break;
@@ -247,11 +273,13 @@ const string user_real_to_string(const real& r, const tostring_t& t) {
 		}
 
 		if (!work_done) {
-			if (target2.length() > 1) {
-				target2.insert(1, ".");
-				if (setting_rd == REALDISP_STD)
-					ascii_remove_trailing_zeros(target2);
-			}
+			  // Work not done yet ==>> failover on SCI display
+			ascii_integer_string_round(target2, setting_nbdecs + 1);
+			//if (target2.length() > 1) {
+			target2.insert(1, ".");
+			if (setting_rd == REALDISP_STD)
+				ascii_remove_trailing_zeros(target2);
+			//}
 			target2.append("E" + integer_to_string(part_exp));
 		}
 
