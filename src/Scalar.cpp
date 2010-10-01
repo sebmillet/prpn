@@ -265,6 +265,22 @@ const string user_real_to_string(const real& r, const tostring_t& t) {
 				}
 				break;
 			case REALDISP_ENG:
+				int point_pos;
+				int new_part_exp;
+				if (part_exp >= 0) {
+					int t = part_exp / 3;
+					new_part_exp = 3 * t;
+				} else {
+					int t = (-part_exp - 1) / 3;
+					new_part_exp = -3 * (t + 1);
+				}
+				point_pos = part_exp - new_part_exp + 1;
+				ascii_integer_string_round(target2, setting_nbdecs + 1);
+				if (point_pos > setting_nbdecs + 1)
+					target2.append(string(point_pos - setting_nbdecs - 1, '0'));
+				target2.insert(point_pos, ".");
+				target2.append("E" + integer_to_string(new_part_exp));
+				work_done = true;
 				break;
 			case REALDISP_SCI:
 				break;
