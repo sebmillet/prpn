@@ -1,0 +1,24 @@
+Syntax error: 2-2,1
+Syntax error: 1-1,1
+Syntax error: 6-6,1
+Syntax error: 1-2,1
+Syntax error: 3-3,1
+1
+.1
+-.00000000034
+-.1
+.2
+""
+"(1,2)"
+"a"
+""
+(-1.E-21,.000000002)
+'1e6,.2)'
+'+ab'
+'b'
+(3,4)
+(0,1)
+0
+(-.8,.0007)
+"ab"
+get_class_count() = 0 for watched classes
