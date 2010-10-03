@@ -1,2 +1,0 @@
-[[ 1 2 ]]
-get_class_count() = 0 for watched classes
