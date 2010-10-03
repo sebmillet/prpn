@@ -1,0 +1,69 @@
+MOD Error:
+Infinite Result
+MOD Error:
+Bad Argument Type
+%CH Error:
+Infinite Result
+%CH Error:
+Infinite Result
+%CH Error:
+Undefined Result
+%T Error:
+Infinite Result
+%T Error:
+Infinite Result
+%T Error:
+Undefined Result
+% Error:
+Bad Argument Type
+%CH Error:
+Bad Argument Type
+%T Error:
+Bad Argument Type
+2.78
+4.41
+-2.5
+1
+0
+(1,2)
+3
+.4
+-.4
+-.4
+.4
+0
+0
+0
+0
+0
+75
+-275
+-275
+75
+-100
+-100
+0
+4
+0
+-4
+0
+0
+120
+-120
+-120
+120
+0
+0
+0
+6
+0
+-6
+0
+0
+(1,2)
+0
+(3,4)
+0
+(5,6)
+0
+get_class_count() = 0 for watched classes

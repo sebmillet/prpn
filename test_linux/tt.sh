@@ -34,6 +34,7 @@ if [ -x "$PRG" ]; then
 		cd ..
 	done
 
+	echo "------------------------------------------------------------"
 	echo "PASSED: $COUNTPASS"
 	echo "FAILED: $COUNTFAILED"
 	if [ $COUNTFAILED -eq 0 ]; then

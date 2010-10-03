@@ -1,0 +1,27 @@
+MIN Error:
+Bad Argument Type
+MAX Error:
+Bad Argument Type
+FLOOR Error:
+Bad Argument Type
+CEIL Error:
+Bad Argument Type
+IP Error:
+Bad Argument Type
+FP Error:
+Bad Argument Type
+MANT Error:
+Bad Argument Type
+XPON Error:
+Bad Argument Type
+(1,2)
+3
+4
+(0,0)
+(1,2)
+(3,4)
+(1,1)
+(2,3)
+(3,3)
+(4,4)
+get_class_count() = 0 for watched classes
