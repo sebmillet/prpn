@@ -136,14 +136,22 @@ Settings and stack content.
 .B ~/.prpn/varsrc
 Variables structure, and actual working directory.
 .SH AUTHOR
-Written by Sébastien Millet <sebastien.millet1@club-internet.fr>. Permission
-is granted to copy, distribute and/or modify this document under the terms of
-the GNU General Public License, Version 3 published by the Free Software
-Foundation.
+Written by Sébastien Millet <sebastien.millet1@club-internet.fr>.
+.br
+Permission is granted to copy, distribute and/or modify this document under the terms of the GNU General Public License, Version 3 published by the Free Software Foundation.
 .SH BUGS
+.B Difference between prpn and prpnc
 .TP
-\- Program is in version 0.5.1...
+.I Linux
+prpn can be run with -c option. In that case it is almost identical to prpnc. "Almost" only. prpn is compiled with WxWidgets library and performs GUI-specific initializations upon startup. If graphical resources aren't found, it won't execute. For example, if you run the following command
+.br
+\fB	DISPLAY="" prpn -c\fP
+.br
+You get this result
+.br
+\fB	Error: Unable to initialize gtk, is DISPLAY set properly?\fP
+.br
+prpnc solves this situation, as it is *not* compiled against WxWidgets and can run in a simple terminal with no graphical resources at all. Note a clean way to improve all this would be to prevent WxWidgets from initializing the GUI whenever -c is provided. If you know how to do that in a robust way (portable across systems and versions...), this program' author is interested!
 .TP
-\- Windows version: wx disconnects the program from the terminal it is sent
-from. Therefore Windows generation produces a GUI version, prpn.exe, and a
-console version, prpnc.exe.
+.I Windows
+prpn.exe can *not* be run with -c. For some reason, under Windows, WxWidgets disconnects the running program from the controlling terminal. The solutions is the same as Linux' except that under Windows, it is mandatory: you must run prpnc.exe if you wish to use the command line version of the calculator.

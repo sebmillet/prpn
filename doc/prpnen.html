@@ -20,7 +20,14 @@ pRPN - a portable RPN calculator
 
 <BR>
 
+<B>prpnc [options]</B>
+
+<DL COMPACT>
+<DT>prpn is the main, GUI, executable. prpnc is the command line version. <B>prpnc</B> is equivalent to <B>prpn -c</B>.<DD>
+<BR>
+
 <P>
+</DL>
 <A NAME="lbAD">&nbsp;</A>
 <H2>DESCRIPTION</H2>
 
@@ -40,7 +47,7 @@ Display version information and exit.
 <DT><B>-c,&nbsp;--console</B>
 
 <DD>
-Run in console mode.
+Run in console mode. Useful for prpn only. prpnc runs only in console mode.
 <DT><B>-w,&nbsp;--width&nbsp;</B><I>width</I>
 
 <DD>
@@ -729,18 +736,36 @@ Variables structure, and actual working directory.
 <A NAME="lbAJ">&nbsp;</A>
 <H2>AUTHOR</H2>
 
-Written by Sébastien Millet &lt;<A HREF="mailto:sebastien.millet1@club-internet.fr">sebastien.millet1@club-internet.fr</A>&gt;. Permission
-is granted to copy, distribute and/or modify this document under the terms of
-the GNU General Public License, Version 3 published by the Free Software
-Foundation.
+Written by Sébastien Millet &lt;<A HREF="mailto:sebastien.millet1@club-internet.fr">sebastien.millet1@club-internet.fr</A>&gt;.
+<BR>
+
+Permission is granted to copy, distribute and/or modify this document under the terms of the GNU General Public License, Version 3 published by the Free Software Foundation.
 <A NAME="lbAK">&nbsp;</A>
 <H2>BUGS</H2>
 
+<B>Difference between prpn and prpnc</B>
+
 <DL COMPACT>
-<DT>- Program is in version 0.5.1...<DD>
-<DT>- Windows version: wx disconnects the program from the terminal it is sent<DD>
-from. Therefore Windows generation produces a GUI version, prpn.exe, and a
-console version, prpnc.exe.
+<DT><I>Linux</I>
+
+<DD>
+prpn can be run with -c option. In that case it is almost identical to prpnc. &quot;Almost&quot; only. prpn is compiled with WxWidgets library and performs GUI-specific initializations upon startup. If graphical resources aren't found, it won't execute. For example, if you run the following command
+<BR>
+
+<B><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TT>DISPLAY=&quot;&quot; prpn -c</B><BR>
+<BR>
+
+You get this result
+<BR>
+
+<B><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TT>Error: Unable to initialize gtk, is DISPLAY set properly?</B><BR>
+<BR>
+
+prpnc solves this situation, as it is *not* compiled against WxWidgets and can run in a simple terminal with no graphical resources at all. Note a clean way to improve all this would be to prevent WxWidgets from initializing the GUI whenever -c is provided. If you know how to do that in a robust way (portable across systems and versions...), this program' author is interested!
+<DT><I>Windows</I>
+
+<DD>
+prpn.exe can *not* be run with -c. For some reason, under Windows, WxWidgets disconnects the running program from the controlling terminal. The solutions is the same as Linux' except that under Windows, it is mandatory: you must run prpnc.exe if you wish to use the command line version of the calculator.
 <P>
 </DL>
 
@@ -762,6 +787,6 @@ console version, prpnc.exe.
 This document was created by
 <A HREF="/cgi-bin/man/man2html">man2html</A>,
 using the manual pages.<BR>
-Time: 15:25:58 GMT, October 03, 2010
+Time: 19:12:07 GMT, October 03, 2010
 </BODY>
 </HTML>

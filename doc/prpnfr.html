@@ -21,7 +21,14 @@ d'exploitation
 
 <BR>
 
+<B>prpnc [options]</B>
+
+<DL COMPACT>
+<DT>prpn est l'exécutable principal, en mode graphique. prpnc est la version en ligne de commande. <B>prpnc</B> est équivalent à <B>prpn -c</B>.<DD>
+<BR>
+
 <P>
+</DL>
 <A NAME="lbAD">&nbsp;</A>
 <H2>DESCRIPTION</H2>
 
@@ -625,13 +632,13 @@ Exécute toujours les instructions du THEN
 <BR>
 
 &lt;&lt; IF 1 THEN &quot;Toujours exécuté&quot; ELSE &quot;Jamais exécuté&quot; END &gt;&gt;
-<DT><I>Example 3</I>
+<DT><I>Exemple 3</I>
 
 <DD>
 Ne fais rien (!)
 <BR>
 
-&lt;&lt; IF 0 THEN &quot;Never executed&quot; END &gt;&gt;
+&lt;&lt; IF 0 THEN &quot;Jamais exécuté&quot; END &gt;&gt;
 <DT><B>Séquence WHILE/REPEAT/END</B>
 
 <DD>
@@ -729,13 +736,36 @@ Structure contenant les variables, et répertoire courant.
 <A NAME="lbAJ">&nbsp;</A>
 <H2>AUTEUR</H2>
 
-Écrit par Sébastien Millet &lt;<A HREF="mailto:sebastien.millet1@club-internet.fr">sebastien.millet1@club-internet.fr</A>&gt;. Autorisation est donnée de copier, distribuer et/ou modifier ce document selon les termes de la licence &quot;GNU General Public License&quot;. La version 3 est publiée par la Free Software Foundation.
+Écrit par Sébastien Millet &lt;<A HREF="mailto:sebastien.millet1@club-internet.fr">sebastien.millet1@club-internet.fr</A>&gt;.
+<BR>
+
+Autorisation est donnée de copier, distribuer et/ou modifier ce document selon les termes de la licence &quot;GNU General Public License&quot;. La version 3 est publiée par la Free Software Foundation.
 <A NAME="lbAK">&nbsp;</A>
 <H2>BUGS</H2>
 
+<B>Différence entre prpn et prpnc</B>
+
 <DL COMPACT>
-<DT>- Ce programme est en version 0.5.1...<DD>
-<DT>- Version Windows : wx se déconnecte du terminal d'où il est lancé. C'est pourquoi la compilation de la version Windows produit une version graphique, prpn.exe, et une version console, prpnc.exe.<DD>
+<DT><I>Linux</I>
+
+<DD>
+prpn peut être exécuté avec l'option -c. Dans ce cas le résultat est presque équivalent à prpnc. &quot;Presque&quot; seulement. prpn est compilé avec la librairie WxWidgets et initialise des ressources graphiques au démarrage. Si les ressources graphiques ne sont pas trouvées, le programme ne démarre pas. Par exemple, si vous exécutez la commande suivante
+<BR>
+
+<B><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TT>DISPLAY=&quot;&quot; prpn -c</B><BR>
+<BR>
+
+Vous obtenez ce résultat
+<BR>
+
+<B><TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TT>Error: Unable to initialize gtk, is DISPLAY set properly?</B><BR>
+<BR>
+
+prpnc résout ce problème, car il n'est *pas* compilé avec WxWidgets et peut fonctionner dans un terminal ne disposant d'aucune ressource graphique. Un moyen élégant de régler cette difficulté serait d'empêcher WxWidgets d'initialiser les ressources graphiques lorsque l'option -c est présente. Si vous connaissez un moyen robuste de le faire (portable quels que soient les systèmes et les versions...), l'auteur de ce programme est intéressé !
+<DT><I>Windows</I>
+
+<DD>
+prpn.exe ne peut *pas* être exécuté avec l'option -c. Sous Windows, WxWidgets déconnecte le processus de son terminal de contrôle. La solution est la même que sous Linux, sauf qu'ici c'est obligatoire : vous devez utiliser prpnc.exe si vous souhaitez utiliser la version en ligne de commande.
 <P>
 </DL>
 
@@ -757,6 +787,6 @@ Structure contenant les variables, et répertoire courant.
 This document was created by
 <A HREF="/cgi-bin/man/man2html">man2html</A>,
 using the manual pages.<BR>
-Time: 15:25:58 GMT, October 03, 2010
+Time: 19:08:57 GMT, October 03, 2010
 </BODY>
 </HTML>

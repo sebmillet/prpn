@@ -8,6 +8,10 @@ NAME
 
 SYNOPSIS
        prpn [options]
+       prpnc [options]
+
+       prpn  is  the main, GUI, executable. prpnc is the command line version.
+       prpnc is equivalent to prpn -c.
 
 
 DESCRIPTION
@@ -22,7 +26,8 @@ OPTIONS
 	      Display version information and exit.
 
        -c, --console
-	      Run in console mode.
+	      Run  in  console	mode. Useful for prpn only. prpnc runs only in
+	      console mode.
 
        -w, --width width
 	      Set width to width, measured in number of  characters.  Defaults
@@ -49,7 +54,7 @@ OPTIONS
 	      Debug mode, requires a parameter.
 
 COMMANDS
-       Commands  are  followed by the number of arguments they take, in paren
+       Commands  are  followed by the number of arguments they take, in paren‐
        thesis. These arguments are taken from the stack.
 
        _HELP (0)
@@ -333,16 +338,16 @@ COMMANDS
 	      Wait a number of seconds
 
        STD (0)
-	      Set reals display to standard
+	      Set reals display to 'standard'
 
        SCI (1)
-	      Set reals display to scientific
+	      Set reals display to 'scientific'
 
        FIX (1)
-	      Set reals display to fixed number of decimals
+	      Set reals display to 'fixed number of decimals'
 
        ENG (1)
-	      Set reals display to engineering
+	      Set reals display to 'engineering'
 
        CLLCD (0)
 	      Clear the screen
@@ -360,7 +365,7 @@ COMMANDS
 	      Write the second item into the file named by the first item
 
        _HACK-REAL-MGMT (1)
-	      Internal: tune real standard display management
+	      Internal: tune real 'standard' display management
 
        _HACK-REAL-DOT (1)
 	      Internal: set whether or not to keep a  trailing	dot  in  reals
@@ -397,7 +402,7 @@ OBJECT TYPES
 
        Names
 
-       Name	 CALC
+       Name   ´ ´  ´CALC´
 
        Procedures
 
@@ -405,7 +410,7 @@ OBJECT TYPES
 	      << >>	<< DUP + SWAP >>
 
        Algebraic
-		 X+2*Y=Z
+	      ´ ´  ´X+2*Y=Z´
 
 PROGRAM CONTROL INSTRUCTIONS
        Note about booleans
@@ -419,7 +424,7 @@ PROGRAM CONTROL INSTRUCTIONS
 	      Execute the instructions between IF and THEN.
 	      Then, take the bottom item of the stack,	if  it	is  true  (see
 	      above),  execute	the instructions between THEN and ELSE (or END
-	      if ELSE is not provided), otherwise execute  the	ELSE  instruc
+	      if ELSE is not provided), otherwise execute  the	ELSE  instruc‐
 	      tions. ELSE is optional.
 
        Example 1
@@ -445,7 +450,7 @@ PROGRAM CONTROL INSTRUCTIONS
        Example
 	      Calculate  the  smallest	N  for which sum(i^2 with i taking all
 	      integer values in the range 1..N) >= 100
-	      << 0 0 -> n << WHILE DUP 100 < REPEAT n SQ + n 1 + n STO END n
+	      << 0 0 -> n << WHILE DUP 100 < REPEAT n SQ + n 1 + 'n' STO END n
 	      >> >>
 
        DO/UNTIL/END sequence
@@ -457,13 +462,13 @@ PROGRAM CONTROL INSTRUCTIONS
        Example
 	      Calculate  the  smallest	N  for which sum(1/i with i taking all
 	      integer values in the range 1..N) >= 3
-	      << 0 0 -> n << DO n 1 + n STO n INV + UNTIL DUP 3 >= END n  >>
+	      << 0 0 -> n << DO n 1 + 'n' STO n INV + UNTIL DUP 3 >= END n  >>
 	      >>
 
        FOR|START/NEXT|STEP sequence
 	      FOR  or START launches a loop. It takes two arguments, the first
 	      argument (second level in the stack)  being  the	start  counter
-	      value,  the second one (first level in the stack) being the tar
+	      value,  the second one (first level in the stack) being the tar‐
 	      get counter value, beyond which to stop the loop.
 	      START is an anonymous loop, FOR takes one name and uses it as  a
 	      local variable for the loop counter.
@@ -498,19 +503,37 @@ INITIALIZATION FILES
 	      Variables structure, and actual working directory.
 
 AUTHOR
-       Written	by Sbastien Millet <sebastien.millet1@club-internet.fr>. Per
-       mission is granted to copy,  distribute	and/or	modify	this  document
-       under  the terms of the GNU General Public License, Version 3 published
+       Written by Sébastien Millet <sebastien.millet1@club-internet.fr>.
+       Permission  is  granted to copy, distribute and/or modify this document
+       under the terms of the GNU General Public License, Version 3  published
        by the Free Software Foundation.
 
 BUGS
-       - Program is in version 0.5.1...
+       Difference between prpn and prpnc
 
-       - Windows version: wx disconnects the program from the terminal	it  is
-       sent
-	      from. Therefore  Windows	generation  produces  a  GUI  version,
-	      prpn.exe, and a console version, prpnc.exe.
+       Linux  prpn  can be run with -c option. In that case it is almost iden‐
+	      tical to prpnc. "Almost" only. prpn is compiled  with  WxWidgets
+	      library  and performs GUI-specific initializations upon startup.
+	      If graphical resources aren't found, it won't execute. For exam‐
+	      ple, if you run the following command
+		   DISPLAY="" prpn -c
+	      You get this result
+		   Error: Unable to initialize gtk, is DISPLAY set properly?
+	      prpnc  solves  this  situation,  as it is *not* compiled against
+	      WxWidgets and can run in a simple  terminal  with  no  graphical
+	      resources  at all. Note a clean way to improve all this would be
+	      to prevent WxWidgets from initializing the GUI  whenever	-c  is
+	      provided.  If  you know how to do that in a robust way (portable
+	      across systems and versions...), this program' author is	inter‐
+	      ested!
+
+       Windows
+	      prpn.exe	can  *not* be run with -c. For some reason, under Win‐
+	      dows, WxWidgets disconnects the running program  from  the  con‐
+	      trolling	terminal.  The	solutions is the same as Linux' except
+	      that under Windows, it is mandatory: you must run  prpnc.exe  if
+	      you wish to use the command line version of the calculator.
 
 
 
-July 05, 2010			 version 0.5.1			       pRPN(1)
+October 03, 2010		 version 0.5.1			       pRPN(1)

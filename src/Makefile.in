@@ -35,7 +35,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-bin_PROGRAMS = prpn$(EXEEXT)
+bin_PROGRAMS = prpn$(EXEEXT) prpnc$(EXEEXT)
 @BUILD_CLIENTGUI_TRUE@am__append_1 = UiImplWx.cpp \
 @BUILD_CLIENTGUI_TRUE@	prpn.xpm \
 @BUILD_CLIENTGUI_TRUE@	prpn.rc prpn.ico \
@@ -82,17 +82,25 @@ am__prpn_SOURCES_DIST = Main.cpp Compat.cpp Common.h PGetOpt.cpp \
 	gettext.h MyIntl.h UiImplWx.cpp prpn.xpm prpn.rc prpn.ico \
 	shiftsel.xpm shiftuns.xpm unit_bin.xpm unit_oct.xpm \
 	unit_dec.xpm unit_hex.xpm
-@BUILD_CLIENTGUI_TRUE@am__objects_1 = prpn-UiImplWx.$(OBJEXT)
-am_prpn_OBJECTS = prpn-Main.$(OBJEXT) prpn-Compat.$(OBJEXT) \
+am__objects_1 = prpn-Main.$(OBJEXT) prpn-Compat.$(OBJEXT) \
 	prpn-PGetOpt.$(OBJEXT) prpn-Scalar.$(OBJEXT) \
 	prpn-Stack.$(OBJEXT) prpn-Variable.$(OBJEXT) \
 	prpn-Parser.$(OBJEXT) prpn-Ui.$(OBJEXT) \
 	prpn-UiImplConsole.$(OBJEXT) prpn-MyString.$(OBJEXT) \
-	prpn-os_generic.$(OBJEXT) $(am__objects_1)
+	prpn-os_generic.$(OBJEXT)
+@BUILD_CLIENTGUI_TRUE@am__objects_2 = prpn-UiImplWx.$(OBJEXT)
+am_prpn_OBJECTS = $(am__objects_1) $(am__objects_2)
 prpn_OBJECTS = $(am_prpn_OBJECTS)
 prpn_LDADD = $(LDADD)
 prpn_LINK = $(CXXLD) $(prpn_CXXFLAGS) $(CXXFLAGS) $(prpn_LDFLAGS) \
 	$(LDFLAGS) -o $@
+am__objects_3 = Main.$(OBJEXT) Compat.$(OBJEXT) PGetOpt.$(OBJEXT) \
+	Scalar.$(OBJEXT) Stack.$(OBJEXT) Variable.$(OBJEXT) \
+	Parser.$(OBJEXT) Ui.$(OBJEXT) UiImplConsole.$(OBJEXT) \
+	MyString.$(OBJEXT) os_generic.$(OBJEXT)
+am_prpnc_OBJECTS = $(am__objects_3)
+prpnc_OBJECTS = $(am_prpnc_OBJECTS)
+prpnc_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/admin/depcomp
 am__depfiles_maybe = depfiles
@@ -106,8 +114,8 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(prpn_SOURCES)
-DIST_SOURCES = $(am__prpn_SOURCES_DIST)
+SOURCES = $(prpn_SOURCES) $(prpnc_SOURCES)
+DIST_SOURCES = $(am__prpn_SOURCES_DIST) $(prpnc_SOURCES)
 DATA = $(noinst_DATA)
 ETAGS = etags
 CTAGS = ctags
@@ -270,12 +278,21 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 EXENAME = prpn${EXEEXT}
-prpn_SOURCES = Main.cpp Compat.cpp Common.h PGetOpt.cpp PGetOpt.h \
-	Scalar.cpp Scalar.h Stack.cpp Stack.h Commands.h Variable.cpp \
-	Variable.h Parser.cpp Parser.h Ui.cpp Ui.h UiImplConsole.cpp \
-	MyString.cpp MyString.h platform/os_generic.cpp \
-	platform/os_generic.h platform/os_unknown.h platform/os_unix.h \
-	platform/os_win.h gettext.h MyIntl.h $(am__append_1)
+MAINSOURCES = Main.cpp Compat.cpp Common.h \
+	PGetOpt.cpp PGetOpt.h \
+	Scalar.cpp Scalar.h \
+	Stack.cpp Stack.h Commands.h \
+	Variable.cpp Variable.h \
+	Parser.cpp Parser.h \
+	Ui.cpp  Ui.h \
+	UiImplConsole.cpp \
+	MyString.cpp MyString.h \
+	platform/os_generic.cpp platform/os_generic.h \
+	platform/os_unknown.h platform/os_unix.h platform/os_win.h \
+	gettext.h MyIntl.h
+
+prpn_SOURCES = ${MAINSOURCES} $(am__append_1)
+prpnc_SOURCES = ${MAINSOURCES}
 AM_CPPFLAGS = -DPKG_DOCDIR="\"${docdir}\"" \
 	-DPKG_HTMLDIR="\"${htmldir}\"" -DPKG_PREFIX="\"${prefix}\"" \
 	-DPKG_DATADIR="\"${datadir}\"" -DPKG_BINDIR="\"${bindir}\"" \
@@ -360,6 +377,9 @@ clean-binPROGRAMS:
 prpn$(EXEEXT): $(prpn_OBJECTS) $(prpn_DEPENDENCIES) 
 	@rm -f prpn$(EXEEXT)
 	$(prpn_LINK) $(prpn_OBJECTS) $(prpn_LDADD) $(LIBS)
+prpnc$(EXEEXT): $(prpnc_OBJECTS) $(prpnc_DEPENDENCIES) 
+	@rm -f prpnc$(EXEEXT)
+	$(CXXLINK) $(prpnc_OBJECTS) $(prpnc_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -367,6 +387,17 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Compat.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/MyString.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/PGetOpt.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Parser.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Scalar.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Stack.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Ui.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/UiImplConsole.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Variable.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/os_generic.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-Compat.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-Main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-MyString.Po@am__quote@
@@ -561,6 +592,20 @@ prpn-UiImplWx.obj: UiImplWx.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='UiImplWx.cpp' object='prpn-UiImplWx.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-UiImplWx.obj `if test -f 'UiImplWx.cpp'; then $(CYGPATH_W) 'UiImplWx.cpp'; else $(CYGPATH_W) '$(srcdir)/UiImplWx.cpp'; fi`
+
+os_generic.o: platform/os_generic.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT os_generic.o -MD -MP -MF $(DEPDIR)/os_generic.Tpo -c -o os_generic.o `test -f 'platform/os_generic.cpp' || echo '$(srcdir)/'`platform/os_generic.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/os_generic.Tpo $(DEPDIR)/os_generic.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='platform/os_generic.cpp' object='os_generic.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o os_generic.o `test -f 'platform/os_generic.cpp' || echo '$(srcdir)/'`platform/os_generic.cpp
+
+os_generic.obj: platform/os_generic.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT os_generic.obj -MD -MP -MF $(DEPDIR)/os_generic.Tpo -c -o os_generic.obj `if test -f 'platform/os_generic.cpp'; then $(CYGPATH_W) 'platform/os_generic.cpp'; else $(CYGPATH_W) '$(srcdir)/platform/os_generic.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/os_generic.Tpo $(DEPDIR)/os_generic.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='platform/os_generic.cpp' object='os_generic.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o os_generic.obj `if test -f 'platform/os_generic.cpp'; then $(CYGPATH_W) 'platform/os_generic.cpp'; else $(CYGPATH_W) '$(srcdir)/platform/os_generic.cpp'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \

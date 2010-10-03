@@ -1,12 +1,16 @@
 .\" Written by Sébastien Millet
 .\"
-.TH pRPN 1 "version 0.5.1" "July 05, 2010"
+.TH pRPN 1 "version 0.5.1" "October 03, 2010"
 
 .SH NAME
 pRPN \- a portable RPN calculator
 
 .SH SYNOPSIS
 .B prpn [options]
+.br
+.B prpnc [options]
+.TP
+prpn is the main, GUI, executable. prpnc is the command line version. \fBprpnc\fP is equivalent to \fBprpn -c\fP.
 .br
 
 .SH DESCRIPTION
@@ -20,7 +24,7 @@ Display a quick help screen and exit.
 Display version information and exit.
 .TP
 .B \-c,\ \-\-console
-Run in console mode.
+Run in console mode. Useful for prpn only. prpnc runs only in console mode.
 .TP
 .B \-w,\ \-\-width\ \fIwidth\fP
 Set width to \fIwidth\fP, measured in number of characters. Defaults to 23.

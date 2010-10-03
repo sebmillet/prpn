@@ -1,6 +1,6 @@
 .\" Écrit par Sébastien Millet
 .\"
-.TH pRPN 1 "version 0.5.1" "5 juillet 2010"
+.TH pRPN 1 "version 0.5.1" "3 octobre 2010"
 
 .SH NAME
 pRPN \- une calculatrice en notation polonaise inverse multi systèmes
@@ -8,6 +8,10 @@ d'exploitation
 
 .SH SYNOPSIS
 .B prpn [options]
+.br
+.B prpnc [options]
+.TP
+prpn est l'exécutable principal, en mode graphique. prpnc est la version en ligne de commande. \fBprpnc\fP est équivalent à \fBprpn -c\fP.
 .br
 
 .SH DESCRIPTION

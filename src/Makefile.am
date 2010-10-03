@@ -1,7 +1,6 @@
 EXENAME=prpn${EXEEXT}
 
-bin_PROGRAMS=prpn
-prpn_SOURCES=Main.cpp Compat.cpp Common.h \
+MAINSOURCES=Main.cpp Compat.cpp Common.h \
 	PGetOpt.cpp PGetOpt.h \
 	Scalar.cpp Scalar.h \
 	Stack.cpp Stack.h Commands.h \
@@ -13,6 +12,10 @@ prpn_SOURCES=Main.cpp Compat.cpp Common.h \
 	platform/os_generic.cpp platform/os_generic.h \
 	platform/os_unknown.h platform/os_unix.h platform/os_win.h \
 	gettext.h MyIntl.h
+
+bin_PROGRAMS=prpn prpnc
+prpn_SOURCES=${MAINSOURCES}
+prpnc_SOURCES=${MAINSOURCES}
 
 AM_CPPFLAGS=-DPKG_DOCDIR="\"${docdir}\"" -DPKG_HTMLDIR="\"${htmldir}\""
 AM_CPPFLAGS+= -DPKG_PREFIX="\"${prefix}\"" -DPKG_DATADIR="\"${datadir}\""
