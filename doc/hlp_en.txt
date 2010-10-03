@@ -1,0 +1,51 @@
+Program execution
+
+Note about booleans
+
+A test (IF, WHILE or UNTIL, see below) takes one item in the stack. The item must be of type real. Any non-null value is treated as TRUE, a null value is FALSE.
+Below, the term "bottom item of the stack" refers to the actual object at level 1 of the stack.
+
+IF/THEN/ELSE/END sequence
+
+Execute the instructions between IF and THEN.
+Then, take the bottom item of the stack, if it is true (see above), execute the instructions between THEN and ELSE (or END if ELSE is not provided), otherwise execute the ELSE instructions. ELSE is optional.
+Examples:
+	Take the first item in the stack and tell whether it is positive or null, or negative:
+	<< IF 0 >= THEN "Positive or null value" ELSE "Negative value" END >>
+	Always execute the THEN part:
+	<< IF 1 THEN "Always executed" ELSE "Never executed" END >>
+	Do nothing (!):
+	<< IF 0 THEN "Never executed" END >>
+
+WHILE/REPEAT/END
+
+Execute the instructions between WHILE and REPEAT.
+Then take the bottom item of the stack, if it is true (see above), execute the instructions after REPEAT, then restart the sequence from the beginning of the WHILE.
+Example:
+	Calculate the smallest N for which sum(i^2 with i taking all integer values in the range 1..N) >= 100:
+	<< 0 0 -> n << WHILE DUP 100 < REPEAT n SQ + n 1 + 'n' STO END n >> >>
+
+DO/UNTIL/END
+Execute the instructions between DO and UNTIL, then, between UNTIL and END.
+Then, take the bottom item of the stack, if it is true (see above), restart the sequence from the beginning of the DO.
+Example:
+	Calculate the smallest N for which sum(1/i with i taking all integer values in the range 1..N) >= 3:
+	<< 0 0 -> n << DO n 1 + 'n' STO n INV + UNTIL DUP 3 >= END n >> >>
+
+FOR|START/NEXT|STEP
+FOR or START launches a loop. It takes two arguments, the first argument (second level in the stack) being the start counter value, the second one (first level in the stack) being the target counter value, beyond which to stop the loop.
+START is an anonymous loop, FOR takes one name and uses it as a local variable for the loop counter.
+NEXT adds 1 to the counter if the target is greater than the start, subtracts 1 otherwise.
+STEP takes one argument in the stack and adds it to the counter.
+NEXT can be used with either FOR or START, same with STEP.
+Examples:
+	Calculate the sum of the squares of the integers from 1 to 10:
+	<< 0 1 10 FOR i i SQ + NEXT >>
+	Calculate sum(2^i with i taking all integer values in the range 1..N), N being the first value in the stack.
+	<< 0 1 1 4 ROLL START 2 * DUP ROT + SWAP NEXT >>
+	Calculate sum(i with i taking all odd integer values in the range 1..N), N being the first value in the stack.
+	<< 0 1 ROT FOR i i + 2 STEP >>
+
+Documentation about RPL (HP language on top of RPN calculators):
+	http://en.wikipedia.org/wiki/RPL_%28programming_language%29
+
