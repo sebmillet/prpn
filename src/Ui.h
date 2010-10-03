@@ -19,10 +19,11 @@ extern int opt_min_stack_height;
 extern bool has_gui;
 extern bool opt_dry_run;
 
-void ui_reset_clmf();
-void ui_set_clmf();
-bool ui_get_clmf();
+void ui_clear_message_flag();
+void ui_set_message_flag();
+bool ui_get_message_flag();
 void ui_disp(int, const std::string&);
+void ui_set_error(const std::string&, const std::string&);
 
 void ui_cllcd();
 
@@ -148,6 +149,7 @@ public:
 
 	virtual void refresh_statuswin() = 0;
 	virtual void set_line(const int&, const std::string&) = 0;
+	virtual void enforce_refresh() = 0;
 	virtual void refresh_display_path(const std::string&, const bool&) = 0;
 	virtual void set_syntax_error(const int&, const int&, const int&, const int&) = 0;
 	virtual const std::string get_string() = 0;

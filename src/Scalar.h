@@ -24,8 +24,13 @@ typedef enum {DIM_VECTOR, DIM_MATRIX} dim_t;
 real real_trim(const real&);
 const std::string real_to_string(const real&);
 st_err_t real_check_bounds(const bool&, const int&, real&, const bool& = false);
+real real_abs(const real&);
 int real_sign(const real&);
 real real_ip(const real&);
+real real_floor(const real&);
+real real_ceil(const real&);
+real real_mant(const real&);
+real real_xpon(const real&);
 real get_max_real_from_bin_size(const int&);
 int digit_to_int(const char&);
 char int_to_digit(const int&);
@@ -47,7 +52,6 @@ void numeric_asin(const real&, st_err_t&, real&);
 void numeric_atan(const real&, st_err_t&, real&);
 void numeric_sqrt(const real&, st_err_t&, real&);
 
-real numeric_abs(const real&);
 
 
 //

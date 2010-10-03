@@ -107,23 +107,28 @@ void ascii_remove_trailing_zeros(string& s, const bool& enforce_remove_trailing_
 		;
 	s.erase(i + 1);
 	if (cfg_realdisp_remove_trailing_dot || enforce_remove_trailing_dots)
-		if (s.at(s.length() - 1) == '.')
+		if (s.at(s.length() - 1) == PORTABLE_DECIMAL_SEPARATOR)
 			s.erase(s.length() - 1);
 }
 
-const string user_real_to_string(const real& r, const tostring_t& t) {
+const string user_real_to_string(const real& r, const tostring_t& t, const bool& enforce_sci = false) {
 	string s = real_to_string(r);
 	size_t p;
 
-	debug_write("Start string:");
-	debug_write(s.c_str());
+	/*debug_write("Start string:");
+	debug_write(s.c_str());*/
 
 	realdisp_t setting_rd;
 	int setting_nbdecs;
 	F->get_realdisp(t != TOSTRING_PORTABLE, setting_rd, setting_nbdecs);
+	if (enforce_sci) {
+		setting_rd = REALDISP_SCI;
+		setting_nbdecs = REAL_PRECISION - 1;
+	}
 
-	debug_write_i("rd = %i", setting_rd);
-	debug_write_i("nbdecs = %i", setting_nbdecs);
+	/*debug_write_i("rd = %i", setting_rd);
+	debug_write_i("nbdecs = %i", setting_nbdecs);*/
+
 	if (setting_nbdecs < 0)
 		setting_nbdecs = REAL_PRECISION - 1;
 
@@ -167,7 +172,7 @@ const string user_real_to_string(const real& r, const tostring_t& t) {
 
 // Integer and decimal parts of the mantisse
 
-		if ((p = part_mantisse.find_first_of('.')) != string::npos) {
+		if ((p = part_mantisse.find_first_of(PORTABLE_DECIMAL_SEPARATOR)) != string::npos) {
 			part_mantisse_int = part_mantisse.substr(0, p);
 			part_mantisse_dec = part_mantisse.substr(p + 1);
 		} else {
@@ -181,14 +186,14 @@ const string user_real_to_string(const real& r, const tostring_t& t) {
 		if ((p = part_mantisse_dec.find_first_not_of('0')) == string::npos)
 			part_mantisse_dec = "";
 
-		debug_write("Mantisse:");
+		/*debug_write("Mantisse:");
 		debug_write(part_mantisse.c_str());
 		debug_write_i("Sign: %i", part_sign);
 		debug_write("Mantisse INT:");
 		debug_write(part_mantisse_int.c_str());
 		debug_write("Mantisse DEC:");
 		debug_write(part_mantisse_dec.c_str());
-		debug_write_i("Exp: %i", part_exp);
+		debug_write_i("Exp: %i", part_exp);*/
 
 		string target1 = part_mantisse_int + part_mantisse_dec;
 		part_exp += part_mantisse_int.length() - 1;
@@ -198,8 +203,8 @@ const string user_real_to_string(const real& r, const tostring_t& t) {
 		}
 		ascii_integer_string_round(target1, REAL_PRECISION);
 
-		debug_write("Target1:");
-		debug_write(target1.c_str());
+		/*debug_write("Target1:");
+		debug_write(target1.c_str());*/
 
 		string disp_eex_noround;
 		if (target1.length() == 0 || target1 == "0") {
@@ -216,9 +221,9 @@ const string user_real_to_string(const real& r, const tostring_t& t) {
 
 		bool work_done = false;
 
-		debug_write("** target2:");
+		/*debug_write("** target2:");
 		debug_write(target2.c_str());
-		debug_write_i("** part_exp: %i", part_exp);
+		debug_write_i("** part_exp: %i", part_exp);*/
 
 		switch (setting_rd) {
 			case REALDISP_STD:
@@ -227,7 +232,7 @@ const string user_real_to_string(const real& r, const tostring_t& t) {
 						if (static_cast<int>(p) + 1 - part_exp <= REAL_PRECISION + 1) {
 							target2.insert(0, string(-part_exp - 1, '0'));
 							target2.erase(REAL_PRECISION);
-							target2.insert(0, ".");
+							target2.insert(0, PORTABLE_STRING_DECIMAL_SEPARATOR);
 							ascii_remove_trailing_zeros(target2);
 							work_done = true;
 						}
@@ -237,7 +242,7 @@ const string user_real_to_string(const real& r, const tostring_t& t) {
 				} else {
 					if (part_exp <= REAL_PRECISION - 1) {
 						if (part_exp < REAL_PRECISION - 1) {
-							target2.insert(part_exp + 1, ".");
+							target2.insert(part_exp + 1, PORTABLE_STRING_DECIMAL_SEPARATOR);
 							ascii_remove_trailing_zeros(target2, true);
 						}
 						work_done = true;
@@ -251,7 +256,7 @@ const string user_real_to_string(const real& r, const tostring_t& t) {
 						ascii_integer_string_round(t, setting_nbdecs + 1);
 						if ((p = t.find_last_not_of('0')) != string::npos) {
 							target2 = t;
-							target2.insert(1, ".");
+							target2.insert(1, PORTABLE_STRING_DECIMAL_SEPARATOR);
 							work_done = true;
 						}
 					}
@@ -259,7 +264,7 @@ const string user_real_to_string(const real& r, const tostring_t& t) {
 					if (part_exp <= REAL_PRECISION - 1) {
 						if (part_exp + 1 + setting_nbdecs < REAL_PRECISION)
 							ascii_integer_string_round(target2, part_exp + setting_nbdecs + 1);
-						target2.insert(part_exp + 1, ".");
+						target2.insert(part_exp + 1, PORTABLE_STRING_DECIMAL_SEPARATOR);
 						work_done = true;
 					}
 				}
@@ -278,7 +283,7 @@ const string user_real_to_string(const real& r, const tostring_t& t) {
 				ascii_integer_string_round(target2, setting_nbdecs + 1);
 				if (point_pos > setting_nbdecs + 1)
 					target2.append(string(point_pos - setting_nbdecs - 1, '0'));
-				target2.insert(point_pos, ".");
+				target2.insert(point_pos, PORTABLE_STRING_DECIMAL_SEPARATOR);
 				target2.append("E" + integer_to_string(new_part_exp));
 				work_done = true;
 				break;
@@ -291,19 +296,17 @@ const string user_real_to_string(const real& r, const tostring_t& t) {
 		if (!work_done) {
 			  // Work not done yet ==>> failover on SCI display
 			ascii_integer_string_round(target2, setting_nbdecs + 1);
-			//if (target2.length() > 1) {
-			target2.insert(1, ".");
+			target2.insert(1, PORTABLE_STRING_DECIMAL_SEPARATOR);
 			if (setting_rd == REALDISP_STD)
 				ascii_remove_trailing_zeros(target2);
-			//}
 			target2.append("E" + integer_to_string(part_exp));
 		}
 
 		if (part_sign < 0)
 			target2.insert(0, "-");
 
-		debug_write("target2:");
-		debug_write(target2.c_str());
+		/*debug_write("target2:");
+		debug_write(target2.c_str());*/
 
 	} else {
 		target2 = s;
@@ -314,8 +317,8 @@ const string user_real_to_string(const real& r, const tostring_t& t) {
 			target2.erase(p + 1, 1);
 	}
 	char ds = F->get_decimal_separator(t != TOSTRING_PORTABLE);
-	if (ds != '.') {
-		p = target2.find_first_of('.');
+	if (ds != PORTABLE_DECIMAL_SEPARATOR) {
+		p = target2.find_first_of(PORTABLE_DECIMAL_SEPARATOR);
 		if (p != string::npos)
 			target2[p] = ds;
 	}
@@ -370,15 +373,39 @@ st_err_t real_check_bounds(const bool& can_be_zero, const int& sign, real& r, co
 	return ST_ERR_OK;
 }
 
-int real_sign(const real& r) {
-	return (r > 0 ? 1 : (r < 0 ? -1 : 0));
-}
+real real_abs(const real& r) { return abs(r); }
+int real_sign(const real& r) { return (r > 0 ? 1 : (r < 0 ? -1 : 0)); }
 
 real real_ip(const real& r) {
 	if (r < 0)
 		return real(ceil(r));
 	else
 		return real(floor(r));
+}
+
+real real_floor(const real& r) { return real(floor(r)); }
+real real_ceil(const real& r) { return real(ceil(r)); }
+real real_mant(const real& r) {
+	string s = user_real_to_string(r, TOSTRING_PORTABLE, true);
+	size_t p;
+	if ((p = s.find_first_of('E')) == string::npos)
+		throw(CalcFatal(__FILE__, __LINE__, "real_mant(): inconsistent data"));
+	s.erase(p);
+	real r2;
+	istringstream iss(s);
+	iss >> r2;
+	return r2;
+}
+real real_xpon(const real& r) {
+	string s = user_real_to_string(r, TOSTRING_PORTABLE, true);
+	size_t p;
+	if ((p = s.find_first_of('E')) == string::npos)
+		throw(CalcFatal(__FILE__, __LINE__, "real_mant(): inconsistent data"));
+	s.erase(0, p + 1);
+	real r2;
+	istringstream iss(s);
+	iss >> r2;
+	return r2;
 }
 
 real get_max_real_from_bin_size(const int& m) {
@@ -528,10 +555,6 @@ void numeric_atan(const real& r, st_err_t& c, real& res) {
 	res = atan(r);
 	if (errno == ERANGE)
 		c = ST_ERR_BAD_ARGUMENT_VALUE;
-}
-
-real numeric_abs(const real& r) {
-	return abs(r);
 }
 
 void numeric_sqrt(const real& r, st_err_t& c, real& res) {

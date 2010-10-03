@@ -35,6 +35,99 @@
 .TP
 .B Algebraic
 \' \'	\'X+2*Y=Z\'
+.SH "PROGRAM CONTROL INSTRUCTIONS"
+.TP
+.B Note about booleans
+A test (IF, WHILE or UNTIL, see below) takes one item in the stack. The item
+must be of type real. Any non-null value is treated as TRUE, a null value is
+FALSE.
+.br
+Below, the term "bottom item of the stack" refers to the actual object at
+level 1 of the stack.
+.TP
+.B IF/THEN/ELSE/END sequence
+Execute the instructions between IF and THEN.
+.br
+Then, take the bottom item of the stack, if it is true (see above), execute
+the instructions between THEN and ELSE (or END if ELSE is not provided),
+otherwise execute the ELSE instructions. ELSE is optional.
+.TP
+.I Example 1
+Take the first item in the stack and tell whether it is positive or null, or
+negative
+.br
+<< IF 0 >= THEN "Positive or null value" ELSE "Negative value" END >>
+.TP
+.I Example 2
+Always execute the THEN part
+.br
+<< IF 1 THEN "Always executed" ELSE "Never executed" END >>
+.TP
+.I Example 3
+Do nothing (!)
+.br
+<< IF 0 THEN "Never executed" END >>
+.TP
+.B WHILE/REPEAT/END sequence
+Execute the instructions between WHILE and REPEAT.
+.br
+Then take the bottom item of the stack, if it is true (see above), execute the
+instructions after REPEAT, then restart the sequence from the beginning of the
+WHILE.
+.TP
+.I Example
+Calculate the smallest N for which sum(i^2 with i taking all integer values in
+the range 1..N) >= 100
+.br
+<< 0 0 -> n << WHILE DUP 100 < REPEAT n SQ + n 1 + 'n' STO END n >> >>
+.TP
+.B DO/UNTIL/END sequence
+Execute the instructions between DO and UNTIL, then, between UNTIL and END.
+.br
+Then, take the bottom item of the stack, if it is true (see above), restart
+the sequence from the beginning of the DO.
+.TP
+.I Example
+Calculate the smallest N for which sum(1/i with i taking all integer values in the range 1..N) >= 3
+.br
+<< 0 0 -> n << DO n 1 + 'n' STO n INV + UNTIL DUP 3 >= END n >> >>
+.TP
+.B FOR|START/NEXT|STEP sequence
+FOR or START launches a loop. It takes two arguments, the first argument
+(second level in the stack) being the start counter value, the second one
+(first level in the stack) being the target counter value, beyond which to
+stop the loop.
+.br
+START is an anonymous loop, FOR takes one name and uses it as a local variable
+for the loop counter.
+.br
+NEXT adds 1 to the counter if the target is greater than the start, subtracts
+1 otherwise.
+.br
+STEP takes one argument in the stack and adds it to the counter. NEXT can be
+used with either FOR or START, same with STEP.
+.TP
+.I Example 1
+Calculate the sum of the squares of the integers from 1 to 10
+.br
+<< 0 1 10 FOR i i SQ + NEXT >>
+.TP
+.I Example 2
+Calculate sum(2^i with i taking all integer values in the range 1..N), N being
+the first value in the stack
+.br
+<< 0 1 1 4 ROLL START 2 * DUP ROT + SWAP NEXT >>
+.TP
+.I Example 3
+Calculate sum(i with i taking all odd integer values in the range 1..N), N
+being the first value in the stack
+.br
+<< 0 1 ROT FOR i i + 2 STEP >>
+.TP
+.B RPL Documentation
+RPL is HP language provided on top of RPN calculators.
+.br
+http://en.wikipedia.org/wiki/RPL_%28programming_language%29
 .SH "INITIALIZATION FILES"
 .TP
 .B ~/.prpn/stackrc
@@ -43,9 +136,14 @@ Settings and stack content.
 .B ~/.prpn/varsrc
 Variables structure, and actual working directory.
 .SH AUTHOR
-Written by Sébastien Millet <sebastien.millet1@club-internet.fr>. Permission is granted to copy, distribute and/or modify this document under the terms of the GNU General Public License, Version 3 published by the Free Software Foundation.
+Written by Sébastien Millet <sebastien.millet1@club-internet.fr>. Permission
+is granted to copy, distribute and/or modify this document under the terms of
+the GNU General Public License, Version 3 published by the Free Software
+Foundation.
 .SH BUGS
 .TP
 \- Program is in version 0.5.1...
 .TP
-\- Windows version: wx disconnects the program from the terminal it is sent from. Therefore Windows generation produces a GUI version, prpn.exe, and a console version, prpnc.exe.
+\- Windows version: wx disconnects the program from the terminal it is sent
+from. Therefore Windows generation produces a GUI version, prpn.exe, and a
+console version, prpnc.exe.

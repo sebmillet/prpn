@@ -202,12 +202,25 @@ public:
 	virtual void to_string(ToString&, const bool& = false) const = 0;
 	virtual st_err_t to_integer(int&) const { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_ip(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_fp(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_floor(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_ceil(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_abs(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_sign(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_mant(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_xpon(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 
 	virtual st_err_t op_add_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_sub_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_mul_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_div_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_pow_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_percent_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_percent_ch_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_percent_t_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_mod_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_min_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_max_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_cos(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_sin(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_tan(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
@@ -229,6 +242,12 @@ public:
 	virtual st_err_t op_mul(StackItemReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_div(StackItemReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_pow(StackItemReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_percent(StackItemReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_percent_ch(StackItemReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_percent_t(StackItemReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_mod(StackItemReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_min(StackItemReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_max(StackItemReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_r_to_c(StackItemReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	  // COMPLEX
 	virtual st_err_t op_add(StackItemCplx*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
@@ -413,19 +432,37 @@ public:
 	virtual void to_string(ToString&, const bool& = false) const;
 	virtual st_err_t to_integer(int&) const;
 	virtual st_err_t op_ip(StackItem*&);
+	virtual st_err_t op_fp(StackItem*&);
+	virtual st_err_t op_floor(StackItem*&);
+	virtual st_err_t op_ceil(StackItem*&);
+	virtual st_err_t op_abs(StackItem*&);
+	virtual st_err_t op_sign(StackItem*&);
+	virtual st_err_t op_mant(StackItem*&);
+	virtual st_err_t op_xpon(StackItem*&);
 
 	virtual st_err_t op_add_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_add(this, ret); }
 	virtual st_err_t op_sub_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_sub(this, ret); }
 	virtual st_err_t op_mul_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_mul(this, ret); }
 	virtual st_err_t op_div_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_div(this, ret); }
-
 	virtual st_err_t op_pow_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_pow(this, ret); }
+	virtual st_err_t op_percent_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_percent(this, ret); }
+	virtual st_err_t op_percent_ch_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_percent_ch(this, ret); }
+	virtual st_err_t op_percent_t_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_percent_t(this, ret); }
+	virtual st_err_t op_mod_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_mod(this, ret); }
+	virtual st_err_t op_min_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_min(this, ret); }
+	virtual st_err_t op_max_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_max(this, ret); }
 	virtual st_err_t op_r_to_c_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_r_to_c(this, ret); }
 
 	virtual st_err_t op_add(StackItemReal* arg1, StackItem*& ret) { return si_arith<Real, StackItemReal>(Real_add, arg1->sc, sc, ret); }
 	virtual st_err_t op_sub(StackItemReal* arg1, StackItem*& ret) { return si_arith<Real, StackItemReal>(Real_sub, arg1->sc, sc, ret); }
 	virtual st_err_t op_mul(StackItemReal* arg1, StackItem*& ret) { return si_arith<Real, StackItemReal>(Real_mul, arg1->sc, sc, ret); }
 	virtual st_err_t op_div(StackItemReal* arg1, StackItem*& ret) { return si_arith<Real, StackItemReal>(Real_div, arg1->sc, sc, ret); }
+	virtual st_err_t op_percent(StackItemReal*, StackItem*&);
+	virtual st_err_t op_percent_ch(StackItemReal*, StackItem*&);
+	virtual st_err_t op_percent_t(StackItemReal*, StackItem*&);
+	virtual st_err_t op_mod(StackItemReal*, StackItem*&);
+	virtual st_err_t op_min(StackItemReal*, StackItem*&);
+	virtual st_err_t op_max(StackItemReal*, StackItem*&);
 	virtual st_err_t op_add(StackItemCplx*, StackItem*&);
 	virtual st_err_t op_sub(StackItemCplx*, StackItem*&);
 	virtual st_err_t op_mul(StackItemCplx*, StackItem*&);

@@ -87,26 +87,54 @@ Display a help screen about flags
 
 <DD>
 Quit program
+<DT><B>_ABOUT&nbsp;(0)</B>
+
+<DD>
+Display information about this program
 <DT><B>+&nbsp;(2)</B>
 
 <DD>
-Addition
+Addition: x + y
 <DT><B>-&nbsp;(2)</B>
 
 <DD>
-Subtraction
+Subtraction: x - y
 <DT><B>*&nbsp;(2)</B>
 
 <DD>
-Multiplication
+Multiplication: x * y
 <DT><B>/&nbsp;(2)</B>
 
 <DD>
-Division
+Division: x / y
 <DT><B>^&nbsp;(2)</B>
 
 <DD>
-Power
+Power: x ^ y
+<DT><B>%&nbsp;(2)</B>
+
+<DD>
+Percentage: (x * y) / 100
+<DT><B>%CH&nbsp;(2)</B>
+
+<DD>
+Percentage change: 100 * (y - x) / x
+<DT><B>%T&nbsp;(2)</B>
+
+<DD>
+Percentage of total: 100 * y / x
+<DT><B>MOD&nbsp;(2)</B>
+
+<DD>
+Modulus: x - y * FLOOR(x / y)
+<DT><B>MIN&nbsp;(2)</B>
+
+<DD>
+Minimum
+<DT><B>MAX&nbsp;(2)</B>
+
+<DD>
+Maximum
 <DT><B>COS&nbsp;(1)</B>
 
 <DD>
@@ -147,6 +175,34 @@ Opposite
 
 <DD>
 Integer part
+<DT><B>FP&nbsp;(1)</B>
+
+<DD>
+Fractional part
+<DT><B>FLOOR&nbsp;(1)</B>
+
+<DD>
+Greatest integer lower than or equal to x
+<DT><B>CEIL&nbsp;(1)</B>
+
+<DD>
+Lowest integer greater than or equal to x
+<DT><B>ABS&nbsp;(1)</B>
+
+<DD>
+Absolute of x
+<DT><B>SIGN&nbsp;(1)</B>
+
+<DD>
+Sign of x: can be -1, 0 or 1
+<DT><B>MANT&nbsp;(1)</B>
+
+<DD>
+Mantisse of x
+<DT><B>XPON&nbsp;(1)</B>
+
+<DD>
+Exponent of x
 <DT><B>INV&nbsp;(1)</B>
 
 <DD>
@@ -427,6 +483,14 @@ Set reals display to 'standard'
 
 <DD>
 Set reals display to 'scientific'
+<DT><B>FIX&nbsp;(1)</B>
+
+<DD>
+Set reals display to 'fixed number of decimals'
+<DT><B>ENG&nbsp;(1)</B>
+
+<DD>
+Set reals display to 'engineering'
 <DT><B>CLLCD&nbsp;(0)</B>
 
 <DD>
@@ -447,6 +511,14 @@ Read file and puts its content in the stack
 
 <DD>
 Write the second item into the file named by the first item
+<DT><B>_HACK-REAL-MGMT&nbsp;(1)</B>
+
+<DD>
+Internal: tune real 'standard' display management
+<DT><B>_HACK-REAL-DOT&nbsp;(1)</B>
+
+<DD>
+Internal: set whether or not to keep a trailing dot in reals display
 <DT><B>UNDO&nbsp;(0)</B>
 
 <DD>
@@ -515,6 +587,133 @@ Get number of undo levels
 ' '<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>'X+2*Y=Z'<BR>
 </DL>
 <A NAME="lbAH">&nbsp;</A>
+<H2>PROGRAM CONTROL INSTRUCTIONS</H2>
+
+<DL COMPACT>
+<DT><B>Note about booleans</B>
+
+<DD>
+A test (IF, WHILE or UNTIL, see below) takes one item in the stack. The item
+must be of type real. Any non-null value is treated as TRUE, a null value is
+FALSE.
+<BR>
+
+Below, the term &quot;bottom item of the stack&quot; refers to the actual object at
+level 1 of the stack.
+<DT><B>IF/THEN/ELSE/END sequence</B>
+
+<DD>
+Execute the instructions between IF and THEN.
+<BR>
+
+Then, take the bottom item of the stack, if it is true (see above), execute
+the instructions between THEN and ELSE (or END if ELSE is not provided),
+otherwise execute the ELSE instructions. ELSE is optional.
+<DT><I>Example 1</I>
+
+<DD>
+Take the first item in the stack and tell whether it is positive or null, or
+negative
+<BR>
+
+&lt;&lt; IF 0 &gt;= THEN &quot;Positive or null value&quot; ELSE &quot;Negative value&quot; END &gt;&gt;
+<DT><I>Example 2</I>
+
+<DD>
+Always execute the THEN part
+<BR>
+
+&lt;&lt; IF 1 THEN &quot;Always executed&quot; ELSE &quot;Never executed&quot; END &gt;&gt;
+<DT><I>Example 3</I>
+
+<DD>
+Do nothing (!)
+<BR>
+
+&lt;&lt; IF 0 THEN &quot;Never executed&quot; END &gt;&gt;
+<DT><B>WHILE/REPEAT/END sequence</B>
+
+<DD>
+Execute the instructions between WHILE and REPEAT.
+<BR>
+
+Then take the bottom item of the stack, if it is true (see above), execute the
+instructions after REPEAT, then restart the sequence from the beginning of the
+WHILE.
+<DT><I>Example</I>
+
+<DD>
+Calculate the smallest N for which sum(i^2 with i taking all integer values in
+the range 1..N) &gt;= 100
+<BR>
+
+&lt;&lt; 0 0 -&gt; n &lt;&lt; WHILE DUP 100 &lt; REPEAT n SQ + n 1 + 'n' STO END n &gt;&gt; &gt;&gt;
+<DT><B>DO/UNTIL/END sequence</B>
+
+<DD>
+Execute the instructions between DO and UNTIL, then, between UNTIL and END.
+<BR>
+
+Then, take the bottom item of the stack, if it is true (see above), restart
+the sequence from the beginning of the DO.
+<DT><I>Example</I>
+
+<DD>
+Calculate the smallest N for which sum(1/i with i taking all integer values in the range 1..N) &gt;= 3
+<BR>
+
+&lt;&lt; 0 0 -&gt; n &lt;&lt; DO n 1 + 'n' STO n INV + UNTIL DUP 3 &gt;= END n &gt;&gt; &gt;&gt;
+<DT><B>FOR|START/NEXT|STEP sequence</B>
+
+<DD>
+FOR or START launches a loop. It takes two arguments, the first argument
+(second level in the stack) being the start counter value, the second one
+(first level in the stack) being the target counter value, beyond which to
+stop the loop.
+<BR>
+
+START is an anonymous loop, FOR takes one name and uses it as a local variable
+for the loop counter.
+<BR>
+
+NEXT adds 1 to the counter if the target is greater than the start, subtracts
+1 otherwise.
+<BR>
+
+STEP takes one argument in the stack and adds it to the counter. NEXT can be
+used with either FOR or START, same with STEP.
+<DT><I>Example 1</I>
+
+<DD>
+Calculate the sum of the squares of the integers from 1 to 10
+<BR>
+
+&lt;&lt; 0 1 10 FOR i i SQ + NEXT &gt;&gt;
+<DT><I>Example 2</I>
+
+<DD>
+Calculate sum(2^i with i taking all integer values in the range 1..N), N being
+the first value in the stack
+<BR>
+
+&lt;&lt; 0 1 1 4 ROLL START 2 * DUP ROT + SWAP NEXT &gt;&gt;
+<DT><I>Example 3</I>
+
+<DD>
+Calculate sum(i with i taking all odd integer values in the range 1..N), N
+being the first value in the stack
+<BR>
+
+&lt;&lt; 0 1 ROT FOR i i + 2 STEP &gt;&gt;
+<DT><B>RPL Documentation</B>
+
+<DD>
+RPL is HP language provided on top of RPN calculators.
+<BR>
+
+<A HREF="http://en.wikipedia.org/wiki/RPL_%28programming_language%29">http://en.wikipedia.org/wiki/RPL_%28programming_language%29</A>
+</DL>
+<A NAME="lbAI">&nbsp;</A>
 <H2>INITIALIZATION FILES</H2>
 
 <DL COMPACT>
@@ -527,16 +726,21 @@ Settings and stack content.
 <DD>
 Variables structure, and actual working directory.
 </DL>
-<A NAME="lbAI">&nbsp;</A>
+<A NAME="lbAJ">&nbsp;</A>
 <H2>AUTHOR</H2>
 
-Written by Sébastien Millet &lt;<A HREF="mailto:sebastien.millet1@club-internet.fr">sebastien.millet1@club-internet.fr</A>&gt;. Permission is granted to copy, distribute and/or modify this document under the terms of the GNU General Public License, Version 3 published by the Free Software Foundation.
-<A NAME="lbAJ">&nbsp;</A>
+Written by Sébastien Millet &lt;<A HREF="mailto:sebastien.millet1@club-internet.fr">sebastien.millet1@club-internet.fr</A>&gt;. Permission
+is granted to copy, distribute and/or modify this document under the terms of
+the GNU General Public License, Version 3 published by the Free Software
+Foundation.
+<A NAME="lbAK">&nbsp;</A>
 <H2>BUGS</H2>
 
 <DL COMPACT>
 <DT>- Program is in version 0.5.1...<DD>
-<DT>- Windows version: wx disconnects the program from the terminal it is sent from. Therefore Windows generation produces a GUI version, prpn.exe, and a console version, prpnc.exe.<DD>
+<DT>- Windows version: wx disconnects the program from the terminal it is sent<DD>
+from. Therefore Windows generation produces a GUI version, prpn.exe, and a
+console version, prpnc.exe.
 <P>
 </DL>
 
@@ -549,14 +753,15 @@ Written by Sébastien Millet &lt;<A HREF="mailto:sebastien.millet1@club-internet.
 <DT><A HREF="#lbAE">OPTIONS</A><DD>
 <DT><A HREF="#lbAF">COMMANDS</A><DD>
 <DT><A HREF="#lbAG">OBJECT TYPES</A><DD>
-<DT><A HREF="#lbAH">INITIALIZATION FILES</A><DD>
-<DT><A HREF="#lbAI">AUTHOR</A><DD>
-<DT><A HREF="#lbAJ">BUGS</A><DD>
+<DT><A HREF="#lbAH">PROGRAM CONTROL INSTRUCTIONS</A><DD>
+<DT><A HREF="#lbAI">INITIALIZATION FILES</A><DD>
+<DT><A HREF="#lbAJ">AUTHOR</A><DD>
+<DT><A HREF="#lbAK">BUGS</A><DD>
 </DL>
 <HR>
 This document was created by
 <A HREF="/cgi-bin/man/man2html">man2html</A>,
 using the manual pages.<BR>
-Time: 22:08:23 GMT, September 24, 2010
+Time: 15:25:58 GMT, October 03, 2010
 </BODY>
 </HTML>

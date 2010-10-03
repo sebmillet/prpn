@@ -15,9 +15,11 @@ using namespace std;
 extern bool opt_batch;
 extern bool debug_tokeniser;
 extern bool debug_itemiser;
+extern bool debug_locale;
 
 extern void debug_test_tokeniser();
 extern void debug_test_itemiser();
+extern void debug_display_locale();
 
 static bool quit_requested = false;
 
@@ -38,6 +40,7 @@ public:
 	virtual void refresh_statuswin();
 	virtual void ui_set_error_call_back(const string&, const string&);
 	virtual void set_line(const int&, const string&);
+	virtual void enforce_refresh();
 	virtual void refresh_display_path(const string&, const bool&);
 	virtual void set_syntax_error(const int&, const int&, const int&, const int&);
 	virtual const std::string get_string();
@@ -68,6 +71,8 @@ UiImplConsole::~UiImplConsole() { }
 void UiImplConsole::refresh_statuswin() { }
 
 void UiImplConsole::set_line(const int&, const string& s) { cout << s << endl; }
+
+void UiImplConsole::enforce_refresh() { }
 
 void UiImplConsole::refresh_display_path(const string& s, const bool&) {
 	if (!opt_batch) {
@@ -118,11 +123,13 @@ void UiImplConsole::refresh_stack_height() { }
 
 void console_loop() {
 	try {
-		if (debug_itemiser || debug_tokeniser) {
+		if (debug_itemiser || debug_tokeniser || debug_locale) {
 			if (debug_itemiser)
 				debug_test_itemiser();
 			else if (debug_tokeniser)
 				debug_test_tokeniser();
+			else if (debug_locale)
+				debug_display_locale();
 			return;
 		}
 

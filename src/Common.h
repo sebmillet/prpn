@@ -22,6 +22,9 @@
 //     une solution plus élégante.
 //     Autre exemple : 10000.15946805 devient 10000.1594681 alors que
 //                     50000.15946805 devient 50000.159468
+//   Traiter le cas des références circulaires. Exemple :
+//   << 'A' 'B' STO 'B' 'A' STO A >> EVAL
+//     La séquence d'instructions ci-dessus provoque une boucle infinie...
 //
 // Programme de test :
 // 	 Intitulé de l'erreur si pas assez d'argument lors de l'exécution de << -> ... << >> >>
@@ -70,6 +73,11 @@ enum {ENCODING_UNKNOWN, ENCODING_1BYTE, ENCODING_UTF8};
 //#define DEBUG_TRANSSTACK
 
 typedef double real;
+#define PORTABLE_DECIMAL_SEPARATOR	'.'
+#define PORTABLE_STRING_DECIMAL_SEPARATOR	"."
+#define ALTERN_DECIMAL_SEPARATOR	','
+#define PORTABLE_COMPLEX_SEPARATOR	','
+#define ALTERN_COMPLEX_SEPARATOR	';'
 
 #define G_HARD_MAX_NB_BITS	64
 extern int g_max_nb_bits;

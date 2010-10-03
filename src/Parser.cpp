@@ -225,7 +225,7 @@ element_t string_to_real(string tok, real& r, const tostring_t& t) {
 			e = "-" + e;
 		e = "E" + e;
 	}
-	string x = m_bc + "." + m_ac + e;
+	string x = m_bc + PORTABLE_STRING_DECIMAL_SEPARATOR + m_ac + e;
 	istringstream iss(x);
 	prepare_arith();
 	iss >> r;

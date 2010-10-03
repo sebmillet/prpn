@@ -200,11 +200,13 @@ bool Flags::get_default(const int& i) const { return flags[i].default_value; }
 const char* Flags::get_description(const int& i) const { return flags[i].description; }
 
 char Flags::get_decimal_separator(const bool& user_setting) const {
-	return user_setting ? (get(FL_DECIMAL_SEP) ? ',' : '.') : '.';
+	return user_setting ? (get(FL_DECIMAL_SEP) ?
+				ALTERN_DECIMAL_SEPARATOR : PORTABLE_DECIMAL_SEPARATOR) : PORTABLE_DECIMAL_SEPARATOR;
 }
 
 char Flags::get_complex_separator(const bool& user_setting) const {
-	return user_setting ? (get(FL_DECIMAL_SEP) ? ';' : ',') : ',';
+	return user_setting ? (get(FL_DECIMAL_SEP) ?
+				ALTERN_COMPLEX_SEPARATOR : PORTABLE_COMPLEX_SEPARATOR) : PORTABLE_COMPLEX_SEPARATOR;
 }
 
 void Flags::set_bin_base_flags(const bool& flag1, const bool& flag2) {
@@ -1442,6 +1444,11 @@ static st_err_t bc_help_flags(TransStack&, SIO*, string&) {
 }
 static st_err_t bc_exit(TransStack&, SIO*, string&) { return ST_ERR_EXIT; }
 
+static st_err_t bc_about(TransStack&, SIO*, string&) {
+	ui_set_error(PACKAGE_STRING DEBUG_VERSION_STRING, "Sébastien Millet 2010");
+	return ST_ERR_OK;
+}
+
   // Arithmetic
 
 void prepare_arith();
@@ -1450,6 +1457,12 @@ static st_err_t bc_sub(StackItem& op1, StackItem& op2, StackItem*& ret, string&)
 static st_err_t bc_mul(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { prepare_arith(); return op1.op_mul_generic(op2, ret); }
 static st_err_t bc_div(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { prepare_arith(); return op1.op_div_generic(op2, ret); }
 static st_err_t bc_pow(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { prepare_arith(); return op1.op_pow_generic(op2, ret); }
+static st_err_t bc_percent(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { prepare_arith(); return op1.op_percent_generic(op2, ret); }
+static st_err_t bc_percent_ch(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { prepare_arith(); return op1.op_percent_ch_generic(op2, ret); }
+static st_err_t bc_percent_t(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { prepare_arith(); return op1.op_percent_t_generic(op2, ret); }
+static st_err_t bc_mod(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { prepare_arith(); return op1.op_mod_generic(op2, ret); }
+static st_err_t bc_min(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { prepare_arith(); return op1.op_min_generic(op2, ret); }
+static st_err_t bc_max(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { prepare_arith(); return op1.op_max_generic(op2, ret); }
 
   // Real functions
 
@@ -1463,6 +1476,13 @@ static st_err_t bc_ln(StackItem& op1, StackItem*& ret, string&) { prepare_arith(
 static st_err_t bc_exp(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_exp(ret); }
 static st_err_t bc_neg(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_neg(ret); }
 static st_err_t bc_ip(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_ip(ret); }
+static st_err_t bc_fp(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_fp(ret); }
+static st_err_t bc_floor(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_floor(ret); }
+static st_err_t bc_ceil(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_ceil(ret); }
+static st_err_t bc_abs(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_abs(ret); }
+static st_err_t bc_sign(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_sign(ret); }
+static st_err_t bc_mant(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_mant(ret); }
+static st_err_t bc_xpon(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_xpon(ret); }
 static st_err_t bc_inv(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_inv(ret); }
 static st_err_t bc_sq(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_sq(ret); }
 static st_err_t bc_sqr(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_sqr(ret); }
@@ -2004,7 +2024,7 @@ static st_err_t bc_cllcd(TransStack& ts, SIO *args, string&) {
 }
 
 static st_err_t bc_clmf(TransStack& ts, SIO *args, string&) {
-	ui_set_clmf();
+	ui_clear_message_flag();
 	return ST_ERR_OK;
 }
 
@@ -2393,8 +2413,96 @@ st_err_t StackItemReal::to_integer(int& n) const {
 	return ST_ERR_OK;
 }
 
-st_err_t StackItemReal::op_ip(StackItem*& ret) {
-	ret = new StackItemReal(Real(real_ip(sc.get_value())));
+#define IMPLEMENT_SIMPLE_REAL_FUNCTION(op, function) \
+st_err_t StackItemReal::op(StackItem*& ret) { \
+	ret = new StackItemReal(Real(function(sc.get_value()))); \
+	return ST_ERR_OK; \
+}
+
+IMPLEMENT_SIMPLE_REAL_FUNCTION(op_ip, real_ip)
+IMPLEMENT_SIMPLE_REAL_FUNCTION(op_floor, real_floor)
+IMPLEMENT_SIMPLE_REAL_FUNCTION(op_ceil, real_ceil)
+IMPLEMENT_SIMPLE_REAL_FUNCTION(op_abs, real_abs)
+IMPLEMENT_SIMPLE_REAL_FUNCTION(op_sign, real_sign)
+IMPLEMENT_SIMPLE_REAL_FUNCTION(op_mant, real_mant)
+IMPLEMENT_SIMPLE_REAL_FUNCTION(op_xpon, real_xpon)
+
+st_err_t StackItemReal::op_fp(StackItem*& ret) {
+	size_t p;
+	real r = 0;
+	string s = sc.to_string(TOSTRING_PORTABLE);
+	debug_write("pre s=");
+	debug_write(s.c_str());
+	if ((p = s.find_first_of('E')) != string::npos) {
+		if (real_abs(sc.get_value()) < 1)
+			r = sc.get_value();
+	} else if ((p = s.find_first_of(PORTABLE_DECIMAL_SEPARATOR)) != string::npos) {
+		s.erase(0, p);
+
+		/*debug_write("post s=");
+		debug_write(s.c_str());*/
+
+		istringstream iss(s);
+		iss >> r;
+		if (sc.get_value() < 0)
+			r = -r;
+	}
+	ret = new StackItemReal(Real(r));
+	return ST_ERR_OK;
+}
+
+st_err_t StackItemReal::op_percent(StackItemReal* arg1, StackItem*& ret) {
+	real r, r2;
+	st_err_t c = ST_ERR_OK;
+	numeric_mul(arg1->get_Real().get_value(), sc.get_value(), c, r);
+	numeric_div(r, static_cast<real>(100.0), c, r2);
+	if (c == ST_ERR_OK)
+		ret = new StackItemReal(Real(r2));
+	return c;
+}
+
+st_err_t StackItemReal::op_percent_ch(StackItemReal* arg1, StackItem*& ret) {
+	real r, r2, r3;
+	st_err_t c = ST_ERR_OK;
+	numeric_sub(sc.get_value(), arg1->get_Real().get_value(), c, r);
+	numeric_mul(r, static_cast<real>(100.0), c, r2);
+	numeric_div(r2, arg1->get_Real().get_value(), c, r3);
+	if (c == ST_ERR_OK)
+		ret = new StackItemReal(Real(r3));
+	return c;
+}
+
+st_err_t StackItemReal::op_percent_t(StackItemReal* arg1, StackItem*& ret) {
+	real r, r2;
+	st_err_t c = ST_ERR_OK;
+	numeric_mul(sc.get_value(), static_cast<real>(100.0), c, r);
+	numeric_div(r, arg1->get_Real().get_value(), c, r2);
+	if (c == ST_ERR_OK)
+		ret = new StackItemReal(Real(r2));
+	return c;
+}
+
+st_err_t StackItemReal::op_mod(StackItemReal* arg1, StackItem*& ret) {
+	real r, r2, r3, r4;
+	st_err_t c = ST_ERR_OK;
+	numeric_div(arg1->get_Real().get_value(), sc.get_value(), c, r);
+	if (c == ST_ERR_OK) {
+		r2 = real_floor(r);
+		numeric_mul(sc.get_value(), r2, c, r3);
+		numeric_sub(arg1->get_Real().get_value(), r3, c, r4);
+		if (c == ST_ERR_OK)
+			ret = new StackItemReal(Real(r4));
+	}
+	return c;
+}
+
+st_err_t StackItemReal::op_min(StackItemReal* arg1, StackItem*& ret) {
+	ret = new StackItemReal(arg1->get_Real().get_value() < sc.get_value() ? arg1->get_Real() : sc);
+	return ST_ERR_OK;
+}
+
+st_err_t StackItemReal::op_max(StackItemReal* arg1, StackItem*& ret) {
+	ret = new StackItemReal(arg1->get_Real().get_value() > sc.get_value() ? arg1->get_Real() : sc);
 	return ST_ERR_OK;
 }
 
@@ -2417,7 +2525,7 @@ IMPLEMENT_REAL_FUNCTION(op_ln, numeric_ln)
 IMPLEMENT_REAL_FUNCTION(op_exp, numeric_exp)
 
 st_err_t StackItemReal::op_sqr(StackItem*& ret) {
-	real tmp_r = numeric_abs(sc.get_value());
+	real tmp_r = real_abs(sc.get_value());
 	st_err_t c = ST_ERR_OK;
 	real res;
 	numeric_sqrt(tmp_r, c, res);

@@ -62,6 +62,7 @@ int opt_height = -1;
 int opt_min_stack_height = -1;
 bool debug_tokeniser = false;
 bool debug_itemiser = false;
+bool debug_locale = false;
 static string opt_debug;
 bool has_gui = false;
 bool opt_dry_run = false;
@@ -345,12 +346,14 @@ int prog_init(int argc, char **argv) {
 	}
 
 	if (opt_debug != "") {
-		cerr << "Debug variable set to " << opt_debug << endl;
+		string ddesc = "Debug variable set to " + opt_debug;
+		debug_write(ddesc.c_str());
 		debug_itemiser = (opt_debug.find_first_of('i') != string::npos);
 		debug_tokeniser = (opt_debug.find_first_of('t') != string::npos);
+		debug_locale = (opt_debug.find_first_of('l') != string::npos);
 	}
 
-	has_gui = (!opt_batch && !opt_console && !debug_itemiser && !debug_tokeniser);
+	has_gui = (!opt_batch && !opt_console && !debug_itemiser && !debug_tokeniser && !debug_locale);
 
 	if (!opt_s_min_stack_height.empty() && has_gui) {
 		std::cerr << BIN_NAME << ": --min_stack_height option allowed in console mode only" << std::endl;
@@ -481,6 +484,10 @@ void debug_test_itemiser() {
 		} else
 			cout << "par.set = false and r = false" << endl;
 	}
+}
+
+void debug_display_locale() {
+	cout << actual_country_code << endl;
 }
 
 #ifdef DEBUG

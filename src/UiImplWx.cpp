@@ -645,6 +645,7 @@ public:
 
 	virtual void refresh_statuswin();
 	virtual void set_line(const int&, const string&);
+	virtual void enforce_refresh();
 	virtual void refresh_display_path(const string&, const bool&);
 	virtual void set_syntax_error(const int&, const int&, const int&, const int&);
 	virtual const std::string get_string();
@@ -677,6 +678,8 @@ void UiImplWx::refresh_statuswin() { f->stwin->Refresh(); }
 void UiImplWx::set_line(const int& line_number, const string& s) {
 	f->dispStack[line_number - 1]->SetLabel(string_to_wxString(s));
 }
+
+void UiImplWx::enforce_refresh() { f->Update(); }
 
 void UiImplWx::refresh_display_path(const string& s, const bool& modified) {
 	if (modified) {

@@ -61,7 +61,7 @@ static IntervalShift ui_shift = {0, 0, 0};
 
 static void refresh_path();
 static void refresh_status();
-static void refresh_stack(const int&);
+static void refresh_stack(const int&, const bool&);
 
 static bool refresh_status_flag = true;
 static int status_actual_base = 0;
@@ -78,24 +78,24 @@ static string display_error_l2 = "";
 static string display_error_l1 = "_HELP command for help";
 static string display_error_l2 = "";
 */
-static bool clmf = false;
+static bool message_flag = false;
 static vector<string> disp;
-void ui_reset_clmf() {
-	if (clmf) {
+void ui_clear_message_flag() {
+	if (message_flag) {
 		set_refresh_stack_flag();
-		clmf = false;
+		message_flag = false;
 	}
 }
-void ui_set_clmf() {
-	if (!clmf) {
-		set_refresh_stack_flag();
-		clmf = true;
-	}
+void ui_set_message_flag() {
+	set_refresh_stack_flag();
+	message_flag = true;
+	refresh_stack(-1, true);
 }
-bool ui_get_clmf() { return clmf; }
+bool ui_get_message_flag() { return message_flag; }
 void ui_cllcd() {
 	for (vector<string>::iterator it = disp.begin(); it != disp.end(); it++)
 		*it = "";
+	ui_set_message_flag();
 }
 void ui_disp(int line, const std::string& s) {
 	if (line < 1)
@@ -103,6 +103,7 @@ void ui_disp(int line, const std::string& s) {
 	if (line > disp.size())
 		line = disp.size();
 	disp[line - 1] = s;
+	ui_set_message_flag();
 }
 
 static bool refresh_stack_flag = true;
@@ -121,7 +122,6 @@ static void ui_set_recalc_stack_flag() {
 static void reset_recalc_stack_flag() { recalc_stack_flag = false; }
 static bool get_recalc_stack_flag() { return recalc_stack_flag; }
 
-static void set_error(const std::string&, const std::string&);
 static void set_syntax_error(const int&, const int&, const int&, const int&);
 
 static void redim(int nb_newlines = -1) {
@@ -152,9 +152,9 @@ const BtnDescription btn_descriptions[] = {
 	{1, "EEX", 0, "_E", "VIEW v", 0, "_VDOWN"},
 	{-1, "", 0, "", "", 0, ""},
 	{3, "'", 0, "'", "HELP", 0, "_HELP"},
-	{4, "7", 0, "7", "", 0, ""},
+	{4, "7", 0, "7", "ROLL", 0, "ROLL"},
 	{4, "8", 0, "8", "UNDO", 0, "UNDO"},
-	{4, "9", 0, "9", "", 0, ""},
+	{4, "9", 0, "9", "SWAP", 0, "SWAP"},
 	{4, "/", 0, "/", "1/x", 0, "INV"},
 	{-1, "", 0, "", "", 0, ""},
 	{3, "STO", 0, "STO", "RCL", 0, "RCL"},
@@ -163,16 +163,16 @@ const BtnDescription btn_descriptions[] = {
 	{4, "6", 0, "6", "", 0, ""},
 	{4, "*", 0, "*", "^", 0, "^"},
 	{-1, "", 0, "", "", 0, ""},
-	{3, "EVAL", 80, "EVAL", "->NUM", 0, "->NUM"},
+	{3, "EVAL", 80, "EVAL", "", 0, ""},
 	{4, "1", 0, "1", "", 0, ""},
 	{4, "2", 0, "2", "%", 0, "%"},
-	{4, "3", 0, "3", "%%CH", 0, "%%CH"},
+	{4, "3", 0, "3", "%CH", 0, "%%CH"},
 	{4, "-", 0, "-", "SQR", 0, "SQR"},
 	{-1, "", 0, "", "", 0, ""},
 	{3, "ON", 0, "_ON", "OFF", 0, "_OFF"},
 	{4, "0", 0, "0", "CLEAR", 0, "CLEAR"},
-	{4, ".", 0, ".", "PI", 0, "PI"},
-	{4, ",", 0, ",", "->", 0, "->"},
+	{4, ".", 0, ".", "DROP", 0, "DROP"},
+	{4, "->", 0, "->", ",", 0, ","},
 	{4, "+", 0, "+", "x^2", 0, "SQ"}
 };
 
@@ -183,10 +183,10 @@ static void readrc_1file(const string& filename_real, const string& filename_dis
 	st_err_t c = read_rc_file(ts, TOSTRING_PORTABLE, filename_real, filename_display, true, error_l1, error_l2);
 	if (c == ST_ERR_FILE_READ_ERROR) {
 		if (os_file_exists(filename_real.c_str())) {
-			set_error(filename_display + ":", "Could not open");
+			ui_set_error(filename_display + ":", "Could not open");
 		}
 	} else if (c != ST_ERR_OK && c != ST_ERR_EXIT)
-		set_error(error_l1, error_l2);
+		ui_set_error(error_l1, error_l2);
 }
 
 static void readrc() {
@@ -470,7 +470,7 @@ void ui_flush_input(const string& textin, const string& additional_command) {
 			c = ts->do_push_eval(*it, inside_undo_sequence, cmd_err);
 			ui_set_recalc_stack_flag();
 			if (c != ST_ERR_OK && c != ST_ERR_EXIT) {
-				set_error(cmd_err + " Error:", get_error_string(c));
+				ui_set_error(cmd_err + " Error:", get_error_string(c));
 			}
 			inside_undo_sequence = true;
 		}
@@ -516,7 +516,7 @@ static inline const string ui_get_ts_display_line(const int& line_number, bool& 
 	return ts->transstack_get_display_line(ui_dsl, line_number, ui_shift, recalc, no_more_lines);
 }
 
-static void refresh_stack(const int& enforced_nb_stack_elems_to_display) {
+static void refresh_stack(const int& enforced_nb_stack_elems_to_display, const bool& enforce_physical_display) {
 
 	//debug_write("A0: refresh_stack(): 0 (enter function)");
 
@@ -544,7 +544,7 @@ static void refresh_stack(const int& enforced_nb_stack_elems_to_display) {
 	if (i_upper >= 0)
 		disp.resize(i_upper);
 
-	if (!ui_get_clmf()) {
+	if (!ui_get_message_flag()) {
 		bool recalc = get_recalc_stack_flag();
 		bool no_more_lines = false;
 		int i;
@@ -568,8 +568,10 @@ static void refresh_stack(const int& enforced_nb_stack_elems_to_display) {
 
 	for (int i = 1; i <= i_upper; i++)
 		ui_impl->set_line(i, disp[i - 1]);
+	if (enforce_physical_display)
+		ui_impl->enforce_refresh();
 
-	if (!ui_get_clmf()) {
+	if (!ui_get_message_flag()) {
 		reset_recalc_stack_flag();
 		reset_refresh_stack_flag();
 	}
@@ -578,10 +580,10 @@ static void refresh_stack(const int& enforced_nb_stack_elems_to_display) {
 void ui_refresh_display(const int& enforced_nb_stack_elems_to_display) {
 	refresh_status();
 	refresh_path();
-	refresh_stack(enforced_nb_stack_elems_to_display);
+	refresh_stack(enforced_nb_stack_elems_to_display, false);
 }
 
-static void set_error(const std::string& l1, const std::string& l2) {
+void ui_set_error(const std::string& l1, const std::string& l2) {
 	is_displaying_error = true;
 	display_error_l1 = l1;
 	display_error_l2 = l2;
@@ -656,7 +658,7 @@ static void enter_edit_mode() {
 }
 
 void ui_notify_button_pressed(const char *c) {
-	ui_reset_clmf();
+	ui_clear_message_flag();
 	work_out_typein_status();
 	ui_reset_is_displaying_error();
 
@@ -697,8 +699,11 @@ void ui_notify_button_pressed(const char *c) {
 	} else if (beval == BEVAL_BTN_HELP) {
 		ui_set_status_shift(false);
 		ui_impl->display_help(DH_MAIN);
-	} else if ((typein_status == TYPEIN_EMPTY || typein_status == TYPEIN_ANY || *c == '\0') && beval != BEVAL_NEVER &&
-			beval != BEVAL_NULL && (beval != BEVAL_NOT_IN_EXPRESSION || typein_status != TYPEIN_EXPRESSION)) {
+	} else if ((typein_status == TYPEIN_EMPTY || typein_status == TYPEIN_ANY || typein_status == TYPEIN_EXPRESSION ||
+					*c == '\0') &&
+				beval != BEVAL_NEVER &&
+				beval != BEVAL_NULL &&
+				(beval != BEVAL_NOT_IN_EXPRESSION || typein_status != TYPEIN_EXPRESSION)) {
 		ui_set_status_shift(false);
 		ui_flush_input(ui_impl->get_string(), c);
 	} else if (beval != BEVAL_NULL) {
@@ -717,7 +722,7 @@ bool ui_notify_key_pressed(const int& k) {
 
 	//debug_write_i("A1: ui_notify_key_pressed(): k = %i", static_cast<int>(k));
 
-	ui_reset_clmf();
+	ui_clear_message_flag();
 	work_out_typein_status();
 	int delta = 0;
 	if (typein_status == TYPEIN_EMPTY && (k == UIK_UP || k == UIK_DOWN)) {

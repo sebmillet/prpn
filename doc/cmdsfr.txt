@@ -3,11 +3,18 @@ Commande (nombre d'arguments) : description
 _HELP          (0): Affiche un écran d'aide
 _HELP_FLAGS    (0): Affiche un écran d'aide sur les options
 _EXIT          (0): Quitte le programme
-+              (2): Addition
--              (2): Soustraction
-*              (2): Multiplication
-/              (2): Division
-^              (2): Puissance
+_ABOUT         (0): Affiche des informations au sujet de ce programme
++              (2): Addition : x + y
+-              (2): Soustraction : x - y
+*              (2): Multiplication : x * y
+/              (2): Division : x / y
+^              (2): Puissance : x ^ y
+%              (2): Pourcentage : (x * y) / 100
+%CH            (2): Pourcentage de changement : 100 * (y - x) / x
+%T             (2): Pourcentage du total : 100 * y / x
+MOD            (2): Modulo : x - y * FLOOR(x / y)
+MIN            (2): Minimum
+MAX            (2): Maximum
 COS            (1): Cosinus
 SIN            (1): Sinus
 TAN            (1): Tangente
@@ -18,6 +25,13 @@ LN             (1): Logarithme (base e)
 EXP            (1): Exponentiel
 NEG            (1): Opposé
 IP             (1): Partie entière
+FP             (1): Partie décimale
+FLOOR          (1): Plus grand entier inférieur ou égal à x
+CEIL           (1): Plus petit entier supérieur ou égal à x
+ABS            (1): Valeur absolue
+SIGN           (1): Signe de x : peut être -1, 0 ou 1
+MANT           (1): Mantisse de x
+XPON           (1): Exponentielle de x
 INV            (1): 1/x
 SQ             (1): Carré
 SQR            (1): Racine carrée
@@ -88,11 +102,15 @@ STOF           (1): Récupère l'état des options depuis un entier binaire
 WAIT           (1): Pause d'une durée définie en secondes
 STD            (0): Règle l'affichage des réels à 'standard'
 SCI            (1): Règle l'affichage des réels à 'scientifique'
+FIX            (1): Règle l'affichage des réels à 'nombre de décimales fixe'
+ENG            (1): Règle l'affichage des réels à 'ingénieur'
 CLLCD          (0): Efface l'écran
 CLMF           (0): Gèle l'affichage de la pile
 DISP           (2): Affiche une chaîne de caractères sur une ligne de l'écran
 _READ          (1): Lis le fichier et met son contenu dans la pile
 _WRITE         (2): Écris le second élément de la pile dans le fichier nommé par le premier élément
+_HACK-REAL-MGMT (1): Interne : règle la gestion de l'affichage des réels en mode 'standard'
+_HACK-REAL-DOT (1): Interne : détermine s'il faut afficher un point à la fin des réels
 UNDO           (0): Annule la dernière commande, 50 niveaux par défaut
 _UNDO_LEVELS   (1): Définis le nombre de niveaux d'annulation
 _UNDO_LEVELS?  (0): Renvoie le nombre de niveaux d'annulations
@@ -116,8 +134,3 @@ Programmes
 Programme                << >>          << DUP + SWAP >>
 Algébrique               ' '            'X+2*Y=Z'
 
-<< CLLCD "allo" 2 DISP 3e18 3 DISP (1,-1) 4 DISP 'x' 1 DISP "very low value" -1e100 DISP "very high value" 1e100 DISP CLMF >>
-<< CLLCD CLMF "a" 1 DISP 5 WAIT "b" 1 DISP 5 WAIT >>
-'x'
-1
-1.23

@@ -88,26 +88,54 @@ Affiche un écran d'aide sur les options
 
 <DD>
 Quitte le programme
+<DT><B>_ABOUT&nbsp;(0)</B>
+
+<DD>
+Affiche des informations au sujet de ce programme
 <DT><B>+&nbsp;(2)</B>
 
 <DD>
-Addition
+Addition : x + y
 <DT><B>-&nbsp;(2)</B>
 
 <DD>
-Soustraction
+Soustraction : x - y
 <DT><B>*&nbsp;(2)</B>
 
 <DD>
-Multiplication
+Multiplication : x * y
 <DT><B>/&nbsp;(2)</B>
 
 <DD>
-Division
+Division : x / y
 <DT><B>^&nbsp;(2)</B>
 
 <DD>
-Puissance
+Puissance : x ^ y
+<DT><B>%&nbsp;(2)</B>
+
+<DD>
+Pourcentage : (x * y) / 100
+<DT><B>%CH&nbsp;(2)</B>
+
+<DD>
+Pourcentage de changement : 100 * (y - x) / x
+<DT><B>%T&nbsp;(2)</B>
+
+<DD>
+Pourcentage du total : 100 * y / x
+<DT><B>MOD&nbsp;(2)</B>
+
+<DD>
+Modulo : x - y * FLOOR(x / y)
+<DT><B>MIN&nbsp;(2)</B>
+
+<DD>
+Minimum
+<DT><B>MAX&nbsp;(2)</B>
+
+<DD>
+Maximum
 <DT><B>COS&nbsp;(1)</B>
 
 <DD>
@@ -148,6 +176,34 @@ Opposé
 
 <DD>
 Partie entière
+<DT><B>FP&nbsp;(1)</B>
+
+<DD>
+Partie décimale
+<DT><B>FLOOR&nbsp;(1)</B>
+
+<DD>
+Plus grand entier inférieur ou égal à x
+<DT><B>CEIL&nbsp;(1)</B>
+
+<DD>
+Plus petit entier supérieur ou égal à x
+<DT><B>ABS&nbsp;(1)</B>
+
+<DD>
+Valeur absolue
+<DT><B>SIGN&nbsp;(1)</B>
+
+<DD>
+Signe de x : peut être -1, 0 ou 1
+<DT><B>MANT&nbsp;(1)</B>
+
+<DD>
+Mantisse de x
+<DT><B>XPON&nbsp;(1)</B>
+
+<DD>
+Exponentielle de x
 <DT><B>INV&nbsp;(1)</B>
 
 <DD>
@@ -428,6 +484,14 @@ Règle l'affichage des réels à 'standard'
 
 <DD>
 Règle l'affichage des réels à 'scientifique'
+<DT><B>FIX&nbsp;(1)</B>
+
+<DD>
+Règle l'affichage des réels à 'nombre de décimales fixe'
+<DT><B>ENG&nbsp;(1)</B>
+
+<DD>
+Règle l'affichage des réels à 'ingénieur'
 <DT><B>CLLCD&nbsp;(0)</B>
 
 <DD>
@@ -448,6 +512,14 @@ Lis le fichier et met son contenu dans la pile
 
 <DD>
 Écris le second élément de la pile dans le fichier nommé par le premier élément
+<DT><B>_HACK-REAL-MGMT&nbsp;(1)</B>
+
+<DD>
+Interne : règle la gestion de l'affichage des réels en mode 'standard'
+<DT><B>_HACK-REAL-DOT&nbsp;(1)</B>
+
+<DD>
+Interne : détermine s'il faut afficher un point à la fin des réels
 <DT><B>UNDO&nbsp;(0)</B>
 
 <DD>
@@ -516,6 +588,132 @@ Renvoie le nombre de niveaux d'annulations
 ' '<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>'X+2*Y=Z'<BR>
 </DL>
 <A NAME="lbAH">&nbsp;</A>
+<H2>INSTRUCTIONS DE CONTRÔLE DES PROGRAMMES</H2>
+
+<DL COMPACT>
+<DT><B>Note au sujet des booléens</B>
+
+<DD>
+Un test (IF, WHILE ou UNTIL, cf. ci-après) prend une valeur dans la pile.
+Cette valeur doit être de type réel. Toute valeur non nulle est traitée comme
+VRAI, une valeur nulle comme FAUX.
+<BR>
+
+Ci-dessous, le terme &quot;en bas de la pile&quot; se rapporte à l'objet situé au niveau
+1 de la pile.
+<DT><B>Séquence IF/THEN/ELSE/END</B>
+
+<DD>
+Exécute les instructions entre IF et THEN.
+<BR>
+
+Ensuite, prends l'élément en bas de la pile, s'il est vrai (voir ci-dessus),
+exécute les instructions entre THEN et ELSE (ou END s'il n'y a pas de ELSE),
+sinon exécute les instructions du ELSE. ELSE est facultatif.
+<DT><I>Exemple 1</I>
+
+<DD>
+Prends l'élément en bas de la pile et indique s'il est supérieur ou égal à
+zéro, ou bien négatif
+<BR>
+
+&lt;&lt; IF 0 &gt;= THEN &quot;Valeur positive ou nulle&quot; ELSE &quot;Valeur négative&quot; END &gt;&gt;
+<DT><I>Exemple 2</I>
+
+<DD>
+Exécute toujours les instructions du THEN
+<BR>
+
+&lt;&lt; IF 1 THEN &quot;Toujours exécuté&quot; ELSE &quot;Jamais exécuté&quot; END &gt;&gt;
+<DT><I>Example 3</I>
+
+<DD>
+Ne fais rien (!)
+<BR>
+
+&lt;&lt; IF 0 THEN &quot;Never executed&quot; END &gt;&gt;
+<DT><B>Séquence WHILE/REPEAT/END</B>
+
+<DD>
+Exécute les instructions entre WHILE et REPEAT.
+<BR>
+
+Ensuite, prends l'élément en bas de la pile, s'il est vrai (voir ci-dessus),
+exécute les instructions du REPEAT et recommence depuis le début du WHILE.
+<DT><I>Exemple</I>
+
+<DD>
+Calcule le plus petit N pour lequel somme(i^2 avec i prenant toutes les
+valeurs entières dans l'intervalle 1..N) &gt;= 100
+<BR>
+
+&lt;&lt; 0 0 -&gt; n &lt;&lt; WHILE DUP 100 &lt; REPEAT n SQ + n 1 + 'n' STO END n &gt;&gt; &gt;&gt;
+<DT><B>Séquence DO/UNTIL/END</B>
+
+<DD>
+Exécute les instructions entre DO et UNTIL puis entre UNTIL et END.
+<BR>
+
+Ensuite, prends l'élément en bas de la pile, s'il est vrai (voir ci-dessus),
+recommence depuis le début du DO.
+<DT><I>Exemple</I>
+
+<DD>
+Calcule le plus petit N pour lequel somme(1/i avec i prenant toutes les
+valeurs entières dans l'intervalle 1..N) &gt;= 3
+<BR>
+
+&lt;&lt; 0 0 -&gt; n &lt;&lt; DO n 1 + 'n' STO n INV + UNTIL DUP 3 &gt;= END n &gt;&gt; &gt;&gt;
+<DT><B>Séquence FOR|START/NEXT|STEP</B>
+
+<DD>
+FOR ou START démarre une boucle en prenant deux arguments, le premier
+(deuxième niveau de la pile) étant la valeur du compteur au départ, le
+deuxième (premier niveau de la pile) étant la valeur cible du compteur,
+au-delà de laquelle la boucle s'arrête.
+<BR>
+
+START est une boucle anonyme. FOR prend un nom et l'utilise comme variable locale pour le compteur.
+<BR>
+
+NEXT incrémente le compteur d'une unité si la valeur cible est supérieure à la valeur de départ, le décrémente d'une unité sinon.
+<BR>
+
+STEP prend la valeur en bas de la pile et l'ajoute au compteur. NEXT peut être
+utilisé indifféremment avec FOR et START, même chose pour STEP.
+<DT><I>Exemple 1</I>
+
+<DD>
+Calcule la somme des carrés des entiers de 1 à 10
+<BR>
+
+&lt;&lt; 0 1 10 FOR i i SQ + NEXT &gt;&gt;
+<DT><I>Exemple 2</I>
+
+<DD>
+Calcule somme(2^i avec i prenant toutes les valeurs entières dans l'intervalle
+1..N), N étant la première valeur dans la pile.
+<BR>
+
+&lt;&lt; 0 1 1 4 ROLL START 2 * DUP ROT + SWAP NEXT &gt;&gt;
+<DT><I>Exemple 3</I>
+
+<DD>
+Calcule somme(i avec i prenant toutes les valeurs impaires dans l'intervalle
+1..N), N étant la première valeur dans la pile.
+<BR>
+
+&lt;&lt; 0 1 ROT FOR i i + 2 STEP &gt;&gt;
+<DT><B>Documentation RPL</B>
+
+<DD>
+RPL est le langage de programmation des calculatrices HP fonctionnant en
+notation polonaise inverse.
+<BR>
+
+<A HREF="http://en.wikipedia.org/wiki/RPL_%28programming_language%29">http://en.wikipedia.org/wiki/RPL_%28programming_language%29</A>
+</DL>
+<A NAME="lbAI">&nbsp;</A>
 <H2>FICHIERS D'INITIALISATION</H2>
 
 <DL COMPACT>
@@ -528,11 +726,11 @@ Réglages et contenu de la pile.
 <DD>
 Structure contenant les variables, et répertoire courant.
 </DL>
-<A NAME="lbAI">&nbsp;</A>
+<A NAME="lbAJ">&nbsp;</A>
 <H2>AUTEUR</H2>
 
 Écrit par Sébastien Millet &lt;<A HREF="mailto:sebastien.millet1@club-internet.fr">sebastien.millet1@club-internet.fr</A>&gt;. Autorisation est donnée de copier, distribuer et/ou modifier ce document selon les termes de la licence &quot;GNU General Public License&quot;. La version 3 est publiée par la Free Software Foundation.
-<A NAME="lbAJ">&nbsp;</A>
+<A NAME="lbAK">&nbsp;</A>
 <H2>BUGS</H2>
 
 <DL COMPACT>
@@ -550,14 +748,15 @@ Structure contenant les variables, et répertoire courant.
 <DT><A HREF="#lbAE">OPTIONS</A><DD>
 <DT><A HREF="#lbAF">COMMANDES</A><DD>
 <DT><A HREF="#lbAG">TYPES D'OBJETS</A><DD>
-<DT><A HREF="#lbAH">FICHIERS D'INITIALISATION</A><DD>
-<DT><A HREF="#lbAI">AUTEUR</A><DD>
-<DT><A HREF="#lbAJ">BUGS</A><DD>
+<DT><A HREF="#lbAH">INSTRUCTIONS DE CONTRÔLE DES PROGRAMMES</A><DD>
+<DT><A HREF="#lbAI">FICHIERS D'INITIALISATION</A><DD>
+<DT><A HREF="#lbAJ">AUTEUR</A><DD>
+<DT><A HREF="#lbAK">BUGS</A><DD>
 </DL>
 <HR>
 This document was created by
 <A HREF="/cgi-bin/man/man2html">man2html</A>,
 using the manual pages.<BR>
-Time: 22:08:23 GMT, September 24, 2010
+Time: 15:25:58 GMT, October 03, 2010
 </BODY>
 </HTML>

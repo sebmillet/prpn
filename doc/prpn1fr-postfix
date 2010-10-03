@@ -35,6 +35,98 @@
 .TP
 .B Algébrique
 \' \'	\'X+2*Y=Z\'
+.SH "INSTRUCTIONS DE CONTRÔLE DES PROGRAMMES"
+.TP
+.B Note au sujet des booléens
+Un test (IF, WHILE ou UNTIL, cf. ci-après) prend une valeur dans la pile.
+Cette valeur doit être de type réel. Toute valeur non nulle est traitée comme
+VRAI, une valeur nulle comme FAUX.
+.br
+Ci-dessous, le terme "en bas de la pile" se rapporte à l'objet situé au niveau
+1 de la pile.
+.TP
+.B Séquence IF/THEN/ELSE/END
+Exécute les instructions entre IF et THEN.
+.br
+Ensuite, prends l'élément en bas de la pile, s'il est vrai (voir ci-dessus),
+exécute les instructions entre THEN et ELSE (ou END s'il n'y a pas de ELSE),
+sinon exécute les instructions du ELSE. ELSE est facultatif.
+.TP
+.I Exemple 1
+Prends l'élément en bas de la pile et indique s'il est supérieur ou égal à
+zéro, ou bien négatif
+.br
+<< IF 0 >= THEN "Valeur positive ou nulle" ELSE "Valeur négative" END >>
+.TP
+.I Exemple 2
+Exécute toujours les instructions du THEN
+.br
+<< IF 1 THEN "Toujours exécuté" ELSE "Jamais exécuté" END >>
+.TP
+.I Example 3
+Ne fais rien (!)
+.br
+<< IF 0 THEN "Never executed" END >>
+.TP
+.B Séquence WHILE/REPEAT/END
+Exécute les instructions entre WHILE et REPEAT.
+.br
+Ensuite, prends l'élément en bas de la pile, s'il est vrai (voir ci-dessus),
+exécute les instructions du REPEAT et recommence depuis le début du WHILE.
+.TP
+.I Exemple
+Calcule le plus petit N pour lequel somme(i^2 avec i prenant toutes les
+valeurs entières dans l'intervalle 1..N) >= 100
+.br
+<< 0 0 -> n << WHILE DUP 100 < REPEAT n SQ + n 1 + 'n' STO END n >> >>
+.TP
+.B Séquence DO/UNTIL/END
+Exécute les instructions entre DO et UNTIL puis entre UNTIL et END.
+.br
+Ensuite, prends l'élément en bas de la pile, s'il est vrai (voir ci-dessus),
+recommence depuis le début du DO.
+.TP
+.I Exemple
+Calcule le plus petit N pour lequel somme(1/i avec i prenant toutes les
+valeurs entières dans l'intervalle 1..N) >= 3
+.br
+<< 0 0 -> n << DO n 1 + 'n' STO n INV + UNTIL DUP 3 >= END n >> >>
+.TP
+.B Séquence FOR|START/NEXT|STEP
+FOR ou START démarre une boucle en prenant deux arguments, le premier
+(deuxième niveau de la pile) étant la valeur du compteur au départ, le
+deuxième (premier niveau de la pile) étant la valeur cible du compteur,
+au-delà de laquelle la boucle s'arrête.
+.br
+START est une boucle anonyme. FOR prend un nom et l'utilise comme variable locale pour le compteur.
+.br
+NEXT incrémente le compteur d'une unité si la valeur cible est supérieure à la valeur de départ, le décrémente d'une unité sinon.
+.br
+STEP prend la valeur en bas de la pile et l'ajoute au compteur. NEXT peut être
+utilisé indifféremment avec FOR et START, même chose pour STEP.
+.TP
+.I Exemple 1
+Calcule la somme des carrés des entiers de 1 à 10
+.br
+<< 0 1 10 FOR i i SQ + NEXT >>
+.TP
+.I Exemple 2
+Calcule somme(2^i avec i prenant toutes les valeurs entières dans l'intervalle
+1..N), N étant la première valeur dans la pile.
+.br
+<< 0 1 1 4 ROLL START 2 * DUP ROT + SWAP NEXT >>
+.TP
+.I Exemple 3
+Calcule somme(i avec i prenant toutes les valeurs impaires dans l'intervalle
+1..N), N étant la première valeur dans la pile.
+.br
+<< 0 1 ROT FOR i i + 2 STEP >>
+.TP
+.B Documentation RPL
+RPL est le langage de programmation des calculatrices HP fonctionnant en
+notation polonaise inverse.
+.br
+http://en.wikipedia.org/wiki/RPL_%28programming_language%29
 .SH "FICHIERS D'INITIALISATION"
 .TP
 .B ~/.prpn/stackrc
