@@ -78,6 +78,60 @@ Display class count before exiting.
 Debug mode, requires a parameter.
 </DL>
 <A NAME="lbAF">&nbsp;</A>
+<H2>OBJECT TYPES</H2>
+
+<DL COMPACT>
+<DT><I>Data</I>
+
+<DD>
+<DT><B>Real Number</B>
+
+<DD>
+1.23456e-25    
+<DT><B>Complex Number</B>
+
+<DD>
+( )<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>(123.45, 678.90)<BR>
+<DT><B>Binary Integer</B>
+
+<DD>
+#<TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TT># 123AB<BR>
+<DT><B>String</B>
+
+<DD>
+&quot; &quot;<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>&quot;RESULT&quot;<BR>
+<DT><B>Vector</B>
+
+<DD>
+[ ]<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>[1.23 4.56 7.89]<BR>
+<DT><B>Matrix</B>
+
+<DD>
+[[ ]]<TT>&nbsp;&nbsp;</TT>[[1.23 4.56] [6.54 3.21]]<BR>
+<DT><B>List</B>
+
+<DD>
+{ }<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>{1.23 &quot;ABC&quot; # 45d}<BR>
+<DT><I>Names</I>
+
+<DD>
+<DT><B>Name</B>
+
+<DD>
+' '<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>'CALC'<BR>
+<DT><I>Procedures</I>
+
+<DD>
+<DT><B>Program</B>
+
+<DD>
+&lt;&lt; &gt;&gt;<TT>&nbsp;&nbsp;</TT>&lt;&lt; DUP + SWAP &gt;&gt;<BR>
+<DT><B>Algebraic</B>
+
+<DD>
+' '<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>'X+2*Y=Z'<BR>
+</DL>
+<A NAME="lbAG">&nbsp;</A>
 <H2>COMMANDS</H2>
 
 Commands are followed by the number of arguments they take, in parenthesis. These arguments are taken from the stack.
@@ -539,60 +593,6 @@ Define number of undo levels
 <DD>
 Get number of undo levels
 </DL>
-<A NAME="lbAG">&nbsp;</A>
-<H2>OBJECT TYPES</H2>
-
-<DL COMPACT>
-<DT><I>Data</I>
-
-<DD>
-<DT><B>Real Number</B>
-
-<DD>
-1.23456e-25    
-<DT><B>Complex Number</B>
-
-<DD>
-( )<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>(123.45, 678.90)<BR>
-<DT><B>Binary Integer</B>
-
-<DD>
-#<TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TT># 123AB<BR>
-<DT><B>String</B>
-
-<DD>
-&quot; &quot;<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>&quot;RESULT&quot;<BR>
-<DT><B>Vector</B>
-
-<DD>
-[ ]<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>[1.23 4.56 7.89]<BR>
-<DT><B>Matrix</B>
-
-<DD>
-[[ ]]<TT>&nbsp;&nbsp;</TT>[[1.23 4.56] [6.54 3.21]]<BR>
-<DT><B>List</B>
-
-<DD>
-{ }<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>{1.23 &quot;ABC&quot; # 45d}<BR>
-<DT><I>Names</I>
-
-<DD>
-<DT><B>Name</B>
-
-<DD>
-' '<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>'CALC'<BR>
-<DT><I>Procedures</I>
-
-<DD>
-<DT><B>Program</B>
-
-<DD>
-&lt;&lt; &gt;&gt;<TT>&nbsp;&nbsp;</TT>&lt;&lt; DUP + SWAP &gt;&gt;<BR>
-<DT><B>Algebraic</B>
-
-<DD>
-' '<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>'X+2*Y=Z'<BR>
-</DL>
 <A NAME="lbAH">&nbsp;</A>
 <H2>PROGRAM CONTROL INSTRUCTIONS</H2>
 
@@ -623,7 +623,7 @@ Take the first item in the stack and tell whether it is positive or null, or
 negative
 <BR>
 
-&lt;&lt; IF 0 &gt;= THEN &quot;Positive or null value&quot; ELSE &quot;Negative value&quot; END &gt;&gt;
+&lt;&lt; IF 0 &gt;= THEN &quot;Positive or null&quot; ELSE &quot;Negative&quot; END &gt;&gt;
 <DT><I>Example 2</I>
 
 <DD>
@@ -669,7 +669,7 @@ the sequence from the beginning of the DO.
 Calculate the smallest N for which sum(1/i with i taking all integer values in the range 1..N) &gt;= 3
 <BR>
 
-&lt;&lt; 0 0 -&gt; n &lt;&lt; DO n 1 + 'n' STO n INV + UNTIL DUP 3 &gt;= END n &gt;&gt; &gt;&gt;
+&lt;&lt; 0 0 -&gt; n &lt;&lt; DO n 1 + 'n' STO n INV + UNTIL DUP 7 &gt;= END n &gt;&gt; &gt;&gt;
 <DT><B>FOR|START/NEXT|STEP sequence</B>
 
 <DD>
@@ -703,7 +703,7 @@ Calculate sum(2^i with i taking all integer values in the range 1..N), N being
 the first value in the stack
 <BR>
 
-&lt;&lt; 0 1 1 4 ROLL START 2 * DUP ROT + SWAP NEXT &gt;&gt;
+&lt;&lt; 0 1 1 4 ROLL START DUP ROT + SWAP 2 * NEXT DROP &gt;&gt; EVAL
 <DT><I>Example 3</I>
 
 <DD>
@@ -776,8 +776,8 @@ prpn.exe can *not* be run with -c. For some reason, under Windows, WxWidgets dis
 <DT><A HREF="#lbAC">SYNOPSIS</A><DD>
 <DT><A HREF="#lbAD">DESCRIPTION</A><DD>
 <DT><A HREF="#lbAE">OPTIONS</A><DD>
-<DT><A HREF="#lbAF">COMMANDS</A><DD>
-<DT><A HREF="#lbAG">OBJECT TYPES</A><DD>
+<DT><A HREF="#lbAF">OBJECT TYPES</A><DD>
+<DT><A HREF="#lbAG">COMMANDS</A><DD>
 <DT><A HREF="#lbAH">PROGRAM CONTROL INSTRUCTIONS</A><DD>
 <DT><A HREF="#lbAI">INITIALIZATION FILES</A><DD>
 <DT><A HREF="#lbAJ">AUTHOR</A><DD>
@@ -787,6 +787,6 @@ prpn.exe can *not* be run with -c. For some reason, under Windows, WxWidgets dis
 This document was created by
 <A HREF="/cgi-bin/man/man2html">man2html</A>,
 using the manual pages.<BR>
-Time: 19:12:07 GMT, October 03, 2010
+Time: 20:28:05 GMT, October 07, 2010
 </BODY>
 </HTML>

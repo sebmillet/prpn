@@ -46,6 +46,43 @@ Display class count before exiting.
 .TP
 .B \-d,\ \-\-debug\ \fIdebug_option\fP
 Debug mode, requires a parameter.
+.SH "OBJECT TYPES"
+.TP
+.I Data
+.TP
+.B Real Number
+1.23456e-25    
+.TP
+.B Complex Number
+( )	(123.45, 678.90)
+.TP
+.B Binary Integer
+#	# 123AB
+.TP
+.B String
+" "	"RESULT"
+.TP
+.B Vector
+[ ]	[1.23 4.56 7.89]
+.TP
+.B Matrix
+[[ ]]	[[1.23 4.56] [6.54 3.21]]
+.TP
+.B List
+{ }	{1.23 "ABC" # 45d}
+.TP
+.I Names
+.TP
+.B Name
+\' \'	\'CALC\'
+.TP
+.I Procedures
+.TP
+.B Program
+<< >>	<< DUP + SWAP >>
+.TP
+.B Algebraic
+\' \'	\'X+2*Y=Z\'
 .SH COMMANDS
 Commands are followed by the number of arguments they take, in parenthesis. These arguments are taken from the stack.
 .TP
@@ -390,43 +427,6 @@ Define number of undo levels
 .TP
 .B _UNDO_LEVELS?\ (0)
 Get number of undo levels
-.SH "OBJECT TYPES"
-.TP
-.I Data
-.TP
-.B Real Number
-1.23456e-25    
-.TP
-.B Complex Number
-( )	(123.45, 678.90)
-.TP
-.B Binary Integer
-#	# 123AB
-.TP
-.B String
-" "	"RESULT"
-.TP
-.B Vector
-[ ]	[1.23 4.56 7.89]
-.TP
-.B Matrix
-[[ ]]	[[1.23 4.56] [6.54 3.21]]
-.TP
-.B List
-{ }	{1.23 "ABC" # 45d}
-.TP
-.I Names
-.TP
-.B Name
-\' \'	\'CALC\'
-.TP
-.I Procedures
-.TP
-.B Program
-<< >>	<< DUP + SWAP >>
-.TP
-.B Algebraic
-\' \'	\'X+2*Y=Z\'
 .SH "PROGRAM CONTROL INSTRUCTIONS"
 .TP
 .B Note about booleans
@@ -448,7 +448,7 @@ otherwise execute the ELSE instructions. ELSE is optional.
 Take the first item in the stack and tell whether it is positive or null, or
 negative
 .br
-<< IF 0 >= THEN "Positive or null value" ELSE "Negative value" END >>
+<< IF 0 >= THEN "Positive or null" ELSE "Negative" END >>
 .TP
 .I Example 2
 Always execute the THEN part
@@ -482,7 +482,7 @@ the sequence from the beginning of the DO.
 .I Example
 Calculate the smallest N for which sum(1/i with i taking all integer values in the range 1..N) >= 3
 .br
-<< 0 0 -> n << DO n 1 + 'n' STO n INV + UNTIL DUP 3 >= END n >> >>
+<< 0 0 -> n << DO n 1 + 'n' STO n INV + UNTIL DUP 7 >= END n >> >>
 .TP
 .B FOR|START/NEXT|STEP sequence
 FOR or START launches a loop. It takes two arguments, the first argument
@@ -508,7 +508,7 @@ Calculate the sum of the squares of the integers from 1 to 10
 Calculate sum(2^i with i taking all integer values in the range 1..N), N being
 the first value in the stack
 .br
-<< 0 1 1 4 ROLL START 2 * DUP ROT + SWAP NEXT >>
+<< 0 1 1 4 ROLL START DUP ROT + SWAP 2 * NEXT DROP >> EVAL
 .TP
 .I Example 3
 Calculate sum(i with i taking all odd integer values in the range 1..N), N

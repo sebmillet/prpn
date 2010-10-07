@@ -1,0 +1,11 @@
+"Positive or null"
+"Negative"
+"Always executed"
+140
+8
+7.00127409708
+616
+385
+1023
+36
+get_class_count() = 0 for watched classes

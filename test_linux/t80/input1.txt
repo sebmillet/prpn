@@ -1,0 +1,9 @@
+1 << IF 0 >= THEN "Positive or null" ELSE "Negative" END >> EVAL
+-1 << IF 0 >= THEN "Positive or null" ELSE "Negative" END >> EVAL
+<< IF 1 THEN "Always executed" ELSE "Never executed" END >> EVAL
+<< IF 0 THEN "Never executed" END >> EVAL
+<< 0 0 -> n << WHILE DUP 100 < REPEAT n SQ + n 1 + 'n' STO END n >> >> EVAL
+<< 0 0 -> n << DO n 1 + 'n' STO n INV + UNTIL DUP 7 >= END n >> >> EVAL
+<< 0 1 10 FOR i i SQ + NEXT >> EVAL
+10 << 0 1 1 4 ROLL START DUP ROT + SWAP 2 * NEXT DROP >> EVAL
+11 << 0 1 ROT FOR i i + 2 STEP >> EVAL

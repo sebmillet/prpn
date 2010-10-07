@@ -46,5 +46,42 @@ Display class count before exiting.
 .TP
 .B \-d,\ \-\-debug\ \fIdebug_option\fP
 Debug mode, requires a parameter.
+.SH "OBJECT TYPES"
+.TP
+.I Data
+.TP
+.B Real Number
+1.23456e-25    
+.TP
+.B Complex Number
+( )	(123.45, 678.90)
+.TP
+.B Binary Integer
+#	# 123AB
+.TP
+.B String
+" "	"RESULT"
+.TP
+.B Vector
+[ ]	[1.23 4.56 7.89]
+.TP
+.B Matrix
+[[ ]]	[[1.23 4.56] [6.54 3.21]]
+.TP
+.B List
+{ }	{1.23 "ABC" # 45d}
+.TP
+.I Names
+.TP
+.B Name
+\' \'	\'CALC\'
+.TP
+.I Procedures
+.TP
+.B Program
+<< >>	<< DUP + SWAP >>
+.TP
+.B Algebraic
+\' \'	\'X+2*Y=Z\'
 .SH COMMANDS
 Commands are followed by the number of arguments they take, in parenthesis. These arguments are taken from the stack.

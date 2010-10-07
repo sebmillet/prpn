@@ -79,6 +79,60 @@ Affiche le comptage des classes avant de terminer.
 Mode debug, prend un paramètre.
 </DL>
 <A NAME="lbAF">&nbsp;</A>
+<H2>TYPES D'OBJETS</H2>
+
+<DL COMPACT>
+<DT><I>Donnée</I>
+
+<DD>
+<DT><B>Nombre réel</B>
+
+<DD>
+1.23456e-25    
+<DT><B>Nombre complexe</B>
+
+<DD>
+( )<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>(123.45, 678.90)<BR>
+<DT><B>Entier binaire</B>
+
+<DD>
+#<TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TT># 123AB<BR>
+<DT><B>Chaîne de caractères</B>
+
+<DD>
+&quot; &quot;<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>&quot;RESULT&quot;<BR>
+<DT><B>Vecteur</B>
+
+<DD>
+[ ]<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>[1.23 4.56 7.89]<BR>
+<DT><B>Matrice</B>
+
+<DD>
+[[ ]]<TT>&nbsp;&nbsp;</TT>[[1.23 4.56] [6.54 3.21]]<BR>
+<DT><B>Liste</B>
+
+<DD>
+{ }<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>{1.23 &quot;ABC&quot; # 45d}<BR>
+<DT><I>Noms</I>
+
+<DD>
+<DT><B>Nom</B>
+
+<DD>
+' '<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>'CALC'<BR>
+<DT><I>Procédures</I>
+
+<DD>
+<DT><B>Programme</B>
+
+<DD>
+&lt;&lt; &gt;&gt;<TT>&nbsp;&nbsp;</TT>&lt;&lt; DUP + SWAP &gt;&gt;<BR>
+<DT><B>Algébrique</B>
+
+<DD>
+' '<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>'X+2*Y=Z'<BR>
+</DL>
+<A NAME="lbAG">&nbsp;</A>
 <H2>COMMANDES</H2>
 
 Les commandes sont suivies du nombre d'arguments qu'elles prennent, entre parenthèses. Ces arguments sont pris dans la pile.
@@ -540,60 +594,6 @@ Définis le nombre de niveaux d'annulation
 <DD>
 Renvoie le nombre de niveaux d'annulations
 </DL>
-<A NAME="lbAG">&nbsp;</A>
-<H2>TYPES D'OBJETS</H2>
-
-<DL COMPACT>
-<DT><I>Donnée</I>
-
-<DD>
-<DT><B>Nombre réel</B>
-
-<DD>
-1.23456e-25    
-<DT><B>Nombre complexe</B>
-
-<DD>
-( )<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>(123.45, 678.90)<BR>
-<DT><B>Entier binaire</B>
-
-<DD>
-#<TT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TT># 123AB<BR>
-<DT><B>Chaîne de caractères</B>
-
-<DD>
-&quot; &quot;<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>&quot;RESULT&quot;<BR>
-<DT><B>Vecteur</B>
-
-<DD>
-[ ]<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>[1.23 4.56 7.89]<BR>
-<DT><B>Matrice</B>
-
-<DD>
-[[ ]]<TT>&nbsp;&nbsp;</TT>[[1.23 4.56] [6.54 3.21]]<BR>
-<DT><B>Liste</B>
-
-<DD>
-{ }<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>{1.23 &quot;ABC&quot; # 45d}<BR>
-<DT><I>Noms</I>
-
-<DD>
-<DT><B>Nom</B>
-
-<DD>
-' '<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>'CALC'<BR>
-<DT><I>Procédures</I>
-
-<DD>
-<DT><B>Programme</B>
-
-<DD>
-&lt;&lt; &gt;&gt;<TT>&nbsp;&nbsp;</TT>&lt;&lt; DUP + SWAP &gt;&gt;<BR>
-<DT><B>Algébrique</B>
-
-<DD>
-' '<TT>&nbsp;&nbsp;&nbsp;&nbsp;</TT>'X+2*Y=Z'<BR>
-</DL>
 <A NAME="lbAH">&nbsp;</A>
 <H2>INSTRUCTIONS DE CONTRÔLE DES PROGRAMMES</H2>
 
@@ -624,7 +624,7 @@ Prends l'élément en bas de la pile et indique s'il est supérieur ou égal à
 zéro, ou bien négatif
 <BR>
 
-&lt;&lt; IF 0 &gt;= THEN &quot;Valeur positive ou nulle&quot; ELSE &quot;Valeur négative&quot; END &gt;&gt;
+&lt;&lt; IF 0 &gt;= THEN &quot;Positif ou nul&quot; ELSE &quot;Négatif&quot; END &gt;&gt;
 <DT><I>Exemple 2</I>
 
 <DD>
@@ -670,7 +670,7 @@ Calcule le plus petit N pour lequel somme(1/i avec i prenant toutes les
 valeurs entières dans l'intervalle 1..N) &gt;= 3
 <BR>
 
-&lt;&lt; 0 0 -&gt; n &lt;&lt; DO n 1 + 'n' STO n INV + UNTIL DUP 3 &gt;= END n &gt;&gt; &gt;&gt;
+&lt;&lt; 0 0 -&gt; n &lt;&lt; DO n 1 + 'n' STO n INV + UNTIL DUP 7 &gt;= END n &gt;&gt; &gt;&gt;
 <DT><B>Séquence FOR|START/NEXT|STEP</B>
 
 <DD>
@@ -702,7 +702,7 @@ Calcule somme(2^i avec i prenant toutes les valeurs entières dans l'intervalle
 1..N), N étant la première valeur dans la pile.
 <BR>
 
-&lt;&lt; 0 1 1 4 ROLL START 2 * DUP ROT + SWAP NEXT &gt;&gt;
+&lt;&lt; 0 1 1 4 ROLL START DUP ROT + SWAP 2 * NEXT DROP &gt;&gt; EVAL
 <DT><I>Exemple 3</I>
 
 <DD>
@@ -776,8 +776,8 @@ prpn.exe ne peut *pas* être exécuté avec l'option -c. Sous Windows, WxWidgets dé
 <DT><A HREF="#lbAC">SYNOPSIS</A><DD>
 <DT><A HREF="#lbAD">DESCRIPTION</A><DD>
 <DT><A HREF="#lbAE">OPTIONS</A><DD>
-<DT><A HREF="#lbAF">COMMANDES</A><DD>
-<DT><A HREF="#lbAG">TYPES D'OBJETS</A><DD>
+<DT><A HREF="#lbAF">TYPES D'OBJETS</A><DD>
+<DT><A HREF="#lbAG">COMMANDES</A><DD>
 <DT><A HREF="#lbAH">INSTRUCTIONS DE CONTRÔLE DES PROGRAMMES</A><DD>
 <DT><A HREF="#lbAI">FICHIERS D'INITIALISATION</A><DD>
 <DT><A HREF="#lbAJ">AUTEUR</A><DD>
@@ -787,6 +787,6 @@ prpn.exe ne peut *pas* être exécuté avec l'option -c. Sous Windows, WxWidgets dé
 This document was created by
 <A HREF="/cgi-bin/man/man2html">man2html</A>,
 using the manual pages.<BR>
-Time: 19:08:57 GMT, October 03, 2010
+Time: 20:28:06 GMT, October 07, 2010
 </BODY>
 </HTML>

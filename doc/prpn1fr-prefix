@@ -47,5 +47,42 @@ Affiche le comptage des classes avant de terminer.
 .TP
 .B \-d,\ \-\-debug\ \fIdebug_option\fP
 Mode debug, prend un paramètre.
+.SH "TYPES D'OBJETS"
+.TP
+.I Donnée
+.TP
+.B Nombre réel
+1.23456e-25    
+.TP
+.B Nombre complexe
+( )	(123.45, 678.90)
+.TP
+.B Entier binaire
+#	# 123AB
+.TP
+.B Chaîne de caractères
+" "	"RESULT"
+.TP
+.B Vecteur
+[ ]	[1.23 4.56 7.89]
+.TP
+.B Matrice
+[[ ]]	[[1.23 4.56] [6.54 3.21]]
+.TP
+.B Liste
+{ }	{1.23 "ABC" # 45d}
+.TP
+.I Noms
+.TP
+.B Nom
+\' \'	\'CALC\'
+.TP
+.I Procédures
+.TP
+.B Programme
+<< >>	<< DUP + SWAP >>
+.TP
+.B Algébrique
+\' \'	\'X+2*Y=Z\'
 .SH COMMANDES
 Les commandes sont suivies du nombre d'arguments qu'elles prennent, entre parenthèses. Ces arguments sont pris dans la pile.

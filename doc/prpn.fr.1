@@ -47,6 +47,43 @@ Affiche le comptage des classes avant de terminer.
 .TP
 .B \-d,\ \-\-debug\ \fIdebug_option\fP
 Mode debug, prend un paramètre.
+.SH "TYPES D'OBJETS"
+.TP
+.I Donnée
+.TP
+.B Nombre réel
+1.23456e-25    
+.TP
+.B Nombre complexe
+( )	(123.45, 678.90)
+.TP
+.B Entier binaire
+#	# 123AB
+.TP
+.B Chaîne de caractères
+" "	"RESULT"
+.TP
+.B Vecteur
+[ ]	[1.23 4.56 7.89]
+.TP
+.B Matrice
+[[ ]]	[[1.23 4.56] [6.54 3.21]]
+.TP
+.B Liste
+{ }	{1.23 "ABC" # 45d}
+.TP
+.I Noms
+.TP
+.B Nom
+\' \'	\'CALC\'
+.TP
+.I Procédures
+.TP
+.B Programme
+<< >>	<< DUP + SWAP >>
+.TP
+.B Algébrique
+\' \'	\'X+2*Y=Z\'
 .SH COMMANDES
 Les commandes sont suivies du nombre d'arguments qu'elles prennent, entre parenthèses. Ces arguments sont pris dans la pile.
 .TP
@@ -391,43 +428,6 @@ Définis le nombre de niveaux d'annulation
 .TP
 .B _UNDO_LEVELS?\ (0)
 Renvoie le nombre de niveaux d'annulations
-.SH "TYPES D'OBJETS"
-.TP
-.I Donnée
-.TP
-.B Nombre réel
-1.23456e-25    
-.TP
-.B Nombre complexe
-( )	(123.45, 678.90)
-.TP
-.B Entier binaire
-#	# 123AB
-.TP
-.B Chaîne de caractères
-" "	"RESULT"
-.TP
-.B Vecteur
-[ ]	[1.23 4.56 7.89]
-.TP
-.B Matrice
-[[ ]]	[[1.23 4.56] [6.54 3.21]]
-.TP
-.B Liste
-{ }	{1.23 "ABC" # 45d}
-.TP
-.I Noms
-.TP
-.B Nom
-\' \'	\'CALC\'
-.TP
-.I Procédures
-.TP
-.B Programme
-<< >>	<< DUP + SWAP >>
-.TP
-.B Algébrique
-\' \'	\'X+2*Y=Z\'
 .SH "INSTRUCTIONS DE CONTRÔLE DES PROGRAMMES"
 .TP
 .B Note au sujet des booléens
@@ -449,7 +449,7 @@ sinon exécute les instructions du ELSE. ELSE est facultatif.
 Prends l'élément en bas de la pile et indique s'il est supérieur ou égal à
 zéro, ou bien négatif
 .br
-<< IF 0 >= THEN "Valeur positive ou nulle" ELSE "Valeur négative" END >>
+<< IF 0 >= THEN "Positif ou nul" ELSE "Négatif" END >>
 .TP
 .I Exemple 2
 Exécute toujours les instructions du THEN
@@ -483,7 +483,7 @@ recommence depuis le début du DO.
 Calcule le plus petit N pour lequel somme(1/i avec i prenant toutes les
 valeurs entières dans l'intervalle 1..N) >= 3
 .br
-<< 0 0 -> n << DO n 1 + 'n' STO n INV + UNTIL DUP 3 >= END n >> >>
+<< 0 0 -> n << DO n 1 + 'n' STO n INV + UNTIL DUP 7 >= END n >> >>
 .TP
 .B Séquence FOR|START/NEXT|STEP
 FOR ou START démarre une boucle en prenant deux arguments, le premier
@@ -507,7 +507,7 @@ Calcule la somme des carrés des entiers de 1 à 10
 Calcule somme(2^i avec i prenant toutes les valeurs entières dans l'intervalle
 1..N), N étant la première valeur dans la pile.
 .br
-<< 0 1 1 4 ROLL START 2 * DUP ROT + SWAP NEXT >>
+<< 0 1 1 4 ROLL START DUP ROT + SWAP 2 * NEXT DROP >> EVAL
 .TP
 .I Exemple 3
 Calcule somme(i avec i prenant toutes les valeurs impaires dans l'intervalle
