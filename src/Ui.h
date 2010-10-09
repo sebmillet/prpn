@@ -24,6 +24,7 @@ void ui_set_message_flag();
 bool ui_get_message_flag();
 void ui_disp(int, const std::string&);
 void ui_set_error(const std::string&, const std::string&);
+bool ui_is_a_program_halted();
 
 void ui_cllcd();
 

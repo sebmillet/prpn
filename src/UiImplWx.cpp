@@ -30,6 +30,8 @@
 #include "unit_oct.xpm"
 #include "unit_dec.xpm"
 #include "unit_hex.xpm"
+#include "exec_norun.xpm"
+#include "exec_run.xpm"
 
 #include "prpn.xpm"
 
@@ -170,6 +172,9 @@ class StatusWindow: public wxScrolledWindow {
 	wxBitmap unit_oct;
 	wxBitmap unit_dec;
 	wxBitmap unit_hex;
+	int shiftx_exec;
+	wxBitmap exec_norun;
+	wxBitmap exec_run;
 public:
     StatusWindow(wxWindow *parent, wxWindowID, const wxPoint &pos, const wxSize &size);
     void OnPaint(wxPaintEvent& event);
@@ -185,13 +190,17 @@ StatusWindow::StatusWindow(wxWindow *parent, wxWindowID id, const wxPoint &pos, 
 		: wxScrolledWindow(parent, id, pos, size, MY_STATUS_BORDER_STYLE),
 		shiftsel(shiftsel_xpm), shiftuns(shiftuns_xpm),
 		shiftx_unit(0),
-		unit_bin(unit_bin_xpm), unit_oct(unit_oct_xpm), unit_dec(unit_dec_xpm), unit_hex(unit_hex_xpm) {
+		unit_bin(unit_bin_xpm), unit_oct(unit_oct_xpm), unit_dec(unit_dec_xpm), unit_hex(unit_hex_xpm),
+		shiftx_exec(0),
+		exec_norun(exec_norun_xpm), exec_run(exec_run_xpm) {
     SetBackgroundColour(MY_STACK_BACKGROUND_COLOUR);
 	int w = shiftsel.GetWidth();
 	int h = shiftsel.GetHeight();
 	int w2 = unit_bin.GetWidth();
-	SetSize(wxSize(w + w2, h));
+	int w3 = exec_run.GetWidth();
+	SetSize(wxSize(w + w2 + w3, h));
 	shiftx_unit = w;
+	shiftx_exec = w + w2;
 }
 
 void StatusWindow::OnPaint(wxPaintEvent&) {
@@ -219,6 +228,10 @@ void StatusWindow::OnPaint(wxPaintEvent&) {
 			throw(CalcFatal(__FILE__, __LINE__, "StatusWindow::OnPaint(): ui_dsl.get_base() returned an unknown value"));
 	}
 	dc.DrawBitmap(*u, shiftx_unit, 0);
+	if (ui_is_a_program_halted())
+		dc.DrawBitmap(exec_run, shiftx_exec, 0);
+	else
+		dc.DrawBitmap(exec_norun, shiftx_exec, 0);
 }
 
 

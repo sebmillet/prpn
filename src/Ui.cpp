@@ -24,6 +24,7 @@
 using namespace std;
 
 #define HARD_GUI_MIN_HEIGHT	3
+#define PREFIX_NEXT_INSTRUCTION	">>> "
 
 static void set_refresh_status_flag();
 static void reset_refresh_status_flag();
@@ -65,6 +66,7 @@ static void refresh_stack(const int&, const bool&);
 
 static bool refresh_status_flag = true;
 static int status_actual_base = 0;
+static bool status_a_program_is_halted = false;
 static void set_refresh_status_flag() { refresh_status_flag = true; }
 static void reset_refresh_status_flag() { refresh_status_flag = false; }
 static bool get_refresh_status_flag() { return refresh_status_flag; }
@@ -506,6 +508,10 @@ static void refresh_status() {
 		status_actual_base = F->get_binary_format();
 		set_refresh_status_flag();
 	}
+	if (status_a_program_is_halted != ts->a_program_is_halted()) {
+		status_a_program_is_halted = ts->a_program_is_halted();
+		set_refresh_status_flag();
+	}
 	if (get_refresh_status_flag()) {
 		ui_impl->refresh_statuswin();
 		reset_refresh_status_flag();
@@ -515,6 +521,8 @@ static void refresh_status() {
 static inline const string ui_get_ts_display_line(const int& line_number, bool& recalc, bool& no_more_lines) {
 	return ts->transstack_get_display_line(ui_dsl, line_number, ui_shift, recalc, no_more_lines);
 }
+
+bool ui_is_a_program_halted() { return ts->a_program_is_halted(); }
 
 static void refresh_stack(const int& enforced_nb_stack_elems_to_display, const bool& enforce_physical_display) {
 
@@ -554,8 +562,13 @@ static void refresh_stack(const int& enforced_nb_stack_elems_to_display, const b
 				ps = &display_error_l1;
 			else if (is_displaying_error && i == 2 && !display_error_l2.empty())
 				ps = &display_error_l2;
-			else {
+			else if (!ts->a_program_is_halted() || i != 1) {
 				l = ui_get_ts_display_line(i, recalc, no_more_lines);
+				ps = &l;
+			} else {
+				ts->get_next_instruction(l);
+				l.insert(0, PREFIX_NEXT_INSTRUCTION);
+				ui_string_trim(l, ui_dsl.get_width(), &ui_dsl);
 				ps = &l;
 			}
 			disp[i - 1] = *ps;

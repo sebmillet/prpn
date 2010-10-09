@@ -127,6 +127,11 @@ BuiltinCommandDescriptor builtinCommands[] = {
 	{1, BC_RAW, "STOF", &bc_stof, 0, 0, 0, 0, _N("Read flag states from a binary integer")},
 	  // Programs
 	{1, BC_COMMAND_WRAPPER, "WAIT", 0, 0, &bc_wait, 0, 0, _N("Wait a number of seconds")},
+	{0, BC_RAW, "HALT", &bc_halt, 0, 0, 0, 0, _N("Halt program execution")},
+	{0, BC_RAW, "SST", &bc_sst, 0, 0, 0, 0, _N("Execute one step in the program")},
+	{0, BC_RAW, "ABORT", &bc_abort, 0, 0, 0, 0, _N("Abort current program execution")},
+	{0, BC_RAW, "KILL", &bc_kill, 0, 0, 0, 0, _N("Abort all programs execution")},
+	{0, BC_RAW, "CONT", &bc_cont, 0, 0, 0, 0, _N("Resume program execution")},
 	  // Misc
 	{0, BC_RAW, "STD", &bc_std, 0, 0, 0, 0, _N("Set reals display to 'standard'")},
 	{1, BC_COMMAND_WRAPPER, "SCI", 0, 0, &bc_sci, 0, 0, _N("Set reals display to 'scientific'")},

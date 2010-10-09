@@ -60,7 +60,7 @@ static bool cfg_rdm_behavior = DEFAULT_RDM_BEHAVIOR;
 // Functions
 //
 
-const string simple_string(StackItem *si) {
+const string simple_string(const StackItem *si) {
 	ToString tostr(TOSTRING_DISPLAY, 1, 0);
 	si->to_string(tostr);
 	string s;
@@ -558,16 +558,6 @@ const StackItem *Stack::stack_get_const_si(const int& stack_item_number) const {
 	return const_cast<const StackItem*>(values[get_count() - stack_item_number]);
 }
 
-/*
-int my_strlen_utf8_c(char *s) {
-  int i = 0, j = 0;
-  while (s[i]) {
-    if ((s[i] & 0xc0) != 0x80) j++;
-    i++;
-  }
-  return j;
-}*/
-
 const string Stack::get_display_line(const DisplayStackLayout& dsl, const int& line_number,
 						IntervalShift& ishift, bool& recalc, bool& no_more_lines) {
 	static vector<string> dv;
@@ -663,7 +653,6 @@ const string Stack::get_display_line(const DisplayStackLayout& dsl, const int& l
 			o << "  ";
 	}
 
-
 	no_more_lines = (e >= static_cast<int>(dv.size()) - 1);
 
 	string s;
@@ -679,10 +668,6 @@ const string Stack::get_display_line(const DisplayStackLayout& dsl, const int& l
 		s = xv[-e - 1];
 	}
 
-	/*if (w >= 1 && s.length() > static_cast<size_t>(w) && dsl.get_max_stack() >= 1) {
-		s.erase(w - dsl.get_to_be_continued_length());
-		s.append(dsl.get_to_be_continued());
-	}*/
 	ui_string_trim(s, static_cast<size_t>(w), &dsl);
 
 	if (w >= 1 && dsl.get_max_stack() >= 1 && (e < e1 || first_elem_height == 1)) {
@@ -1042,7 +1027,7 @@ void TransStack::TSVars::recall_pwd(VarDirectory* d) { tree->recall_pwd(d); }
 long TransStack::class_count = 0;
 #endif
 
-TransStack::TransStack(const bool& tc, vector<Exec> *ex) : count(0), modified_flag(true),
+TransStack::TransStack(const bool& tc, vector<Exec> *ex) : count(0), modified_flag(true), exec_mode(EXECMODE_RUN),
 	temporary_copy(tc), exec_stack(ex) {
 #ifdef DEBUG_CLASS_COUNT
 		class_count++;
@@ -1220,10 +1205,11 @@ st_err_t TransStack::inner_push_eval(const eval_t& et, SIO& s, const bool& insid
 
 st_err_t TransStack::do_push_eval(SIO& s, const bool& inside_undo_sequence, string& cmd_err, const eval_t& et) {
 	st_err_t c = inner_push_eval(et, s, inside_undo_sequence, cmd_err);
-	while (c == ST_ERR_OK && exec_stack->size() > ground_level) {
+	while (c == ST_ERR_OK && exec_stack->size() > ground_level && exec_mode == EXECMODE_RUN) {
 		c = exec1(cmd_err);
 	}
-	clear_exec_stack();
+	if (c != ST_ERR_OK || exec_mode != EXECMODE_HALT)
+		clear_exec_stack();
 
 #ifdef DEBUG_TRANSSTACK
 	cout << "TransStack::tail = [" << tail->get_object_serial() << "], ::head = [" << head->get_object_serial() <<
@@ -1233,6 +1219,23 @@ st_err_t TransStack::do_push_eval(SIO& s, const bool& inside_undo_sequence, stri
 	return c;
 }
 
+void TransStack::halt() { exec_mode = EXECMODE_HALT; }
+st_err_t TransStack::sst(string& cmd_err) { return exec1(cmd_err); }
+void TransStack::abort() {
+	if (exec_stack->size() > ground_level)
+		pop_exec_stack();
+}
+void TransStack::kill() { clear_exec_stack(); }
+void TransStack::cont() { exec_mode = EXECMODE_RUN; }
+void TransStack::get_next_instruction(string& s) const {
+	if (exec_stack->empty()) {
+		s = "";
+		return;
+	}
+	Exec& e = exec_stack->back();
+	e.s.si->next_instruction(e.ip, s);
+}
+
 size_t TransStack::stack_get_count() const { return head->st->get_count(); }
 
 const StackItem *TransStack::transstack_get_const_si(const int& stack_item_number) const {
@@ -1240,8 +1243,10 @@ const StackItem *TransStack::transstack_get_const_si(const int& stack_item_numbe
 }
 
 st_err_t TransStack::exec1(string& cmd_err) {
-	if (exec_stack->empty())
+	if (exec_stack->empty()) {
+		exec_mode = EXECMODE_RUN;
 		return ST_ERR_OK;
+	}
 	Exec& e = exec_stack->back();
 
 	st_err_t c = e.s.si->exec1(*this, e.ip, cmd_err);
@@ -1261,17 +1266,22 @@ void TransStack::push_exec_stack(SIO s, VarDirectory *lvars) {
 void TransStack::clear_exec_stack() {
 	while (exec_stack->size() > ground_level)
 		pop_exec_stack();
+	exec_mode = EXECMODE_RUN;
 }
 
 size_t TransStack::pop_exec_stack() {
-	if (exec_stack->size() <= ground_level)
+	if (exec_stack->size() <= ground_level) {
+		exec_mode = EXECMODE_RUN;
 		return exec_stack->size();
+	}
 	Exec& e = exec_stack->back();
 	if (e.s.ownership == TSO_OWNED_BY_TS)
 		delete e.s.si;
 	else
 		e.s.si->clear_lvars();
 	exec_stack->pop_back();
+	if (exec_stack->size() <= ground_level)
+		exec_mode = EXECMODE_RUN;
 	return exec_stack->size();
 }
 
@@ -1410,6 +1420,10 @@ st_err_t StackItem::exec1(TransStack&, int& ip, string& cmd_err) {
 	ip = IP_END;
 	cmd_err = "";
 	return ST_ERR_OK;
+}
+
+void StackItem::next_instruction(const int& ip, string& s) const {
+	s = simple_string(this);
 }
 
 VarDirectory *StackItem::get_lvars(bool& feed_with_stack) const {
@@ -1997,6 +2011,12 @@ static st_err_t bc_wait(StackItem& op1, StackItem*&, string&) {
 	my_sleep_seconds(n);
 	return ST_ERR_OK;
 }
+
+static st_err_t bc_halt(TransStack& ts, SIO*, string&) { ts.halt(); return ST_ERR_OK; }
+static st_err_t bc_sst(TransStack& ts, SIO*, string& cmd_err) { return ts.sst(cmd_err); }
+static st_err_t bc_abort(TransStack& ts, SIO*, string&) { ts.abort(); return ST_ERR_OK; }
+static st_err_t bc_kill(TransStack& ts, SIO*, string&) { ts.kill(); return ST_ERR_OK; }
+static st_err_t bc_cont(TransStack& ts, SIO*, string&) { ts.cont(); return ST_ERR_OK; }
 
   // Misc
 
@@ -3564,6 +3584,18 @@ st_err_t StackItemProgram::exec1(TransStack& ts, int& ip, string& cmd_err) {
 	SIO s = SIO(TSO_FROZEN, list[ip++]);
 	st_err_t c = ts.inner_push_eval(EVAL_SOFT, s, true, cmd_err);
 	return c;
+}
+
+void StackItemProgram::next_instruction(const int& ip, std::string& s) const {
+	if (ip < 0 || ip > (int)list.size() - 1) {
+		s = (ip < 0 ? "<<" : ">>");
+		return;
+	}
+	if (ip == 0) {
+		StackItem::next_instruction(0, s);
+	} else {
+		list[ip]->next_instruction(0, s);
+	}
 }
 
 VarDirectory *StackItemProgram::get_lvars(bool& feed_with_stack) const {

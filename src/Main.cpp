@@ -479,7 +479,7 @@ void debug_test_itemiser() {
 		if (par.set)
 			cout << "Syntax error: " << par.col_start << "-" << par.col_end << "," << par.line << endl;
 		else if (r) {
-			cout << "Item: " << simple_string(si) << endl;
+			cout << "Item: " << simple_string(const_cast<const StackItem *>(si)) << endl;
 			delete si;
 		} else
 			cout << "par.set = false and r = false" << endl;

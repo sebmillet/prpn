@@ -103,7 +103,7 @@ class VarFile;
 class VarDirectory;
 class Tree;
 
-const std::string simple_string(StackItem*);
+const std::string simple_string(const StackItem*);
 int get_base_from_flags();
 const std::string base_int_to_letter(const int&);
 
@@ -330,6 +330,7 @@ public:
 
 	  // Program execution
 	virtual st_err_t exec1(TransStack&, int&, std::string&);
+	virtual void next_instruction(const int&, std::string&) const;
 
 	virtual st_err_t op_add(StackItemList*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_add(StackItemExpression*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
@@ -863,6 +864,7 @@ public:
 	virtual void clear_lvars();
 	virtual st_err_t eval(const eval_t&, TransStack&, manage_si_t&, std::string&);
 	virtual st_err_t exec1(TransStack&, int&, std::string&);
+	virtual void next_instruction(const int&, std::string&) const;
 
 	virtual st_err_t op_add_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 
@@ -1150,6 +1152,8 @@ public:
 // TransStack
 //
 
+typedef enum {EXECMODE_RUN, EXECMODE_HALT} exec_mode_t;
+
 class TransStack {
 
 #ifdef DEBUG_CLASS_COUNT
@@ -1161,6 +1165,7 @@ class TransStack {
 	NodeStack* tail;
 	NodeStack* head;
 	std::vector<Exec> *exec_stack;
+	exec_mode_t exec_mode;
 	bool temporary_copy;
 	size_t ground_level;
 
@@ -1224,6 +1229,13 @@ public:
 	virtual void clear_exec_stack();
 	virtual size_t pop_exec_stack();
 	virtual st_err_t read_lvars(VarDirectory*, std::string&);
+	virtual void halt();
+	st_err_t sst(std::string&);
+	virtual void abort();
+	virtual void kill();
+	virtual void cont();
+	virtual bool a_program_is_halted() const { return exec_mode != EXECMODE_RUN; }
+	virtual void get_next_instruction(std::string&) const;
 
 	virtual st_err_t crdir(const std::string&);
 	virtual st_err_t sto(const std::string&, StackItem* const, const bool& = true);
