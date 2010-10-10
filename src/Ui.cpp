@@ -39,8 +39,11 @@ static bool get_recalc_stack_flag();
 typedef enum {TYPEIN_EMPTY, TYPEIN_ANY, TYPEIN_STRING, TYPEIN_EXPRESSION, TYPEIN_PROGRAM} typein_t;
 
 typedef enum {EM_DEFAULT, EM_EDIT_STACK} em_t;
-em_t edit_mode = EM_DEFAULT;
-int stack_item_number_being_edited;
+static em_t edit_mode = EM_DEFAULT;
+static int stack_item_number_being_edited;
+static void reset_edit_mode() { edit_mode = EM_DEFAULT; stack_item_number_being_edited = 0; }
+static void set_edit_mode(const int& itnum) { edit_mode = EM_EDIT_STACK; stack_item_number_being_edited = itnum; }
+static int get_item_number_being_edited() { return edit_mode == EM_DEFAULT ? 0 : stack_item_number_being_edited; }
 
 UiImpl *ui_impl;
 
@@ -81,7 +84,11 @@ static string display_error_l1 = "_HELP command for help";
 static string display_error_l2 = "";
 */
 static bool message_flag = false;
-static vector<string> disp;
+struct disp_1line {
+	string text;
+	slcc_t color_code;
+};
+static vector<disp_1line> disp;
 void ui_clear_message_flag() {
 	if (message_flag) {
 		set_refresh_stack_flag();
@@ -95,8 +102,10 @@ void ui_set_message_flag() {
 }
 bool ui_get_message_flag() { return message_flag; }
 void ui_cllcd() {
-	for (vector<string>::iterator it = disp.begin(); it != disp.end(); it++)
-		*it = "";
+	for (vector<disp_1line>::iterator it = disp.begin(); it != disp.end(); it++) {
+		(*it).text = "";
+		(*it).color_code = SLCC_NORMAL;
+	}
 	ui_set_message_flag();
 }
 void ui_disp(int line, const std::string& s) {
@@ -104,7 +113,8 @@ void ui_disp(int line, const std::string& s) {
 		line = 1;
 	if (line > disp.size())
 		line = disp.size();
-	disp[line - 1] = s;
+	disp[line - 1].text = s;
+	disp[line - 1].color_code = SLCC_NORMAL;
 	ui_set_message_flag();
 }
 
@@ -135,10 +145,16 @@ static void redim(int nb_newlines = -1) {
 	}
 }
 
-void ui_string_trim(string& s, const size_t& width, const DisplayStackLayout *dsl) {
-	if (width >= 1 && E->get_string_length(s.c_str()) > width && dsl->get_max_stack() >= 1) {
-		E->erase(s, width - dsl->get_to_be_continued_length());
-		s.append(dsl->get_to_be_continued());
+void ui_string_trim(string& s, const size_t& width, const DisplayStackLayout *dsl, const bool& remove_beginning) {
+	size_t l = E->get_string_length(s.c_str());
+	if (width >= 1 && l > width && dsl->get_max_stack() >= 1) {
+		if (!remove_beginning) {
+			E->erase(s, width - dsl->get_to_be_continued_length());
+			s.append(dsl->get_to_be_continued());
+		} else {
+			E->erase(s, 0, l - width + dsl->get_to_be_continued_length());
+			s.insert(0, dsl->get_to_be_continued());
+		}
 	}
 }
 
@@ -409,7 +425,7 @@ static void erase_input(const bool& reset_everything) {
 	typein_status = TYPEIN_EMPTY;
 
 	if (reset_everything) {
-		edit_mode = EM_DEFAULT;
+		reset_edit_mode();
 		redim(0);
 	}
 }
@@ -460,10 +476,10 @@ void ui_flush_input(const string& textin, const string& additional_command) {
 
 	c = ST_ERR_OK;
 	if (eval_items) {
-		if (edit_mode == EM_EDIT_STACK) {
+		if (get_item_number_being_edited() >= 1) {
 			SIO s = ts->transstack_pop();
 			s.cleanup();
-			edit_mode = EM_DEFAULT;
+			reset_edit_mode();
 		}
 		string cmd_err;
 		bool inside_undo_sequence = false;
@@ -518,8 +534,9 @@ static void refresh_status() {
 	}
 }
 
-static inline const string ui_get_ts_display_line(const int& line_number, bool& recalc, bool& no_more_lines) {
-	return ts->transstack_get_display_line(ui_dsl, line_number, ui_shift, recalc, no_more_lines);
+static inline const string ui_get_ts_display_line(const int& line_number, bool& recalc,
+		bool& no_more_lines, int& item_number) {
+	return ts->transstack_get_display_line(ui_dsl, line_number, ui_shift, recalc, no_more_lines, item_number);
 }
 
 bool ui_is_a_program_halted() { return ts->a_program_is_halted(); }
@@ -556,22 +573,28 @@ static void refresh_stack(const int& enforced_nb_stack_elems_to_display, const b
 		bool recalc = get_recalc_stack_flag();
 		bool no_more_lines = false;
 		int i;
+		int item_number;
 		string* ps;
+		slcc_t color_code;
 		for (i = 1; i <= i_upper && !no_more_lines; i++) {
+			color_code = SLCC_NORMAL;
 			if (is_displaying_error && i == 1)
 				ps = &display_error_l1;
 			else if (is_displaying_error && i == 2 && !display_error_l2.empty())
 				ps = &display_error_l2;
 			else if (!ts->a_program_is_halted() || i != 1) {
-				l = ui_get_ts_display_line(i, recalc, no_more_lines);
+				l = ui_get_ts_display_line(i, recalc, no_more_lines, item_number);
+				color_code = (get_item_number_being_edited() == item_number ? SLCC_INVERTED : SLCC_NORMAL);
 				ps = &l;
 			} else {
 				ts->get_next_instruction(l);
-				l.insert(0, PREFIX_NEXT_INSTRUCTION);
+				l.insert(0, ui_impl->get_next_instruction_prefix());
 				ui_string_trim(l, ui_dsl.get_width(), &ui_dsl);
+				color_code = SLCC_INVERTED;
 				ps = &l;
 			}
-			disp[i - 1] = *ps;
+			disp[i - 1].color_code = color_code;
+			disp[i - 1].text = *ps;
 		}
 		i_upper = i - 1;
 		if (i_upper < 0)
@@ -580,7 +603,7 @@ static void refresh_stack(const int& enforced_nb_stack_elems_to_display, const b
 	}
 
 	for (int i = 1; i <= i_upper; i++)
-		ui_impl->set_line(i, disp[i - 1]);
+		ui_impl->set_line(i, disp[i - 1].color_code, disp[i - 1].text);
 	if (enforce_physical_display)
 		ui_impl->enforce_refresh();
 
@@ -642,7 +665,7 @@ static void work_out_typein_status() {
 }
 
 static void enter_edit_mode() {
-	if (edit_mode != EM_DEFAULT || !ui_impl->get_first_char().empty())
+	if (get_item_number_being_edited() >= 1 || !ui_impl->get_first_char().empty())
 		return;
 
 	  // One day, we may implement direct edition of any item in the stack, as with the HP-48
@@ -652,8 +675,7 @@ static void enter_edit_mode() {
 		return;
 	erase_input(false);
 	const StackItem *csi = ts->transstack_get_const_si(n);
-	edit_mode = EM_EDIT_STACK;
-	stack_item_number_being_edited = n;
+	set_edit_mode(n);
 	  // Width - 2 because of the elevator at the right, that consumes this number of characters
 	ToString tostr(TOSTRING_DISPLAY, 0, ui_dsl.get_width() - ui_impl->get_elevator_width());
 	csi->to_string(tostr);
@@ -667,6 +689,7 @@ static void enter_edit_mode() {
 	}
 	tostr.unlock();
 	ui_impl->set_cursor_at_the_beginning();
+	set_refresh_stack_flag();
 	redim();
 }
 

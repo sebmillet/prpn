@@ -30,7 +30,7 @@ void ui_cllcd();
 
 const std::string stack_get_help(const int&);
 
-void ui_string_trim(std::string&, const size_t&, const DisplayStackLayout*);
+void ui_string_trim(std::string&, const size_t&, const DisplayStackLayout*, const bool& = false);
 
 extern std::string html_help_file;
 extern bool html_help_found;
@@ -124,7 +124,7 @@ void ui_display_help(const int&);
 int ui_get_nb_items_in_stack();
 void ui_refresh_display(const int& = -1);
 void ui_flush_input(const std::string&, const std::string&);
-const std::string ui_get_ts_display_line(const DisplayStackLayout&, const int&, int&, int&);
+const std::string ui_get_ts_display_line(const DisplayStackLayout&, const int&, int&, int&, int&);
 
 bool ui_notify_key_pressed(const int&);
 void ui_reset_is_displaying_error();
@@ -140,6 +140,9 @@ char ui_get_char_decimal_sep();
 // UIIMPL
 //
 
+  // SLCC stands for "Set Line Color Code"
+typedef enum {SLCC_NORMAL, SLCC_INVERTED, SLCC_NB_CODES} slcc_t;
+
 class UiImpl {
 	UiImpl(const UiImpl&);
 public:
@@ -149,7 +152,7 @@ public:
 	virtual void ui_set_error_call_back(const std::string&, const std::string&);
 
 	virtual void refresh_statuswin() = 0;
-	virtual void set_line(const int&, const std::string&) = 0;
+	virtual void set_line(const int&, const slcc_t&, const std::string&) = 0;
 	virtual void enforce_refresh() = 0;
 	virtual void refresh_display_path(const std::string&, const bool&) = 0;
 	virtual void set_syntax_error(const int&, const int&, const int&, const int&) = 0;
@@ -167,6 +170,7 @@ public:
 	virtual void quit() = 0;
 	virtual bool want_to_refresh_display() = 0;
 	virtual void display_help(const int&) = 0;
+	virtual const char *get_next_instruction_prefix() = 0;
 };
 
 #endif	// UI_H

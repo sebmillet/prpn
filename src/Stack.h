@@ -1028,7 +1028,7 @@ public:
 	virtual size_t get_count() const { return values.size(); }
 #endif
 	virtual const StackItem *stack_get_const_si(const int&) const;
-	virtual const std::string get_display_line(const DisplayStackLayout&, const int&, IntervalShift&, bool&, bool&);
+	virtual const std::string get_display_line(const DisplayStackLayout&, const int&, IntervalShift&, bool&, bool&, int&);
 	virtual void take_ownership() { has_ownership = true; }
 };
 
@@ -1219,7 +1219,8 @@ public:
 	virtual SIO transstack_pop();
 	virtual st_err_t read_integer(int&);
 
-	virtual const std::string transstack_get_display_line(const DisplayStackLayout&, const int&, IntervalShift&, bool&, bool&);
+	virtual const std::string transstack_get_display_line(const DisplayStackLayout&, const int&,
+			IntervalShift&, bool&, bool&, int&);
 	virtual st_err_t inner_push_eval(const eval_t&, SIO&, const bool&, std::string&);
 	virtual st_err_t do_push_eval(SIO&, const bool&, std::string&, const eval_t& = EVAL_SOFT);
 	virtual size_t stack_get_count() const;

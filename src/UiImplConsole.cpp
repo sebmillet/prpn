@@ -10,6 +10,8 @@
 #include <string>
 #include <iostream>
 
+static const char *next_instruction_prefix = "*** ";
+
 using namespace std;
 
 extern bool opt_batch;
@@ -39,7 +41,7 @@ public:
 
 	virtual void refresh_statuswin();
 	virtual void ui_set_error_call_back(const string&, const string&);
-	virtual void set_line(const int&, const string&);
+	virtual void set_line(const int&, const slcc_t&, const string&);
 	virtual void enforce_refresh();
 	virtual void refresh_display_path(const string&, const bool&);
 	virtual void set_syntax_error(const int&, const int&, const int&, const int&);
@@ -57,6 +59,7 @@ public:
 	virtual void quit();
 	virtual bool want_to_refresh_display();
 	virtual void display_help(const int&);
+	virtual const char *get_next_instruction_prefix();
 };
 
 
@@ -70,14 +73,14 @@ UiImplConsole::~UiImplConsole() { }
 
 void UiImplConsole::refresh_statuswin() { }
 
-void UiImplConsole::set_line(const int&, const string& s) { cout << s << endl; }
+void UiImplConsole::set_line(const int&, const slcc_t&, const string& s) { cout << s << endl; }
 
 void UiImplConsole::enforce_refresh() { }
 
 void UiImplConsole::refresh_display_path(const string& s, const bool&) {
 	if (!opt_batch) {
 		string s_mod = s;
-		ui_string_trim(s_mod, ui_dsl.get_width(), &ui_dsl);
+		ui_string_trim(s_mod, ui_dsl.get_width(), &ui_dsl, true);
 		cout << s_mod << endl;
 	}
 }
@@ -111,6 +114,8 @@ bool UiImplConsole::want_to_refresh_display() {
 }
 
 void UiImplConsole::display_help(const int& dh) { cout << stack_get_help(dh); }
+
+const char *UiImplConsole::get_next_instruction_prefix() { return next_instruction_prefix; }
 
 void UiImplConsole::neg() { }
 

@@ -7,7 +7,13 @@
 // Sébastien Millet
 // August 2009 - April 2010
 
+#include "Common.h"
+#include <sys/stat.h>
+
 #define SEP			'/'
+
+#define VARSRC_FILE		"varsrc"
+#define STACKRC_FILE	"stackrc"
 
 const char *os_to_be_continued = "...";
 const int os_to_be_continued_length = 3;
@@ -22,6 +28,20 @@ const string os_get_install_language() { return ""; }
 
 const string os_concatene(const string& base, const string& added) { return concatene(SEP, base, added); }
 
+static bool os_e_exists(const char *sz, const unsigned int& my_flag) {
+	struct stat st;
+
+	if (stat(sz, &st) != 0)
+		return false;
+    return ((st.st_mode & S_IFMT) == my_flag);
+}
+
+bool os_dir_exists(const char *sz) { return os_e_exists(sz, S_IFDIR); }
+bool os_file_exists(const char *sz) { return os_e_exists(sz, S_IFREG); }
+
+int os_dir_create(const char *sz) {
+	return mkdir(sz, S_IRWXU | S_IRWXG);
+}
 OS_Dirs::OS_Dirs(const char *argv0) {
 	dirs[OSF_RT_ARGV0] = argv0;
 	my_split(argv0, SEP, dirs[OSD_RT_EXE], dirs[OSF_RT_EXE]);

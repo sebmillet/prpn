@@ -559,7 +559,7 @@ const StackItem *Stack::stack_get_const_si(const int& stack_item_number) const {
 }
 
 const string Stack::get_display_line(const DisplayStackLayout& dsl, const int& line_number,
-						IntervalShift& ishift, bool& recalc, bool& no_more_lines) {
+						IntervalShift& ishift, bool& recalc, bool& no_more_lines, int& item_number) {
 	static vector<string> dv;
 	static vector<string> xv;
 	static int e1;
@@ -638,8 +638,6 @@ const string Stack::get_display_line(const DisplayStackLayout& dsl, const int& l
 	if (ishift.actual > ishift.max)
 		ishift.actual = ishift.max;
 
-	int item_number;
-
 	int e = e_start + line_number - 1 + ishift.actual;
 	ostringstream o;
 	item_number = e1 - e + 1;
@@ -680,6 +678,9 @@ const string Stack::get_display_line(const DisplayStackLayout& dsl, const int& l
 			o << " ";
 		o << s;
 	}
+
+	if (item_number < 1)
+		item_number = 1;
 
 	return o.str();
 }
@@ -1167,8 +1168,8 @@ st_err_t TransStack::read_integer(int& n) {
 }
 
 inline const string TransStack::transstack_get_display_line(const DisplayStackLayout& dsl, const int& line_number,
-						IntervalShift& ishift, bool& recalc, bool& no_more_lines) {
-	return head->st->get_display_line(dsl, line_number, ishift, recalc, no_more_lines);
+						IntervalShift& ishift, bool& recalc, bool& no_more_lines, int& item_number) {
+	return head->st->get_display_line(dsl, line_number, ishift, recalc, no_more_lines, item_number);
 }
 
 st_err_t TransStack::inner_push_eval(const eval_t& et, SIO& s, const bool& inside_undo_sequence, string& cmd_err) {

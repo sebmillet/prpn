@@ -35,9 +35,21 @@
 
 #include "prpn.xpm"
 
+static const char *next_instruction_prefix = "";
+
 using namespace std;
 
-const wxString const_char_to_wxString(const char *sz) {
+struct color_codes_t {
+	wxColor fg;
+	wxColor bg;
+};
+
+color_codes_t color_codes[SLCC_NB_CODES] = {
+	{*wxBLACK, *wxWHITE},
+	{*wxWHITE, *wxBLACK}
+};
+
+static const wxString const_char_to_wxString(const char *sz) {
 	if (E->get_actual_encoding() == MYENCODING_UTF8)
 		return wxString::FromUTF8(sz);
 	else if (E->get_actual_encoding() == MYENCODING_1BYTE)
@@ -47,9 +59,9 @@ const wxString const_char_to_wxString(const char *sz) {
 
 }
 
-const wxString string_to_wxString(const string& s) { return const_char_to_wxString(s.c_str()); }
+static const wxString string_to_wxString(const string& s) { return const_char_to_wxString(s.c_str()); }
 
-const string wxString_to_string(const wxString& wxs) {
+static const string wxString_to_string(const wxString& wxs) {
 	if (E->get_actual_encoding() == MYENCODING_UTF8)
 		return string(wxs.mb_str(wxConvUTF8));
 	else if (E->get_actual_encoding() == MYENCODING_1BYTE)
@@ -58,23 +70,26 @@ const string wxString_to_string(const wxString& wxs) {
 		throw(CalcFatal(__FILE__, __LINE__, "wxString_to_string(): unknown encoding returned by E->get_actual_encoding()"));
 }
 
+static const wxColor slcc_to_bg_wxColor(const slcc_t& color_code) { return color_codes[color_code].bg; }
+static const wxColor slcc_to_fg_wxColor(const slcc_t& color_code) { return color_codes[color_code].fg; }
+
 
 //
 // UI SETTINGS CONSTANTS
 //
 
+  // Common
+#define MY_CALCULATOR_BACKGROUND_COLOR	(wxColour(0xD0, 0xD0, 0xD0))
   // Stack
 #define STACK_MIN_LINES					1
-#define MY_STACK_BACKGROUND_COLOUR		(wxColour(0xFA, 0xFA, 0xFA))
-#define MY_STACK_FOREGROUND_COLOUR		(*wxBLACK)
-#define MY_TYPEIN_BACKGROUND_COLOUR		MY_STACK_BACKGROUND_COLOUR
+#define MY_TYPEIN_BACKGROUND_COLOUR		(wxColour(0xFA, 0xFA, 0xFA))
 #define MY_TYPEIN_FOREGROUND_COLOUR		(*wxBLACK)
   // Path
 #define MY_PATH_BORDER					4
 #define MY_PATH_BORDERSTYLE 			wxBORDER_NONE
 #define MY_PATH_FONTSIZE				10
 #define MY_PATH_FONTWEIGHT				wxFONTWEIGHT_NORMAL
-#define MY_PATH_BACKGROUND_COLOUR		MY_STACK_BACKGROUND_COLOUR
+#define MY_PATH_BACKGROUND_COLOUR		(wxColour(0xD0, 0xD0, 0xD0))
 #define MY_PATH_FOREGROUND_COLOUR		(*wxBLACK)
   // Status area
 #define MY_STATUS_BORDER				0
@@ -117,6 +132,7 @@ static int quit_requested = false;
 static bool xy_set = false;
 static int my_x0 = -1;
 static int my_w0 = -1;
+static int my_h0 = -1;
 static int my_y0 = -1;
 static int my_y1 = -1;
 static int my_ty = -1;
@@ -152,7 +168,7 @@ static int count_newlines(const string& s, const int& max_lines) {
 	return n;
 }
 
-int my_get_max_stack() {
+static int my_get_max_stack() {
 	int n = ui_dsl.get_max_stack();
 	if (n < STACK_MIN_LINES)
 		n = STACK_MIN_LINES;
@@ -193,7 +209,7 @@ StatusWindow::StatusWindow(wxWindow *parent, wxWindowID id, const wxPoint &pos, 
 		unit_bin(unit_bin_xpm), unit_oct(unit_oct_xpm), unit_dec(unit_dec_xpm), unit_hex(unit_hex_xpm),
 		shiftx_exec(0),
 		exec_norun(exec_norun_xpm), exec_run(exec_run_xpm) {
-    SetBackgroundColour(MY_STACK_BACKGROUND_COLOUR);
+    SetBackgroundColour(MY_CALCULATOR_BACKGROUND_COLOR);
 	int w = shiftsel.GetWidth();
 	int h = shiftsel.GetHeight();
 	int w2 = unit_bin.GetWidth();
@@ -276,6 +292,11 @@ struct wxBtnAll {
 	}
 };
 
+struct stack_1line {
+	wxWindow *w;
+	wxStaticText *t;
+};
+
 class MyFrame: public wxFrame {
 	wxSizer *topSizer;
 
@@ -287,7 +308,7 @@ class MyFrame: public wxFrame {
 	wxStaticText *path;
 	int path_width;
 
-	vector<wxStaticText*> dispStack;
+	vector<stack_1line> dispStack;
 	wxTextCtrl *textTypein;
 	void build_dispStack();
 	void display_help(const int&);
@@ -328,7 +349,7 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size, 
 
     SetIcon(wxIcon(prpn_xpm));
 
-	SetBackgroundColour(MY_STACK_BACKGROUND_COLOUR);
+	SetBackgroundColour(MY_CALCULATOR_BACKGROUND_COLOR);
 
 	/*wxMenu *menuFile = new wxMenu;
 
@@ -362,7 +383,7 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size, 
 
 	  // Type-in area
 	int w, h;
-	dispStack[0]->GetSize(&w, &h);
+	dispStack[0].t->GetSize(&w, &h);
 	textTypein = new wxTextCtrl(this, ID_TEXTTYPEIN, _T(""), wxPoint(wxDefaultPosition), wxSize(5, h),
 						MY_TYPEIN_BORDERSTYLE | wxTE_PROCESS_ENTER | wxTE_MULTILINE);
 	textTypein->SetFont(wxFont(MY_TYPEIN_FONTSIZE, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, MY_TYPEIN_FONTWEIGHT, 0));
@@ -464,7 +485,8 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size, 
 	int l = 0;
 	wxStaticText *tmp;
 	int wtmp, htmp, w_ref, h_ref;
-	dispStack[0]->GetSize(&w_ref, &h_ref);
+	dispStack[0].t->GetSize(&w_ref, &h_ref);
+	debug_write_i("wref = %i", w_ref);
 	do {
 		l++;
 		tmp = new wxStaticText(this, wxID_ANY, wxString(wxChar(' '), l), wxPoint(0, 0), wxSize(wxDefaultSize),
@@ -482,28 +504,34 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size, 
 void MyFrame::build_dispStack() {
 	int n = my_get_max_stack();
 
-	wxStaticText *t;
+	stack_1line l1;
+
 	if (n > static_cast<int>(dispStack.size())) {
 		for (int i = static_cast<int>(dispStack.size()); i < n; i++) {
 			wxPoint wxp;
+			wxSize wxs;
 			if (xy_set) {
 				int y0 = my_y0 + i * (my_y1 - my_y0);
 				wxp = wxPoint(my_x0, y0);
+				wxs = wxSize(my_w0, my_h0);
 			} else {
 				wxp = wxPoint(wxDefaultPosition);
+				wxs = wxSize(wxDefaultSize);
 			}
-			t = new wxStaticText(this, wxID_ANY, wxString(wxChar(' '), ui_dsl.get_width()),
-					wxp, wxSize(wxDefaultSize), MY_STACK_BORDERSTYLE);
-			t->SetFont(wxFont(MY_STACK_FONTSIZE, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, MY_STACK_FONTWEIGHT, 0));
-			t->SetBackgroundColour(MY_STACK_BACKGROUND_COLOUR);
-			t->SetForegroundColour(MY_STACK_FOREGROUND_COLOUR);
-			dispStack.push_back(t);
-			topSizer->Insert(STACK_INDEX_0 + i, t, 0, wxALL, MY_STACK_BORDERSIZE);
+			l1.w = new wxWindow(this, wxID_ANY, wxp, wxs, MY_STACK_BORDERSTYLE);
+			l1.t = new wxStaticText(l1.w, wxID_ANY, wxString(wxChar(' '), ui_dsl.get_width()),
+					wxPoint(0, 0), wxs, MY_STACK_BORDERSTYLE);
+			l1.t->SetFont(wxFont(MY_STACK_FONTSIZE, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, MY_STACK_FONTWEIGHT, 0));
+			l1.w->SetBackgroundColour(slcc_to_bg_wxColor(SLCC_NORMAL));
+			l1.t->SetForegroundColour(slcc_to_fg_wxColor(SLCC_NORMAL));
+			dispStack.push_back(l1);
+			topSizer->Insert(STACK_INDEX_0 + i, l1.w, 0, wxALL, MY_STACK_BORDERSIZE);
 		}
 	} else if (n < static_cast<int>(dispStack.size())) {
 		for (int i = static_cast<int>(dispStack.size()); i > n; i--) {
 			topSizer->Remove(STACK_INDEX_0 + i - 1);
-			dispStack[i - 1]->Destroy();
+			dispStack[i - 1].t->Destroy();
+			dispStack[i - 1].w->Destroy();
 		}
 		dispStack.erase(dispStack.begin() + n, dispStack.end());
 	}
@@ -618,23 +646,23 @@ void MyFrame::OnChar(wxKeyEvent& event) {
 void MyFrame::OnPaint(wxPaintEvent& ev) {
 	if (!xy_set) {
 		int x, y, w, h, x2, y2;
-		dispStack[0]->GetPosition(&x, &y);
-		dispStack[0]->GetSize(&w, &h);
-		dispStack[1]->GetPosition(&x2, &y2);
-		int tx, ty, tw, th;
+		dispStack[0].w->GetPosition(&x, &y);
+		dispStack[0].w->GetSize(&w, &h);
+		dispStack[1].w->GetPosition(&x2, &y2);
+		int tx, ty;
 		textTypein->GetPosition(&tx, &ty);
-		textTypein->GetSize(&tw, &th);
+		textTypein->GetSize(&my_w0, &my_h0);
 		my_x0 = x;
-		my_w0 = tw;
 		my_y0 = y;
 		my_y1 = y2;
-		my_ty = ty + th - 1;
+		my_ty = ty + my_h0 - 1;
 
-		/*debug_write_i("A1: my_x0 = %i", my_x0);
-		debug_write_i("A1: my_w0 = %i", my_w0);
-		debug_write_i("A1: my_y0 = %i", my_y0);
-		debug_write_i("A1: my_y1 = %i", my_y1);
-		debug_write_i("A1: my_ty = %i", my_ty);*/
+//        debug_write_i("A1: my_x0 = %i", my_x0);
+//        debug_write_i("A1: my_w0 = %i", my_w0);
+//        debug_write_i("A1: my_h0 = %i", my_h0);
+//        debug_write_i("A1: my_y0 = %i", my_y0);
+//        debug_write_i("A1: my_y1 = %i", my_y1);
+//        debug_write_i("A1: my_ty = %i", my_ty);
 	
 		xy_set = true;
 	}
@@ -657,7 +685,7 @@ public:
 	virtual ~UiImplWx();
 
 	virtual void refresh_statuswin();
-	virtual void set_line(const int&, const string&);
+	virtual void set_line(const int&, const slcc_t&, const string&);
 	virtual void enforce_refresh();
 	virtual void refresh_display_path(const string&, const bool&);
 	virtual void set_syntax_error(const int&, const int&, const int&, const int&);
@@ -675,6 +703,7 @@ public:
 	virtual void quit();
 	virtual bool want_to_refresh_display();
 	virtual void display_help(const int&);
+	virtual const char *get_next_instruction_prefix();
 };
 
 
@@ -688,8 +717,10 @@ UiImplWx::~UiImplWx() { }
 
 void UiImplWx::refresh_statuswin() { f->stwin->Refresh(); }
 
-void UiImplWx::set_line(const int& line_number, const string& s) {
-	f->dispStack[line_number - 1]->SetLabel(string_to_wxString(s));
+void UiImplWx::set_line(const int& line_number, const slcc_t& color_code, const string& s) {
+	f->dispStack[line_number - 1].t->SetForegroundColour(slcc_to_fg_wxColor(color_code));
+	f->dispStack[line_number - 1].w->SetBackgroundColour(slcc_to_bg_wxColor(color_code));
+	f->dispStack[line_number - 1].t->SetLabel(string_to_wxString(s));
 }
 
 void UiImplWx::enforce_refresh() { f->Update(); }
@@ -697,8 +728,10 @@ void UiImplWx::enforce_refresh() { f->Update(); }
 void UiImplWx::refresh_display_path(const string& s, const bool& modified) {
 	if (modified) {
 		string s_mod = s;
-		ui_string_trim(s_mod, f->path_width, &ui_dsl);
+		ui_string_trim(s_mod, f->path_width, &ui_dsl, true);
 		f->path->SetLabel(string_to_wxString(s_mod));
+		debug_write("Path:");
+		debug_write(s.c_str());
 	}
 }
 
@@ -833,6 +866,8 @@ void UiImplWx::quit() {
 bool UiImplWx::want_to_refresh_display() { return false; }
 
 void UiImplWx::display_help(const int& dh) { f->display_help(dh); }
+
+const char *UiImplWx::get_next_instruction_prefix() { return next_instruction_prefix; }
 
 
 //
