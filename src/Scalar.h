@@ -170,6 +170,9 @@ public:
 	Real& operator=(const Real& rv) { r = rv.r; return *this; }
 	Real& operator=(const Cplx&);
 	real get_value() const { return r; }
+	  // Used in linear system resolution, to calculate which coeff
+	  // is closest to 1 in its mantisse.
+	real get_mantisse() const { return real_abs(real_mant(r)); }
 	void trim();
 	void neg() { r = (r == 0 ? 0 : -r); }
 	void conj() { }
@@ -255,6 +258,16 @@ public:
 	Cplx& operator=(const Real&);
 	real get_re() const { return re; }
 	real get_im() const { return im; }
+	  // Used in linear system resolution, to calculate which coeff
+	  // is closest to 1 in its mantisse.
+	real get_mantisse() const {
+		real r1 = real_abs(real_mant(re));
+		real r2 = real_abs(real_mant(im));
+		if (r1 < r2)
+			return r2;
+		else
+			return r1;
+	}
 	void trim();
 	void zero() { re = 0; im = 0; }
 	void neg() { re = (re == 0 ? 0 : -re); im = (im == 0 ? 0 : -im); }
@@ -338,8 +351,8 @@ public:
 	virtual Scalar get_value(const int& i, const int& j) const { return (*mat[i])[j]; }
 	virtual void set_value(const int& i, const int& j, const Scalar& v) { (*mat[i])[j] = v; }
 	virtual void redim(const dim_t&, const int&, const int&);
-	virtual bool index_to_ij(const int&, int&, int&);
-	virtual void copy_linear(Matrix<Scalar>*);
+	virtual bool index_to_ij(const int&, int&, int&) const;
+	virtual void copy_linear(const Matrix<Scalar>*);
 	virtual st_err_t create_transpose(Matrix<Scalar>*&);
 	virtual st_err_t get_bounds(Coordinates& coord) {
 		coord.d = dimension;
@@ -355,7 +368,8 @@ public:
 	virtual st_err_t md(st_err_t (*f)(const Scalar&, const Scalar&, Scalar&), const Scalar&);
 	  // Addition or subtraction with another vector/matrix of same dimension
 	virtual st_err_t as(st_err_t (*f)(const Scalar&, const Scalar&, Scalar&), Matrix<Scalar>&);
-
+	virtual st_err_t create_mul(const Matrix<Scalar>*, Matrix<Scalar>*&) const;
+	virtual st_err_t create_div(const Matrix<Scalar>*, Matrix<Scalar>*&) const;
 };
 
 #endif // SCALAR_H

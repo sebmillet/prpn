@@ -2305,7 +2305,8 @@ template<class Scalar, class SI> st_err_t si_arith
 	return c;
 }
 
-template<class Scalar, class SI_Mat> st_err_t si_matrix_md(st_err_t (*f)(const Scalar&, const Scalar&, Scalar&), Matrix<Scalar> *lv, const Scalar& rv, StackItem*& ret) {
+template<class Scalar, class SI_Mat> st_err_t si_matrix_md(st_err_t (*f)(const Scalar&, const Scalar&, Scalar&),
+		Matrix<Scalar> *lv, const Scalar& rv, StackItem*& ret) {
 	Matrix<Scalar> *mres = new Matrix<Scalar>(*lv);
 	st_err_t c = mres->md(f, rv);
 	if (c == ST_ERR_OK)
@@ -2792,6 +2793,57 @@ void MATSI::rdm(const dim_t& new_dimension, const int& new_nb_lines, const int& 
 IMPLEMENT_MAT_RDM(StackItemMatrixReal)
 IMPLEMENT_MAT_RDM(StackItemMatrixCplx)
 
+#define IMPLEMENT_MAT_MUL_WITH_MAT(MATSI, SCALAR) \
+st_err_t MATSI::op_mul(MATSI *arg1, StackItem*& ret) { \
+	Matrix<SCALAR> *mres; \
+	st_err_t c = arg1->pmat->create_mul(pmat, mres); \
+	if (c == ST_ERR_OK) \
+		ret = new MATSI(mres); \
+	return c; \
+}
+
+IMPLEMENT_MAT_MUL_WITH_MAT(StackItemMatrixReal, Real)
+IMPLEMENT_MAT_MUL_WITH_MAT(StackItemMatrixCplx, Cplx)
+
+st_err_t StackItemMatrixReal::op_mul(StackItemMatrixCplx *arg1, StackItem*& ret) {
+	Matrix<Cplx> *converted_to_matrix_cplx = matrix_real_to_cplx(pmat);
+	Matrix<Cplx> *mres;
+	st_err_t c = arg1->get_matrix()->create_mul(converted_to_matrix_cplx, mres);
+	if (c == ST_ERR_OK)
+		ret = new StackItemMatrixCplx(mres);
+	delete converted_to_matrix_cplx;
+	return c;
+}
+
+st_err_t StackItemMatrixCplx::op_mul(StackItemMatrixReal *arg1, StackItem*& ret) {
+	Matrix<Cplx> *converted_to_matrix_cplx = matrix_real_to_cplx(arg1->get_matrix());
+	Matrix<Cplx> *mres;
+	st_err_t c = converted_to_matrix_cplx->create_mul(pmat, mres);
+	if (c == ST_ERR_OK)
+		ret = new StackItemMatrixCplx(mres);
+	delete converted_to_matrix_cplx;
+	return c;
+}
+
+st_err_t StackItemMatrixReal::op_div(StackItemMatrixReal *arg1, StackItem*& ret) {
+	Matrix<Real> *mres;
+	st_err_t c = arg1->pmat->create_div(pmat, mres);
+	if (c == ST_ERR_OK)
+		ret = new StackItemMatrixReal(mres);
+	return c;
+}
+
+st_err_t StackItemMatrixReal::op_div(StackItemMatrixCplx *arg1, StackItem*& ret) {
+	return ST_ERR_INVALID_DIMENSION;
+}
+
+st_err_t StackItemMatrixCplx::op_div(StackItemMatrixReal *arg1, StackItem*& ret) {
+	return ST_ERR_INVALID_DIMENSION;
+}
+
+st_err_t StackItemMatrixCplx::op_div(StackItemMatrixCplx *arg1, StackItem*& ret) {
+	return ST_ERR_INVALID_DIMENSION;
+}
 
 //
 // StackItemMatrixReal

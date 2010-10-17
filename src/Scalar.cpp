@@ -14,9 +14,11 @@
 
 using namespace std;
 
+  // Number of digits of reals
 const int REAL_PRECISION = 12;
-
+  // Lowest positive real
 extern const real MINR = 1e-199;
+  // Biggest positive real
 extern const real MAXR = 9.99999999999e199;
 
   // If the constant below is false, then, the "STD" display mode of
@@ -55,6 +57,10 @@ bool cfg_realdisp_remove_trailing_dot = false;
 
 void prepare_arith() { errno = 0; }
 
+  // Remove trailing digits of reals
+  // If we were using decimal coded binary reals, such a function would
+  // not be needed. BUT, we are using internal double or long double and
+  // thus need to chop trailing digits off
 real real_trim(const real& r) {
 	real r2;
 	string s = real_to_string(r);
@@ -69,6 +75,7 @@ real real_trim(const real& r) {
 	return r2;
 }
 
+  // Simple real to string converter
 const string real_to_string(const real& r) {
 	ostringstream o;
 	o.precision(REAL_PRECISION);
@@ -77,6 +84,7 @@ const string real_to_string(const real& r) {
 	return s;
 }
 
+  // Used only by user_real_to_string()
 void ascii_integer_string_round(string& s, const int& nb_digits) {
 	if (s.length() > nb_digits) {
 		char c = s.at(nb_digits);
@@ -101,6 +109,7 @@ void ascii_integer_string_round(string& s, const int& nb_digits) {
   // Remove useless zeros left after the decimal separator ('.')
   // This function presumes there IS a decimal separator somwhere, don't
   // apply it on litteral integers.
+  // Used only by user_real_to_string().
 void ascii_remove_trailing_zeros(string& s, const bool& enforce_remove_trailing_dots = false) {
 	int i;
 	for (i = s.length() - 1; i >= 0 && s.at(i) == '0'; i--)
@@ -111,6 +120,9 @@ void ascii_remove_trailing_zeros(string& s, const bool& enforce_remove_trailing_
 			s.erase(s.length() - 1);
 }
 
+  // Convert a real into a string, taking into account
+  // user settings like STD, FIX, SCI, ENG, and the
+  // number of decimals if applicable.
 const string user_real_to_string(const real& r, const tostring_t& t, const bool& enforce_sci = false) {
 	string s = real_to_string(r);
 	size_t p;
@@ -1031,6 +1043,152 @@ template<class Scalar> st_err_t Matrix<Scalar>::as(st_err_t (*f)(const Scalar&, 
 	return c;
 }
 
+  // Multiply a matrix with a vector or a matrix with a matrix
+template<class Scalar> st_err_t Matrix<Scalar>::create_mul(const Matrix<Scalar> *multiplier, Matrix<Scalar>*& mres) const {
+	st_err_t c = ST_ERR_OK;
+	if (dimension == multiplier->dimension && dimension == DIM_MATRIX) {
+
+// Case 1: matrix * matrix
+
+		if (nb_columns == multiplier->nb_lines) {
+			Scalar cell;
+			Scalar total;
+			mres = new Matrix<Scalar>(DIM_MATRIX, nb_lines, multiplier->nb_columns, Scalar(Real(0)));
+			for (int i = 0; i < nb_lines; i++) {
+				for (int j = 0; j < multiplier->nb_columns; j++) {
+					total.zero();
+					for (int cursor = 0; cursor < nb_columns; cursor++) {
+						c = (*mat[i])[cursor].mul((*(multiplier->mat)[cursor])[j], cell);
+						if (c == ST_ERR_OK)
+							c = cell.add(total, total);
+					}
+					if (c != ST_ERR_OK)
+						break;
+					mres->set_value(i, j, total);
+				}
+				if (c != ST_ERR_OK)
+					break;
+			}
+			if (c != ST_ERR_OK)
+				delete mres;
+		} else {
+			c = ST_ERR_INVALID_DIMENSION;
+		}
+	} else if (dimension == DIM_MATRIX && multiplier->dimension == DIM_VECTOR) {
+
+// Case 2: matrix * vector
+
+		if (nb_columns == multiplier->nb_columns) {
+			Scalar cell;
+			Scalar total;
+			mres = new Matrix<Scalar>(DIM_VECTOR, 1, nb_lines, Scalar(Real(0)));
+			for (int i = 0; i < nb_lines; i++) {
+				total.zero();
+				for (int cursor = 0; cursor < nb_columns; cursor++) {
+					c = (*mat[i])[cursor].mul((*(multiplier->mat)[0])[cursor], cell);
+					if (c == ST_ERR_OK)
+						c = cell.add(total, total);
+				}
+				if (c != ST_ERR_OK)
+					break;
+				mres->set_value(0, i, total);
+			}
+			if (c != ST_ERR_OK)
+				delete mres;
+		} else {
+			c = ST_ERR_INVALID_DIMENSION;
+		}
+	} else
+		c = ST_ERR_INVALID_DIMENSION;
+	return c;
+}
+
+template<class Scalar> void debug_matrix_to_string(Matrix<Scalar> *pmat, int *reorder) {
+	string s;
+	if (pmat->get_dimension() == DIM_MATRIX)
+		s = "[";
+	for (int i = 0; i < pmat->get_nb_lines(); i++) {
+		int i_reordered = i;
+		if (pmat->get_dimension() == DIM_MATRIX)
+			i_reordered = reorder[i];
+		if (i_reordered == 0)
+			s.append("[ ");
+		else
+			s.append(" [ ");
+		for (int j = 0; j < pmat->get_nb_columns(); j++) {
+			int j_reordered = j;
+			if (pmat->get_dimension() == DIM_VECTOR)
+				j_reordered = reorder[j];
+			s.append(pmat->get_value(i_reordered, j_reordered).to_string(TOSTRING_DISPLAY));
+			if (j_reordered != pmat->get_nb_columns() - 1)
+				s.append(" ");
+		}
+		s.append(" ]");
+		if (i_reordered < pmat->get_nb_lines() - 1) {
+			debug_write(s.c_str());
+			s = "";
+		}
+	}
+	if (pmat->get_dimension() == DIM_MATRIX)
+		s.append("]");
+	debug_write(s.c_str());
+}
+
+template<class Scalar> st_err_t Matrix<Scalar>::create_div(const Matrix<Scalar> *divis, Matrix<Scalar>*& mres) const {
+	debug_write("Matrix<Scalar>::create_div()");
+	debug_write_i("Matrix<Scalar>::create_div(): this->dimension = %i", static_cast<int>(dimension));
+	debug_write_i("Matrix<Scalar>::create_div(): divis->dimension = %i", static_cast<int>(divis->dimension));
+	st_err_t c = ST_ERR_OK;
+	if (dimension == DIM_VECTOR && divis->dimension == DIM_MATRIX && nb_columns == divis->nb_columns &&
+			divis->nb_columns == divis->nb_lines) {
+		debug_write("Matrix<Scalar>::create_div(): AA");
+		int n = nb_columns;
+		int reorder[n];
+		for (int i = 0; i < n; i++)
+			reorder[i] = i;
+
+		Matrix<Scalar> *mm = new Matrix<Scalar>(divis->dimension, divis->nb_lines, divis->nb_columns, Scalar(Real(0)));
+		mm->copy_linear(divis);
+		Matrix<Scalar> *vv = new Matrix<Scalar>(dimension, nb_lines, nb_columns, Scalar(Real(0)));
+		vv->copy_linear(this);
+
+		int ii = -1;
+		int go_down = 0;
+		real t;
+		real best = 10;
+		for (int i = go_down; i < n; i++) {
+			t = (*(mm->mat)[i])[go_down].get_mantisse();
+			if (t < best && t > 0) {
+				best = t;
+				ii = i;
+			}
+		}
+		if (ii < 0)
+			ii = 0;
+		int temporary_integer = reorder[ii];
+		reorder[ii] = reorder[go_down];
+		reorder[go_down] = temporary_integer;
+
+		Scalar alpha, beta;
+		beta = (*(mm->mat)[reorder[go_down]])[go_down];
+		for (int i = go_down + 1; i < n; i++) {
+			alpha = (*(mm->mat)[reorder[i]])[go_down];
+			for (int j = go_down + 1; i < n; i++) {
+				
+			}
+
+		debug_write("mm:");
+		debug_matrix_to_string(mm, reorder);
+		debug_write("vv:");
+		debug_matrix_to_string(vv, reorder);
+
+		delete vv;
+		delete mm;
+	} else
+		c = ST_ERR_INVALID_DIMENSION;
+	return ST_ERR_INVALID_DIMENSION;
+}
+
 template<class Scalar> void Matrix<Scalar>::trim() {
 	for (int i = 0; i < nb_lines; i++)
 		for (int j = 0; j < nb_columns; j++)
@@ -1060,7 +1218,7 @@ template<class Scalar> void Matrix<Scalar>::redim(const dim_t& new_dimension, co
 	//debug_write_i("vector new columns = %i", (int)((*mat[0]).size()));
 }
 
-template<class Scalar> bool Matrix<Scalar>::index_to_ij(const int& index, int& i, int& j) {
+template<class Scalar> bool Matrix<Scalar>::index_to_ij(const int& index, int& i, int& j) const {
 	i = index / nb_columns;
 	j = index % nb_columns;
 	//debug_write_i("index = %i", index);
@@ -1069,7 +1227,7 @@ template<class Scalar> bool Matrix<Scalar>::index_to_ij(const int& index, int& i
 	return (i >= 0 && i < nb_lines && j >= 0 && j < nb_columns);
 }
 
-template<class Scalar> void Matrix<Scalar>::copy_linear(Matrix<Scalar>* orig) {
+template<class Scalar> void Matrix<Scalar>::copy_linear(const Matrix<Scalar>* orig) {
 	int idx = 0;
 	int orig_i, orig_j;
 	for (int i = 0; i < nb_lines; i++) {

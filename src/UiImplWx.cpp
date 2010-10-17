@@ -119,15 +119,30 @@ static const string wxString_to_string(const wxString& wxs) {
 #define MY_HELP_OKBUTTON_MARGIN			5
 #define MY_HELP_OKBUTTON_ALIGN			wxALIGN_RIGHT
 
-color_codes_t color_codes[SLCC_NB_CODES] = {
+  // 0: black and white
+  // 1: a few colors... Well, really a little bit!
+int my_actual_color_code_set = 0;
+color_codes_t color_codes[2][SLCC_NB_CODES] = {{
+// my_actual_color_code_set = 0
+	{*wxBLACK,	*wxWHITE},	// SLCC_NORMAL
+	{*wxWHITE,	*wxBLACK},	// SLCC_EDITED_ITEM
+	{*wxWHITE,	*wxBLACK},	// SLCC_NEXT_INSTRUCTION
+	{*wxBLACK,	*wxWHITE}	// SLCC_ERROR
+}, {
+// my_actual_color_code_set = 1
 	{*wxBLACK,	*wxWHITE},	// SLCC_NORMAL
 	{*wxWHITE,	*wxBLACK},	// SLCC_EDITED_ITEM
 	{*wxBLACK,	*wxGREEN},	// SLCC_NEXT_INSTRUCTION
 	{*wxRED,	*wxWHITE}	// SLCC_ERROR
-};
+}};
 
-static const wxColor slcc_to_bg_wxColor(const slcc_t& color_code) { return color_codes[color_code].bg; }
-static const wxColor slcc_to_fg_wxColor(const slcc_t& color_code) { return color_codes[color_code].fg; }
+
+static const wxColor slcc_to_bg_wxColor(const slcc_t& color_code) {
+	return color_codes[my_actual_color_code_set][color_code].bg;
+}
+static const wxColor slcc_to_fg_wxColor(const slcc_t& color_code) {
+	return color_codes[my_actual_color_code_set][color_code].fg;
+}
 
 
 //

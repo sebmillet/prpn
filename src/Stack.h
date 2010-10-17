@@ -621,6 +621,10 @@ public:
 	virtual st_err_t op_div_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_div(this, ret); }
 	virtual st_err_t op_mul(StackItemReal*, StackItem*&);
 	virtual st_err_t op_mul(StackItemCplx*, StackItem*&);
+	virtual st_err_t op_mul(StackItemMatrixReal*, StackItem*&);
+	virtual st_err_t op_mul(StackItemMatrixCplx*, StackItem*&);
+	virtual st_err_t op_div(StackItemMatrixReal*, StackItem*&);
+	virtual st_err_t op_div(StackItemMatrixCplx*, StackItem*&);
 	virtual st_err_t op_add(StackItemMatrixReal*, StackItem*&);
 	virtual st_err_t op_sub(StackItemMatrixReal*, StackItem*&);
 	virtual st_err_t op_add(StackItemMatrixCplx*, StackItem*&);
@@ -675,6 +679,10 @@ public:
 	virtual st_err_t op_div_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_div(this, ret); }
 	virtual st_err_t op_mul(StackItemReal*, StackItem*&);
 	virtual st_err_t op_mul(StackItemCplx*, StackItem*&);
+	virtual st_err_t op_mul(StackItemMatrixReal*, StackItem*&);
+	virtual st_err_t op_mul(StackItemMatrixCplx*, StackItem*&);
+	virtual st_err_t op_div(StackItemMatrixReal*, StackItem*&);
+	virtual st_err_t op_div(StackItemMatrixCplx*, StackItem*&);
 	virtual st_err_t op_add(StackItemMatrixCplx*, StackItem*&);
 	virtual st_err_t op_sub(StackItemMatrixCplx*, StackItem*&);
 	virtual st_err_t op_add(StackItemMatrixReal*, StackItem*&);
