@@ -14,6 +14,7 @@
   // To display HTML pages
 #include "wx/wxhtml.h"
 #include "wx/statline.h"
+#include "wx/clipbrd.h"
 
 #include "MyIntl.h"
 
@@ -44,11 +45,6 @@ struct color_codes_t {
 	wxColor bg;
 };
 
-color_codes_t color_codes[SLCC_NB_CODES] = {
-	{*wxBLACK, *wxWHITE},
-	{*wxWHITE, *wxBLACK}
-};
-
 static const wxString const_char_to_wxString(const char *sz) {
 	if (E->get_actual_encoding() == MYENCODING_UTF8)
 		return wxString::FromUTF8(sz);
@@ -70,40 +66,40 @@ static const string wxString_to_string(const wxString& wxs) {
 		throw(CalcFatal(__FILE__, __LINE__, "wxString_to_string(): unknown encoding returned by E->get_actual_encoding()"));
 }
 
-static const wxColor slcc_to_bg_wxColor(const slcc_t& color_code) { return color_codes[color_code].bg; }
-static const wxColor slcc_to_fg_wxColor(const slcc_t& color_code) { return color_codes[color_code].fg; }
-
 
 //
 // UI SETTINGS CONSTANTS
 //
 
   // Common
-#define MY_CALCULATOR_BACKGROUND_COLOR	(wxColour(0xD0, 0xD0, 0xD0))
-  // Stack
-#define STACK_MIN_LINES					1
-#define MY_TYPEIN_BACKGROUND_COLOUR		(wxColour(0xFA, 0xFA, 0xFA))
-#define MY_TYPEIN_FOREGROUND_COLOUR		(*wxBLACK)
+#define MY_CALCULATOR_BACKGROUND_COLOR	(wxColour(0xE0, 0xE0, 0xE0))
+  // Status area
+#define MY_STATUS_BORDER				0
+#define MY_STATUS_BORDER_STYLE			wxBORDER_NONE
+#define MY_STATUS_BACKGROUND_COLOUR		(wxColour(0xFA, 0xFA, 0xFA))
+//#define MY_STATUS_BACKGROUND_COLOUR		(*wxRED)
+#define MY_STATUS_WINDOW_ITEM_H_MARGIN	4
+#define MY_STATUS_WINDOW_ITEM_V_MARGIN	2
   // Path
-#define MY_PATH_BORDER					4
+#define MY_PATH_BORDER					0
 #define MY_PATH_BORDERSTYLE 			wxBORDER_NONE
 #define MY_PATH_FONTSIZE				10
 #define MY_PATH_FONTWEIGHT				wxFONTWEIGHT_NORMAL
-#define MY_PATH_BACKGROUND_COLOUR		(wxColour(0xD0, 0xD0, 0xD0))
+#define MY_PATH_BACKGROUND_COLOUR		MY_STATUS_BACKGROUND_COLOUR
 #define MY_PATH_FOREGROUND_COLOUR		(*wxBLACK)
-  // Status area
-#define MY_STATUS_BORDER				0
-#define MY_STATUS_BORDER_STYLE			wxBORDER_NONE	// wxSUNKEN_BORDER
-  // wxTextCtrl to type in values
-#define MY_TYPEIN_BORDERSTYLE 			wxBORDER_NONE
-#define MY_TYPEIN_BORDERSIZE  			0
-#define MY_TYPEIN_FONTSIZE				14
-#define MY_TYPEIN_FONTWEIGHT			wxFONTWEIGHT_NORMAL
   // Stack area
 #define MY_STACK_BORDERSTYLE 			wxBORDER_NONE
 #define MY_STACK_BORDERSIZE  			0
 #define MY_STACK_FONTSIZE				14
 #define MY_STACK_FONTWEIGHT				wxFONTWEIGHT_NORMAL
+#define STACK_MIN_LINES					1
+  // wxTextCtrl to type in values
+#define MY_TYPEIN_BACKGROUND_COLOUR		(*wxWHITE)
+#define MY_TYPEIN_FOREGROUND_COLOUR		(*wxBLACK)
+#define MY_TYPEIN_BORDERSTYLE 			wxBORDER_NONE
+#define MY_TYPEIN_BORDERSIZE  			0
+#define MY_TYPEIN_FONTSIZE				14
+#define MY_TYPEIN_FONTWEIGHT			wxFONTWEIGHT_NORMAL
   // Buttons layout
 #define MY_BTN_FONTSIZE					11
 #define MY_BTNCOLUMN_BORDER				4
@@ -122,6 +118,16 @@ static const wxColor slcc_to_fg_wxColor(const slcc_t& color_code) { return color
 #define MY_HELP_FONTWEIGHT				wxFONTWEIGHT_NORMAL
 #define MY_HELP_OKBUTTON_MARGIN			5
 #define MY_HELP_OKBUTTON_ALIGN			wxALIGN_RIGHT
+
+color_codes_t color_codes[SLCC_NB_CODES] = {
+	{*wxBLACK,	*wxWHITE},	// SLCC_NORMAL
+	{*wxWHITE,	*wxBLACK},	// SLCC_EDITED_ITEM
+	{*wxBLACK,	*wxGREEN},	// SLCC_NEXT_INSTRUCTION
+	{*wxRED,	*wxWHITE}	// SLCC_ERROR
+};
+
+static const wxColor slcc_to_bg_wxColor(const slcc_t& color_code) { return color_codes[color_code].bg; }
+static const wxColor slcc_to_fg_wxColor(const slcc_t& color_code) { return color_codes[color_code].fg; }
 
 
 //
@@ -181,16 +187,17 @@ static int my_get_max_stack() {
 //
 
 class StatusWindow: public wxScrolledWindow {
+	int horoffset_exec;
+	wxBitmap exec_norun;
+	wxBitmap exec_run;
+	int horoffset_arrow;
     wxBitmap shiftsel;
 	wxBitmap shiftuns;
-	int shiftx_unit;
+	int horoffset_unit;
 	wxBitmap unit_bin;
 	wxBitmap unit_oct;
 	wxBitmap unit_dec;
 	wxBitmap unit_hex;
-	int shiftx_exec;
-	wxBitmap exec_norun;
-	wxBitmap exec_run;
 public:
     StatusWindow(wxWindow *parent, wxWindowID, const wxPoint &pos, const wxSize &size);
     void OnPaint(wxPaintEvent& event);
@@ -204,28 +211,38 @@ END_EVENT_TABLE()
 
 StatusWindow::StatusWindow(wxWindow *parent, wxWindowID id, const wxPoint &pos, const wxSize &size)
 		: wxScrolledWindow(parent, id, pos, size, MY_STATUS_BORDER_STYLE),
+		horoffset_exec(0),
+		exec_norun(exec_norun_xpm), exec_run(exec_run_xpm),
+		horoffset_arrow(0),
 		shiftsel(shiftsel_xpm), shiftuns(shiftuns_xpm),
-		shiftx_unit(0),
-		unit_bin(unit_bin_xpm), unit_oct(unit_oct_xpm), unit_dec(unit_dec_xpm), unit_hex(unit_hex_xpm),
-		shiftx_exec(0),
-		exec_norun(exec_norun_xpm), exec_run(exec_run_xpm) {
+		horoffset_unit(0),
+		unit_bin(unit_bin_xpm), unit_oct(unit_oct_xpm), unit_dec(unit_dec_xpm), unit_hex(unit_hex_xpm) {
     SetBackgroundColour(MY_CALCULATOR_BACKGROUND_COLOR);
-	int w = shiftsel.GetWidth();
+	int w = exec_run.GetWidth();
+	int w2 = shiftsel.GetWidth();
 	int h = shiftsel.GetHeight();
-	int w2 = unit_bin.GetWidth();
-	int w3 = exec_run.GetWidth();
-	SetSize(wxSize(w + w2 + w3, h));
-	shiftx_unit = w;
-	shiftx_exec = w + w2;
+	int w3 = unit_bin.GetWidth();
+	horoffset_exec = MY_STATUS_WINDOW_ITEM_H_MARGIN;
+	horoffset_arrow = w + 2 * MY_STATUS_WINDOW_ITEM_H_MARGIN;
+	horoffset_unit = w + w2 + 3 * MY_STATUS_WINDOW_ITEM_H_MARGIN;
+	SetSize(wxSize(horoffset_unit + w3, h + 2 * MY_STATUS_WINDOW_ITEM_V_MARGIN));
 }
 
 void StatusWindow::OnPaint(wxPaintEvent&) {
     wxPaintDC dc(this);
     PrepareDC(dc);
-	if (ui_dsl.get_status_shift())
-		dc.DrawBitmap(shiftsel, 0, 0);
+
+	dc.SetBackgroundMode(wxSOLID);
+	SetBackgroundColour(MY_STATUS_BACKGROUND_COLOUR);
+
+	if (ui_is_a_program_halted())
+		dc.DrawBitmap(exec_run, horoffset_exec, MY_STATUS_WINDOW_ITEM_V_MARGIN);
 	else
-		dc.DrawBitmap(shiftuns, 0, 0);
+		dc.DrawBitmap(exec_norun, horoffset_exec, MY_STATUS_WINDOW_ITEM_V_MARGIN);
+	if (ui_dsl.get_status_shift())
+		dc.DrawBitmap(shiftsel, horoffset_arrow, MY_STATUS_WINDOW_ITEM_V_MARGIN);
+	else
+		dc.DrawBitmap(shiftuns, horoffset_arrow, MY_STATUS_WINDOW_ITEM_V_MARGIN);
 	wxBitmap *u;
 	switch (ui_dsl.get_base()) {
 		case 2:
@@ -243,11 +260,7 @@ void StatusWindow::OnPaint(wxPaintEvent&) {
 		default:
 			throw(CalcFatal(__FILE__, __LINE__, "StatusWindow::OnPaint(): ui_dsl.get_base() returned an unknown value"));
 	}
-	dc.DrawBitmap(*u, shiftx_unit, 0);
-	if (ui_is_a_program_halted())
-		dc.DrawBitmap(exec_run, shiftx_exec, 0);
-	else
-		dc.DrawBitmap(exec_norun, shiftx_exec, 0);
+	dc.DrawBitmap(*u, horoffset_unit, MY_STATUS_WINDOW_ITEM_V_MARGIN);
 }
 
 
@@ -305,6 +318,7 @@ class MyFrame: public wxFrame {
 	int nb_btn_descriptions;
 
 	StatusWindow *stwin;
+	wxWindow *w_path;
 	wxStaticText *path;
 	int path_width;
 
@@ -369,14 +383,15 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size, 
 
 	  // Status line (red arrow to show shift pressed, ...)
 	stwin = new StatusWindow(this, wxID_ANY, wxPoint(wxDefaultPosition), wxSize(wxDefaultSize));
-	topSizer->Add(stwin, 0, wxALL, MY_STATUS_BORDER);
+	topSizer->Add(stwin, 0, wxLEFT | wxRIGHT | wxTOP | wxEXPAND, MY_STATUS_BORDER);
 
 	  // Path
-	path = new wxStaticText(this, wxID_ANY, _T(""), wxPoint(wxDefaultPosition), wxSize(wxDefaultSize), MY_PATH_BORDERSTYLE);
+	w_path = new wxWindow(this, wxID_ANY, wxPoint(wxDefaultPosition), wxSize(wxDefaultSize));
+	path = new wxStaticText(w_path, wxID_ANY, _T(""), wxPoint(wxDefaultPosition), wxSize(wxDefaultSize), MY_PATH_BORDERSTYLE);
 	path->SetFont(wxFont(MY_PATH_FONTSIZE, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, MY_PATH_FONTWEIGHT, 0));
-	path->SetBackgroundColour(MY_PATH_BACKGROUND_COLOUR);
 	path->SetForegroundColour(MY_PATH_FOREGROUND_COLOUR);
-	topSizer->Add(path, 0, wxALL, MY_PATH_BORDER);
+	w_path->SetBackgroundColour(MY_PATH_BACKGROUND_COLOUR);
+	topSizer->Add(w_path, 0, wxLEFT | wxRIGHT | wxBOTTOM | wxEXPAND, MY_PATH_BORDER);
 
 	  // Stack items
 	build_dispStack();
@@ -496,6 +511,16 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size, 
 		tmp->Destroy();
 	} while (wtmp < w_ref);
 	path_width = l - 1;
+
+//    int ww, hh;
+//    stwin->GetSize(&ww, &hh);
+//    stwin->SetSize(w_ref, hh + 50);
+//    int fake_w, fake_h;
+//    w_path->SetSize(w_ref, h_ref);
+
+//    w_path->GetSize(&fake_w, &fake_h);
+//    debug_write_i("Fake_w = %i", fake_w);
+//    debug_write_i("Fake_h = %i", fake_h);
 
 	textTypein->SetFocus();
 }
@@ -704,6 +729,8 @@ public:
 	virtual bool want_to_refresh_display();
 	virtual void display_help(const int&);
 	virtual const char *get_next_instruction_prefix();
+	virtual void copy_text(const char *);
+	virtual const char *paste_text();
 };
 
 
@@ -868,6 +895,32 @@ bool UiImplWx::want_to_refresh_display() { return false; }
 void UiImplWx::display_help(const int& dh) { f->display_help(dh); }
 
 const char *UiImplWx::get_next_instruction_prefix() { return next_instruction_prefix; }
+
+void UiImplWx::copy_text(const char *sz) {
+	if (wxTheClipboard->Open()) {
+		wxTheClipboard->SetData(new wxTextDataObject(const_char_to_wxString(sz)));
+		wxTheClipboard->Close();
+	}
+}
+
+string paste_repository = "";
+const char *empty_string = "";
+
+const char *UiImplWx::paste_text() {
+	const char *sz = NULL;
+	if (wxTheClipboard->Open()) {
+		if (wxTheClipboard->IsSupported(wxDF_TEXT)) {
+			wxTextDataObject data;
+			wxTheClipboard->GetData(data);
+			paste_repository = wxString_to_string(data.GetText());
+			sz = paste_repository.c_str();
+		}  
+		wxTheClipboard->Close();
+	}
+	if (sz == NULL)
+		sz = empty_string;
+	return sz;
+}
 
 
 //

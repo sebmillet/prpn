@@ -2937,10 +2937,14 @@ st_err_t StackItemString::op_greater_or_equal(StackItemString *arg1, StackItem*&
 	return ST_ERR_OK;
 }
 
-st_err_t read_rc_file(TransStack*, const tostring_t&, const std::string&, const std::string&, const bool&, std::string&, std::string&, const int& = -1);
+st_err_t read_rc_file(TransStack*, const tostring_t&, std::istream&, const char *sz, const bool&, std::string&, std::string&, const int& = -1);
 st_err_t StackItemString::op_read(TransStack& ts) {
 	string error_l1, error_l2;
-	st_err_t c = read_rc_file(&ts, TOSTRING_PORTABLE, s, s, false, error_l1, error_l2, 1);
+
+	ifstream ifs(s.c_str(), ifstream::in);
+	st_err_t c = read_rc_file(&ts, TOSTRING_PORTABLE, ifs, s.c_str(), false, error_l1, error_l2, 1);
+	ifs.close();
+
 	return c;
 }
 

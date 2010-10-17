@@ -25,8 +25,9 @@ bool ui_get_message_flag();
 void ui_disp(int, const std::string&);
 void ui_set_error(const std::string&, const std::string&);
 bool ui_is_a_program_halted();
-
 void ui_cllcd();
+//void ui_copy();
+//void ui_paste();
 
 const std::string stack_get_help(const int&);
 
@@ -66,6 +67,8 @@ typedef enum {BEVAL_NULL,
 	BEVAL_BTN_VUP,		// UI-specific: VIEW UP button
 	BEVAL_BTN_VDOWN,	// UI-specific: VIEW DOWN button
 	BEVAL_BTN_EDIT,		// UI-specific: EDIT button
+	BEVAL_BTN_COPY,		// UI-specific: COPY button
+	BEVAL_BTN_PASTE,	// UI-specific: PASTE button
 	BEVAL_BTN_NEG,		// UI-specific: +/- button
 	BEVAL_BTN_HELP		// UI-specific: HELP button
 } beval_t;
@@ -141,7 +144,7 @@ char ui_get_char_decimal_sep();
 //
 
   // SLCC stands for "Set Line Color Code"
-typedef enum {SLCC_NORMAL, SLCC_INVERTED, SLCC_NB_CODES} slcc_t;
+typedef enum {SLCC_NORMAL, SLCC_EDITED_ITEM, SLCC_NEXT_INSTRUCTION, SLCC_ERROR, SLCC_NB_CODES} slcc_t;
 
 class UiImpl {
 	UiImpl(const UiImpl&);
@@ -171,6 +174,8 @@ public:
 	virtual bool want_to_refresh_display() = 0;
 	virtual void display_help(const int&) = 0;
 	virtual const char *get_next_instruction_prefix() = 0;
+	virtual void copy_text(const char *) = 0;
+	virtual const char *paste_text() = 0;
 };
 
 #endif	// UI_H

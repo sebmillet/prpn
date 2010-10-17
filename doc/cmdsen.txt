@@ -100,6 +100,11 @@ R->B           (1): Convert a real into a binary integer
 RCLF           (0): Save flag states in a binary integer
 STOF           (1): Read flag states from a binary integer
 WAIT           (1): Wait a number of seconds
+HALT           (0): Halt program execution
+SST            (0): Execute one step in the program
+ABORT          (0): Abort current program execution
+KILL           (0): Abort all programs execution
+CONT           (0): Resume program execution
 STD            (0): Set reals display to 'standard'
 SCI            (1): Set reals display to 'scientific'
 FIX            (1): Set reals display to 'fixed number of decimals'
@@ -134,3 +139,4 @@ Procedures
 Program                  << >>          << DUP + SWAP >>
 Algebraic                ' '            'X+2*Y=Z'
 
+{ 1 2 "allo bravo" << DUP EVAL >> }

@@ -11,6 +11,7 @@
 #include <iostream>
 
 static const char *next_instruction_prefix = "*** ";
+static const char *empty_const_char = "";
 
 using namespace std;
 
@@ -60,6 +61,8 @@ public:
 	virtual bool want_to_refresh_display();
 	virtual void display_help(const int&);
 	virtual const char *get_next_instruction_prefix();
+	virtual void copy_text(const char *);
+	virtual const char *paste_text();
 };
 
 
@@ -116,6 +119,12 @@ bool UiImplConsole::want_to_refresh_display() {
 void UiImplConsole::display_help(const int& dh) { cout << stack_get_help(dh); }
 
 const char *UiImplConsole::get_next_instruction_prefix() { return next_instruction_prefix; }
+
+void UiImplConsole::copy_text(const char *sz) { }
+
+const char *UiImplConsole::paste_text() {
+	return empty_const_char;
+}
 
 void UiImplConsole::neg() { }
 

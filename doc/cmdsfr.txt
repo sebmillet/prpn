@@ -100,6 +100,11 @@ R->B           (1): Convertis un réel en entier binaire
 RCLF           (0): Enregistre l'état des options dans un entier binaire
 STOF           (1): Récupère l'état des options depuis un entier binaire
 WAIT           (1): Pause d'une durée définie en secondes
+HALT           (0): Halt program execution
+SST            (0): Execute one step in the program
+ABORT          (0): Abort current program execution
+KILL           (0): Abort all programs execution
+CONT           (0): Resume program execution
 STD            (0): Règle l'affichage des réels à 'standard'
 SCI            (1): Règle l'affichage des réels à 'scientifique'
 FIX            (1): Règle l'affichage des réels à 'nombre de décimales fixe'
@@ -134,3 +139,4 @@ Programmes
 Programme                << >>          << DUP + SWAP >>
 Algébrique               ' '            'X+2*Y=Z'
 
+{ 1 2 "allo bravo" << DUP EVAL >> }

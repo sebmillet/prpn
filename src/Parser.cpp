@@ -1081,21 +1081,20 @@ st_err_t parser_str_to(TransStack& ts, string str, string& cmd_err) {
 	return c;
 }
 
-st_err_t read_rc_file(TransStack* ts, const tostring_t& tostring, const string& filename_real, const string& filename_display,
+st_err_t read_rc_file(TransStack* ts, const tostring_t& tostring, istream& is, const char *filename_display,
 		const bool& do_eval, string& error_l1, string& error_l2, const int& limit_number_of_items) {
 	st_err_t c = ST_ERR_OK;
 	error_l1 = "";
 	error_l2 = "";
-	ifstream ifs(filename_real.c_str(), ifstream::in);
-	if (ifs.good()) {
+	if (is.good()) {
 
 // 1. Read items
 
 		debug_write("Reading:");
-		debug_write(filename_real.c_str());
+		debug_write(filename_display);
 
 		vector<SIO> vs;
-		Itemiser* itemise = new Itemiser(&ifs, tostring);
+		Itemiser* itemise = new Itemiser(&is, tostring);
 		ParserError par = {false, 0, 0, 0, 0};
 		SIO s;
 		bool r = true;
@@ -1103,17 +1102,25 @@ st_err_t read_rc_file(TransStack* ts, const tostring_t& tostring, const string& 
 		int n = 0;
 		while (!par.set && r && (limit_number_of_items < 0 || n < limit_number_of_items)) {
 			r = itemise->get_item(par, s.si);
-			if (!par.set && r)
+			if (!par.set && r) {
 				vs.push_back(SIO(TSO_OUTSIDE_TS, s.si));
+
+				debug_write_i("Item #%i", n);
+				debug_write(simple_string(s.si).c_str());
+			}
 			n++;
 		}
 		delete itemise;
+
+		debug_write_i("number of items read: %i", n);
+
 		if (par.set) {
 			cmd_err = "Syntax";
 			c = ST_ERR_SYNTAX_ERROR;
 		}
 		if (par.set || (c != ST_ERR_OK && c != ST_ERR_EXIT)) {
-			error_l1 = filename_display + ":";
+			error_l1 = filename_display;
+			error_l1.append(":");
 			error_l2 = cmd_err + " Error, line " + integer_to_string(par.line);
 		}
 
@@ -1138,7 +1145,6 @@ st_err_t read_rc_file(TransStack* ts, const tostring_t& tostring, const string& 
 	} else {
 		c = ST_ERR_FILE_READ_ERROR;
 	}
-	ifs.close();
 	return c;
 }
 

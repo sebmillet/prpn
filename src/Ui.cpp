@@ -177,8 +177,8 @@ const BtnDescription btn_descriptions[] = {
 	{-1, "", 0, "", "", 0, ""},
 	{3, "STO", 0, "STO", "RCL", 0, "RCL"},
 	{4, "4", 0, "4", "PURGE", 0, "PURGE"},
-	{4, "5", 0, "5", "", 0, ""},
-	{4, "6", 0, "6", "", 0, ""},
+	{4, "5", 0, "5", "COPY", 0, "_COPY"},
+	{4, "6", 0, "6", "PASTE", 0, "_PASTE"},
 	{4, "*", 0, "*", "^", 0, "^"},
 	{-1, "", 0, "", "", 0, ""},
 	{3, "EVAL", 80, "EVAL", "ABOUT", 0, "_ABOUT"},
@@ -196,9 +196,22 @@ const BtnDescription btn_descriptions[] = {
 
 static map<string, beval_t> cmd_evals;
 
+static void write_stack_to_stream(ostream& os) {
+	const StackItem *csi;
+	int n = ui_get_nb_items_in_stack();
+	for (int i = n; i >= 1; i--) {
+		csi = ts->transstack_get_const_si(i);
+		write_si(TOSTRING_PORTABLE, csi, os);
+	}
+}
+
 static void readrc_1file(const string& filename_real, const string& filename_display) {
 	string error_l1, error_l2;
-	st_err_t c = read_rc_file(ts, TOSTRING_PORTABLE, filename_real, filename_display, true, error_l1, error_l2);
+
+	ifstream ifs(filename_real.c_str(), ifstream::in);
+	st_err_t c = read_rc_file(ts, TOSTRING_PORTABLE, ifs, filename_display.c_str(), true, error_l1, error_l2);
+	ifs.close();
+
 	if (c == ST_ERR_FILE_READ_ERROR) {
 		if (os_file_exists(filename_real.c_str())) {
 			ui_set_error(filename_display + ":", "Could not open");
@@ -265,12 +278,7 @@ static void writerc() {
 		string f = get_rclf_portable_string();
 		ofs << f << " STOF\n";
 		  // Stack items
-		const StackItem *csi;
-		int n = ui_get_nb_items_in_stack();
-		for (int i = n; i >= 1; i--) {
-			csi = ts->transstack_get_const_si(i);
-			write_si(TOSTRING_PORTABLE, csi, ofs);
-		}
+		write_stack_to_stream(ofs);
 	} else {
 		debug_write("Unable to open:");
 		debug_write(osd->get_dir(OSF_STACKRC).c_str());
@@ -322,6 +330,8 @@ void ui_init() {
 	cmd_evals["_VDOWN"] = BEVAL_BTN_VDOWN;
 	cmd_evals["_NEG"] = BEVAL_BTN_NEG;
 	cmd_evals["_EDIT"] = BEVAL_BTN_EDIT;
+	cmd_evals["_COPY"] = BEVAL_BTN_COPY;
+	cmd_evals["_PASTE"] = BEVAL_BTN_PASTE;
 	cmd_evals["_HELP"] = BEVAL_BTN_HELP;
 	  // Special case: ENTER
 	cmd_evals[""] = BEVAL_ALWAYS;	// Corresponds to the ENTER button
@@ -578,19 +588,21 @@ static void refresh_stack(const int& enforced_nb_stack_elems_to_display, const b
 		slcc_t color_code;
 		for (i = 1; i <= i_upper && !no_more_lines; i++) {
 			color_code = SLCC_NORMAL;
-			if (is_displaying_error && i == 1)
+			if (is_displaying_error && i == 1) {
+				color_code = SLCC_ERROR;
 				ps = &display_error_l1;
-			else if (is_displaying_error && i == 2 && !display_error_l2.empty())
+			} else if (is_displaying_error && i == 2 && !display_error_l2.empty()) {
+				color_code = SLCC_ERROR;
 				ps = &display_error_l2;
-			else if (!ts->a_program_is_halted() || i != 1) {
+			} else if (!ts->a_program_is_halted() || i != 1) {
 				l = ui_get_ts_display_line(i, recalc, no_more_lines, item_number);
-				color_code = (get_item_number_being_edited() == item_number ? SLCC_INVERTED : SLCC_NORMAL);
+				color_code = (get_item_number_being_edited() == item_number ? SLCC_EDITED_ITEM : SLCC_NORMAL);
 				ps = &l;
 			} else {
 				ts->get_next_instruction(l);
 				l.insert(0, ui_impl->get_next_instruction_prefix());
 				ui_string_trim(l, ui_dsl.get_width(), &ui_dsl);
-				color_code = SLCC_INVERTED;
+				color_code = SLCC_NEXT_INSTRUCTION;
 				ps = &l;
 			}
 			disp[i - 1].color_code = color_code;
@@ -634,6 +646,27 @@ static void set_syntax_error(const int& col_start, const int& col_end, const int
 }
 
 int ui_get_nb_items_in_stack() { return ts->stack_get_count(); }
+
+static void ui_copy() {
+	ostringstream oss;
+	write_stack_to_stream(oss);
+	ui_impl->copy_text(oss.str().c_str());
+}
+
+static void ui_paste() {
+	string error_l1, error_l2;
+
+	const char *sz = ui_impl->paste_text();
+
+	debug_write("Clipboard:");
+	debug_write(sz);
+
+	istringstream iss(sz);
+	st_err_t c = read_rc_file(ts, TOSTRING_PORTABLE, iss, "Clipboard", false, error_l1, error_l2);
+
+	if (c != ST_ERR_OK && c != ST_ERR_EXIT)
+		ui_set_error(error_l1, error_l2);
+}
 
 void ui_reset_is_displaying_error() {
 	if (is_displaying_error) {
@@ -721,33 +754,36 @@ void ui_notify_button_pressed(const char *c) {
 	else if (beval == BEVAL_BTN_ON)
 		erase_input(true);
 	else if (beval == BEVAL_BTN_OFF) {
-		ui_set_status_shift(false);
 		ui_impl->quit();
 	} else if (beval == BEVAL_BTN_VUP) {
-		ui_set_status_shift(false);
 		ui_notify_key_pressed(UIK_UP);
 	} else if (beval == BEVAL_BTN_VDOWN) {
-		ui_set_status_shift(false);
 		ui_notify_key_pressed(UIK_DOWN);
 	} else if (beval == BEVAL_BTN_EDIT) {
-		ui_set_status_shift(false);
 		enter_edit_mode();
+	} else if (beval == BEVAL_BTN_COPY) {
+		if (get_item_number_being_edited() == 0)
+			ui_copy();
+	} else if (beval == BEVAL_BTN_PASTE) {
+		if (get_item_number_being_edited() == 0) {
+			ui_paste();
+			ui_set_recalc_stack_flag();
+		}
 	} else if (beval == BEVAL_BTN_HELP) {
-		ui_set_status_shift(false);
 		ui_impl->display_help(DH_MAIN);
 	} else if ((typein_status == TYPEIN_EMPTY || typein_status == TYPEIN_ANY || typein_status == TYPEIN_EXPRESSION ||
 					*c == '\0') &&
 				beval != BEVAL_NEVER &&
 				beval != BEVAL_NULL &&
 				(beval != BEVAL_NOT_IN_EXPRESSION || typein_status != TYPEIN_EXPRESSION)) {
-		ui_set_status_shift(false);
 		ui_flush_input(ui_impl->get_string(), c);
 	} else if (beval != BEVAL_NULL) {
 		if (beval != BEVAL_NEVER && !ui_impl->space_at_the_left_of_the_cursor())
 			ui_impl->insert_text(" ");
-		ui_set_status_shift(false);
 		ui_impl->insert_text(c);
 	}
+	if (beval != BEVAL_NULL && beval != BEVAL_BTN_SHIFT)
+		ui_set_status_shift(false);
 
 	if (beval != BEVAL_NULL)
 		ui_refresh_display();
