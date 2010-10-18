@@ -338,8 +338,9 @@ const string user_real_to_string(const real& r, const tostring_t& t, const bool&
 	return target2;
 }
 
-st_err_t real_check_bounds(const bool& can_be_zero, const int& sign, real& r, const bool& force_strict) {
+st_err_t real_check_bounds(const bool& can_be_zero, const int& sign, const real& r, real& res, const bool& force_strict) {
 	enum {VALID, OVERFLOW_NEG, OVERFLOW_POS, UNDERFLOW_NEG, UNDERFLOW_POS} status = VALID;
+	res = r;
 	if (errno == ERANGE)
 		status = (sign >= 0 ? OVERFLOW_POS : OVERFLOW_NEG);
 	else if (!can_be_zero && r == 0)
@@ -359,25 +360,25 @@ st_err_t real_check_bounds(const bool& can_be_zero, const int& sign, real& r, co
 			if (F->get(FL_OVERFLOW_OK) || force_strict)
 				return ST_ERR_OVERFLOW;
 			else
-				r = -MAXR;
+				res = -MAXR;
 			break;
 		case OVERFLOW_POS:
 			if (F->get(FL_OVERFLOW_OK) || force_strict)
 				return ST_ERR_OVERFLOW;
 			else
-				r = MAXR;
+				res = MAXR;
 			break;
 		case UNDERFLOW_NEG:
 			if (F->get(FL_UNDERFLOW_OK) || force_strict)
 				return ST_ERR_UNDERFLOW_NEG;
 			else
-				r = 0;
+				res = 0;
 			break;
 		case UNDERFLOW_POS:
 			if (F->get(FL_UNDERFLOW_OK) || force_strict)
 				return ST_ERR_UNDERFLOW_POS;
 			else
-				r = 0;
+				res = 0;
 			break;
 		default:
 			return ST_ERR_INTERNAL;
@@ -427,7 +428,23 @@ real get_max_real_from_bin_size(const int& m) {
 
 // Arithmetic functions
 
+// * ***************************************************************** *
+// *                                                                   *
+// *                           WARNING                                 *
+// *                                                                   *
+// *            IMPORTANT NOTE ABOUT NUMERIC_* FUNCTIONS               *
+// *                                                                   *
+// * The functions MUST be built in a such a way that res can point to *
+// * the same object as the first const real& (r or r1 in general.)    *
+// *                                                                   *
+// * This is why res1 intermediate is always used, as a precaution. In *
+// * many cases it is useless but better stick to a unique, safe,      *
+// * standard.                                                         *
+// *                                                                   *
+// * ***************************************************************** *
+
 void numeric_add(const real& r1, const real& r2, st_err_t& c, real& res) {
+	real res1;
 	int s1 = real_sign(r1);
 	int s2 = real_sign(r2);
 	int s;
@@ -441,11 +458,12 @@ void numeric_add(const real& r1, const real& r2, st_err_t& c, real& res) {
 		s = (r1 >= -r2 ? 1 : s2);
 	else
 		s = s2;
-	res = r1 + r2;
-	c = real_check_bounds(true, s, res);
+	res1 = r1 + r2;
+	c = real_check_bounds(true, s, res1, res);
 }
 
 void numeric_sub(const real& r1, const real& r2, st_err_t& c, real& res) {
+	real res1;
 	int s1 = real_sign(r1);
 	int s2 = -real_sign(r2);
 	int s;
@@ -459,18 +477,20 @@ void numeric_sub(const real& r1, const real& r2, st_err_t& c, real& res) {
 		s = (r1 >= r2 ? 1 : s2);
 	else
 		s = s2;
-	res = r1 - r2;
-	c = real_check_bounds(true, s, res);
+	res1 = r1 - r2;
+	c = real_check_bounds(true, s, res1, res);
 }
 
 void numeric_mul(const real& r1, const real& r2, st_err_t& c, real& res) {
+	real res1;
 	if (c != ST_ERR_OK)
 		return;
-	res = r1 * r2;
-	c = real_check_bounds(r1 == 0 || r2 == 0, real_sign(r1) * real_sign(r2), res);
+	res1 = r1 * r2;
+	c = real_check_bounds(r1 == 0 || r2 == 0, real_sign(r1) * real_sign(r2), res1, res);
 }
 
 void numeric_div(const real& r1, const real& r2, st_err_t& c, real& res) {
+	real res1;
 	if (c != ST_ERR_OK)
 		return;
 	if (r2 == 0) {
@@ -479,104 +499,123 @@ void numeric_div(const real& r1, const real& r2, st_err_t& c, real& res) {
 		else if (F->get(FL_INFINITE))
 			c = ST_ERR_INFINITE_RESULT;
 		else {
-			res = (real_sign(r1) < 0 ? -MAXR : MAXR);
+			res1 = (real_sign(r1) < 0 ? -MAXR : MAXR);
 			c = ST_ERR_OK;
+			res = res1;
 		}
 	} else {
-		res = r1 / r2;
-		c = real_check_bounds(r1 == 0, real_sign(r1) * real_sign(r2), res);
+		res1 = r1 / r2;
+		c = real_check_bounds(r1 == 0, real_sign(r1) * real_sign(r2), res1, res);
 	}
 }
 
 void numeric_ln(const real& r, st_err_t& c, real& res) {
+	real res1;
 	if (c != ST_ERR_OK)
 		return;
 	if (r < 0)
 		c = ST_ERR_BAD_ARGUMENT_VALUE;
 	else if (r == 0) {
 		c = ST_ERR_OK;
-		res = -MAXR;
+		res1 = -MAXR;
 		if (F->get(FL_INFINITE))
 			c = ST_ERR_INFINITE_RESULT;
 	} else {
-		res = log(r);
-		c = real_check_bounds(true, res < 0 ? -1 : 1, res);
+		res1 = log(r);
+		c = real_check_bounds(true, res1 < 0 ? -1 : 1, res1, res);
 	}
 }
 
 void numeric_exp(const real& r, st_err_t& c, real& res) {
+	real res1;
 	if (c != ST_ERR_OK)
 		return;
-	res = exp(r);
+	res1 = exp(r);
 	if (errno && r < 0) {
-		res = 0;
+		res1 = 0;
 		errno = 0;
 	}
-	c = real_check_bounds(false, 1, res);
+	c = real_check_bounds(false, 1, res1, res);
 }
 
 void numeric_pow(const real& r1, const real& r2, st_err_t& c, real& res) {
+	real res1;
 	if (c != ST_ERR_OK)
 		return;
 	real res2;
 	  // a^b = exp(b * ln(a))
-	numeric_ln(r1, c, res);
-	numeric_mul(r2, res, c, res2);
-	numeric_exp(res2, c, res);
-
+	numeric_ln(r1, c, res1);
+	numeric_mul(r2, res1, c, res2);
+	numeric_exp(res2, c, res1);
+	res = res1;
 }
 
 void numeric_cos(const real& r, st_err_t& c, real& res) {
+	real res1;
 	if (c != ST_ERR_OK)
 		return;
-	res = cos(r);
+	res1 = cos(r);
+	res = res1;
 }
 
 void numeric_acos(const real& r, st_err_t& c, real& res) {
+	real res1;
 	if (c != ST_ERR_OK)
 		return;
-	res = acos(r);
+	res1 = acos(r);
 	if (errno == ERANGE)
 		c = ST_ERR_BAD_ARGUMENT_VALUE;
+	else
+		res = res1;
 }
 
 void numeric_sin(const real& r, st_err_t& c, real& res) {
+	real res1;
 	if (c != ST_ERR_OK)
 		return;
-	res = sin(r);
+	res1 = sin(r);
+	res = res1;
 }
 
 void numeric_asin(const real& r, st_err_t& c, real& res) {
+	real res1;
 	if (c != ST_ERR_OK)
 		return;
-	res = asin(r);
+	res1 = asin(r);
 	if (errno == ERANGE)
 		c = ST_ERR_BAD_ARGUMENT_VALUE;
+	else
+		res = res1;
 }
 
 void numeric_tan(const real& r, st_err_t& c, real& res) {
+	real res1;
 	if (c != ST_ERR_OK)
 		return;
-	res = tan(r);
-	c = real_check_bounds(true, res >= 0 ? 1 : -1, res);
+	res1 = tan(r);
+	c = real_check_bounds(true, res >= 0 ? 1 : -1, res1, res);
 }
 
 void numeric_atan(const real& r, st_err_t& c, real& res) {
+	real res1;
 	if (c != ST_ERR_OK)
 		return;
-	res = atan(r);
+	res1 = atan(r);
 	if (errno == ERANGE)
 		c = ST_ERR_BAD_ARGUMENT_VALUE;
+	else
+		res = res1;
 }
 
 void numeric_sqrt(const real& r, st_err_t& c, real& res) {
+	real res1;
 	if (c != ST_ERR_OK)
 		return;
 	if (r < 0)
 		c = ST_ERR_BAD_ARGUMENT_VALUE;
 	else {
-		res = sqrt(r);
-		c = real_check_bounds(r == 0, 1, res);
+		res1 = sqrt(r);
+		c = real_check_bounds(r == 0, 1, res1, res);
 	}
 }
 
@@ -1134,15 +1173,65 @@ template<class Scalar> void debug_matrix_to_string(Matrix<Scalar> *pmat, int *re
 	debug_write(s.c_str());
 }
 
+  //
+  // * ************************ *
+  // * Linear system resolution *
+  // * ************************ *
+  //
+  // (= a vector divided by a matrix)
+  // Done in two steps.
+  //
+  // STEP 1: go downward and rightward in the matrix, starting from the top left corner,
+  //         so as to zero the left column starting at the top left corner of the actual
+  //         sub-matrix.
+  //         At the end of step 1, the bottom left triangle of the matrix is zeroed.
+  //
+  // STEP 2: go upward to calculate the solutions one by one.
+  //
+  // Details about the algorithm
+  //
+  // If we are here at the i-nth iteration:
+  //
+  //   +------------------------------ ...       | v(1)
+  //   | ...                           ...       | ...
+  //   | ... +------------------------ ...       | v(i-1)
+  //   | ... |m(i,i)   m(i,i+1)   m(i,i+2)   ... | v(i)
+  //   | ... |m(i+1,i) m(i+1,i+1) m(i+1,i+2) ... | v(i+1)
+  //   | ... |...                            ... | ...
+  //
+  // Then for j taking all values in [i+1,n] and k taking all values in [i, n] (n being the number of
+  // lines = number of columns of the matrix), we do: m(j,k) := m(j,k)-m(i,k)*m(j,i)/m(i,i)
+  // This is a safe transformation as it consists in adding the line i to the lines j, with the
+  // coefficient m(j,i)/m(i,i). Obviously the same needs to be done in the values at the right:
+  // v(j) := v(j)-v(i)*m(j,i)/m(i,i).
+  // For the column i itself (when k == i), it results in the special case:
+  //     m(j,i) := m(j,i)-m(i,i)*m(j,i)/m(i,i) := m(j,i)-m(j,i) := 0.
+  // This way, the i column below the i line (the values m(j,i)) is all set to zero. Once done,
+  // the same transformation can be done one line below and obviously one column rigthward as the
+  // left value is null. At the end, all values in the bottom left rectangle (all m(j,i) with j>i)
+  // are equal to zero.
+  //
+  // Once done, the solution s(n) can be calculated immediately (s(n) := v(n)/m(n,n)) as all other
+  // values of the n-th line are equal to zero. Once calculated, v(n-1) can be calculated as well,
+  // and so on and so forth during STEP 2.
+  //
+  // The array reorder[] is necessary to switch lines of the matrix if need be - it is necessary
+  // if a value m(i,i) happens to be equal to zero.
+  // There can be situations where no switch is possible - if all values of a column happen to
+  // be null at some point. It means a value is not determined by the system. This algorithm
+  // doesn't deal with such a situation and simply returns an error.
+  //
 template<class Scalar> st_err_t Matrix<Scalar>::create_div(const Matrix<Scalar> *divis, Matrix<Scalar>*& mres) const {
-	debug_write("Matrix<Scalar>::create_div()");
-	debug_write_i("Matrix<Scalar>::create_div(): this->dimension = %i", static_cast<int>(dimension));
-	debug_write_i("Matrix<Scalar>::create_div(): divis->dimension = %i", static_cast<int>(divis->dimension));
+
+//    debug_write("Matrix<Scalar>::create_div()");
+//    debug_write_i("Matrix<Scalar>::create_div(): this->dimension = %i", static_cast<int>(dimension));
+//    debug_write_i("Matrix<Scalar>::create_div(): divis->dimension = %i", static_cast<int>(divis->dimension));
+
 	st_err_t c = ST_ERR_OK;
 	if (dimension == DIM_VECTOR && divis->dimension == DIM_MATRIX && nb_columns == divis->nb_columns &&
 			divis->nb_columns == divis->nb_lines) {
-		debug_write("Matrix<Scalar>::create_div(): AA");
 		int n = nb_columns;
+		debug_write_i("Matrix<Scalar>::create_div(): n = %i", n);
 		int reorder[n];
 		for (int i = 0; i < n; i++)
 			reorder[i] = i;
@@ -1153,40 +1242,97 @@ template<class Scalar> st_err_t Matrix<Scalar>::create_div(const Matrix<Scalar> 
 		vv->copy_linear(this);
 
 		int ii = -1;
-		int go_down = 0;
-		real t;
-		real best = 10;
-		for (int i = go_down; i < n; i++) {
-			t = (*(mm->mat)[i])[go_down].get_mantisse();
-			if (t < best && t > 0) {
-				best = t;
-				ii = i;
+
+// STEP 1: go down the matrix to zero the column below the top left corner, column by column
+
+		for (int go_down = 0; go_down < n - 1; go_down++) {
+			real t;
+			real best = 10;
+			for (int i = go_down; i < n; i++) {
+				t = (*(mm->mat)[i])[go_down].get_mantisse();
+				if (t < best && t > 0) {
+					best = t;
+					ii = i;
+				}
 			}
+			if (ii < 0)
+				ii = 0;
+			int temporary_integer = reorder[ii];
+			reorder[ii] = reorder[go_down];
+			reorder[go_down] = temporary_integer;
+
+//            debug_write("mm(0):");
+//            debug_matrix_to_string(mm, reorder);
+//            debug_write("vv(0):");
+//            debug_matrix_to_string(vv, reorder);
+
+			Scalar alpha, beta, top;
+			beta = (*(mm->mat)[reorder[go_down]])[go_down];
+
+	//        debug_write("beta = ");
+	//        debug_write(beta.to_string(TOSTRING_PORTABLE).c_str());
+
+			for (int i = go_down + 1; i < n; i++) {
+				alpha = (*(mm->mat)[reorder[i]])[go_down];
+
+	//            debug_write_i("i = %i", i);
+	//            debug_write("alpha = ");
+	//            debug_write(alpha.to_string(TOSTRING_PORTABLE).c_str());
+
+				(*(mm->mat)[reorder[i]])[go_down] = Scalar(Real(0));
+
+				  // Modify each cell of the matrix
+				for (int j = go_down + 1; j < n; j++) {
+					top = (*(mm->mat)[reorder[go_down]])[j];
+					top.mul(alpha, top);
+					top.div(beta, top);
+					(*(mm->mat)[reorder[i]])[j].sub(top, (*(mm->mat)[reorder[i]])[j]);
+				}
+
+				  // Modify the value of the vector the same way as cells done just before
+				top = (*(vv->mat)[0])[reorder[go_down]];
+				top.mul(alpha, top);
+				top.div(beta, top);
+				(*(vv->mat)[0])[reorder[i]].sub(top, (*(vv->mat)[0])[reorder[i]]);
+			}
+
+//            debug_write("mm(1):");
+//            debug_matrix_to_string(mm, reorder);
+//            debug_write("vv(1):");
+//            debug_matrix_to_string(vv, reorder);
+
 		}
-		if (ii < 0)
-			ii = 0;
-		int temporary_integer = reorder[ii];
-		reorder[ii] = reorder[go_down];
-		reorder[go_down] = temporary_integer;
 
-		Scalar alpha, beta;
-		beta = (*(mm->mat)[reorder[go_down]])[go_down];
-		for (int i = go_down + 1; i < n; i++) {
-			alpha = (*(mm->mat)[reorder[i]])[go_down];
-			for (int j = go_down + 1; i < n; i++) {
-				
+// STEP 2: calculate solutions, going upward in the matrix
+
+		Scalar t, m;
+		for (int go_up = n - 1; go_up >= 0; go_up--) {
+			t = (*(vv->mat)[0])[reorder[go_up]];
+			for (int i = go_up + 1; i < n; i++) {
+				m = (*(mm->mat)[reorder[go_up]])[i];
+				m.mul((*(vv->mat)[0])[reorder[i]], m);
+				t.sub(m, t);
 			}
+			t.div((*(mm->mat)[reorder[go_up]])[go_up], (*(vv->mat)[0])[reorder[go_up]]);
+		}
 
-		debug_write("mm:");
-		debug_matrix_to_string(mm, reorder);
-		debug_write("vv:");
-		debug_matrix_to_string(vv, reorder);
+		mres = new Matrix<Scalar>(DIM_VECTOR, 1, n, Scalar(Real(0)));
+		  // Re-order elements
+		for (int i = 0; i < n; i++)
+			(*(mres->mat)[0])[i] = (*(vv->mat)[0])[reorder[i]];
+
+//        debug_write("mm(n):");
+//        debug_matrix_to_string(mm, reorder);
+//        debug_write("vv(n):");
+//        debug_matrix_to_string(vv, reorder);
 
 		delete vv;
 		delete mm;
+
+		c = ST_ERR_OK;
 	} else
 		c = ST_ERR_INVALID_DIMENSION;
-	return ST_ERR_INVALID_DIMENSION;
+	return c;
 }
 
 template<class Scalar> void Matrix<Scalar>::trim() {

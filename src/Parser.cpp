@@ -228,8 +228,9 @@ element_t string_to_real(string tok, real& r, const tostring_t& t) {
 	string x = m_bc + PORTABLE_STRING_DECIMAL_SEPARATOR + m_ac + e;
 	istringstream iss(x);
 	prepare_arith();
-	iss >> r;
-	if (real_check_bounds(can_be_zero, 1, r, true) != ST_ERR_OK)
+	real r_tmp;
+	iss >> r_tmp;
+	if (real_check_bounds(can_be_zero, 1, r_tmp, r, true) != ST_ERR_OK)
 		return EL_ERROR;
 	if (m_sign < 0 && r != 0)
 		r = -r;
