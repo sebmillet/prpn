@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: prpn 0.5.0\n"
 "Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
-"POT-Creation-Date: 2010-10-03 17:22+0200\n"
-"PO-Revision-Date: 2010-10-03 17:24+0100\n"
+"POT-Creation-Date: 2010-10-20 22:57+0200\n"
+"PO-Revision-Date: 2010-10-20 22:58+0100\n"
 "Last-Translator: Sébastien Millet <sebastien.millet1@club-internet.fr>\n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
@@ -194,11 +194,11 @@ msgstr "Overflow (dépassement à l'infini) traité en exception"
 msgid "Infinite Result processed as an exception"
 msgstr "Infinite Result (résultat infini) traité en exception"
 
-#: src/UiImplWx.cpp:503
+#: src/UiImplWx.cpp:583
 msgid "Help"
 msgstr "Aide"
 
-#: src/UiImplWx.cpp:525 src/UiImplWx.cpp:538
+#: src/UiImplWx.cpp:605 src/UiImplWx.cpp:618
 msgid "OK"
 msgstr "OK"
 
@@ -602,189 +602,209 @@ msgstr "Récupère l'état des options depuis un entier binaire"
 msgid "Wait a number of seconds"
 msgstr "Pause d'une durée définie en secondes"
 
+#: src/Commands.h:130
+msgid "Halt program execution"
+msgstr "Suspends l'exécution du programme"
+
 #: src/Commands.h:131
+msgid "Execute one step in the program"
+msgstr "Exécute une instruction dans le programme"
+
+#: src/Commands.h:132
+msgid "Abort current program execution"
+msgstr "Arrête l'exécution du programme courant"
+
+#: src/Commands.h:133
+msgid "Abort all programs execution"
+msgstr "Arrête l'exécution de tous les programmes"
+
+#: src/Commands.h:134
+msgid "Resume program execution"
+msgstr "Reprends l'exécution du programme"
+
+#: src/Commands.h:136
 msgid "Set reals display to 'standard'"
 msgstr "Règle l'affichage des réels à 'standard'"
 
-#: src/Commands.h:132
+#: src/Commands.h:137
 msgid "Set reals display to 'scientific'"
 msgstr "Règle l'affichage des réels à 'scientifique'"
 
-#: src/Commands.h:133
+#: src/Commands.h:138
 msgid "Set reals display to 'fixed number of decimals'"
 msgstr "Règle l'affichage des réels à 'nombre de décimales fixe'"
 
-#: src/Commands.h:134
+#: src/Commands.h:139
 msgid "Set reals display to 'engineering'"
 msgstr "Règle l'affichage des réels à 'ingénieur'"
 
-#: src/Commands.h:135
+#: src/Commands.h:140
 msgid "Clear the screen"
 msgstr "Efface l'écran"
 
-#: src/Commands.h:136
-msgid "Clear the message flag"
-msgstr "Gèle l'affichage de la pile"
+#: src/Commands.h:141
+msgid "Clear the message flag => unfreeze stack display"
+msgstr "Désarme l'indicateur d'affichage => dégèle l'affichage de la pile"
 
-#: src/Commands.h:137
+#: src/Commands.h:142
 msgid "Display an item on a line of the screen"
 msgstr "Affiche une chaîne de caractères sur une ligne de l'écran"
 
-#: src/Commands.h:138
+#: src/Commands.h:143
 msgid "Read file and puts its content in the stack"
 msgstr "Lis le fichier et met son contenu dans la pile"
 
-#: src/Commands.h:139
+#: src/Commands.h:144
 msgid "Write the second item into the file named by the first item"
 msgstr ""
 "Écris le second élément de la pile dans le fichier nommé par le premier "
 "élément"
 
-#: src/Commands.h:140
+#: src/Commands.h:145
 msgid "Internal: tune real 'standard' display management"
 msgstr "Interne : règle la gestion de l'affichage des réels en mode 'standard'"
 
-#: src/Commands.h:141
+#: src/Commands.h:146
 msgid "Internal: set whether or not to keep a trailing dot in reals display"
 msgstr "Interne : détermine s'il faut afficher un point à la fin des réels"
 
-#: src/Commands.h:142
+#: src/Commands.h:147
 msgid "Undo last command, 50 levels by default"
 msgstr "Annule la dernière commande, 50 niveaux par défaut"
 
-#: src/Commands.h:143
+#: src/Commands.h:148
 msgid "Define number of undo levels"
 msgstr "Définis le nombre de niveaux d'annulation"
 
-#: src/Commands.h:144
+#: src/Commands.h:149
 msgid "Get number of undo levels"
 msgstr "Renvoie le nombre de niveaux d'annulations"
 
-#: src/Commands.h:151
+#: src/Commands.h:156
 msgid "Command (number of arguments): description"
 msgstr "Commande (nombre d'arguments) : description"
 
-#: src/Commands.h:161
+#: src/Commands.h:166
 msgid "Object type"
 msgstr "Type d'objet"
 
-#: src/Commands.h:162
+#: src/Commands.h:167
 msgid "Symbol"
 msgstr "Symbole"
 
-#: src/Commands.h:162
+#: src/Commands.h:167
 msgid "Example"
 msgstr "Exemple"
 
-#: src/Commands.h:166
+#: src/Commands.h:171
 msgid "Data"
 msgstr "Donnée"
 
-#: src/Commands.h:167
+#: src/Commands.h:172
 msgid "Real Number"
 msgstr "Nombre réel"
 
-#: src/Commands.h:168
+#: src/Commands.h:173
 msgid "1.23456e-25"
 msgstr "1.23456e-25"
 
-#: src/Commands.h:169
+#: src/Commands.h:174
 msgid "Complex Number"
 msgstr "Nombre Complexe"
 
-#: src/Commands.h:170
+#: src/Commands.h:175
 msgid "(123.45, 678.90)"
 msgstr "(123.45, 678.90)"
 
-#: src/Commands.h:171
+#: src/Commands.h:176
 msgid "Binary Integer"
 msgstr "Entier Binaire"
 
-#: src/Commands.h:172
+#: src/Commands.h:177
 msgid "# 123AB"
 msgstr "# 123AB"
 
-#: src/Commands.h:173
+#: src/Commands.h:178
 msgid "String"
 msgstr "Chaîne de Caractères"
 
-#: src/Commands.h:174
+#: src/Commands.h:179
 msgid "\"RESULT\""
 msgstr "\"RÉSULTAT\""
 
-#: src/Commands.h:175
+#: src/Commands.h:180
 msgid "Vector"
 msgstr "Vecteur"
 
-#: src/Commands.h:176
+#: src/Commands.h:181
 msgid "[1.23 4.56 7.89]"
 msgstr "[1.23 4.56 7.89]"
 
-#: src/Commands.h:177
+#: src/Commands.h:182
 msgid "Matrix"
 msgstr "Matrice"
 
-#: src/Commands.h:178
+#: src/Commands.h:183
 msgid "[[1.23 4.56] [6.54 3.21]]"
 msgstr "[[1.23 4.56] [6.54 3.21]]"
 
-#: src/Commands.h:179
+#: src/Commands.h:184
 msgid "List"
 msgstr "Liste"
 
-#: src/Commands.h:180
+#: src/Commands.h:185
 msgid "{1.23 \"ABC\" # 45d}"
 msgstr "{1.23 \"ABC\" # 45d}"
 
-#: src/Commands.h:182
+#: src/Commands.h:187
 msgid "Names"
 msgstr "Noms"
 
-#: src/Commands.h:183
+#: src/Commands.h:188
 msgid "Name"
 msgstr "Nom"
 
-#: src/Commands.h:184
+#: src/Commands.h:189
 msgid "'CALC'"
 msgstr "'CALC'"
 
-#: src/Commands.h:186
+#: src/Commands.h:191
 msgid "Procedures"
 msgstr "Programmes"
 
-#: src/Commands.h:187
+#: src/Commands.h:192
 msgid "Program"
 msgstr "Programme"
 
-#: src/Commands.h:188
+#: src/Commands.h:193
 msgid "<< DUP + SWAP >>"
 msgstr "<< DUP + SWAP >>"
 
-#: src/Commands.h:189
+#: src/Commands.h:194
 msgid "Algebraic"
 msgstr "Algébrique"
 
-#: src/Commands.h:190
+#: src/Commands.h:195
 msgid "'X+2*Y=Z'"
 msgstr "'X+2*Y=Z'"
 
-#: src/Commands.h:195
+#: src/Commands.h:200
 msgid "Flag #"
 msgstr "Option #"
 
-#: src/Commands.h:196
+#: src/Commands.h:201
 msgid "Description"
 msgstr "Description"
 
-#: src/Commands.h:197
+#: src/Commands.h:202
 msgid "Status"
 msgstr "État"
 
-#: src/Commands.h:211
+#: src/Commands.h:216
 msgid "Set"
 msgstr "Activé"
 
-#: src/Commands.h:211
+#: src/Commands.h:216
 msgid "Unset"
 msgstr "Désactivé"
 

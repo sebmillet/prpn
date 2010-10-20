@@ -138,7 +138,7 @@ BuiltinCommandDescriptor builtinCommands[] = {
 	{1, BC_COMMAND_WRAPPER, "FIX", 0, 0, &bc_fix, 0, 0, _N("Set reals display to 'fixed number of decimals'")},
 	{1, BC_COMMAND_WRAPPER, "ENG", 0, 0, &bc_eng, 0, 0, _N("Set reals display to 'engineering'")},
 	{0, BC_RAW, "CLLCD", &bc_cllcd, 0, 0, 0, 0, _N("Clear the screen")},
-	{0, BC_RAW, "CLMF", &bc_clmf, 0, 0, 0, 0, _N("Clear the message flag")},
+	{0, BC_RAW, "CLMF", &bc_clmf, 0, 0, 0, 0, _N("Clear the message flag => unfreeze stack display")},
 	{2, BC_COMMAND_WRAPPER, "DISP", 0, 0, 0, &bc_disp, 0, _N("Display an item on a line of the screen")},
 	{1, BC_RAW, CMD_PREFIX_NOSTD "READ", &bc_read, 0, 0, 0, 0, _N("Read file and puts its content in the stack")},
 	{2, BC_COMMAND_WRAPPER, CMD_PREFIX_NOSTD "WRITE", 0, 0, 0, &bc_write, 0, _N("Write the second item into the file named by the first item")},

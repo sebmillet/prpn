@@ -1,0 +1,15 @@
+/ Error:
+Infinite Result
+/ Error:
+Infinite Result
+/ Error:
+Undefined Result
+[ 1 ]
+[[ 0 ]]
+[ 9.99999999999E199 ]
+[ -1 ]
+[[ 0 ]]
+[ -9.99999999999E199 ]
+[ 0 ]
+[[ 0 ]]
+get_class_count() = 0 for watched classes

@@ -388,19 +388,19 @@ Récupère l'état des options depuis un entier binaire
 Pause d'une durée définie en secondes
 .TP
 .B HALT\ (0)
-Halt program execution
+Suspends l'exécution du programme
 .TP
 .B SST\ (0)
-Execute one step in the program
+Exécute une instruction dans le programme
 .TP
 .B ABORT\ (0)
-Abort current program execution
+Arrête l'exécution du programme courant
 .TP
 .B KILL\ (0)
-Abort all programs execution
+Arrête l'exécution de tous les programmes
 .TP
 .B CONT\ (0)
-Resume program execution
+Reprends l'exécution du programme
 .TP
 .B STD\ (0)
 Règle l'affichage des réels à 'standard'
@@ -418,7 +418,7 @@ Règle l'affichage des réels à 'ingénieur'
 Efface l'écran
 .TP
 .B CLMF\ (0)
-Gèle l'affichage de la pile
+Désarme l'indicateur d'affichage => dégèle l'affichage de la pile
 .TP
 .B DISP\ (2)
 Affiche une chaîne de caractères sur une ligne de l'écran
@@ -443,6 +443,30 @@ Définis le nombre de niveaux d'annulation
 .TP
 .B _UNDO_LEVELS?\ (0)
 Renvoie le nombre de niveaux d'annulations
+.SH "RÉSOLUTION DE SYSTÈMES D'ÉQUATIONS LINÉAIRES"
+.TP
+Vous pouvez résoudre un système d'équations linéaires en divisant un vecteur par une matrice.
+.br
+.I Exemple
+Vous voudriez résoudre le système
+.br
+  2x - y + z = 13
+  x + 5y +3z = 3
+  -2x + 4z = 4
+.br
+Saisissez le vecteur
+.br
+  [13 3 4]
+.br
+Ensuite saisissez la matrice
+.br
+  [[2 -1 1][1 5 3][-2 0 4]]
+.br
+Faites une division en cliquant sur le bouton '/'. Le résultat est là :
+.br
+  [4 -2 3]
+.br
+Ce qui se lit "la solution est x = 4, y = -2 et z = 3"
 .SH "INSTRUCTIONS DE CONTRÔLE DES PROGRAMMES"
 .TP
 .B Note au sujet des booléens

@@ -72,12 +72,11 @@ static const string wxString_to_string(const wxString& wxs) {
 //
 
   // Common
-#define MY_CALCULATOR_BACKGROUND_COLOR	(wxColour(0xE0, 0xE0, 0xE0))
+#define MY_CALCULATOR_BACKGROUND_COLOR	(wxColour(0xEA, 0xEA, 0xEA))
   // Status area
 #define MY_STATUS_BORDER				0
 #define MY_STATUS_BORDER_STYLE			wxBORDER_NONE
 #define MY_STATUS_BACKGROUND_COLOUR		(wxColour(0xFA, 0xFA, 0xFA))
-//#define MY_STATUS_BACKGROUND_COLOUR		(*wxRED)
 #define MY_STATUS_WINDOW_ITEM_H_MARGIN	4
 #define MY_STATUS_WINDOW_ITEM_V_MARGIN	2
   // Path

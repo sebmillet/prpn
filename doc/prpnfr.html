@@ -540,23 +540,23 @@ Pause d'une durée définie en secondes
 <DT><B>HALT&nbsp;(0)</B>
 
 <DD>
-Halt program execution
+Suspends l'exécution du programme
 <DT><B>SST&nbsp;(0)</B>
 
 <DD>
-Execute one step in the program
+Exécute une instruction dans le programme
 <DT><B>ABORT&nbsp;(0)</B>
 
 <DD>
-Abort current program execution
+Arrête l'exécution du programme courant
 <DT><B>KILL&nbsp;(0)</B>
 
 <DD>
-Abort all programs execution
+Arrête l'exécution de tous les programmes
 <DT><B>CONT&nbsp;(0)</B>
 
 <DD>
-Resume program execution
+Reprends l'exécution du programme
 <DT><B>STD&nbsp;(0)</B>
 
 <DD>
@@ -580,7 +580,7 @@ Efface l'écran
 <DT><B>CLMF&nbsp;(0)</B>
 
 <DD>
-Gèle l'affichage de la pile
+Désarme l'indicateur d'affichage =&gt; dégèle l'affichage de la pile
 <DT><B>DISP&nbsp;(2)</B>
 
 <DD>
@@ -615,6 +615,43 @@ Définis le nombre de niveaux d'annulation
 Renvoie le nombre de niveaux d'annulations
 </DL>
 <A NAME="lbAH">&nbsp;</A>
+<H2>RÉSOLUTION DE SYSTÈMES D'ÉQUATIONS LINÉAIRES</H2>
+
+<DL COMPACT>
+<DT>Vous pouvez résoudre un système d'équations linéaires en divisant un vecteur par une matrice.<DD>
+<BR>
+
+<I>Exemple</I>
+
+Vous voudriez résoudre le système
+<BR>
+
+<BR>&nbsp;&nbsp;2x&nbsp;-&nbsp;y&nbsp;+&nbsp;z&nbsp;=&nbsp;13
+<BR>&nbsp;&nbsp;x&nbsp;+&nbsp;5y&nbsp;+3z&nbsp;=&nbsp;3
+<BR>&nbsp;&nbsp;-2x&nbsp;+&nbsp;4z&nbsp;=&nbsp;4
+<BR>
+
+Saisissez le vecteur
+<BR>
+
+<BR>&nbsp;&nbsp;[13&nbsp;3&nbsp;4]
+<BR>
+
+Ensuite saisissez la matrice
+<BR>
+
+<BR>&nbsp;&nbsp;[[2&nbsp;-1&nbsp;1][1&nbsp;5&nbsp;3][-2&nbsp;0&nbsp;4]]
+<BR>
+
+Faites une division en cliquant sur le bouton '/'. Le résultat est là :
+<BR>
+
+<BR>&nbsp;&nbsp;[4&nbsp;-2&nbsp;3]
+<BR>
+
+Ce qui se lit &quot;la solution est x = 4, y = -2 et z = 3&quot;
+</DL>
+<A NAME="lbAI">&nbsp;</A>
 <H2>INSTRUCTIONS DE CONTRÔLE DES PROGRAMMES</H2>
 
 <DL COMPACT>
@@ -740,7 +777,7 @@ notation polonaise inverse.
 
 <A HREF="http://en.wikipedia.org/wiki/RPL_%28programming_language%29">http://en.wikipedia.org/wiki/RPL_%28programming_language%29</A>
 </DL>
-<A NAME="lbAI">&nbsp;</A>
+<A NAME="lbAJ">&nbsp;</A>
 <H2>FICHIERS D'INITIALISATION</H2>
 
 <DL COMPACT>
@@ -753,14 +790,14 @@ Réglages et contenu de la pile.
 <DD>
 Structure contenant les variables, et répertoire courant.
 </DL>
-<A NAME="lbAJ">&nbsp;</A>
+<A NAME="lbAK">&nbsp;</A>
 <H2>AUTEUR</H2>
 
 Écrit par Sébastien Millet &lt;<A HREF="mailto:sebastien.millet1@club-internet.fr">sebastien.millet1@club-internet.fr</A>&gt;.
 <BR>
 
 Autorisation est donnée de copier, distribuer et/ou modifier ce document selon les termes de la licence &quot;GNU General Public License&quot;. La version 3 est publiée par la Free Software Foundation.
-<A NAME="lbAK">&nbsp;</A>
+<A NAME="lbAL">&nbsp;</A>
 <H2>BUGS</H2>
 
 <B>Différence entre prpn et prpnc</B>
@@ -798,15 +835,16 @@ prpn.exe ne peut *pas* être exécuté avec l'option -c. Sous Windows, WxWidgets dé
 <DT><A HREF="#lbAE">OPTIONS</A><DD>
 <DT><A HREF="#lbAF">TYPES D'OBJETS</A><DD>
 <DT><A HREF="#lbAG">COMMANDES</A><DD>
-<DT><A HREF="#lbAH">INSTRUCTIONS DE CONTRÔLE DES PROGRAMMES</A><DD>
-<DT><A HREF="#lbAI">FICHIERS D'INITIALISATION</A><DD>
-<DT><A HREF="#lbAJ">AUTEUR</A><DD>
-<DT><A HREF="#lbAK">BUGS</A><DD>
+<DT><A HREF="#lbAH">RÉSOLUTION DE SYSTÈMES D'ÉQUATIONS LINÉAIRES</A><DD>
+<DT><A HREF="#lbAI">INSTRUCTIONS DE CONTRÔLE DES PROGRAMMES</A><DD>
+<DT><A HREF="#lbAJ">FICHIERS D'INITIALISATION</A><DD>
+<DT><A HREF="#lbAK">AUTEUR</A><DD>
+<DT><A HREF="#lbAL">BUGS</A><DD>
 </DL>
 <HR>
 This document was created by
 <A HREF="/cgi-bin/man/man2html">man2html</A>,
 using the manual pages.<BR>
-Time: 16:56:02 GMT, October 10, 2010
+Time: 21:00:10 GMT, October 20, 2010
 </BODY>
 </HTML>

@@ -1,3 +1,27 @@
+.SH "RÉSOLUTION DE SYSTÈMES D'ÉQUATIONS LINÉAIRES"
+.TP
+Vous pouvez résoudre un système d'équations linéaires en divisant un vecteur par une matrice.
+.br
+.I Exemple
+Vous voudriez résoudre le système
+.br
+  2x - y + z = 13
+  x + 5y +3z = 3
+  -2x + 4z = 4
+.br
+Saisissez le vecteur
+.br
+  [13 3 4]
+.br
+Ensuite saisissez la matrice
+.br
+  [[2 -1 1][1 5 3][-2 0 4]]
+.br
+Faites une division en cliquant sur le bouton '/'. Le résultat est là :
+.br
+  [4 -2 3]
+.br
+Ce qui se lit "la solution est x = 4, y = -2 et z = 3"
 .SH "INSTRUCTIONS DE CONTRÔLE DES PROGRAMMES"
 .TP
 .B Note au sujet des booléens

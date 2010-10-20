@@ -579,7 +579,7 @@ Clear the screen
 <DT><B>CLMF&nbsp;(0)</B>
 
 <DD>
-Clear the message flag
+Clear the message flag =&gt; unfreeze stack display
 <DT><B>DISP&nbsp;(2)</B>
 
 <DD>
@@ -614,6 +614,44 @@ Define number of undo levels
 Get number of undo levels
 </DL>
 <A NAME="lbAH">&nbsp;</A>
+<H2>LINEAR EQUATIONS SYSTEMS RESOLUTION</H2>
+
+<DL COMPACT>
+<DT>You can solve a linear system by dividing a vector by a matrix.<DD>
+<BR>
+
+<I>Example</I>
+
+You would like to resolve the system
+<BR>
+
+<BR>&nbsp;&nbsp;2x&nbsp;-&nbsp;y&nbsp;+&nbsp;z&nbsp;=&nbsp;13
+<BR>&nbsp;&nbsp;x&nbsp;+&nbsp;5y&nbsp;+3z&nbsp;=&nbsp;3
+<BR>&nbsp;&nbsp;-2x&nbsp;+&nbsp;4z&nbsp;=&nbsp;4
+<BR>
+
+Type in the vector
+<BR>
+
+<BR>&nbsp;&nbsp;[13&nbsp;3&nbsp;4]
+<BR>
+
+Then type in the matrix
+<BR>
+
+<BR>&nbsp;&nbsp;[[2&nbsp;-1&nbsp;1][1&nbsp;5&nbsp;3][-2&nbsp;0&nbsp;4]]
+<BR>
+
+Do a division by clicking the '/' button. Here you go with
+the result:
+<BR>
+
+<BR>&nbsp;&nbsp;[4&nbsp;-2&nbsp;3]
+<BR>
+
+That reads &quot;the solution is x = 4, y = -2 and z = 3&quot;
+</DL>
+<A NAME="lbAI">&nbsp;</A>
 <H2>PROGRAM CONTROL INSTRUCTIONS</H2>
 
 <DL COMPACT>
@@ -740,7 +778,7 @@ RPL is HP language provided on top of RPN calculators.
 
 <A HREF="http://en.wikipedia.org/wiki/RPL_%28programming_language%29">http://en.wikipedia.org/wiki/RPL_%28programming_language%29</A>
 </DL>
-<A NAME="lbAI">&nbsp;</A>
+<A NAME="lbAJ">&nbsp;</A>
 <H2>INITIALIZATION FILES</H2>
 
 <DL COMPACT>
@@ -753,14 +791,14 @@ Settings and stack content.
 <DD>
 Variables structure, and actual working directory.
 </DL>
-<A NAME="lbAJ">&nbsp;</A>
+<A NAME="lbAK">&nbsp;</A>
 <H2>AUTHOR</H2>
 
 Written by Sébastien Millet &lt;<A HREF="mailto:sebastien.millet1@club-internet.fr">sebastien.millet1@club-internet.fr</A>&gt;.
 <BR>
 
 Permission is granted to copy, distribute and/or modify this document under the terms of the GNU General Public License, Version 3 published by the Free Software Foundation.
-<A NAME="lbAK">&nbsp;</A>
+<A NAME="lbAL">&nbsp;</A>
 <H2>BUGS</H2>
 
 <B>Difference between prpn and prpnc</B>
@@ -798,15 +836,16 @@ prpn.exe can *not* be run with -c. For some reason, under Windows, WxWidgets dis
 <DT><A HREF="#lbAE">OPTIONS</A><DD>
 <DT><A HREF="#lbAF">OBJECT TYPES</A><DD>
 <DT><A HREF="#lbAG">COMMANDS</A><DD>
-<DT><A HREF="#lbAH">PROGRAM CONTROL INSTRUCTIONS</A><DD>
-<DT><A HREF="#lbAI">INITIALIZATION FILES</A><DD>
-<DT><A HREF="#lbAJ">AUTHOR</A><DD>
-<DT><A HREF="#lbAK">BUGS</A><DD>
+<DT><A HREF="#lbAH">LINEAR EQUATIONS SYSTEMS RESOLUTION</A><DD>
+<DT><A HREF="#lbAI">PROGRAM CONTROL INSTRUCTIONS</A><DD>
+<DT><A HREF="#lbAJ">INITIALIZATION FILES</A><DD>
+<DT><A HREF="#lbAK">AUTHOR</A><DD>
+<DT><A HREF="#lbAL">BUGS</A><DD>
 </DL>
 <HR>
 This document was created by
 <A HREF="/cgi-bin/man/man2html">man2html</A>,
 using the manual pages.<BR>
-Time: 16:56:02 GMT, October 10, 2010
+Time: 21:00:10 GMT, October 20, 2010
 </BODY>
 </HTML>

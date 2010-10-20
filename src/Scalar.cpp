@@ -429,7 +429,7 @@ real get_max_real_from_bin_size(const int& m) {
 // Arithmetic functions
 
 // * ***************************************************************** *
-// *                                                                   *
+// * --NUMERIC--                                                       *
 // *                           WARNING                                 *
 // *                                                                   *
 // *            IMPORTANT NOTE ABOUT NUMERIC_* FUNCTIONS               *
@@ -893,38 +893,50 @@ void Cplx::trim() {
 
 int Cplx::cmp(const Cplx& rv) const { return re == rv.re && im == rv.im ? 0 : 1; }
 
+  //
+  // Please see remark earlier in this file about numeric_ functions: res
+  // could be the same object as lv. To find this remark directly, search
+  // the string
+  //   --NUMERIC--
 st_err_t Cplx_add(const Cplx& lv, const Cplx& rv, Cplx& res) {
+	Cplx res1;
 	st_err_t c = ST_ERR_OK;
 	  // Calculate real part
-	numeric_add(lv.re, rv.re, c, res.re);
-	numeric_add(lv.im, rv.im, c, res.im);
+	numeric_add(lv.re, rv.re, c, res1.re);
+	numeric_add(lv.im, rv.im, c, res1.im);
+	res = res1;
 	return c;
 }
 
 st_err_t Cplx_sub(const Cplx& lv, const Cplx& rv, Cplx& res) {
+	Cplx res1;
 	st_err_t c = ST_ERR_OK;
 	  // Calculate real part
-	numeric_sub(lv.re, rv.re, c, res.re);
-	numeric_sub(lv.im, rv.im, c, res.im);
+	numeric_sub(lv.re, rv.re, c, res1.re);
+	numeric_sub(lv.im, rv.im, c, res1.im);
+	res = res1;
 	return c;
 }
 
 st_err_t Cplx_mul(const Cplx& lv, const Cplx& rv, Cplx& res) {
+	Cplx res1;
 	real x;
 	real y = 0;
 	st_err_t c = ST_ERR_OK;
 	  // Calculate real part
 	numeric_mul(lv.re, rv.re, c, x);
 	numeric_mul(lv.im, rv.im, c, y);
-	numeric_sub(x, y, c, res.re);
+	numeric_sub(x, y, c, res1.re);
 	  // Calculate imaginary part
 	numeric_mul(lv.im, rv.re, c, x);
 	numeric_mul(lv.re, rv.im, c, y);
-	numeric_add(x, y, c, res.im);
+	numeric_add(x, y, c, res1.im);
+	res = res1;
 	return c;
 }
 
 st_err_t Cplx_div(const Cplx& lv, const Cplx& rv, Cplx& res) {
+	Cplx res1;
 	real x = 0, y = 0, d = 0, t = 0, u = 0, v = 0;
 	st_err_t c = ST_ERR_OK;
 
@@ -954,12 +966,13 @@ st_err_t Cplx_div(const Cplx& lv, const Cplx& rv, Cplx& res) {
 	numeric_mul(rv.re, lv.re, c, t);
 	numeric_mul(rv.im, lv.im, c, u);
 	numeric_add(t, u, c, v);
-	numeric_div(v, d, c, res.re);
+	numeric_div(v, d, c, res1.re);
 	  // Calculate imaginary part
 	numeric_mul(rv.re, lv.im, c, t);
 	numeric_mul(rv.im, lv.re, c, u);
 	numeric_sub(t, u, c, v);
-	numeric_div(v, d, c, res.im);
+	numeric_div(v, d, c, res1.im);
+	res = res1;
 	return c;
 }
 
@@ -1142,6 +1155,8 @@ template<class Scalar> st_err_t Matrix<Scalar>::create_mul(const Matrix<Scalar> 
 	return c;
 }
 
+  // Output a matrix (or vector) using debug_write() function
+#ifdef DEBUG
 template<class Scalar> void debug_matrix_to_string(Matrix<Scalar> *pmat, int *reorder) {
 	string s;
 	if (pmat->get_dimension() == DIM_MATRIX)
@@ -1172,6 +1187,7 @@ template<class Scalar> void debug_matrix_to_string(Matrix<Scalar> *pmat, int *re
 		s.append("]");
 	debug_write(s.c_str());
 }
+#endif
 
   //
   // * ************************ *
@@ -1219,15 +1235,14 @@ template<class Scalar> void debug_matrix_to_string(Matrix<Scalar> *pmat, int *re
   // if a value m(i,i) happens to be equal to zero.
   // There can be situations where no switch is possible - if all values of a column happen to
   // be null at some point. It means a value is not determined by the system. This algorithm
-  // doesn't deal with such a situation and simply returns an error.
+  // doesn't deal with such a situation and simply returns an error (infinite result.) Note that
+  // would 59 flag be unset (59 FS? returns 0), a positive real divided by zero will return
+  // MAXR, a negative real divided by zero will return -MAXR, and no error will be returned.
   //
 template<class Scalar> st_err_t Matrix<Scalar>::create_div(const Matrix<Scalar> *divis, Matrix<Scalar>*& mres) const {
-
-//    debug_write("Matrix<Scalar>::create_div()");
-//    debug_write_i("Matrix<Scalar>::create_div(): this->dimension = %i", static_cast<int>(dimension));
-//    debug_write_i("Matrix<Scalar>::create_div(): divis->dimension = %i", static_cast<int>(divis->dimension));
-
+	debug_write("Matrix<Scalar>::create_div()");
 	st_err_t c = ST_ERR_OK;
+
 	if (dimension == DIM_VECTOR && divis->dimension == DIM_MATRIX && nb_columns == divis->nb_columns &&
 			divis->nb_columns == divis->nb_lines) {
 		int n = nb_columns;
@@ -1261,75 +1276,91 @@ template<class Scalar> st_err_t Matrix<Scalar>::create_div(const Matrix<Scalar> 
 			reorder[ii] = reorder[go_down];
 			reorder[go_down] = temporary_integer;
 
-//            debug_write("mm(0):");
-//            debug_matrix_to_string(mm, reorder);
-//            debug_write("vv(0):");
-//            debug_matrix_to_string(vv, reorder);
+#ifdef DEBUG
+			debug_write("mm:");
+			debug_matrix_to_string(mm, reorder);
+			debug_write("vv:");
+			debug_matrix_to_string(vv, reorder);
+#endif // DEBUG
 
 			Scalar alpha, beta, top;
 			beta = (*(mm->mat)[reorder[go_down]])[go_down];
 
-	//        debug_write("beta = ");
-	//        debug_write(beta.to_string(TOSTRING_PORTABLE).c_str());
+			debug_write("beta = ");
+			debug_write(beta.to_string(TOSTRING_PORTABLE).c_str());
 
-			for (int i = go_down + 1; i < n; i++) {
+			for (int i = go_down + 1; i < n && c == ST_ERR_OK; i++) {
 				alpha = (*(mm->mat)[reorder[i]])[go_down];
 
-	//            debug_write_i("i = %i", i);
-	//            debug_write("alpha = ");
-	//            debug_write(alpha.to_string(TOSTRING_PORTABLE).c_str());
+				debug_write_i("i = %i", i);
+				debug_write("alpha = ");
+				debug_write(alpha.to_string(TOSTRING_PORTABLE).c_str());
 
 				(*(mm->mat)[reorder[i]])[go_down] = Scalar(Real(0));
 
 				  // Modify each cell of the matrix
-				for (int j = go_down + 1; j < n; j++) {
+				for (int j = go_down + 1; j < n && c == ST_ERR_OK; j++) {
 					top = (*(mm->mat)[reorder[go_down]])[j];
-					top.mul(alpha, top);
-					top.div(beta, top);
-					(*(mm->mat)[reorder[i]])[j].sub(top, (*(mm->mat)[reorder[i]])[j]);
+
+					debug_write("top(1):");
+					debug_write(top.to_string(TOSTRING_PORTABLE).c_str());
+
+					if ((c = top.mul(alpha, top)) == ST_ERR_OK) {
+
+						debug_write("top(2):");
+						debug_write(top.to_string(TOSTRING_PORTABLE).c_str());
+
+						if ((c = top.div(beta, top)) == ST_ERR_OK) {
+
+							debug_write("top(3):");
+							debug_write(top.to_string(TOSTRING_PORTABLE).c_str());
+
+							c = (*(mm->mat)[reorder[i]])[j].sub(top, (*(mm->mat)[reorder[i]])[j]);
+						}
+					}
 				}
 
-				  // Modify the value of the vector the same way as cells done just before
-				top = (*(vv->mat)[0])[reorder[go_down]];
-				top.mul(alpha, top);
-				top.div(beta, top);
-				(*(vv->mat)[0])[reorder[i]].sub(top, (*(vv->mat)[0])[reorder[i]]);
+				if (c == ST_ERR_OK) {
+					  // Modify the value of the vector the same way as cells done just before
+					top = (*(vv->mat)[0])[reorder[go_down]];
+					if ((c = top.mul(alpha, top)) == ST_ERR_OK)
+						if ((c = top.div(beta, top)) == ST_ERR_OK)
+							c = (*(vv->mat)[0])[reorder[i]].sub(top, (*(vv->mat)[0])[reorder[i]]);
+				}
+
+#ifdef DEBUG
+				debug_write("mm:");
+				debug_matrix_to_string(mm, reorder);
+				debug_write("vv:");
+				debug_matrix_to_string(vv, reorder);
+#endif // DEBUG
+
 			}
-
-//            debug_write("mm(1):");
-//            debug_matrix_to_string(mm, reorder);
-//            debug_write("vv(1):");
-//            debug_matrix_to_string(vv, reorder);
-
 		}
 
 // STEP 2: calculate solutions, going upward in the matrix
 
 		Scalar t, m;
-		for (int go_up = n - 1; go_up >= 0; go_up--) {
+		for (int go_up = n - 1; go_up >= 0 && c == ST_ERR_OK; go_up--) {
 			t = (*(vv->mat)[0])[reorder[go_up]];
 			for (int i = go_up + 1; i < n; i++) {
 				m = (*(mm->mat)[reorder[go_up]])[i];
-				m.mul((*(vv->mat)[0])[reorder[i]], m);
-				t.sub(m, t);
+				if ((c = m.mul((*(vv->mat)[0])[reorder[i]], m)) == ST_ERR_OK)
+					c = t.sub(m, t);
 			}
-			t.div((*(mm->mat)[reorder[go_up]])[go_up], (*(vv->mat)[0])[reorder[go_up]]);
+			if (c == ST_ERR_OK)
+				c = t.div((*(mm->mat)[reorder[go_up]])[go_up], (*(vv->mat)[0])[reorder[go_up]]);
 		}
 
-		mres = new Matrix<Scalar>(DIM_VECTOR, 1, n, Scalar(Real(0)));
-		  // Re-order elements
-		for (int i = 0; i < n; i++)
-			(*(mres->mat)[0])[i] = (*(vv->mat)[0])[reorder[i]];
+		if (c == ST_ERR_OK) {
+			mres = new Matrix<Scalar>(DIM_VECTOR, 1, n, Scalar(Real(0)));
+			  // Re-order elements
+			for (int i = 0; i < n; i++)
+				(*(mres->mat)[0])[i] = (*(vv->mat)[0])[reorder[i]];
 
-//        debug_write("mm(n):");
-//        debug_matrix_to_string(mm, reorder);
-//        debug_write("vv(n):");
-//        debug_matrix_to_string(vv, reorder);
-
+		}
 		delete vv;
 		delete mm;
-
-		c = ST_ERR_OK;
 	} else
 		c = ST_ERR_INVALID_DIMENSION;
 	return c;

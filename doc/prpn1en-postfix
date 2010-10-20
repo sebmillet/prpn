@@ -1,3 +1,28 @@
+.SH "LINEAR EQUATIONS SYSTEMS RESOLUTION"
+.TP
+You can solve a linear system by dividing a vector by a matrix.
+.br
+.I Example
+You would like to resolve the system
+.br
+  2x - y + z = 13
+  x + 5y +3z = 3
+  -2x + 4z = 4
+.br
+Type in the vector
+.br
+  [13 3 4]
+.br
+Then type in the matrix
+.br
+  [[2 -1 1][1 5 3][-2 0 4]]
+.br
+Do a division by clicking the '/' button. Here you go with
+the result:
+.br
+  [4 -2 3]
+.br
+That reads "the solution is x = 4, y = -2 and z = 3"
 .SH "PROGRAM CONTROL INSTRUCTIONS"
 .TP
 .B Note about booleans

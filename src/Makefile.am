@@ -44,7 +44,8 @@ prpn_SOURCES+=UiImplWx.cpp \
 	prpn.xpm \
 	prpn.rc prpn.ico \
 	shiftsel.xpm shiftuns.xpm \
-	unit_bin.xpm unit_oct.xpm unit_dec.xpm unit_hex.xpm
+	unit_bin.xpm unit_oct.xpm unit_dec.xpm unit_hex.xpm \
+	exec_norun.xpm exec_run.xpm
 prpn_CXXFLAGS=@WX_CXXFLAGS@ -DFOREIGN_MAIN
 prpn_LDFLAGS=@WX_LIBS@
 

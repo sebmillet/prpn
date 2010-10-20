@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: prpn 0.5.1\n"
 "Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
-"POT-Creation-Date: 2010-10-03 17:22+0200\n"
+"POT-Creation-Date: 2010-10-20 22:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -193,11 +193,11 @@ msgstr ""
 msgid "Infinite Result processed as an exception"
 msgstr ""
 
-#: src/UiImplWx.cpp:503
+#: src/UiImplWx.cpp:583
 msgid "Help"
 msgstr ""
 
-#: src/UiImplWx.cpp:525 src/UiImplWx.cpp:538
+#: src/UiImplWx.cpp:605 src/UiImplWx.cpp:618
 msgid "OK"
 msgstr ""
 
@@ -601,186 +601,206 @@ msgstr ""
 msgid "Wait a number of seconds"
 msgstr ""
 
+#: src/Commands.h:130
+msgid "Halt program execution"
+msgstr ""
+
 #: src/Commands.h:131
-msgid "Set reals display to 'standard'"
+msgid "Execute one step in the program"
 msgstr ""
 
 #: src/Commands.h:132
-msgid "Set reals display to 'scientific'"
+msgid "Abort current program execution"
 msgstr ""
 
 #: src/Commands.h:133
-msgid "Set reals display to 'fixed number of decimals'"
+msgid "Abort all programs execution"
 msgstr ""
 
 #: src/Commands.h:134
-msgid "Set reals display to 'engineering'"
-msgstr ""
-
-#: src/Commands.h:135
-msgid "Clear the screen"
+msgid "Resume program execution"
 msgstr ""
 
 #: src/Commands.h:136
-msgid "Clear the message flag"
+msgid "Set reals display to 'standard'"
 msgstr ""
 
 #: src/Commands.h:137
-msgid "Display an item on a line of the screen"
+msgid "Set reals display to 'scientific'"
 msgstr ""
 
 #: src/Commands.h:138
-msgid "Read file and puts its content in the stack"
+msgid "Set reals display to 'fixed number of decimals'"
 msgstr ""
 
 #: src/Commands.h:139
-msgid "Write the second item into the file named by the first item"
+msgid "Set reals display to 'engineering'"
 msgstr ""
 
 #: src/Commands.h:140
-msgid "Internal: tune real 'standard' display management"
+msgid "Clear the screen"
 msgstr ""
 
 #: src/Commands.h:141
-msgid "Internal: set whether or not to keep a trailing dot in reals display"
+msgid "Clear the message flag => unfreeze stack display"
 msgstr ""
 
 #: src/Commands.h:142
-msgid "Undo last command, 50 levels by default"
+msgid "Display an item on a line of the screen"
 msgstr ""
 
 #: src/Commands.h:143
-msgid "Define number of undo levels"
+msgid "Read file and puts its content in the stack"
 msgstr ""
 
 #: src/Commands.h:144
+msgid "Write the second item into the file named by the first item"
+msgstr ""
+
+#: src/Commands.h:145
+msgid "Internal: tune real 'standard' display management"
+msgstr ""
+
+#: src/Commands.h:146
+msgid "Internal: set whether or not to keep a trailing dot in reals display"
+msgstr ""
+
+#: src/Commands.h:147
+msgid "Undo last command, 50 levels by default"
+msgstr ""
+
+#: src/Commands.h:148
+msgid "Define number of undo levels"
+msgstr ""
+
+#: src/Commands.h:149
 msgid "Get number of undo levels"
 msgstr ""
 
-#: src/Commands.h:151
+#: src/Commands.h:156
 msgid "Command (number of arguments): description"
 msgstr ""
 
-#: src/Commands.h:161
+#: src/Commands.h:166
 msgid "Object type"
 msgstr ""
 
-#: src/Commands.h:162
+#: src/Commands.h:167
 msgid "Symbol"
 msgstr ""
 
-#: src/Commands.h:162
+#: src/Commands.h:167
 msgid "Example"
 msgstr ""
 
-#: src/Commands.h:166
+#: src/Commands.h:171
 msgid "Data"
 msgstr ""
 
-#: src/Commands.h:167
+#: src/Commands.h:172
 msgid "Real Number"
 msgstr ""
 
-#: src/Commands.h:168
+#: src/Commands.h:173
 msgid "1.23456e-25"
 msgstr ""
 
-#: src/Commands.h:169
+#: src/Commands.h:174
 msgid "Complex Number"
 msgstr ""
 
-#: src/Commands.h:170
+#: src/Commands.h:175
 msgid "(123.45, 678.90)"
 msgstr ""
 
-#: src/Commands.h:171
+#: src/Commands.h:176
 msgid "Binary Integer"
 msgstr ""
 
-#: src/Commands.h:172
+#: src/Commands.h:177
 msgid "# 123AB"
 msgstr ""
 
-#: src/Commands.h:173
+#: src/Commands.h:178
 msgid "String"
 msgstr ""
 
-#: src/Commands.h:174
+#: src/Commands.h:179
 msgid "\"RESULT\""
 msgstr ""
 
-#: src/Commands.h:175
+#: src/Commands.h:180
 msgid "Vector"
 msgstr ""
 
-#: src/Commands.h:176
+#: src/Commands.h:181
 msgid "[1.23 4.56 7.89]"
 msgstr ""
 
-#: src/Commands.h:177
+#: src/Commands.h:182
 msgid "Matrix"
 msgstr ""
 
-#: src/Commands.h:178
+#: src/Commands.h:183
 msgid "[[1.23 4.56] [6.54 3.21]]"
 msgstr ""
 
-#: src/Commands.h:179
+#: src/Commands.h:184
 msgid "List"
 msgstr ""
 
-#: src/Commands.h:180
+#: src/Commands.h:185
 msgid "{1.23 \"ABC\" # 45d}"
 msgstr ""
 
-#: src/Commands.h:182
+#: src/Commands.h:187
 msgid "Names"
 msgstr ""
 
-#: src/Commands.h:183
+#: src/Commands.h:188
 msgid "Name"
 msgstr ""
 
-#: src/Commands.h:184
+#: src/Commands.h:189
 msgid "'CALC'"
 msgstr ""
 
-#: src/Commands.h:186
+#: src/Commands.h:191
 msgid "Procedures"
 msgstr ""
 
-#: src/Commands.h:187
+#: src/Commands.h:192
 msgid "Program"
 msgstr ""
 
-#: src/Commands.h:188
+#: src/Commands.h:193
 msgid "<< DUP + SWAP >>"
 msgstr ""
 
-#: src/Commands.h:189
+#: src/Commands.h:194
 msgid "Algebraic"
 msgstr ""
 
-#: src/Commands.h:190
+#: src/Commands.h:195
 msgid "'X+2*Y=Z'"
 msgstr ""
 
-#: src/Commands.h:195
+#: src/Commands.h:200
 msgid "Flag #"
 msgstr ""
 
-#: src/Commands.h:196
+#: src/Commands.h:201
 msgid "Description"
 msgstr ""
 
-#: src/Commands.h:197
+#: src/Commands.h:202
 msgid "Status"
 msgstr ""
 
-#: src/Commands.h:211
+#: src/Commands.h:216
 msgid "Set"
 msgstr ""
 
-#: src/Commands.h:211
+#: src/Commands.h:216
 msgid "Unset"
 msgstr ""

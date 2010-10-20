@@ -2793,57 +2793,45 @@ void MATSI::rdm(const dim_t& new_dimension, const int& new_nb_lines, const int& 
 IMPLEMENT_MAT_RDM(StackItemMatrixReal)
 IMPLEMENT_MAT_RDM(StackItemMatrixCplx)
 
-#define IMPLEMENT_MAT_MUL_WITH_MAT(MATSI, SCALAR) \
-st_err_t MATSI::op_mul(MATSI *arg1, StackItem*& ret) { \
+#define IMPLEMENT_MAT_OP_WITH_MAT(MATSI, SCALAR, OP) \
+st_err_t MATSI::op_##OP(MATSI *arg1, StackItem*& ret) { \
 	Matrix<SCALAR> *mres; \
-	st_err_t c = arg1->pmat->create_mul(pmat, mres); \
+	st_err_t c = arg1->pmat->create_##OP(pmat, mres); \
 	if (c == ST_ERR_OK) \
 		ret = new MATSI(mres); \
 	return c; \
 }
+IMPLEMENT_MAT_OP_WITH_MAT(StackItemMatrixReal, Real, mul)
+IMPLEMENT_MAT_OP_WITH_MAT(StackItemMatrixReal, Real, div)
+IMPLEMENT_MAT_OP_WITH_MAT(StackItemMatrixCplx, Cplx, mul)
+IMPLEMENT_MAT_OP_WITH_MAT(StackItemMatrixCplx, Cplx, div)
 
-IMPLEMENT_MAT_MUL_WITH_MAT(StackItemMatrixReal, Real)
-IMPLEMENT_MAT_MUL_WITH_MAT(StackItemMatrixCplx, Cplx)
-
-st_err_t StackItemMatrixReal::op_mul(StackItemMatrixCplx *arg1, StackItem*& ret) {
-	Matrix<Cplx> *converted_to_matrix_cplx = matrix_real_to_cplx(pmat);
-	Matrix<Cplx> *mres;
-	st_err_t c = arg1->get_matrix()->create_mul(converted_to_matrix_cplx, mres);
-	if (c == ST_ERR_OK)
-		ret = new StackItemMatrixCplx(mres);
-	delete converted_to_matrix_cplx;
-	return c;
+#define IMPLEMENT_MAT_OP_CPLX_OP_REAL(OP) \
+st_err_t StackItemMatrixReal::op_##OP(StackItemMatrixCplx *arg1, StackItem*& ret) { \
+	Matrix<Cplx> *converted_to_matrix_cplx = matrix_real_to_cplx(pmat); \
+	Matrix<Cplx> *mres; \
+	st_err_t c = arg1->get_matrix()->create_##OP(converted_to_matrix_cplx, mres); \
+	if (c == ST_ERR_OK) \
+		ret = new StackItemMatrixCplx(mres); \
+	delete converted_to_matrix_cplx; \
+	return c; \
 }
+IMPLEMENT_MAT_OP_CPLX_OP_REAL(mul)
+IMPLEMENT_MAT_OP_CPLX_OP_REAL(div)
 
-st_err_t StackItemMatrixCplx::op_mul(StackItemMatrixReal *arg1, StackItem*& ret) {
-	Matrix<Cplx> *converted_to_matrix_cplx = matrix_real_to_cplx(arg1->get_matrix());
-	Matrix<Cplx> *mres;
-	st_err_t c = converted_to_matrix_cplx->create_mul(pmat, mres);
-	if (c == ST_ERR_OK)
-		ret = new StackItemMatrixCplx(mres);
-	delete converted_to_matrix_cplx;
-	return c;
+#define IMPLEMENT_MAT_OP_REAL_OP_CPLX(OP) \
+st_err_t StackItemMatrixCplx::op_##OP(StackItemMatrixReal *arg1, StackItem*& ret) { \
+	Matrix<Cplx> *converted_to_matrix_cplx = matrix_real_to_cplx(arg1->get_matrix()); \
+	Matrix<Cplx> *mres; \
+	st_err_t c = converted_to_matrix_cplx->create_##OP(pmat, mres); \
+	if (c == ST_ERR_OK) \
+		ret = new StackItemMatrixCplx(mres); \
+	delete converted_to_matrix_cplx; \
+	return c; \
 }
+IMPLEMENT_MAT_OP_REAL_OP_CPLX(mul)
+IMPLEMENT_MAT_OP_REAL_OP_CPLX(div)
 
-st_err_t StackItemMatrixReal::op_div(StackItemMatrixReal *arg1, StackItem*& ret) {
-	Matrix<Real> *mres;
-	st_err_t c = arg1->pmat->create_div(pmat, mres);
-	if (c == ST_ERR_OK)
-		ret = new StackItemMatrixReal(mres);
-	return c;
-}
-
-st_err_t StackItemMatrixReal::op_div(StackItemMatrixCplx *arg1, StackItem*& ret) {
-	return ST_ERR_INVALID_DIMENSION;
-}
-
-st_err_t StackItemMatrixCplx::op_div(StackItemMatrixReal *arg1, StackItem*& ret) {
-	return ST_ERR_INVALID_DIMENSION;
-}
-
-st_err_t StackItemMatrixCplx::op_div(StackItemMatrixCplx *arg1, StackItem*& ret) {
-	return ST_ERR_INVALID_DIMENSION;
-}
 
 //
 // StackItemMatrixReal

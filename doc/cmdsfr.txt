@@ -100,17 +100,17 @@ R->B           (1): Convertis un réel en entier binaire
 RCLF           (0): Enregistre l'état des options dans un entier binaire
 STOF           (1): Récupère l'état des options depuis un entier binaire
 WAIT           (1): Pause d'une durée définie en secondes
-HALT           (0): Halt program execution
-SST            (0): Execute one step in the program
-ABORT          (0): Abort current program execution
-KILL           (0): Abort all programs execution
-CONT           (0): Resume program execution
+HALT           (0): Suspends l'exécution du programme
+SST            (0): Exécute une instruction dans le programme
+ABORT          (0): Arrête l'exécution du programme courant
+KILL           (0): Arrête l'exécution de tous les programmes
+CONT           (0): Reprends l'exécution du programme
 STD            (0): Règle l'affichage des réels à 'standard'
 SCI            (1): Règle l'affichage des réels à 'scientifique'
 FIX            (1): Règle l'affichage des réels à 'nombre de décimales fixe'
 ENG            (1): Règle l'affichage des réels à 'ingénieur'
 CLLCD          (0): Efface l'écran
-CLMF           (0): Gèle l'affichage de la pile
+CLMF           (0): Désarme l'indicateur d'affichage => dégèle l'affichage de la pile
 DISP           (2): Affiche une chaîne de caractères sur une ligne de l'écran
 _READ          (1): Lis le fichier et met son contenu dans la pile
 _WRITE         (2): Écris le second élément de la pile dans le fichier nommé par le premier élément
@@ -139,4 +139,3 @@ Programmes
 Programme                << >>          << DUP + SWAP >>
 Algébrique               ' '            'X+2*Y=Z'
 
-{ 1 2 "allo bravo" << DUP EVAL >> }
