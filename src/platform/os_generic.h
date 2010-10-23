@@ -28,6 +28,7 @@ const std::string os_concatene(const std::string&, const std::string&);
 bool os_dir_exists(const char *);
 bool os_file_exists(const char *);
 int os_dir_create(const char *);
+int os_rename(const char *, const char*);
 int os_get_default_encoding();
 const std::string os_get_install_language();
 
@@ -42,10 +43,12 @@ enum {OSF_RT_ARGV0 = 0,	// Ex.: /usr/local/bin/prpn
 	OSD_USER_HOME,		// Ex.: ~
 	OSD_USER_CONF,		// Ex.: ~/.prpn
 	OSD_PKG_LOCALEDIR,	// Ex.: /usr/local/share/locale
-	OSF_VARSRC,			// Ex.: /home/sebastien/.prpn/vars
-	OSF_SMALL_VARSRC,	// Ex.: ~/.prpn/vars
-	OSF_STACKRC,		// Ex.: /home/sebastien/.prpn/stack
-	OSF_SMALL_STACKRC,	// Ex.: ~/.prpn/stack
+	OSF_VARSRC,			// Ex.: /home/sebastien/.prpn/varsrc
+	OSF_VARSRC_ALT,		// Ex.: /home/sebastien/.prpn/varsrc~
+	OSF_SMALL_VARSRC,	// Ex.: ~/.prpn/varsrc
+	OSF_STACKRC,		// Ex.: /home/sebastien/.prpn/stackrc
+	OSF_STACKRC_ALT,	// Ex.: /home/sebastien/.prpn/stackrc~
+	OSF_SMALL_STACKRC,	// Ex.: ~/.prpn/stackrc
 	OS_END
 };
 

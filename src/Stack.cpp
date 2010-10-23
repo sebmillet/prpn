@@ -95,13 +95,23 @@ const string base_int_to_letter(const int& base) {
 
   // Used by GET and similar commands
 st_err_t check_coordinates(const Coordinates& bounds, const Coordinates& coord) {
-	if (bounds.d != coord.d)
+	if (coord.d != DIM_ANY && bounds.d != coord.d)
 		return ST_ERR_BAD_ARGUMENT_VALUE;
-	for (int ii = 0; ii < (bounds.d == DIM_VECTOR ? 1 : 2); ii++) {
-		int b = (ii == 0 ? bounds.i : bounds.j);
-		int v = (ii == 0 ? coord.i : coord.j);
-		if (v < 1 || v > b)
-			return ST_ERR_BAD_ARGUMENT_VALUE;
+	if (coord.d != DIM_ANY) {
+		for (int ii = 0; ii < (bounds.d == DIM_VECTOR ? 1 : 2); ii++) {
+			int b = (ii == 0 ? bounds.i : bounds.j);
+			int v = (ii == 0 ? coord.i : coord.j);
+			if (v < 1 || v > b)
+				return ST_ERR_BAD_ARGUMENT_VALUE;
+		}
+	} else {
+		int n;
+		if (bounds.d == DIM_VECTOR)
+			n = bounds.i;
+		else
+			n = bounds.i * bounds.j;
+		if (coord.i < 1 || coord.i > n)
+				return ST_ERR_BAD_ARGUMENT_VALUE;
 	}
 	return ST_ERR_OK;
 }
@@ -1209,7 +1219,9 @@ st_err_t TransStack::do_push_eval(SIO& s, const bool& inside_undo_sequence, stri
 	while (c == ST_ERR_OK && exec_stack->size() > ground_level && exec_mode == EXECMODE_RUN) {
 		c = exec1(cmd_err);
 	}
-	if (c != ST_ERR_OK || exec_mode != EXECMODE_HALT)
+	if (c != ST_ERR_OK && !temporary_copy && !opt_batch)
+		exec_mode = EXECMODE_HALT;
+	if (exec_mode != EXECMODE_HALT)
 		clear_exec_stack();
 
 #ifdef DEBUG_TRANSSTACK
@@ -1250,7 +1262,10 @@ st_err_t TransStack::exec1(string& cmd_err) {
 	}
 	Exec& e = exec_stack->back();
 
+	int ip_backup = e.ip;
 	st_err_t c = e.s.si->exec1(*this, e.ip, cmd_err);
+	if (c != ST_ERR_OK)
+		e.ip = ip_backup;
 
 	if (c != ST_ERR_OK)
 		return c;
@@ -1441,6 +1456,27 @@ StackItem* StackItem::forge_list_size(const Coordinates& coord) {
 		sil->append_item(new StackItemReal(Real(coord.j)));
 	return sil;
 }
+
+st_err_t StackItem::op_get(TransStack& ts, StackItemList *sil, StackItem*& ret) {
+	Coordinates coord;
+	st_err_t c = get_coordinates(ts, sil, coord);
+	if (c != ST_ERR_OK)
+		return c;
+	ret = sil->get_dup_nth_item(coord.i);
+	return ST_ERR_OK;
+}
+
+#define IMPLEMENT_SCALAR_OP_GET(SCTYPE) \
+st_err_t StackItem::op_get(TransStack& ts, StackItemMatrix##SCTYPE *sim, StackItem*& ret) { \
+	Coordinates coord; \
+	st_err_t c = get_coordinates(ts, sim, coord); \
+	if (c != ST_ERR_OK) \
+		return c; \
+	ret = new StackItem##SCTYPE(sim->get_value(coord)); \
+	return ST_ERR_OK; \
+}
+IMPLEMENT_SCALAR_OP_GET(Real)
+IMPLEMENT_SCALAR_OP_GET(Cplx)
 
 
 //
@@ -1799,7 +1835,6 @@ static st_err_t bc_get(TransStack& ts, SIO *args, string& cmd_err) {
 		ts.transstack_push(ret);
 	return c;
 }
-//static st_err_t bc_get(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { return op1.op_get_generic(ts, op2, ret); }
 
 static void pushback_incremented_bounds(TransStack& ts, SIO *args, const bool& push_args0) {
 	Coordinates bounds;
@@ -1810,17 +1845,10 @@ static void pushback_incremented_bounds(TransStack& ts, SIO *args, const bool& p
 		ts.transstack_push_SIO(args[0]);
 	StackItem *ready_si;
 	get_ready_si(args[1], ready_si);
-	StackItemList *sil = dynamic_cast<StackItemList*>(ready_si);
-	if (sil == NULL)
-		throw(CalcFatal(__FILE__, __LINE__, "pushback_incremented_bounds(): ready_si should be of type StackItemList*!"));
-
-	  // Not necessary. Done to make sure we now use sil, not ready_si
-	ready_si = NULL;
-
-	c = sil->increment_list(ts, bounds);
+	c = ready_si->increment_coord(ts, bounds);
 	if (c != ST_ERR_OK)
-		throw(CalcFatal(__FILE__, __LINE__, "pushback_incremented_bounds(): increment() returned a bad error code!"));
-	ts.transstack_push(sil);
+		throw(CalcFatal(__FILE__, __LINE__, "pushback_incremented_bounds(): increment_coord() returned an error code!!!?"));
+	ts.transstack_push(ready_si);
 }
 
 static st_err_t bc_geti(TransStack& ts, SIO *args, string& cmd_err) {
@@ -2364,7 +2392,7 @@ st_err_t si_matrix_as3(st_err_t (*f)(const Cplx&, const Cplx&, Cplx&), Matrix<Cp
 #define IMPLEMENT_SCALAR_OP_CON_LIST(MATSI, SI, SCALAR) \
 st_err_t SI::op_con(TransStack& ts, StackItemList* sil, StackItem*& ret) { \
 	Coordinates coord; \
-	st_err_t c = sil->get_coordinates(ts, coord); \
+	st_err_t c = sil->inner_get_coordinates(ts, coord); \
 	if (c != ST_ERR_OK) \
 		return c; \
 	int i, j; \
@@ -2634,9 +2662,9 @@ st_err_t StackItemReal::op_r_to_b(StackItem*& ret) {
 }
 
 #define IMPLEMENT_OP_PUT_MATRIX(MATSI, SI, Scalar) \
-st_err_t SI::op_put_matrix(TransStack& ts, StackItemList* sil, MATSI* sim) { \
+st_err_t SI::op_put_matrix(TransStack& ts, StackItem* si, MATSI* sim) { \
 	Coordinates coord; \
-	st_err_t c = sil->prepare_list_access(ts, sim, coord); \
+	st_err_t c = si->get_coordinates(ts, sim, coord); \
 	if (c != ST_ERR_OK) \
 		return c; \
 	sim->set_value(coord, Scalar(sc)); \
@@ -2669,6 +2697,45 @@ st_err_t StackItemReal::op_disp(StackItem& arg1) {
 	if (s.length() >= 2 && s.at(0) == '"' && s.at(s.length() - 1) == '"')
 		s = s.substr(1, s.length() - 2);
 	ui_disp(n, s);
+	return ST_ERR_OK;
+}
+
+st_err_t StackItemReal::increment_coord(TransStack&, const Coordinates& bounds) {
+	int n;
+	if (bounds.d == DIM_VECTOR)
+		n = bounds.i;
+	else
+		n = bounds.i * bounds.j;
+	int v;
+	st_err_t c = to_integer(v);
+	if (c != ST_ERR_OK)
+		throw(CalcFatal(__FILE__, __LINE__, "StackItemReal::real_increment_coord(): to_integer() returned an error!!!?"));
+	v++;
+	if (v > n)
+		v = 1;
+	set_Real(Real(v));
+	return ST_ERR_OK;
+}
+
+st_err_t StackItemReal::get_coordinates(TransStack& ts, StackItem* si, Coordinates& coord) {
+	Coordinates bounds;
+	coord.d = DIM_ANY;
+	st_err_t c;
+	if ((c = to_integer(coord.i)) != ST_ERR_OK)
+		throw(CalcFatal(__FILE__, __LINE__, "StackItemReal::get_coordinates(): to_integer() returned an error!!!?"));
+	if ((c = si->get_bounds(bounds)) != ST_ERR_OK)
+		return c;
+	if ((c = check_coordinates(bounds, coord)) != ST_ERR_OK)
+		return c;
+	return ST_ERR_OK;
+}
+
+st_err_t StackItem::op_put(TransStack& ts, StackItemList* sil, SIO& s) {
+	Coordinates coord;
+	st_err_t c = get_coordinates(ts, sil, coord);
+	if (c != ST_ERR_OK)
+		return c;
+	sil->replace_nth_item(coord.i, s);
 	return ST_ERR_OK;
 }
 
@@ -3168,6 +3235,20 @@ bool StackItemMeta::same(StackItem* si, const sitype_t& expected_type) const {
 	return remote_it == remote_list->end();
 }
 
+StackItem *StackItemMeta::get_dup_nth_item(const int& n) const {
+	if (n < 1 || n > list.size())
+		throw(CalcFatal(__FILE__, __LINE__, "StackItemMeta::get_dup_nth_item(): n out of bounds!"));
+	return list[n - 1]->dup();
+}
+
+void StackItemMeta::replace_nth_item(int n, SIO& s) {
+	StackItem *si;
+	get_ready_si(s, si);
+	--n;
+	delete list[n];
+	list[n] = si;
+}
+
 
 //
 // StackItemList
@@ -3204,7 +3285,7 @@ st_err_t StackItemList::op_list_to(TransStack& ts, const tso_t& o) {
 	return ST_ERR_OK;
 }
 
-st_err_t StackItemList::get_coordinates(TransStack& ts, Coordinates& coord) {
+st_err_t StackItemList::inner_get_coordinates(TransStack& ts, Coordinates& coord) {
 	st_err_t c = ST_ERR_OK;
 
 	size_t nb = get_nb_items();
@@ -3222,7 +3303,7 @@ st_err_t StackItemList::get_coordinates(TransStack& ts, Coordinates& coord) {
 			else if (ii == 1)
 				coord.j = value;
 			else
-				throw(CalcFatal(__FILE__, __LINE__, "StackItemList::get_coordinates(): inconsistent values encountered!!!??"));
+				throw(CalcFatal(__FILE__, __LINE__, "StackItemList::inner_get_coordinates(): inconsistent values encountered!!!??"));
 		}
 		coord.d = (nb == 1 ? DIM_VECTOR : DIM_MATRIX);
 	} else
@@ -3318,9 +3399,9 @@ st_err_t StackItemList::op_size(StackItem*& ret) {
 	return ST_ERR_OK;
 }
 
-st_err_t StackItemList::prepare_list_access(TransStack& ts, StackItem *si, Coordinates& coord) {
+st_err_t StackItemList::get_coordinates(TransStack& ts, StackItem *si, Coordinates& coord) {
 	Coordinates bounds;
-	st_err_t c = get_coordinates(ts, coord);
+	st_err_t c = inner_get_coordinates(ts, coord);
 	if (c != ST_ERR_OK)
 		return c;
 	if ((c = si->get_bounds(bounds)) != ST_ERR_OK)
@@ -3330,41 +3411,8 @@ st_err_t StackItemList::prepare_list_access(TransStack& ts, StackItem *si, Coord
 	return ST_ERR_OK;
 }
 
-st_err_t StackItemList::op_get(TransStack& ts, StackItemList *sil, StackItem*& ret) {
-	Coordinates coord;
-	st_err_t c = prepare_list_access(ts, sil, coord);
-	if (c != ST_ERR_OK)
-		return c;
-	ret = sil->list[coord.i - 1]->dup();
-	return ST_ERR_OK;
-}
-
-#define IMPLEMENT_SCALAR_OP_GET(MATSI, SI) \
-st_err_t StackItemList::op_get(TransStack& ts, MATSI* sim, StackItem*& ret) { \
-	Coordinates coord; \
-	st_err_t c = prepare_list_access(ts, sim, coord); \
-	if (c != ST_ERR_OK) \
-		return c; \
-	ret = new SI(sim->get_value(coord)); \
-	return ST_ERR_OK; \
-}
-IMPLEMENT_SCALAR_OP_GET(StackItemMatrixReal, StackItemReal)
-IMPLEMENT_SCALAR_OP_GET(StackItemMatrixCplx, StackItemCplx)
-
-st_err_t StackItemList::op_put(TransStack& ts, StackItemList* sil, SIO& s) {
-	Coordinates coord;
-	st_err_t c = prepare_list_access(ts, sil, coord);
-	if (c != ST_ERR_OK)
-		return c;
-	StackItem *si;
-	get_ready_si(s, si);
-	delete sil->list[coord.i - 1];
-	sil->list[coord.i - 1] = si;
-	return ST_ERR_OK;
-}
-
-st_err_t StackItemList::op_put(TransStack& ts, StackItemMatrixReal* simr, SIO& s) { return s.si->op_put_matrix(ts, this, simr); }
-st_err_t StackItemList::op_put(TransStack& ts, StackItemMatrixCplx* simc, SIO& s) { return s.si->op_put_matrix(ts, this, simc); }
+st_err_t StackItem::op_put(TransStack& ts, StackItemMatrixReal* simr, SIO& s) { return s.si->op_put_matrix(ts, this, simr); }
+st_err_t StackItem::op_put(TransStack& ts, StackItemMatrixCplx* simc, SIO& s) { return s.si->op_put_matrix(ts, this, simc); }
 
 static void increment_coordinates(const Coordinates& bounds, Coordinates& coord) {
 	if (bounds.d != coord.d)
@@ -3387,15 +3435,15 @@ static void increment_coordinates(const Coordinates& bounds, Coordinates& coord)
 	}
 }
 
-st_err_t StackItemList::increment_list(TransStack& ts, const Coordinates& bounds) {
+st_err_t StackItemList::increment_coord(TransStack& ts, const Coordinates& bounds) {
 	Coordinates coord;
-	st_err_t c = get_coordinates(ts, coord);
+	st_err_t c = inner_get_coordinates(ts, coord);
 	if (c != ST_ERR_OK)
 		return c;
 	if (coord.d != bounds.d)
 		return ST_ERR_BAD_ARGUMENT_VALUE;
 	if ((coord.d == DIM_VECTOR && get_nb_items() != 1) || (coord.d == DIM_MATRIX && get_nb_items() != 2))
-		throw(CalcFatal(__FILE__, __LINE__, "StackItemList::increment_list(): internal error"));
+		throw(CalcFatal(__FILE__, __LINE__, "StackItemList::list_increment_coord(): internal error"));
 	increment_coordinates(bounds, coord);
 	if (list[0]->get_type() == SITYPE_REAL)
 		dynamic_cast<StackItemReal*>(list[0])->set_Real(Real(coord.i));
@@ -3416,7 +3464,7 @@ st_err_t StackItemList::increment_list(TransStack& ts, const Coordinates& bounds
 
 st_err_t StackItemList::op_to_arry(TransStack& ts) {
 	Coordinates coord;
-	st_err_t c = get_coordinates(ts, coord);
+	st_err_t c = inner_get_coordinates(ts, coord);
 	if (c != ST_ERR_OK)
 		return c;
 	if (coord.i < 1)
@@ -3545,7 +3593,7 @@ st_err_t StackItemList::op_add(StackItemProgram* si, StackItem*& ret) { return l
 #define IMPLEMENT_LIST_OP_RDM(MATSI, SCALAR) \
 st_err_t StackItemList::op_rdm(TransStack& ts, MATSI* sim, StackItem*& ret) { \
 	Coordinates coord; \
-	st_err_t c = get_coordinates(ts, coord); \
+	st_err_t c = inner_get_coordinates(ts, coord); \
 	if (c != ST_ERR_OK) \
 		return c; \
 	int i, j; \

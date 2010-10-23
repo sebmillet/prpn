@@ -18,7 +18,7 @@ extern bool cfg_realdisp_manage_std;
 extern bool cfg_realdisp_remove_trailing_dot;
 
 typedef enum {SCALAR_UNDEF, SCALAR_REAL, SCALAR_COMPLEX} scalar_t;
-typedef enum {DIM_VECTOR, DIM_MATRIX} dim_t;
+typedef enum {DIM_VECTOR, DIM_MATRIX, DIM_ANY} dim_t;
 
   // General functions
 real real_trim(const real&);
@@ -51,7 +51,6 @@ void numeric_acos(const real&, st_err_t&, real&);
 void numeric_asin(const real&, st_err_t&, real&);
 void numeric_atan(const real&, st_err_t&, real&);
 void numeric_sqrt(const real&, st_err_t&, real&);
-
 
 
 //
@@ -348,10 +347,22 @@ public:
 	virtual dim_t get_dimension() const { return dimension; }
 	virtual int get_nb_lines() const { return nb_lines; }
 	virtual int get_nb_columns() const { return nb_columns; }
-	virtual Scalar get_value(const int& i, const int& j) const { return (*mat[i])[j]; }
-	virtual void set_value(const int& i, const int& j, const Scalar& v) { (*mat[i])[j] = v; }
-	virtual void redim(const dim_t&, const int&, const int&);
 	virtual bool index_to_ij(const int&, int&, int&) const;
+	virtual Scalar get_value(const int& i, const int& j) const { return (*mat[i])[j]; }
+	virtual Scalar get_value(int n) const {
+		int i, j;
+		if (index_to_ij(--n, i, j))
+			return (*mat[i])[j];
+		else
+			return Scalar(Real(0));
+	}
+	virtual void set_value(const int& i, const int& j, const Scalar& v) { (*mat[i])[j] = v; }
+	virtual void set_value(int n, const Scalar& v) {
+		int i, j;
+		if (index_to_ij(--n, i, j))
+			(*mat[i])[j] = v;
+	}
+	virtual void redim(const dim_t&, const int&, const int&);
 	virtual void copy_linear(const Matrix<Scalar>*);
 	virtual st_err_t create_transpose(Matrix<Scalar>*&);
 	virtual st_err_t get_bounds(Coordinates& coord) {

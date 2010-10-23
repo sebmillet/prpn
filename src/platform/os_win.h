@@ -25,7 +25,9 @@
 #define REG_KEY_LANGUAGE	"Language"
 #define USER_CONF			"pRPN"
 #define VARSRC_FILE			"varsrc"
+#define VARSRC_FILE_ALT		"varsrc~"
 #define STACKRC_FILE		"stackrc"
+#define STACKRC_FILE_ALT	"stackrc~"
 
 const char *os_to_be_continued = "...";
 const int os_to_be_continued_length = 3;
@@ -118,8 +120,10 @@ OS_Dirs::OS_Dirs(const char *argv0) {
 	p = os_concatene(p, USER_CONF);
 	dirs[OSF_SMALL_VARSRC] = os_concatene(p, VARSRC_FILE);
 	dirs[OSF_VARSRC] = os_concatene(dirs[OSD_USER_CONF], VARSRC_FILE);
+	dirs[OSF_VARSRC_ALT] = os_concatene(dirs[OSD_USER_CONF], VARSRC_FILE_ALT);
 	dirs[OSF_SMALL_STACKRC] = os_concatene(p, STACKRC_FILE);
 	dirs[OSF_STACKRC] = os_concatene(dirs[OSD_USER_CONF], STACKRC_FILE);
+	dirs[OSF_STACKRC_ALT] = os_concatene(dirs[OSD_USER_CONF], STACKRC_FILE_ALT);
 
 	/*for (int i = OS_BEGIN; i != OS_END; i++) {
 		debug_write_i("dir entry #%i", i);

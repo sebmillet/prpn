@@ -47,6 +47,9 @@ static int get_item_number_being_edited() { return edit_mode == EM_DEFAULT ? 0 :
 
 UiImpl *ui_impl;
 
+bool cfg_backup_stackrc = false;
+bool cfg_backup_varsrc = true;
+
 static TransStack *ts = 0;
 
 static typein_t typein_status = TYPEIN_EMPTY;
@@ -268,6 +271,11 @@ static void writerc() {
 // 1. Flags + stack content
 // Written into ~/.prpn/stackrc or alike depending on OS
 
+	if (cfg_backup_stackrc) {
+		int status = os_rename(osd->get_dir(OSF_STACKRC).c_str(), osd->get_dir(OSF_STACKRC_ALT).c_str());
+		debug_write_i("stackrc rename status = %i", status);
+	}
+
 	fstream ofs(osd->get_dir(OSF_STACKRC).c_str(), fstream::out | fstream::trunc);
 
 	if (ofs.good()) {
@@ -287,6 +295,11 @@ static void writerc() {
 
 // 2. Variables
 // Written into ~/.prpn/varsrc or alike depending on OS
+
+	if (cfg_backup_varsrc) {
+		int status = os_rename(osd->get_dir(OSF_VARSRC).c_str(), osd->get_dir(OSF_VARSRC_ALT).c_str());
+		debug_write_i("varsrc rename status = %i", status);
+	}
 
 	fstream ofs2(osd->get_dir(OSF_VARSRC).c_str(), fstream::out | fstream::trunc);
 	if (ofs2.good()) {
@@ -579,7 +592,7 @@ static void refresh_stack(const int& enforced_nb_stack_elems_to_display, const b
 	if (i_upper >= 0)
 		disp.resize(i_upper);
 
-	if (!ui_get_message_flag()) {
+	if (!ui_get_message_flag() || is_displaying_error) {
 		bool recalc = get_recalc_stack_flag();
 		bool no_more_lines = false;
 		int i;

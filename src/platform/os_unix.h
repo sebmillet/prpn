@@ -9,14 +9,17 @@
 #include "Common.h"
 #include <cstdlib>
 #include <sys/stat.h>
+#include <cstdio>
 
-#define CODE_BIN		"bin"
-#define CODE_DOC		"share/doc"
-#define CODE_HTML		"share/doc"
-#define SEP				'/'
-#define USER_CONF		".prpn"
-#define VARSRC_FILE		"varsrc"
-#define STACKRC_FILE	"stackrc"
+#define CODE_BIN			"bin"
+#define CODE_DOC			"share/doc"
+#define CODE_HTML			"share/doc"
+#define SEP					'/'
+#define USER_CONF			".prpn"
+#define VARSRC_FILE			"varsrc"
+#define VARSRC_FILE_ALT		"varsrc~"
+#define STACKRC_FILE		"stackrc"
+#define STACKRC_FILE_ALT	"stackrc~"
 
 const char *os_to_be_continued = "┄";
 const int os_to_be_continued_length = 1;
@@ -45,6 +48,10 @@ int os_dir_create(const char *sz) {
 	return mkdir(sz, S_IRWXU | S_IRWXG);
 }
 
+int os_rename(const char *actual_name, const char* new_name) {
+	return rename(actual_name, new_name);
+}
+
 OS_Dirs::OS_Dirs(const char *argv0) {
 	dirs[OSF_RT_ARGV0] = argv0;
 	my_split(argv0, SEP, dirs[OSD_RT_EXE], dirs[OSF_RT_EXE]);
@@ -67,8 +74,10 @@ OS_Dirs::OS_Dirs(const char *argv0) {
 	p = os_concatene(p, USER_CONF);
 	dirs[OSF_SMALL_VARSRC] = os_concatene(p, VARSRC_FILE);
 	dirs[OSF_VARSRC] = os_concatene(dirs[OSD_USER_CONF], VARSRC_FILE);
+	dirs[OSF_VARSRC_ALT] = os_concatene(dirs[OSD_USER_CONF], VARSRC_FILE_ALT);
 	dirs[OSF_SMALL_STACKRC] = os_concatene(p, STACKRC_FILE);
 	dirs[OSF_STACKRC] = os_concatene(dirs[OSD_USER_CONF], STACKRC_FILE);
+	dirs[OSF_STACKRC_ALT] = os_concatene(dirs[OSD_USER_CONF], STACKRC_FILE_ALT);
 
 	/*for (int i = OS_BEGIN; i != OS_END; i++) {
 		debug_write_i("dir entry #%i", i);

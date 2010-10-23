@@ -1,3 +1,3 @@
 #!/bin/sh
 
-../generic_multiple.sh "" 10 "PUT GET PUTI GETI SIZE" "input" "tmp-output" "expected-output" ".txt" $1
+../generic_multiple.sh "" 11 "PUT GET PUTI GETI SIZE" "input" "tmp-output" "expected-output" ".txt" $1
