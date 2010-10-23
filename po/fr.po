@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: prpn 0.5.0\n"
 "Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
-"POT-Creation-Date: 2010-10-20 22:57+0200\n"
+"POT-Creation-Date: 2010-10-23 19:06+0200\n"
 "PO-Revision-Date: 2010-10-20 22:58+0100\n"
 "Last-Translator: Sébastien Millet <sebastien.millet1@club-internet.fr>\n"
 "Language-Team: French\n"
@@ -102,95 +102,95 @@ msgstr "l'option `%s' est ambiguë"
 msgid "trailing arguments%s"
 msgstr "arguments excédentaires%s"
 
-#: src/Stack.cpp:160
+#: src/Stack.cpp:170
 msgid "Allow LAST function"
 msgstr "Autorise la fonction LAST"
 
-#: src/Stack.cpp:161
+#: src/Stack.cpp:171
 msgid "Automatic print mode"
 msgstr "Mode impression automatique"
 
-#: src/Stack.cpp:162
+#: src/Stack.cpp:172
 msgid "Automatic CR"
 msgstr "Retour chariot automatique"
 
-#: src/Stack.cpp:163
+#: src/Stack.cpp:173
 msgid "Principal value (definition range)"
 msgstr "Valeur principale (intervalle de définition)"
 
-#: src/Stack.cpp:164
+#: src/Stack.cpp:174
 msgid "Symbolic constants evaluation"
 msgstr "Évaluation des constantes symboliques"
 
-#: src/Stack.cpp:165
+#: src/Stack.cpp:175
 msgid "Symbolic functions evaluation"
 msgstr "Évaluation des fonctions symboliques"
 
-#: src/Stack.cpp:167
+#: src/Stack.cpp:177
 msgid "Binary integers word size"
 msgstr "Taille d'entier binaire"
 
-#: src/Stack.cpp:168
+#: src/Stack.cpp:178
 msgid "Numeric base for binary integers"
 msgstr "Base numérique pour les entiers binaires"
 
-#: src/Stack.cpp:169
+#: src/Stack.cpp:179
 msgid "Level 1 display"
 msgstr "Affichage du niveau 1"
 
-#: src/Stack.cpp:170 src/Stack.cpp:171
+#: src/Stack.cpp:180 src/Stack.cpp:181
 msgid "Reserved"
 msgstr "Réservé"
 
-#: src/Stack.cpp:172
+#: src/Stack.cpp:182
 msgid "Decimal separator"
 msgstr "Séparateur décimal"
 
-#: src/Stack.cpp:173
+#: src/Stack.cpp:183
 msgid "Real numbers format"
 msgstr "Format des nombres réels"
 
-#: src/Stack.cpp:174
+#: src/Stack.cpp:184
 msgid "Tone"
 msgstr "Tonalité"
 
-#: src/Stack.cpp:175
+#: src/Stack.cpp:185
 msgid "Fast printing"
 msgstr "Impression rapide"
 
-#: src/Stack.cpp:176
+#: src/Stack.cpp:186
 msgid "Number of decimals"
 msgstr "Nombre de décimales"
 
-#: src/Stack.cpp:177
+#: src/Stack.cpp:187
 msgid "Underflow processed normally"
 msgstr "Underflow (dépassement vers zéro) traité normalement"
 
-#: src/Stack.cpp:178
+#: src/Stack.cpp:188
 msgid "Overflow processed normally"
 msgstr "Overflow (dépassement à l'infini) traité normalement"
 
-#: src/Stack.cpp:179
+#: src/Stack.cpp:189
 msgid "Infinite Result processed normally"
 msgstr "Infinite Result (Résultat Infini) traité normalement"
 
-#: src/Stack.cpp:180
+#: src/Stack.cpp:190
 msgid "Angle"
 msgstr "Angle"
 
-#: src/Stack.cpp:181
+#: src/Stack.cpp:191
 msgid "Underflow- processed as an exception"
 msgstr "Underflow- (dépassement négatif vers zéro) traité en exception"
 
-#: src/Stack.cpp:182
+#: src/Stack.cpp:192
 msgid "Underdlow+ processed as an exception"
 msgstr "Underflow+ (dépassement positif vers zéro) traité en exception"
 
-#: src/Stack.cpp:183
+#: src/Stack.cpp:193
 msgid "Overflow processed as an exception"
 msgstr "Overflow (dépassement à l'infini) traité en exception"
 
-#: src/Stack.cpp:184
+#: src/Stack.cpp:194
 msgid "Infinite Result processed as an exception"
 msgstr "Infinite Result (résultat infini) traité en exception"
 

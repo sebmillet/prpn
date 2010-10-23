@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: prpn 0.5.1\n"
 "Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
-"POT-Creation-Date: 2010-10-20 22:57+0200\n"
+"POT-Creation-Date: 2010-10-23 19:06+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -101,95 +101,95 @@ msgstr ""
 msgid "trailing arguments%s"
 msgstr ""
 
-#: src/Stack.cpp:160
+#: src/Stack.cpp:170
 msgid "Allow LAST function"
 msgstr ""
 
-#: src/Stack.cpp:161
+#: src/Stack.cpp:171
 msgid "Automatic print mode"
 msgstr ""
 
-#: src/Stack.cpp:162
+#: src/Stack.cpp:172
 msgid "Automatic CR"
 msgstr ""
 
-#: src/Stack.cpp:163
+#: src/Stack.cpp:173
 msgid "Principal value (definition range)"
 msgstr ""
 
-#: src/Stack.cpp:164
+#: src/Stack.cpp:174
 msgid "Symbolic constants evaluation"
 msgstr ""
 
-#: src/Stack.cpp:165
+#: src/Stack.cpp:175
 msgid "Symbolic functions evaluation"
 msgstr ""
 
-#: src/Stack.cpp:167
+#: src/Stack.cpp:177
 msgid "Binary integers word size"
 msgstr ""
 
-#: src/Stack.cpp:168
+#: src/Stack.cpp:178
 msgid "Numeric base for binary integers"
 msgstr ""
 
-#: src/Stack.cpp:169
+#: src/Stack.cpp:179
 msgid "Level 1 display"
 msgstr ""
 
-#: src/Stack.cpp:170 src/Stack.cpp:171
+#: src/Stack.cpp:180 src/Stack.cpp:181
 msgid "Reserved"
 msgstr ""
 
-#: src/Stack.cpp:172
+#: src/Stack.cpp:182
 msgid "Decimal separator"
 msgstr ""
 
-#: src/Stack.cpp:173
+#: src/Stack.cpp:183
 msgid "Real numbers format"
 msgstr ""
 
-#: src/Stack.cpp:174
+#: src/Stack.cpp:184
 msgid "Tone"
 msgstr ""
 
-#: src/Stack.cpp:175
+#: src/Stack.cpp:185
 msgid "Fast printing"
 msgstr ""
 
-#: src/Stack.cpp:176
+#: src/Stack.cpp:186
 msgid "Number of decimals"
 msgstr ""
 
-#: src/Stack.cpp:177
+#: src/Stack.cpp:187
 msgid "Underflow processed normally"
 msgstr ""
 
-#: src/Stack.cpp:178
+#: src/Stack.cpp:188
 msgid "Overflow processed normally"
 msgstr ""
 
-#: src/Stack.cpp:179
+#: src/Stack.cpp:189
 msgid "Infinite Result processed normally"
 msgstr ""
 
-#: src/Stack.cpp:180
+#: src/Stack.cpp:190
 msgid "Angle"
 msgstr ""
 
-#: src/Stack.cpp:181
+#: src/Stack.cpp:191
 msgid "Underflow- processed as an exception"
 msgstr ""
 
-#: src/Stack.cpp:182
+#: src/Stack.cpp:192
 msgid "Underdlow+ processed as an exception"
 msgstr ""
 
-#: src/Stack.cpp:183
+#: src/Stack.cpp:193
 msgid "Overflow processed as an exception"
 msgstr ""
 
-#: src/Stack.cpp:184
+#: src/Stack.cpp:194
 msgid "Infinite Result processed as an exception"
 msgstr ""
 
