@@ -1,0 +1,1 @@
+<< 1 200000 FOR i i SQR NEXT CLEAR >> EVAL
