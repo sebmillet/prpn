@@ -112,6 +112,13 @@ void ui_cllcd() {
 	ui_set_message_flag();
 }
 void ui_disp(int line, const std::string& s) {
+	if (disp.size() < 1) {
+		int n = ui_dsl.get_max_stack();
+		if (n < 1)
+			n = 1;
+		disp.resize(n);
+		ui_cllcd();
+	}
 	if (line < 1)
 		line = 1;
 	if (line > disp.size())
@@ -348,15 +355,6 @@ void ui_init() {
 	cmd_evals["_HELP"] = BEVAL_BTN_HELP;
 	  // Special case: ENTER
 	cmd_evals[""] = BEVAL_ALWAYS;	// Corresponds to the ENTER button
-	  // Now that we've defined cmd_evals, we can go through btn_descriptions
-	/*beval_t be;
-	bevals.resize(sizeof(btn_descriptions) / sizeof(*btn_descriptions));
-	for (int i = 0; i < static_cast<int>(sizeof(btn_descriptions) / sizeof(*btn_descriptions)); i++) {
-		be = cmd_evals[btn_descriptions[i].main_cmd];
-		if (be == BEVAL_NULL)
-			be = BEVAL_DEFAULT;
-		bevals[i] = be;
-	}*/
 
 	if (opt_height != -1 && opt_height < HARD_GUI_MIN_HEIGHT && has_gui)
 		opt_height = HARD_GUI_MIN_HEIGHT;
@@ -364,7 +362,7 @@ void ui_init() {
 		opt_height == -1 ? default_disp_height : opt_height);
 	if (opt_min_stack_height != -1)
 		ui_dsl.set_min_stack_height(opt_min_stack_height);
-	ts = new TransStack();
+	ts = new TransStack(false, !opt_batch, NULL);
 }
 
 void ui_post_init() {

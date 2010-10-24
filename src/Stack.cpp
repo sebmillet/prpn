@@ -1038,8 +1038,8 @@ void TransStack::TSVars::recall_pwd(VarDirectory* d) { tree->recall_pwd(d); }
 long TransStack::class_count = 0;
 #endif
 
-TransStack::TransStack(const bool& tc, vector<Exec> *ex) : count(0), modified_flag(true), exec_mode(EXECMODE_RUN),
-	temporary_copy(tc), exec_stack(ex) {
+TransStack::TransStack(const bool& tc, const bool& ah, vector<Exec> *ex) : count(0), modified_flag(true), exec_mode(EXECMODE_RUN),
+	temporary_copy(tc), allow_halt(ah), exec_stack(ex) {
 #ifdef DEBUG_CLASS_COUNT
 		class_count++;
 #endif
@@ -1219,7 +1219,7 @@ st_err_t TransStack::do_push_eval(SIO& s, const bool& inside_undo_sequence, stri
 	while (c == ST_ERR_OK && exec_stack->size() > ground_level && exec_mode == EXECMODE_RUN) {
 		c = exec1(cmd_err);
 	}
-	if (c != ST_ERR_OK && !temporary_copy && !opt_batch)
+	if (c != ST_ERR_OK && !temporary_copy && allow_halt)
 		exec_mode = EXECMODE_HALT;
 	if (exec_mode != EXECMODE_HALT)
 		clear_exec_stack();
@@ -3310,7 +3310,7 @@ st_err_t StackItemList::inner_get_coordinates(TransStack& ts, Coordinates& coord
 		c = ST_ERR_BAD_ARGUMENT_VALUE;
 
 	if (c != ST_ERR_OK) {
-		TransStack *tmpts = new TransStack(true, ts.get_exec_stack());
+		TransStack *tmpts = new TransStack(true, false, ts.get_exec_stack());
 		bool inside_undo_sequence = false;
 		string cmd_err;
 		c = ST_ERR_OK;

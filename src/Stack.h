@@ -1201,10 +1201,19 @@ class TransStack {
 	NodeStack* tail;
 	NodeStack* head;
 	std::vector<Exec> *exec_stack;
+	  // Is there a running program halted?
 	exec_mode_t exec_mode;
+	  // TransStack is used to calculate internally (=> it is not owner of exec_stack content)
 	bool temporary_copy;
+	  // If temporary_copy is true, ground_level may be non-zero (= there exists items in it
+	  // that should not be touched.)
 	size_t ground_level;
+	  // If an error occurs, or if a HALT instruction is encountered, is it possible to
+	  // halt a program execution?
+	  // Internally, if temporary_copy is true, it implies allow_halt.
+	bool allow_halt;
 
+	  // Move forward one step on the program execution
 	virtual st_err_t exec1(std::string&);
 	virtual VarFile* get_local_var(const std::string&);
 
@@ -1233,7 +1242,7 @@ public:
 
 	//sitype_t si_get_type(StackItem* const &);
 
-	TransStack(const bool& = false, std::vector<Exec>* = NULL);
+	TransStack(const bool&, const bool&, std::vector<Exec>*);
 	virtual ~TransStack();
 
 #ifdef DEBUG_CLASS_COUNT
