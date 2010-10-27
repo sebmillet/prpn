@@ -1009,9 +1009,9 @@ StackItemList *TransStack::TSVars::get_si_path() const {
 }
 
 bool TransStack::TSVars::update_si_path() {
-	if (si_path != 0 && !tree->get_pwd_has_changed())
+	if (si_path != NULL && !tree->get_pwd_has_changed())
 		return false;
-	if (si_path != 0)
+	if (si_path != NULL)
 		delete si_path;
 	si_path = get_si_path();
 	tree->reset_pwd_has_changed();

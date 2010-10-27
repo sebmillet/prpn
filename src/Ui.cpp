@@ -534,9 +534,7 @@ static void refresh_path() {
 	bool has_changed = ts->vars.update_si_path();
 	if (has_changed) {
 		cache_path = ts->vars.get_si_path_string();
-		//debug_write("A1: ********** PATH REFRESHED **********");
 	}
-
 	ui_impl->refresh_display_path(cache_path, has_changed);
 }
 

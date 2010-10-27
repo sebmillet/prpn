@@ -72,7 +72,7 @@ static const string wxString_to_string(const wxString& wxs) {
 //
 
   // Common
-#define MY_CALCULATOR_BACKGROUND_COLOR	(wxColour(0xEA, 0xEA, 0xEA))
+#define MY_CALCULATOR_BACKGROUND_COLOR	(wxColour(0xFA, 0xFA, 0xFA))
   // Status area
 #define MY_STATUS_BORDER				0
 #define MY_STATUS_BORDER_STYLE			wxBORDER_NONE
@@ -303,7 +303,7 @@ struct BtnSmallLabel {
 
 struct wxBtnLine {
 	int btns_index;
-	wxSizer* bSizer[2];
+	wxSizer *bSizer[2];
 	vector<BtnSmallLabel> vl;
 	vector<wxButton*> vb;
 	wxBtnLine() : btns_index(-1) { }
@@ -400,12 +400,15 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size, 
 	topSizer->Add(stwin, 0, wxLEFT | wxRIGHT | wxTOP | wxEXPAND, MY_STATUS_BORDER);
 
 	  // Path
-	w_path = new wxWindow(this, wxID_ANY, wxPoint(wxDefaultPosition), wxSize(wxDefaultSize));
-	path = new wxStaticText(w_path, wxID_ANY, _T(""), wxPoint(wxDefaultPosition), wxSize(wxDefaultSize), MY_PATH_BORDERSTYLE);
+//    w_path = new wxWindow(this, wxID_ANY, wxPoint(wxDefaultPosition), wxSize(wxDefaultSize));
+//    w_path->SetBackgroundColour(MY_PATH_BACKGROUND_COLOUR);
+//    wxSizer *sxx = new wxBoxSizer(wxHORIZONTAL);
+//    w_path->SetSizer(sxx);
+	path = new wxStaticText(this, wxID_ANY, _T(""), wxPoint(wxDefaultPosition), wxSize(wxDefaultSize), MY_PATH_BORDERSTYLE);
 	path->SetFont(wxFont(MY_PATH_FONTSIZE, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, MY_PATH_FONTWEIGHT, 0));
 	path->SetForegroundColour(MY_PATH_FOREGROUND_COLOUR);
-	w_path->SetBackgroundColour(MY_PATH_BACKGROUND_COLOUR);
-	topSizer->Add(w_path, 0, wxLEFT | wxRIGHT | wxBOTTOM | wxEXPAND, MY_PATH_BORDER);
+	topSizer->Add(path, 0, wxLEFT | wxRIGHT | wxBOTTOM | wxEXPAND, MY_PATH_BORDER);
+//    sxx->Add(path, 0, wxALL | wxEXPAND, 0);
 
 	  // Stack items
 	build_dispStack();
@@ -767,6 +770,10 @@ void UiImplWx::set_line(const int& line_number, const slcc_t& color_code, const 
 void UiImplWx::enforce_refresh() { f->Update(); }
 
 void UiImplWx::refresh_display_path(const string& s, const bool& modified) {
+
+	debug_write_i("PATH REFRESH = %i", static_cast<int>(modified));
+	debug_write(s.c_str());
+
 	if (modified) {
 		string s_mod = s;
 		ui_string_trim(s_mod, f->path_width, &ui_dsl, true);
@@ -893,6 +900,11 @@ void UiImplWx::refresh_stack_height() {
 	int y0 = my_y0 + my_get_max_stack() * (my_y1 - my_y0);
 	int h = my_ty - y0 + 1;
 	f->textTypein->SetSize(my_x0, y0, my_w0, h);
+
+//    int ww, hh;
+//    f->path->GetSize(&ww, &hh);
+//    debug_write_i("ww = %i", ww);
+//    debug_write_i("hh = %i", hh);
 
 	//cout << "X5: setting size to " << my_w0 << " x " << h << endl;
 
