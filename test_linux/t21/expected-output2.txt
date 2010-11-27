@@ -1,3 +1,6 @@
-"bddcddcabddcddca"
+6
+-1
 0
+"bddcddcabddcddcabddcddcabddcddca"
+3
 get_class_count() = 0 for watched classes

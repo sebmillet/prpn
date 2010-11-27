@@ -1,0 +1,2 @@
+0 _undo_levels
+<< 1 200000 FOR i i SQR SQ SQR NEXT CLEAR >> EVAL

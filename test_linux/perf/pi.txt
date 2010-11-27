@@ -1,0 +1,4 @@
+"picalc.txt"
+_read
+EVAL
+_UNDO_LEVELS?

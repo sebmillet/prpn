@@ -287,7 +287,7 @@ static void writerc() {
 
 	if (ofs.good()) {
 		  // Number of undo levels
-		string u = integer_to_string(cfg_get_undo_levels());
+		string u = integer_to_string(ts->get_undo_levels());
 		ofs << u << " " CMD_PREFIX_NOSTD "UNDO_LEVELS\n";
 		  // Flags
 		string f = get_rclf_portable_string();

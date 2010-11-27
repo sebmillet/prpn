@@ -1,0 +1,8 @@
+<< 4 0 0 0 0 0 0 0 0 0 [ 0 ] -> n d t q h j newj m i k x a << RCLF STD CLLCD
+"" n 2 + 'n' STO 4 n 4 MOD - n + 4 / 'n' STO n d * 3.3219 * 1 + IP 'm' STO 2 m
+* 1 - IP 'newj' STO { m } 2 CON 'a' STO 1 n FOR k 0 'q' STO newj 'j' STO m 1
+FOR i a i GET 10000 * i q * + .5 + IP 't' STO t j / IP 'q' STO a i t q j * -
+PUT 'a' STO j 2 - 'j' STO -1 STEP q 10000 / h + IP ->STR DUP SIZE 'x' STO
+WHILE x 4 < REPEAT "0" SWAP + x 1 + 'x' STO END + DUP DUP SIZE DUP 22 - SWAP
+SUB 2 DISP q q 10000 / IP 10000 * .5 + IP - 'h' STO NEXT SWAP STOF DUP SIZE 4
+SWAP SUB CLMF >> >>

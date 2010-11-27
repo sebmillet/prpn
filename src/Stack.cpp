@@ -45,13 +45,6 @@ static string st_errors[] = {
 	"Quitting"				// ST_ERR_EXIT
 };
 
-static const int DEFAULT_UNDO_LEVELS = 50;
-  // Built-in maximum of undo levels.
-  // A negative value means "no maximum"
-static const int HARD_MAX_UNDO_LEVELS = -1;
-static int cfg_undo_levels = DEFAULT_UNDO_LEVELS;
-int cfg_get_undo_levels() { return cfg_undo_levels; }
-
 enum {RDM_HP, RDM_TABLE};
 static const bool DEFAULT_RDM_BEHAVIOR = RDM_HP;
 static bool cfg_rdm_behavior = DEFAULT_RDM_BEHAVIOR;
@@ -894,58 +887,64 @@ SIO NodeStack::nodestack_pop() {
 
 #else // STACK_USE_MAP is defined
 
-int NodeStack::nodestack_push(StackItem *si) {
+int NodeStack::nodestack_push(StackItem *si, const bool& transactional) {
 	int v = st->stack_push(si);
-	si_keeper_t t;
-	t = si_map_keeper[si];
-	if (t == SI_DELETED) {
+	if (transactional) {
+		si_keeper_t t;
+		t = si_map_keeper[si];
+		if (t == SI_DELETED) {
 
 #ifdef DEBUG_TRANSSTACK
-		cout << "NodeStack::nodestack_push(), removing [" << si->get_object_serial() <<
-			"] of type " << debug_keeper_type_name(si_map_keeper[si]) << endl;
+			cout << "NodeStack::nodestack_push(), removing [" << si->get_object_serial() <<
+				"] of type " << debug_keeper_type_name(si_map_keeper[si]) << endl;
 #endif // DEBUG_TRANSSTACK
-		si_map_keeper.erase(si);
+			si_map_keeper.erase(si);
 
-	} else if (t == SI_UNDEF) {
+		} else if (t == SI_UNDEF) {
 
-		si_map_keeper[si] = SI_ADDED;
+			si_map_keeper[si] = SI_ADDED;
 #ifdef DEBUG_TRANSSTACK
-		cout << "NodeStack::nodestack_push(), added [" << si->get_object_serial() <<
-			"] as " << debug_keeper_type_name(si_map_keeper[si]) << endl;
+			cout << "NodeStack::nodestack_push(), added [" << si->get_object_serial() <<
+				"] as " << debug_keeper_type_name(si_map_keeper[si]) << endl;
 #endif // DEBUG_TRANSSTACK
 
-	} else {
-		throw(CalcFatal(__FILE__, __LINE__, "inconsistent keeper item values in nodestack_push() (STACK_USE_MAP defined)"));
+		} else {
+			throw(CalcFatal(__FILE__, __LINE__, "inconsistent keeper item values in nodestack_push() (STACK_USE_MAP defined)"));
+		}
 	}
 
 	return v;
 }
 
-SIO NodeStack::nodestack_pop() {
+SIO NodeStack::nodestack_pop(const bool& transactional) {
 	SIO s;
 	s.si = st->stack_pop();
-	si_keeper_t t;
-	t = si_map_keeper[s.si];
-	if (t == SI_ADDED) {
+	if (transactional || si_map_keeper.size() != 0) {
+		si_keeper_t t;
+		t = si_map_keeper[s.si];
+		if (t == SI_ADDED) {
 
 #ifdef DEBUG_TRANSSTACK
-		cout << "NodeStack::nodestack_pop(), removing [" << s.si->get_object_serial() <<
-			"] of type " << debug_keeper_type_name(si_map_keeper[s.si]) << endl;
+			cout << "NodeStack::nodestack_pop(), removing [" << s.si->get_object_serial() <<
+				"] of type " << debug_keeper_type_name(si_map_keeper[s.si]) << endl;
 #endif // DEBUG_TRANSSTACK
-		si_map_keeper.erase(s.si);
-		s.ownership = TSO_OUTSIDE_TS;
+			si_map_keeper.erase(s.si);
+			s.ownership = TSO_OUTSIDE_TS;
 
-	} else if (t == SI_UNDEF) {
+		} else if (t == SI_UNDEF) {
 
-		si_map_keeper[s.si] = SI_DELETED;
+			si_map_keeper[s.si] = SI_DELETED;
 #ifdef DEBUG_TRANSSTACK
-		cout << "NodeStack::nodestack_pop(), added [" << s.si->get_object_serial() <<
-			"] as " << debug_keeper_type_name(si_map_keeper[s.si]) << endl;
+			cout << "NodeStack::nodestack_pop(), added [" << s.si->get_object_serial() <<
+				"] as " << debug_keeper_type_name(si_map_keeper[s.si]) << endl;
 #endif // DEBUG_TRANSSTACK
-		s.ownership = TSO_OWNED_BY_TS;
+			s.ownership = TSO_OWNED_BY_TS;
 
+		} else {
+			throw(CalcFatal(__FILE__, __LINE__, "inconsistent keeper item values in nodestack_pop() (STACK_USE_MAP defined)"));
+		}
 	} else {
-		throw(CalcFatal(__FILE__, __LINE__, "inconsistent keeper item values in nodestack_pop() (STACK_USE_MAP defined)"));
+		s.ownership = TSO_OUTSIDE_TS;
 	}
 	return s;
 }
@@ -1038,8 +1037,8 @@ void TransStack::TSVars::recall_pwd(VarDirectory* d) { tree->recall_pwd(d); }
 long TransStack::class_count = 0;
 #endif
 
-TransStack::TransStack(const bool& tc, const bool& ah, vector<Exec> *ex) : count(0), modified_flag(true), exec_mode(EXECMODE_RUN),
-	temporary_copy(tc), allow_halt(ah), exec_stack(ex) {
+TransStack::TransStack(const bool& tc, const bool& ah, vector<Exec> *ex, const int& ul) : count(0), modified_flag(true), exec_mode(EXECMODE_RUN),
+	temporary_copy(tc), allow_halt(ah), exec_stack(ex), undo_levels(ul) {
 #ifdef DEBUG_CLASS_COUNT
 		class_count++;
 #endif
@@ -1099,12 +1098,13 @@ void TransStack::forward_tail() {
 #ifdef DEBUG_TRANSSTACK
 	cout << "TransStack::forward_tail() (end), count = " << count << endl;
 	cout << "\ttail = [" << tail->get_object_serial() << "], head = [" << head->get_object_serial() << "]" << endl;
+	cout << "\ttail.count = " << tail->si_map_keeper.size() << ", head.count = " << head->si_map_keeper.size() << endl;
 #endif // DEBUG_TRANSSTACK
 
 }
 
 void TransStack::control_undos_chain_size() {
-	while (cfg_undo_levels >= 0 && count > cfg_undo_levels + 1)
+	while ((undo_levels == 0 && count >= 1) || (undo_levels > 0 && count > undo_levels + 1))
 		forward_tail();
 }
 
@@ -1124,6 +1124,7 @@ void TransStack::forward_head() {
 #ifdef DEBUG_TRANSSTACK
 	cout << "TransStack::forward_head() (end), count = " << count << endl;
 	cout << "\ttail = [" << tail->get_object_serial() << "], head = [" << head->get_object_serial() << "]" << endl;
+	cout << "\ttail.count = " << tail->si_map_keeper.size() << ", head.count = " << head->si_map_keeper.size() << endl;
 #endif // DEBUG_TRANSSTACK
 
 }
@@ -1146,13 +1147,27 @@ void TransStack::backward_head() {
 #ifdef DEBUG_TRANSSTACK
 	cout << "TransStack::backward_head() (end), count = " << count << endl;
 	cout << "\ttail = [" << tail->get_object_serial() << "], head = [" << head->get_object_serial() << "]" << endl;
+	cout << "\ttail.count = " << tail->si_map_keeper.size() << ", head.count = " << head->si_map_keeper.size() << endl;
 #endif // DEBUG_TRANSSTACK
 
 }
 
+int TransStack::get_undo_levels() const { return undo_levels; }
+
+void TransStack::set_undo_levels(int ul) {
+	if (ul < -1)
+		ul = -1;
+	  // z used to avoid a warning with Microsoft Visual C++ 2010 Express
+	  // "warning C4127: conditional expression is constant"
+	int z = 0;
+	if (HARD_MAX_UNDO_LEVELS >= z && ul > HARD_MAX_UNDO_LEVELS)
+		ul = HARD_MAX_UNDO_LEVELS;
+	undo_levels = ul;
+}
+
 int TransStack::transstack_push(StackItem *si) {
 	set_modified_flag(true);
-	return head->nodestack_push(si);
+	return head->nodestack_push(si, undo_levels != 0);
 }
 
 int TransStack::transstack_push_SIO(SIO& s) {
@@ -1162,7 +1177,7 @@ int TransStack::transstack_push_SIO(SIO& s) {
 
 SIO TransStack::transstack_pop() {
 	set_modified_flag(true);
-	return head->nodestack_pop();
+	return head->nodestack_pop(undo_levels != 0);
 }
 
 st_err_t TransStack::read_integer(int& n) {
@@ -2108,24 +2123,17 @@ static st_err_t bc_undo(TransStack& ts, SIO*, string&) {
 	return ST_ERR_OK;
 }
 
-static st_err_t bc_undo_levels(StackItem& op1, StackItem*&, string&) {
+static st_err_t bc_undo_levels(TransStack& ts, SIO *args, string&) {
 	int n;
-	st_err_t c = op1.to_integer(n);
+	st_err_t c = args[0].si->to_integer(n);
 	if (c != ST_ERR_OK)
 		return c;
-	if (n < -1)
-		n = -1;
-	  // z used to avoid a warning with Microsoft Visual C++ 2010 Express
-	  // "warning C4127: conditional expression is constant"
-	int z = 0;
-	if (HARD_MAX_UNDO_LEVELS >= z && n > HARD_MAX_UNDO_LEVELS)
-		n = HARD_MAX_UNDO_LEVELS;
-	cfg_undo_levels = n;
+	ts.set_undo_levels(n);
 	return ST_ERR_OK;
 }
 
-static st_err_t bc_undo_levels_get(StackItem*& si, string&) {
-	si = new StackItemReal(Real(cfg_undo_levels));
+static st_err_t bc_undo_levels_get(TransStack& ts, SIO *args, string&) {
+	ts.transstack_push(new StackItemReal(Real(ts.get_undo_levels())));
 	return ST_ERR_OK;
 }
 
@@ -2187,9 +2195,13 @@ st_err_t StackItemBuiltinCommand::eval(const eval_t&, TransStack& ts, manage_si_
 	if (resp != ST_ERR_OK && resp != ST_ERR_EXIT && F->get(FL_LAST)) {
 		for (size_t i = 0; i < bc.nb_args; i++)
 			ts.transstack_push(args[i].si);
-	} else
-		for (int i = bc.nb_args - 1; i >= 0; i--)
+	} else {
+		for (int i = bc.nb_args - 1; i >= 0; i--) {
+			debug_write("A0");
 			args[i].cleanup();
+			debug_write("A1");
+		}
+	}
 
 	if (bc.type == BC_FUNCTION_WRAPPER || bc.type == BC_COMMAND_WRAPPER)
 		if (resp != ST_ERR_OK && resp != ST_ERR_EXIT && F->get(FL_LAST))
@@ -3310,7 +3322,7 @@ st_err_t StackItemList::inner_get_coordinates(TransStack& ts, Coordinates& coord
 		c = ST_ERR_BAD_ARGUMENT_VALUE;
 
 	if (c != ST_ERR_OK) {
-		TransStack *tmpts = new TransStack(true, false, ts.get_exec_stack());
+		TransStack *tmpts = new TransStack(true, false, ts.get_exec_stack(), 0);
 		bool inside_undo_sequence = false;
 		string cmd_err;
 		c = ST_ERR_OK;

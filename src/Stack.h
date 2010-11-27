@@ -60,11 +60,10 @@ extern int g_max_int;
 extern bool opt_batch;
 extern std::string branch_str[];
 
-//extern int g_display_width;
-//extern int g_display_stack_min_lines;
-//extern int g_display_stack_max_lines;
-
-int cfg_get_undo_levels();
+#define DEFAULT_UNDO_LEVELS 50
+  // Built-in maximum of undo levels.
+  // A negative value means "no maximum"
+#define HARD_MAX_UNDO_LEVELS -1
 
 typedef enum {
 	BC_FUNCTION_WRAPPER,	// Returns a StackItem*, example: +, COS
@@ -1085,6 +1084,7 @@ struct SIO {
 	~SIO() { }
 	void cleanup() {
 		if (ownership == TSO_OUTSIDE_TS && si != NULL) {
+//            std::cout << ">>> Deleting " << si << std::endl;
 			delete si;
 		}
 	}
@@ -1150,8 +1150,8 @@ public:
 #ifndef STACK_USE_MAP
 	virtual int add(const ListSI&);
 #endif
-	virtual int nodestack_push(StackItem*);
-	virtual SIO nodestack_pop();
+	virtual int nodestack_push(StackItem*, const bool&);
+	virtual SIO nodestack_pop(const bool&);
 };
 
 
@@ -1201,6 +1201,7 @@ class TransStack {
 	NodeStack* tail;
 	NodeStack* head;
 	std::vector<Exec> *exec_stack;
+	int undo_levels;
 	  // Is there a running program halted?
 	exec_mode_t exec_mode;
 	  // TransStack is used to calculate internally (=> it is not owner of exec_stack content)
@@ -1242,7 +1243,7 @@ public:
 
 	//sitype_t si_get_type(StackItem* const &);
 
-	TransStack(const bool&, const bool&, std::vector<Exec>*);
+	TransStack(const bool&, const bool&, std::vector<Exec>*, const int& = DEFAULT_UNDO_LEVELS);
 	virtual ~TransStack();
 
 #ifdef DEBUG_CLASS_COUNT
@@ -1255,6 +1256,8 @@ public:
 	virtual void control_undos_chain_size();
 	virtual void forward_head();
 	virtual void backward_head();
+	int get_undo_levels() const;
+	void set_undo_levels(int);
 
 	virtual bool get_modified_flag() const;
 	virtual void set_modified_flag(const bool& m);

@@ -26,6 +26,6 @@ DROP UNDO
 "AB" UNDO
 DROP
 DEPTH 1 + DUP ROLLD
-DROP ROT ROT + 3 -
+DROP ROT ROT + 3
 _undo_levels?
 +
