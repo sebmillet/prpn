@@ -189,6 +189,22 @@ COMMANDS
        C->R (1)
 	      Complex to real
 
+       RE (1) Get real part of complex number
+
+       IM (1) Get imaginary part of complex number
+
+       CONJ (1)
+	      Get conjugate of complex number
+
+       ARG (1)
+	      Get argument of a complex number
+
+       R->P (1)
+	      Rectangular to polar coordinates
+
+       P->R (1)
+	      Polar to rectangular coordinates
+
        SAME (2)
 	      Is identical
 

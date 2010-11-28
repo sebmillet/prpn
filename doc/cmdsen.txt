@@ -37,6 +37,12 @@ SQ             (1): Square
 SQR            (1): Square root
 R->C           (2): Real to complex
 C->R           (1): Complex to real
+RE             (1): Get real part of complex number
+IM             (1): Get imaginary part of complex number
+CONJ           (1): Get conjugate of complex number
+ARG            (1): Get argument of a complex number
+R->P           (1): Rectangular to polar coordinates
+P->R           (1): Polar to rectangular coordinates
 SAME           (2): Is identical
 ==             (2): Equal to
 <>             (2): Different from
@@ -139,3 +145,25 @@ Procedures
 Program                  << >>          << DUP + SWAP >>
 Algebraic                ' '            'X+2*Y=Z'
 
+3.14159265358
+3.14159265359
+1.57079632679
+-1.57079632679
+0
+(2,3.14159265359)
+(0,0)
+(1,1.57079632679)
+(2,0)
+(.707106781187,.707106781187)
+(2,0)
+(0,1)
+(2,0)
+(.707106781187,.707106781187)
+(-.707106781187,.707106781187)
+(.99999999995,9.9999999995E-6)
+(.707106781187,.707106781187)
+(1,0)
+.785398163398
+2.82842712475
+1.57079632679
+(1,2.35619449019)

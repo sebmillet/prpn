@@ -9,6 +9,7 @@
 
 #include "Common.h"
 #include <sys/stat.h>
+#include <cstdio>
 
 #define SEP			'/'
 

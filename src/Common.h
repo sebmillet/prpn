@@ -7,14 +7,14 @@
 // August 2009 - May 2010
 
 // A faire
-//   NEG pour complexes et matrices
-//   NEG qui ne stocke pas de signe sur une valeur nulle (real)
-//   RE, IM, C->R et R->C pour matrices
+//   *OK* NEG pour complexes et matrices
+//   *OK* NEG qui ne stocke pas de signe sur une valeur nulle (real)
+//   *OK* RE, IM, C->R et R->C pour matrices
 //   VarFile::get_si(): quid si le si attaché est égal à 0 ?
 //   Binaries : écrire plan de test et opérations * et /
-//   opération + doit fonctionner entre une liste et n'importe quel élément
+//   *OK* opération + doit fonctionner entre une liste et n'importe quel élément
 //   Remplacer string par wstring ?
-//   { nom_variable } possible pour créer un tableau
+//   *OK* { nom_variable } possible pour créer un tableau
 //   Trouver une solution à des erreurs d'arrondi provoqués par la librairie "math". Ainsi le nombre
 //     50000000000.15 une fois arrondi à 12 décimales vaut 50000000000.2 alors que le nombre
 //     90000000000.15 une fois arrondi à 12 décimales vaut 90000000000.1
@@ -27,7 +27,7 @@
 //     La séquence d'instructions ci-dessus provoque une boucle infinie...
 //
 // Programme de test :
-// 	 Intitulé de l'erreur si pas assez d'argument lors de l'exécution de << -> ... << >> >>
+// 	 *OK* Intitulé de l'erreur si pas assez d'argument lors de l'exécution de << -> ... << >> >>
 
 #ifndef COMMON_H
 #define COMMON_H

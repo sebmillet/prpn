@@ -176,11 +176,11 @@ public:
 	void neg() { r = (r == 0 ? 0 : -r); }
 	void conj() { }
 	int cmp(const Real&) const;
-	st_err_t add(const Real&, Real&);
-	st_err_t sub(const Real&, Real&);
-	st_err_t mul(const Real&, Real&);
-	st_err_t div(const Real&, Real&);
-	st_err_t pow(const Real&, Real&);
+	st_err_t add(const Real&, Real&) const;
+	st_err_t sub(const Real&, Real&) const;
+	st_err_t mul(const Real&, Real&) const;
+	st_err_t div(const Real&, Real&) const;
+	st_err_t pow(const Real&, Real&) const;
 	void zero() { r = 0; }
 	const std::string to_string(const tostring_t&) const;
 };
@@ -271,11 +271,19 @@ public:
 	void zero() { re = 0; im = 0; }
 	void neg() { re = (re == 0 ? 0 : -re); im = (im == 0 ? 0 : -im); }
 	void conj() { im = -im; }
+	st_err_t abs(real&) const;
+	st_err_t arg(real&) const;
+	st_err_t r_to_p(Cplx&) const;
+	st_err_t p_to_r(Cplx&) const;
+	st_err_t ln(Cplx&) const;
+	st_err_t exp(Cplx&) const;
+	st_err_t pow(const Cplx&, Cplx&) const;
+	st_err_t sign();
 	int cmp(const Cplx&) const;
-	st_err_t add(const Cplx&, Cplx&);
-	st_err_t sub(const Cplx&, Cplx&);
-	st_err_t mul(const Cplx&, Cplx&);
-	st_err_t div(const Cplx&, Cplx&);
+	st_err_t add(const Cplx&, Cplx&) const;
+	st_err_t sub(const Cplx&, Cplx&) const;
+	st_err_t mul(const Cplx&, Cplx&) const;
+	st_err_t div(const Cplx&, Cplx&) const;
 	const std::string to_string(const tostring_t&) const;
 };
 
@@ -365,6 +373,7 @@ public:
 	virtual void redim(const dim_t&, const int&, const int&);
 	virtual void copy_linear(const Matrix<Scalar>*);
 	virtual st_err_t create_transpose(Matrix<Scalar>*&);
+	virtual st_err_t create_neg(Matrix<Scalar>*&);
 	virtual st_err_t get_bounds(Coordinates& coord) {
 		coord.d = dimension;
 		coord.i = (dimension == DIM_VECTOR ? nb_columns : nb_lines);
@@ -382,6 +391,12 @@ public:
 	virtual st_err_t create_mul(const Matrix<Scalar>*, Matrix<Scalar>*&) const;
 	virtual st_err_t create_div(const Matrix<Scalar>*, Matrix<Scalar>*&) const;
 };
+
+st_err_t mat_r_to_c(Matrix<Real>*, Matrix<Real>*, Matrix<Cplx>*&);
+void mat_c_to_r(Matrix<Cplx>*, Matrix<Real>*&, Matrix<Real>*&);
+void mat_c_to_re(Matrix<Cplx>*, Matrix<Real>*&);
+void mat_c_to_im(Matrix<Cplx>*, Matrix<Real>*&);
+void mat_c_conj(Matrix<Cplx>*, Matrix<Cplx>*&);
 
 #endif // SCALAR_H
 

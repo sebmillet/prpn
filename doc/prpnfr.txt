@@ -192,6 +192,24 @@ COMMANDES
        C->R (1)
 	      Complexe à réel
 
+       RE (1) Partie réelle d'un nombre complexe
+
+       IM (1) Partie imaginaire d'un nombre complexe
+
+       CONJ (1)
+	      Conjugué du nombre complexe
+
+       ARG (1)
+	      Argument du nombre complexe
+
+       R->P (1)
+	      Conversion des coordonnées d'un nombre complexe de rectangulaire
+	      à polaire
+
+       P->R (1)
+	      Conversion  des  coordonnées  d'un  nombre complexe de polaire à
+	      rectangulaire
+
        SAME (2)
 	      Est identique
 

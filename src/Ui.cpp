@@ -608,6 +608,7 @@ static void refresh_stack(const int& enforced_nb_stack_elems_to_display, const b
 				color_code = (get_item_number_being_edited() == item_number ? SLCC_EDITED_ITEM : SLCC_NORMAL);
 				ps = &l;
 			} else {
+				debug_write("---- A PROGRAM IS HALTED");
 				ts->get_next_instruction(l);
 				l.insert(0, ui_impl->get_next_instruction_prefix());
 				ui_string_trim(l, ui_dsl.get_width(), &ui_dsl);

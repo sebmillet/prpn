@@ -20,6 +20,8 @@ const int REAL_PRECISION = 12;
 extern const real MINR = 1e-199;
   // Biggest positive real
 extern const real MAXR = 9.99999999999e199;
+static const real PI = 3.14159265359;
+static const real PI_DIV_2 = 1.57079632679;
 
   // If the constant below is false, then, the "STD" display mode of
   // reals just uses C++ built-in language = the following code:
@@ -854,11 +856,11 @@ st_err_t Real_mul(const Real& lv, const Real& rv, Real& res) { return Real_arith
 st_err_t Real_div(const Real& lv, const Real& rv, Real& res) { return Real_arith(numeric_div, lv, rv, res); }
 st_err_t Real_pow(const Real& lv, const Real& rv, Real& res) { return Real_arith(numeric_pow, lv, rv, res); }
 
-st_err_t Real::add(const Real& rv, Real& res) { return Real_add(*this, rv, res); }
-st_err_t Real::sub(const Real& rv, Real& res) { return Real_sub(*this, rv, res); }
-st_err_t Real::mul(const Real& rv, Real& res) { return Real_mul(*this, rv, res); }
-st_err_t Real::div(const Real& rv, Real& res) { return Real_div(*this, rv, res); }
-st_err_t Real::pow(const Real& rv, Real& res) { return Real_pow(*this, rv, res); }
+st_err_t Real::add(const Real& rv, Real& res) const { return Real_add(*this, rv, res); }
+st_err_t Real::sub(const Real& rv, Real& res) const { return Real_sub(*this, rv, res); }
+st_err_t Real::mul(const Real& rv, Real& res) const { return Real_mul(*this, rv, res); }
+st_err_t Real::div(const Real& rv, Real& res) const { return Real_div(*this, rv, res); }
+st_err_t Real::pow(const Real& rv, Real& res) const { return Real_pow(*this, rv, res); }
 
 
 //
@@ -979,10 +981,114 @@ st_err_t Cplx_div(const Cplx& lv, const Cplx& rv, Cplx& res) {
 //st_err_t Real_mul_by_Cplx(const Real& lv, const Cplx& rv, Cplx& res) { return Cplx_mul(Cplx(lv), rv, res); }
 //st_err_t Real_div_by_Cplx(const Real& lv, const Cplx& rv, Cplx& res) { return Cplx_div(Cplx(lv), rv, res); }
 
-st_err_t Cplx::add(const Cplx& rv, Cplx& res) { return Cplx_add(*this, rv, res); }
-st_err_t Cplx::sub(const Cplx& rv, Cplx& res) { return Cplx_sub(*this, rv, res); }
-st_err_t Cplx::mul(const Cplx& rv, Cplx& res) { return Cplx_mul(*this, rv, res); }
-st_err_t Cplx::div(const Cplx& rv, Cplx& res) { return Cplx_div(*this, rv, res); }
+st_err_t Cplx::add(const Cplx& rv, Cplx& res) const { return Cplx_add(*this, rv, res); }
+st_err_t Cplx::sub(const Cplx& rv, Cplx& res) const { return Cplx_sub(*this, rv, res); }
+st_err_t Cplx::mul(const Cplx& rv, Cplx& res) const { return Cplx_mul(*this, rv, res); }
+st_err_t Cplx::div(const Cplx& rv, Cplx& res) const { return Cplx_div(*this, rv, res); }
+
+st_err_t Cplx::abs(real& r) const {
+	real x, y, t;
+	st_err_t c = ST_ERR_OK;
+	numeric_mul(re, re, c, x);
+	numeric_mul(im, im, c, y);
+	numeric_add(x, y, c, t);
+	numeric_sqrt(t, c, r);
+	return c;
+}
+
+st_err_t Cplx::arg(real& r) const {
+	real t, r1;
+	st_err_t c = ST_ERR_OK;
+	if (re == 0) {
+		if (im > 0)
+			r = PI_DIV_2;
+		else if (im < 0)
+			r = -PI_DIV_2;
+		else
+			r = 0;
+	} else {
+		numeric_div(im, re, c, t);
+		numeric_atan(t, c, r1);
+		if (re < 0)
+			if (im >= 0)
+				numeric_add(r1, PI, c, r);
+			else
+				numeric_sub(r1, PI, c, r);
+		else
+			r = r1;
+	}
+	return c;
+}
+
+st_err_t Cplx::r_to_p(Cplx& cplx) const {
+	real cplx_re, cplx_im;
+	st_err_t c = abs(cplx_re);
+	if (c == ST_ERR_OK)
+		c = arg(cplx_im);
+	if (c == ST_ERR_OK)
+		cplx = Cplx(cplx_re, cplx_im);
+	return c;
+}
+
+st_err_t Cplx::p_to_r(Cplx& cplx) const {
+	real x, y, cplx_re, cplx_im;
+	st_err_t c = ST_ERR_OK;
+	numeric_cos(im, c, x);
+	numeric_mul(x, re, c, cplx_re);
+	numeric_sin(im, c, y);
+	numeric_mul(y, re, c, cplx_im);
+	if (c == ST_ERR_OK)
+		cplx = Cplx(cplx_re, cplx_im);
+	return c;
+}
+
+st_err_t Cplx::ln(Cplx& cplx) const {
+	real x, new_re, new_im;
+	st_err_t c = abs(x);
+	if (c == ST_ERR_OK)
+		c = arg(new_im);
+	numeric_ln(x, c, new_re);
+	cplx = Cplx(new_re, new_im);
+	return c;
+}
+
+st_err_t Cplx::exp(Cplx& cplx) const {
+	real new_re;
+	st_err_t c = ST_ERR_OK;
+	numeric_exp(re, c, new_re);
+	if (c == ST_ERR_OK) {
+		Cplx c2(new_re, im);
+		c = c2.p_to_r(cplx);
+	}
+	return c;
+}
+
+st_err_t Cplx::pow(const Cplx& rv, Cplx& cplx) const {
+	Cplx c2, c3;
+	st_err_t c = ln(c2);
+	if (c == ST_ERR_OK) {
+		c = rv.mul(c2, c3);
+		if (c == ST_ERR_OK) {
+			c = c3.exp(cplx);
+		}
+	}
+	return c;
+}
+
+st_err_t Cplx::sign() {
+	st_err_t c = ST_ERR_OK;
+	real a, new_re, new_im;
+	if (re != 0 || im != 0) {
+		c = abs(a);
+		numeric_div(re, a, c, new_re);
+		numeric_div(im, a, c, new_im);
+		if (c == ST_ERR_OK) {
+			re = new_re;
+			im = new_im;
+		}
+	}
+	return c;
+}
 
 
 //
@@ -1434,6 +1540,19 @@ template<class Scalar> st_err_t Matrix<Scalar>::create_transpose(Matrix<Scalar>*
 	return ST_ERR_OK;
 }
 
+template<class Scalar> st_err_t Matrix<Scalar>::create_neg(Matrix<Scalar>*& ret) {
+	ret = new Matrix<Scalar>(dimension, nb_lines, nb_columns, Scalar(Real(0)));
+	Scalar sc;
+	for (int i = 0; i < nb_lines; i++) {
+		for (int j = 0; j < nb_columns; j++) {
+			sc = get_value(i, j);
+			sc.neg();
+			ret->set_value(i, j, sc);
+		}
+	}
+	return ST_ERR_OK;
+}
+
 template<class Scalar> int Matrix<Scalar>::cmp(const Matrix<Scalar>& op) const {
 	if (nb_lines != op.nb_lines || nb_columns != op.nb_columns || dimension != op.dimension)
 		return 1;
@@ -1447,6 +1566,55 @@ template<class Scalar> int Matrix<Scalar>::cmp(const Matrix<Scalar>& op) const {
 	return 0;
 }
 
+st_err_t mat_r_to_c(Matrix<Real> *m_re, Matrix<Cplx> *m_im, Matrix<Cplx>*& mres) {
+	return ST_ERR_INTERNAL;
+}
+
 template class Matrix<Real>;
 template class Matrix<Cplx>;
+
+st_err_t mat_r_to_c(Matrix<Real> *m_re, Matrix<Real> *m_im, Matrix<Cplx>*& m_cplx) {
+	if (m_re->get_dimension() != m_im->get_dimension() ||
+			m_re->get_nb_lines() != m_im->get_nb_lines() ||
+			m_re->get_nb_columns() != m_im->get_nb_columns())
+		return ST_ERR_INVALID_DIMENSION;
+	m_cplx = new Matrix<Cplx>(m_re->get_dimension(), m_re->get_nb_lines(), m_re->get_nb_columns(), Cplx(0, 0));
+	for (int i = 0; i < m_re->get_nb_lines(); i++)
+		for (int j = 0; j < m_re->get_nb_columns(); j++)
+			m_cplx->set_value(i, j, Cplx(m_re->get_value(i, j).get_value(), m_im->get_value(i, j).get_value()));
+	return ST_ERR_OK;
+}
+
+void mat_c_to_r(Matrix<Cplx> *m_cplx, Matrix<Real>*& m_re, Matrix<Real>*& m_im) {
+	m_re = new Matrix<Real>(m_cplx->get_dimension(), m_cplx->get_nb_lines(), m_cplx->get_nb_columns(), Real(0));
+	m_im = new Matrix<Real>(m_cplx->get_dimension(), m_cplx->get_nb_lines(), m_cplx->get_nb_columns(), Real(0));
+	for (int i = 0; i < m_cplx->get_nb_lines(); i++) {
+		for (int j = 0; j < m_cplx->get_nb_columns(); j++) {
+			m_re->set_value(i, j, Real(m_cplx->get_value(i, j).get_re()));
+			m_im->set_value(i, j, Real(m_cplx->get_value(i, j).get_im()));
+		}
+	}
+}
+
+#define IMPLEMENT_MAT_C_TO_RE_OR_IM(OP) \
+void mat_c_to_##OP(Matrix<Cplx>* m_cplx, Matrix<Real>*& m) { \
+	m = new Matrix<Real>(m_cplx->get_dimension(), m_cplx->get_nb_lines(), m_cplx->get_nb_columns(), Real(0)); \
+	for (int i = 0; i < m_cplx->get_nb_lines(); i++) \
+		for (int j = 0; j < m_cplx->get_nb_columns(); j++) \
+			m->set_value(i, j, Real(m_cplx->get_value(i, j).get_##OP())); \
+}
+IMPLEMENT_MAT_C_TO_RE_OR_IM(re)
+IMPLEMENT_MAT_C_TO_RE_OR_IM(im)
+
+void mat_c_conj(Matrix<Cplx>* m_cplx, Matrix<Cplx>*& m_conj) {
+	m_conj = new Matrix<Cplx>(m_cplx->get_dimension(), m_cplx->get_nb_lines(), m_cplx->get_nb_columns(), Cplx(0, 0));
+	Cplx cplx;
+	for (int i = 0; i < m_cplx->get_nb_lines(); i++) {
+		for (int j = 0; j < m_cplx->get_nb_columns(); j++) {
+			cplx = m_cplx->get_value(i, j);
+			cplx.conj();
+			m_conj->set_value(i, j, cplx);
+		}
+	}
+}
 

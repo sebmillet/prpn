@@ -1234,7 +1234,10 @@ st_err_t TransStack::do_push_eval(SIO& s, const bool& inside_undo_sequence, stri
 	while (c == ST_ERR_OK && exec_stack->size() > ground_level && exec_mode == EXECMODE_RUN) {
 		c = exec1(cmd_err);
 	}
-	if (c != ST_ERR_OK && !temporary_copy && allow_halt)
+
+	debug_write_i("Size of exec_stack = %i", static_cast<int>(exec_stack->size()));
+
+	if (c != ST_ERR_OK && !temporary_copy && allow_halt && exec_stack->size() >= 1)
 		exec_mode = EXECMODE_HALT;
 	if (exec_mode != EXECMODE_HALT)
 		clear_exec_stack();
@@ -1554,6 +1557,12 @@ static st_err_t bc_sq(StackItem& op1, StackItem*& ret, string&) { prepare_arith(
 static st_err_t bc_sqr(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_sqr(ret); }
 static st_err_t bc_r_to_c(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { prepare_arith(); return op1.op_r_to_c_generic(op2, ret); }
 static st_err_t bc_c_to_r(TransStack& ts, SIO *args, string&) { return args[0].si->op_c_to_r(ts); }
+static st_err_t bc_re(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_re(ret); }
+static st_err_t bc_im(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_im(ret); }
+static st_err_t bc_conj(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_conj(ret); }
+static st_err_t bc_arg(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_arg(ret); }
+static st_err_t bc_p_to_r(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_p_to_r(ret); }
+static st_err_t bc_r_to_p(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_r_to_p(ret); }
 
   // Comparison functions
 
@@ -2583,8 +2592,24 @@ IMPLEMENT_REAL_FUNCTION(op_tan, numeric_tan)
 IMPLEMENT_REAL_FUNCTION(op_acos, numeric_acos)
 IMPLEMENT_REAL_FUNCTION(op_asin, numeric_asin)
 IMPLEMENT_REAL_FUNCTION(op_atan, numeric_atan)
-IMPLEMENT_REAL_FUNCTION(op_ln, numeric_ln)
 IMPLEMENT_REAL_FUNCTION(op_exp, numeric_exp)
+
+st_err_t StackItemReal::op_ln(StackItem*& ret) {
+	st_err_t c = ST_ERR_OK;
+	real res;
+	if (sc.get_value() < 0) {
+		Cplx c1(sc.get_value(), 0);
+		Cplx cplx;
+		c = c1.ln(cplx);
+		if (c == ST_ERR_OK)
+			ret = new StackItemCplx(cplx);
+	} else {
+		numeric_ln(sc.get_value(), c, res);
+		if (c == ST_ERR_OK)
+			ret = new StackItemReal(Real(res));
+	}
+	return c;
+}
 
 st_err_t StackItemReal::op_sqr(StackItem*& ret) {
 	real tmp_r = real_abs(sc.get_value());
@@ -2764,6 +2789,45 @@ st_err_t si_cplx_arith(st_err_t (*f)(const Cplx&, const Cplx&, Cplx&), const Cpl
 	return c;
 }
 
+st_err_t StackItemCplx::op_sign(StackItem*& ret) {
+	Cplx cplx = sc;
+	st_err_t c = cplx.sign();
+	if (c == ST_ERR_OK)
+		ret = new StackItemCplx(cplx);
+	return c;
+}
+
+#define IMPLEMENT_CPLX_OPREAL(OP) \
+st_err_t StackItemCplx::op_##OP(StackItem*& ret) { \
+	real r; \
+	st_err_t c = sc.OP(r); \
+	if (c == ST_ERR_OK) \
+		ret = new StackItemReal(Real(r)); \
+	return c; \
+}
+IMPLEMENT_CPLX_OPREAL(abs)
+IMPLEMENT_CPLX_OPREAL(arg)
+
+#define IMPLEMENT_CPLX_OPCPLX(OP) \
+st_err_t StackItemCplx::op_##OP(StackItem*& ret) { \
+	Cplx cplx; \
+	st_err_t c = sc.OP(cplx); \
+	if (c == ST_ERR_OK) \
+		ret = new StackItemCplx(cplx); \
+	return c; \
+}
+IMPLEMENT_CPLX_OPCPLX(p_to_r)
+IMPLEMENT_CPLX_OPCPLX(r_to_p)
+IMPLEMENT_CPLX_OPCPLX(ln)
+IMPLEMENT_CPLX_OPCPLX(exp)
+
+st_err_t StackItemCplx::op_conj(StackItem*& ret) {
+	Cplx cplx = sc;
+	cplx.conj();
+	ret = new StackItemCplx(cplx);
+	return ST_ERR_OK;
+}
+
 st_err_t StackItemCplx::op_mul(StackItemMatrixCplx *arg1, StackItem*& ret) {
 	return si_matrix_md<Cplx, StackItemMatrixCplx>(Cplx_mul, arg1->get_matrix(), sc, ret);
 }
@@ -2780,9 +2844,27 @@ st_err_t StackItemCplx::op_div(StackItemMatrixReal *arg1, StackItem*& ret) {
 	return si_matrix_md2(Cplx_div, arg1->get_matrix(), sc, ret);
 }
 
+st_err_t StackItemCplx::op_pow(StackItemCplx* arg1, StackItem*& ret) {
+	Cplx cplx;
+	st_err_t c = arg1->sc.pow(sc, cplx);
+	if (c == ST_ERR_OK)
+		ret = new StackItemCplx(cplx);
+	return c;
+}
+
 st_err_t StackItemCplx::op_c_to_r(TransStack& ts) {
 	ts.transstack_push(new StackItemReal(Real(sc.get_re())));
 	ts.transstack_push(new StackItemReal(Real(sc.get_im())));
+	return ST_ERR_OK;
+}
+
+st_err_t StackItemCplx::op_re(StackItem*& ret) {
+	ret = new StackItemReal(Real(sc.get_re()));
+	return ST_ERR_OK;
+}
+
+st_err_t StackItemCplx::op_im(StackItem*& ret) {
+	ret = new StackItemReal(Real(sc.get_im()));
 	return ST_ERR_OK;
 }
 
@@ -2911,6 +2993,17 @@ st_err_t StackItemMatrixCplx::op_##OP(StackItemMatrixReal *arg1, StackItem*& ret
 IMPLEMENT_MAT_OP_REAL_OP_CPLX(mul)
 IMPLEMENT_MAT_OP_REAL_OP_CPLX(div)
 
+#define IMPLEMENT_MAT_OP_NEG(SC) \
+st_err_t StackItemMatrix##SC::op_neg(StackItem*& ret) { \
+	Matrix<SC> *mres; \
+	st_err_t c = pmat->create_neg(mres); \
+	if (c == ST_ERR_OK) \
+		ret = new StackItemMatrix##SC(mres); \
+	return c; \
+}
+IMPLEMENT_MAT_OP_NEG(Real)
+IMPLEMENT_MAT_OP_NEG(Cplx)
+
 
 //
 // StackItemMatrixReal
@@ -2960,6 +3053,14 @@ st_err_t StackItemMatrixReal::op_sub(StackItemMatrixCplx *arg1, StackItem*& ret)
 	return si_matrix_as3(Cplx_sub, arg1->get_matrix(), pmat, ret);
 }
 
+st_err_t StackItemMatrixReal::op_r_to_c(StackItemMatrixReal *arg1, StackItem*& ret) {
+	Matrix<Cplx> *mres;
+	st_err_t c = mat_r_to_c(arg1->pmat, pmat, mres);
+	if (c == ST_ERR_OK)
+		ret = new StackItemMatrixCplx(mres);
+	return c;
+}
+
 
 //
 // StackItemMatrixCplx
@@ -3007,6 +3108,32 @@ st_err_t StackItemMatrixCplx::op_add(StackItemMatrixReal *arg1, StackItem*& ret)
 }
 st_err_t StackItemMatrixCplx::op_sub(StackItemMatrixReal *arg1, StackItem*& ret) {
 	return si_matrix_as2(Cplx_sub, arg1->get_matrix(), pmat, ret);
+}
+
+st_err_t StackItemMatrixCplx::op_c_to_r(TransStack& ts) {
+	Matrix<Real> *m_re;
+	Matrix<Real> *m_im;
+	mat_c_to_r(pmat, m_re, m_im);
+	ts.transstack_push(new StackItemMatrixReal(m_re));
+	ts.transstack_push(new StackItemMatrixReal(m_im));
+	return ST_ERR_OK;
+}
+
+#define IMPLEMENT_MAT_CPLX_RE_OR_IM(OP) \
+st_err_t StackItemMatrixCplx::op_##OP(StackItem*& ret) { \
+	Matrix<Real> *m; \
+	mat_c_to_##OP(pmat, m); \
+	ret = new StackItemMatrixReal(m); \
+	return ST_ERR_OK; \
+}
+IMPLEMENT_MAT_CPLX_RE_OR_IM(re)
+IMPLEMENT_MAT_CPLX_RE_OR_IM(im)
+
+st_err_t StackItemMatrixCplx::op_conj(StackItem*& ret) {
+	Matrix<Cplx> *m_cplx;
+	mat_c_conj(pmat, m_cplx);
+	ret = new StackItemMatrixCplx(m_cplx);
+	return ST_ERR_OK;
 }
 
 

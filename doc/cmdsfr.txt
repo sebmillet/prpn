@@ -37,6 +37,12 @@ SQ             (1): Carré
 SQR            (1): Racine carrée
 R->C           (2): Réel à complexe
 C->R           (1): Complexe à réel
+RE             (1): Partie réelle d'un nombre complexe
+IM             (1): Partie imaginaire d'un nombre complexe
+CONJ           (1): Conjugué du nombre complexe
+ARG            (1): Argument du nombre complexe
+R->P           (1): Conversion des coordonnées d'un nombre complexe de rectangulaire à polaire
+P->R           (1): Conversion des coordonnées d'un nombre complexe de polaire à rectangulaire
 SAME           (2): Est identique
 ==             (2): Est égal à
 <>             (2): Est différent de
@@ -139,3 +145,25 @@ Programmes
 Programme                << >>          << DUP + SWAP >>
 Algébrique               ' '            'X+2*Y=Z'
 
+3.14159265358
+3.14159265359
+1.57079632679
+-1.57079632679
+0
+(2,3.14159265359)
+(0,0)
+(1,1.57079632679)
+(2,0)
+(.707106781187,.707106781187)
+(2,0)
+(0,1)
+(2,0)
+(.707106781187,.707106781187)
+(-.707106781187,.707106781187)
+(.99999999995,9.9999999995E-6)
+(.707106781187,.707106781187)
+(1,0)
+.785398163398
+2.82842712475
+1.57079632679
+(1,2.35619449019)

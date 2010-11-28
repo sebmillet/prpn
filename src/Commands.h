@@ -56,6 +56,12 @@ BuiltinCommandDescriptor builtinCommands[] = {
 	{1, BC_FUNCTION_WRAPPER, "SQR", 0, 0, &bc_sqr, 0, 0, _N("Square root")},
 	{2, BC_FUNCTION_WRAPPER, "R->C", 0, 0, 0, &bc_r_to_c, 0, _N("Real to complex")},
 	{1, BC_RAW, "C->R", &bc_c_to_r, 0, 0, 0, 0, _N("Complex to real")},
+	{1, BC_FUNCTION_WRAPPER, "RE", 0, 0, &bc_re, 0, 0, _N("Get real part of complex number")},
+	{1, BC_FUNCTION_WRAPPER, "IM", 0, 0, &bc_im, 0, 0, _N("Get imaginary part of complex number")},
+	{1, BC_FUNCTION_WRAPPER, "CONJ", 0, 0, &bc_conj, 0, 0, _N("Get conjugate of complex number")},
+	{1, BC_FUNCTION_WRAPPER, "ARG", 0, 0, &bc_arg, 0, 0, _N("Get argument of a complex number")},
+	{1, BC_FUNCTION_WRAPPER, "R->P", 0, 0, &bc_r_to_p, 0, 0, _N("Rectangular to polar coordinates")},
+	{1, BC_FUNCTION_WRAPPER, "P->R", 0, 0, &bc_p_to_r, 0, 0, _N("Polar to rectangular coordinates")},
 	  // Comparison functions
 	{2, BC_FUNCTION_WRAPPER, "SAME", 0, 0, 0, &bc_same, 0, _N("Is identical")},
 	{2, BC_FUNCTION_WRAPPER, "==", 0, 0, 0, &bc_equal, 0, _N("Equal to")},
