@@ -59,10 +59,9 @@ public:
 	OS_Dirs(const char *);
 	virtual ~OS_Dirs();
 	virtual const std::string get_dir(const int& d) {
-		if (d >= OS_BEGIN && d < OS_END)
-			return dirs[d];
-		else
+		if (d < OS_BEGIN || d >= OS_END)
 			throw(CalcFatal(__FILE__, __LINE__, "OS_Dirs::get_dir(): bad argument value"));
+		return dirs[d];
 	}
 };
 

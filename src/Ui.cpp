@@ -121,7 +121,7 @@ void ui_disp(int line, const std::string& s) {
 	}
 	if (line < 1)
 		line = 1;
-	if (line > disp.size())
+	if (static_cast<unsigned int>(line) > disp.size())
 		line = disp.size();
 	disp[line - 1].text = s;
 	disp[line - 1].color_code = SLCC_NORMAL;
@@ -279,8 +279,8 @@ static void writerc() {
 // Written into ~/.prpn/stackrc or alike depending on OS
 
 	if (cfg_backup_stackrc) {
-		int status = os_rename(osd->get_dir(OSF_STACKRC).c_str(), osd->get_dir(OSF_STACKRC_ALT).c_str());
-		debug_write_i("stackrc rename status = %i", status);
+		os_rename(osd->get_dir(OSF_STACKRC).c_str(), osd->get_dir(OSF_STACKRC_ALT).c_str());
+		//debug_write_i("stackrc rename status = %i", status);
 	}
 
 	fstream ofs(osd->get_dir(OSF_STACKRC).c_str(), fstream::out | fstream::trunc);
@@ -304,8 +304,8 @@ static void writerc() {
 // Written into ~/.prpn/varsrc or alike depending on OS
 
 	if (cfg_backup_varsrc) {
-		int status = os_rename(osd->get_dir(OSF_VARSRC).c_str(), osd->get_dir(OSF_VARSRC_ALT).c_str());
-		debug_write_i("varsrc rename status = %i", status);
+		os_rename(osd->get_dir(OSF_VARSRC).c_str(), osd->get_dir(OSF_VARSRC_ALT).c_str());
+		//debug_write_i("varsrc rename status = %i", status);
 	}
 
 	fstream ofs2(osd->get_dir(OSF_VARSRC).c_str(), fstream::out | fstream::trunc);

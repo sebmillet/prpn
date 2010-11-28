@@ -188,7 +188,7 @@ static Flag1 default_flags[FL_TAG_IT_END + 1] = {
 };
 
 Flags::Flags() {
-	for (int i = 0; i < sizeof(flags) / sizeof(*flags); i++)
+	for (int i = 0; static_cast<unsigned int>(i) < sizeof(flags) / sizeof(*flags); i++)
 		flags[i] = default_flags[i];
 }
 
@@ -1037,8 +1037,8 @@ void TransStack::TSVars::recall_pwd(VarDirectory* d) { tree->recall_pwd(d); }
 long TransStack::class_count = 0;
 #endif
 
-TransStack::TransStack(const bool& tc, const bool& ah, vector<Exec> *ex, const int& ul) : count(0), modified_flag(true), exec_mode(EXECMODE_RUN),
-	temporary_copy(tc), allow_halt(ah), exec_stack(ex), undo_levels(ul) {
+TransStack::TransStack(const bool& tc, const bool& ah, vector<Exec> *ex, const int& ul) : count(0), modified_flag(true),
+		exec_stack(ex), undo_levels(ul), exec_mode(EXECMODE_RUN), temporary_copy(tc), allow_halt(ah) {
 #ifdef DEBUG_CLASS_COUNT
 		class_count++;
 #endif
@@ -1453,7 +1453,7 @@ st_err_t StackItem::exec1(TransStack&, int& ip, string& cmd_err) {
 	return ST_ERR_OK;
 }
 
-void StackItem::next_instruction(const int& ip, string& s) const {
+void StackItem::next_instruction(const int&, string& s) const {
 	s = simple_string(this);
 }
 
@@ -1843,7 +1843,7 @@ static st_err_t bc_to_list(TransStack& ts, SIO *args, string&) {
 
 static st_err_t bc_list_to(TransStack& ts, SIO *args, string&) { return args[0].si->op_list_to(ts, args[0].ownership); }
 
-static st_err_t bc_get(TransStack& ts, SIO *args, string& cmd_err) {
+static st_err_t bc_get(TransStack& ts, SIO *args, string&) {
 	StackItem *ret;
 	st_err_t c = args[0].si->op_get_generic(ts, *(args[1].si), ret);
 	if (c == ST_ERR_OK)
@@ -1866,7 +1866,7 @@ static void pushback_incremented_bounds(TransStack& ts, SIO *args, const bool& p
 	ts.transstack_push(ready_si);
 }
 
-static st_err_t bc_geti(TransStack& ts, SIO *args, string& cmd_err) {
+static st_err_t bc_geti(TransStack& ts, SIO *args, string&) {
 	StackItem *ret;
 	st_err_t c = args[0].si->op_get_generic(ts, *(args[1].si), ret);
 	if (c == ST_ERR_OK) {
@@ -1900,7 +1900,7 @@ static st_err_t bc_arry_to(TransStack& ts, SIO *args, string&) { return args[0].
 
 static st_err_t bc_to_arry(TransStack& ts, SIO *args, string&) { return args[0].si->op_to_arry(ts); }
 
-static st_err_t bc_con(TransStack& ts, SIO *args, string& cmd_err) {
+static st_err_t bc_con(TransStack& ts, SIO *args, string&) {
 	StackItem *ret;
 	st_err_t c = args[0].si->op_con_generic(ts, *(args[1].si), ret);
 	if (c == ST_ERR_OK)
@@ -1908,7 +1908,7 @@ static st_err_t bc_con(TransStack& ts, SIO *args, string& cmd_err) {
 	return c;
 }
 static st_err_t bc_trn(StackItem& op1, StackItem*& ret, string&) { return op1.op_trn(ret); }
-static st_err_t bc_rdm(TransStack& ts, SIO *args, string& cmd_err) {
+static st_err_t bc_rdm(TransStack& ts, SIO *args, string&) {
 	StackItem *ret;
 	st_err_t c = args[0].si->op_rdm_generic(ts, *(args[1].si), ret);
 	if (c == ST_ERR_OK)
@@ -2064,7 +2064,7 @@ static st_err_t bc_cont(TransStack& ts, SIO*, string&) { ts.cont(); return ST_ER
 
   // Misc
 
-static st_err_t bc_std(TransStack& ts, SIO *args, string&) {
+static st_err_t bc_std(TransStack&, SIO*, string&) {
 	F->set_realdisp(REALDISP_STD, 0);
 	return ST_ERR_OK;
 }
@@ -2082,12 +2082,12 @@ static st_err_t bc_sci(StackItem& op1, StackItem*&, string&) { return set_realdi
 static st_err_t bc_fix(StackItem& op1, StackItem*&, string&) { return set_realdisp_n(op1, REALDISP_FIX); }
 static st_err_t bc_eng(StackItem& op1, StackItem*&, string&) { return set_realdisp_n(op1, REALDISP_ENG); }
 
-static st_err_t bc_cllcd(TransStack& ts, SIO *args, string&) {
+static st_err_t bc_cllcd(TransStack&, SIO*, string&) {
 	ui_cllcd();
 	return ST_ERR_OK;
 }
 
-static st_err_t bc_clmf(TransStack& ts, SIO *args, string&) {
+static st_err_t bc_clmf(TransStack&, SIO*, string&) {
 	ui_clear_message_flag();
 	return ST_ERR_OK;
 }
@@ -2132,7 +2132,7 @@ static st_err_t bc_undo_levels(TransStack& ts, SIO *args, string&) {
 	return ST_ERR_OK;
 }
 
-static st_err_t bc_undo_levels_get(TransStack& ts, SIO *args, string&) {
+static st_err_t bc_undo_levels_get(TransStack& ts, SIO*, string&) {
 	ts.transstack_push(new StackItemReal(Real(ts.get_undo_levels())));
 	return ST_ERR_OK;
 }
@@ -2417,7 +2417,7 @@ IMPLEMENT_SCALAR_OP_CON_LIST(StackItemMatrixReal, StackItemReal, Real)
 IMPLEMENT_SCALAR_OP_CON_LIST(StackItemMatrixCplx, StackItemCplx, Cplx)
 
 #define IMPLEMENT_SCALAR_OP_CON_MAT(MATSI, SI, SCALAR) \
-st_err_t SI::op_con(TransStack& ts, MATSI* sim, StackItem*& ret) { \
+st_err_t SI::op_con(TransStack&, MATSI* sim, StackItem*& ret) { \
 	Matrix<SCALAR> *t = sim->get_matrix(); \
 	Matrix<SCALAR> *pmat = new Matrix<SCALAR>(t->get_dimension(), t->get_nb_lines(), t->get_nb_columns(), SCALAR(sc)); \
 	ret = new MATSI(pmat); \
@@ -2729,7 +2729,7 @@ st_err_t StackItemReal::increment_coord(TransStack&, const Coordinates& bounds) 
 	return ST_ERR_OK;
 }
 
-st_err_t StackItemReal::get_coordinates(TransStack& ts, StackItem* si, Coordinates& coord) {
+st_err_t StackItemReal::get_coordinates(TransStack&, StackItem* si, Coordinates& coord) {
 	Coordinates bounds;
 	coord.d = DIM_ANY;
 	st_err_t c;
@@ -3248,7 +3248,7 @@ bool StackItemMeta::same(StackItem* si, const sitype_t& expected_type) const {
 }
 
 StackItem *StackItemMeta::get_dup_nth_item(const int& n) const {
-	if (n < 1 || n > list.size())
+	if (n < 1 || static_cast<unsigned int>(n) > list.size())
 		throw(CalcFatal(__FILE__, __LINE__, "StackItemMeta::get_dup_nth_item(): n out of bounds!"));
 	return list[n - 1]->dup();
 }

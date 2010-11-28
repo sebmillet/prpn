@@ -120,7 +120,7 @@ void UiImplConsole::display_help(const int& dh) { cout << stack_get_help(dh); }
 
 const char *UiImplConsole::get_next_instruction_prefix() { return next_instruction_prefix; }
 
-void UiImplConsole::copy_text(const char *sz) { }
+void UiImplConsole::copy_text(const char*) { }
 
 const char *UiImplConsole::paste_text() {
 	return empty_const_char;

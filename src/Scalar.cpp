@@ -86,7 +86,7 @@ const string real_to_string(const real& r) {
 
   // Used only by user_real_to_string()
 void ascii_integer_string_round(string& s, const int& nb_digits) {
-	if (s.length() > nb_digits) {
+	if (s.length() > static_cast<unsigned int>(nb_digits)) {
 		char c = s.at(nb_digits);
 		s.erase(nb_digits);
 		if (c >= '5') {
@@ -102,7 +102,7 @@ void ascii_integer_string_round(string& s, const int& nb_digits) {
 		}
 	}
 	  // Ha! Infinite loop? This should not happen
-	if (s.length() > nb_digits)
+	if (s.length() > static_cast<unsigned int>(nb_digits))
 		ascii_integer_string_round(s, nb_digits);
 }
 
@@ -152,7 +152,7 @@ const string user_real_to_string(const real& r, const tostring_t& t, const bool&
 		  // After "E"
 		int part_exp;
 		  // -1 or +1
-		int part_sign;
+		int part_sign = 1;
 		  // Before .
 		string part_mantisse_int;
 		  // After .
@@ -226,7 +226,7 @@ const string user_real_to_string(const real& r, const tostring_t& t, const bool&
 		} else {
 			disp_eex_noround = target1;
 		}
-		if (disp_eex_noround.length() < REAL_PRECISION)
+		if (disp_eex_noround.length() < static_cast<unsigned int>(REAL_PRECISION))
 			disp_eex_noround.append(string(REAL_PRECISION - disp_eex_noround.length(), '0'));
 		ascii_integer_string_round(disp_eex_noround, REAL_PRECISION);
 		target2 = disp_eex_noround;
@@ -1247,7 +1247,8 @@ template<class Scalar> st_err_t Matrix<Scalar>::create_div(const Matrix<Scalar> 
 			divis->nb_columns == divis->nb_lines) {
 		int n = nb_columns;
 		debug_write_i("Matrix<Scalar>::create_div(): n = %i", n);
-		int reorder[n];
+		int *reorder;
+		reorder = new int[n];
 		for (int i = 0; i < n; i++)
 			reorder[i] = i;
 
@@ -1361,6 +1362,7 @@ template<class Scalar> st_err_t Matrix<Scalar>::create_div(const Matrix<Scalar> 
 		}
 		delete vv;
 		delete mm;
+		delete []reorder;
 	} else
 		c = ST_ERR_INVALID_DIMENSION;
 	return c;

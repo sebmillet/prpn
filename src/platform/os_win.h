@@ -83,6 +83,12 @@ int os_dir_create(const char *sz) {
 	return r;
 }
 
+int os_rename(const char *actual_name, const char* new_name) {
+	if (os_file_exists(new_name))
+		remove(new_name);
+	return rename(actual_name, new_name);
+}
+
 OS_Dirs::OS_Dirs(const char *argv0) {
 	TCHAR szPath[MAX_PATH];
 

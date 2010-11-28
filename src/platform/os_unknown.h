@@ -44,6 +44,11 @@ bool os_file_exists(const char *sz) { return os_e_exists(sz, S_IFREG); }
 int os_dir_create(const char *sz) {
 	return mkdir(sz, S_IRWXU | S_IRWXG);
 }
+
+int os_rename(const char *actual_name, const char* new_name) {
+	return rename(actual_name, new_name);
+}
+
 OS_Dirs::OS_Dirs(const char *argv0) {
 	dirs[OSF_RT_ARGV0] = argv0;
 	my_split(argv0, SEP, dirs[OSD_RT_EXE], dirs[OSF_RT_EXE]);
