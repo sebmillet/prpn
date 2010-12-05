@@ -221,6 +221,8 @@ public:
 	virtual st_err_t op_mod_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_min_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_max_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_hms_add_generic(StackItem& arg2, StackItem*& ret) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_hms_sub_generic(StackItem& arg2, StackItem*& ret) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_cos(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_sin(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_tan(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
@@ -229,6 +231,20 @@ public:
 	virtual st_err_t op_atan(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_ln(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_exp(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+
+	virtual st_err_t op_cosh(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_sinh(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_tanh(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_acosh(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_asinh(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_atanh(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+
+	virtual st_err_t op_to_hms(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_hms_to(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+
+	virtual st_err_t op_d_to_r(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_r_to_d(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+
 	virtual st_err_t op_neg(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_sq(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_inv(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
@@ -255,6 +271,8 @@ public:
 	virtual st_err_t op_min(StackItemReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_max(StackItemReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_r_to_c(StackItemReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_hms_add(StackItemReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_hms_sub(StackItemReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	  // COMPLEX
 	virtual st_err_t op_add(StackItemCplx*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_sub(StackItemCplx*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
@@ -421,7 +439,7 @@ public:
 // StackItemReal and StackItemCplx
 //
 
-template<class Scalar, class SI> st_err_t si_arith(st_err_t (*f)(const Scalar&, const Scalar&, Scalar&), const Scalar&, const Scalar&, StackItem*&);
+template<class Scalar, class SI> st_err_t si_arith(void (*f)(const Scalar&, const Scalar&, st_err_t&, Scalar&), const Scalar&, const Scalar&, StackItem*&);
 template<class Scalar, class SI_Mat> st_err_t si_matrix_md(st_err_t (*f)(const Scalar&, const Scalar&, Scalar&), Matrix<Scalar>*, const Scalar&, StackItem*&);
 
 //
@@ -463,6 +481,8 @@ public:
 	virtual st_err_t op_min_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_min(this, ret); }
 	virtual st_err_t op_max_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_max(this, ret); }
 	virtual st_err_t op_r_to_c_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_r_to_c(this, ret); }
+	virtual st_err_t op_hms_add_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_hms_add(this, ret); }
+	virtual st_err_t op_hms_sub_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_hms_sub(this, ret); }
 
 	virtual st_err_t op_add(StackItemReal* arg1, StackItem*& ret) { return si_arith<Real, StackItemReal>(Real_add, arg1->sc, sc, ret); }
 	virtual st_err_t op_sub(StackItemReal* arg1, StackItem*& ret) { return si_arith<Real, StackItemReal>(Real_sub, arg1->sc, sc, ret); }
@@ -478,7 +498,9 @@ public:
 	virtual st_err_t op_sub(StackItemCplx*, StackItem*&);
 	virtual st_err_t op_mul(StackItemCplx*, StackItem*&);
 	virtual st_err_t op_div(StackItemCplx*, StackItem*&);
-	virtual st_err_t op_pow(StackItemReal* arg1, StackItem*& ret) { return si_arith<Real, StackItemReal>(Real_pow, arg1->sc, sc, ret); }
+	virtual st_err_t op_pow(StackItemReal*, StackItem*&);
+	virtual st_err_t op_hms_add(StackItemReal*, StackItem*&);
+	virtual st_err_t op_hms_sub(StackItemReal*, StackItem*&);
 
 	virtual st_err_t op_r_to_c(StackItemReal*, StackItem*&);
 
@@ -495,10 +517,22 @@ public:
 	virtual st_err_t op_atan(StackItem*&);
 	virtual st_err_t op_ln(StackItem*&);
 	virtual st_err_t op_exp(StackItem*&);
+	virtual st_err_t op_cosh(StackItem*&);
+	virtual st_err_t op_sinh(StackItem*&);
+	virtual st_err_t op_tanh(StackItem*&);
+	virtual st_err_t op_acosh(StackItem*&);
+	virtual st_err_t op_asinh(StackItem*&);
+	virtual st_err_t op_atanh(StackItem*&);
 	virtual st_err_t op_neg(StackItem*&);
 	virtual st_err_t op_sq(StackItem*&);
 	virtual st_err_t op_inv(StackItem*&);
 	virtual st_err_t op_sqr(StackItem*&);
+
+	virtual st_err_t op_to_hms(StackItem*&);
+	virtual st_err_t op_hms_to(StackItem*&);
+
+	virtual st_err_t op_d_to_r(StackItem*&);
+	virtual st_err_t op_r_to_d(StackItem*&);
 
 	virtual st_err_t op_lower_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_lower(this, ret); }
 	virtual st_err_t op_lower_or_equal_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_lower_or_equal(this, ret); }
@@ -587,12 +621,27 @@ public:
 	virtual st_err_t op_pow_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_pow(this, ret); }
 	virtual st_err_t op_pow(StackItemCplx* arg1, StackItem*& ret);
 
+	virtual st_err_t op_cos(StackItem*&);
+	virtual st_err_t op_sin(StackItem*&);
+	virtual st_err_t op_tan(StackItem*&);
 	virtual st_err_t op_exp(StackItem*&);
 	virtual st_err_t op_ln(StackItem*&);
+	virtual st_err_t op_sqr(StackItem*&);
+	virtual st_err_t op_acos(StackItem*&);
+	virtual st_err_t op_asin(StackItem*&);
+	virtual st_err_t op_atan(StackItem*&);
+
+	virtual st_err_t op_cosh(StackItem*&);
+	virtual st_err_t op_sinh(StackItem*&);
+	virtual st_err_t op_tanh(StackItem*&);
+	virtual st_err_t op_acosh(StackItem*&);
+	virtual st_err_t op_asinh(StackItem*&);
+	virtual st_err_t op_atanh(StackItem*&);
 
 	virtual st_err_t op_neg(StackItem*&);
 	virtual st_err_t op_sq(StackItem*&);
 	virtual st_err_t op_inv(StackItem*&);
+
 	virtual st_err_t op_re(StackItem*&);
 	virtual st_err_t op_im(StackItem*&);
 	virtual st_err_t op_conj(StackItem*&);

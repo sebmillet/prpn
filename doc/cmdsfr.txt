@@ -13,8 +13,8 @@ _ABOUT         (0): Affiche des informations au sujet de ce programme
 %CH            (2): Pourcentage de changement : 100 * (y - x) / x
 %T             (2): Pourcentage du total : 100 * y / x
 MOD            (2): Modulo : x - y * FLOOR(x / y)
-MIN            (2): Minimum
-MAX            (2): Maximum
+MIN            (2): Minimum of two reals
+MAX            (2): Maximum of two reals
 COS            (1): Cosinus
 SIN            (1): Sinus
 TAN            (1): Tangente
@@ -23,6 +23,12 @@ ASIN           (1): Arc-sinus
 ATAN           (1): Arc-tangente
 LN             (1): Logarithme (base e)
 EXP            (1): Exponentiel
+COSH           (1): Cosinus hyperbolique
+SINH           (1): Sinus hyperbolique
+TANH           (1): Tangente hyperbolique
+ACOSH          (1): Arc-cosinus hyperbolique
+ASINH          (1): Arc-sinus hyperbolique
+ATANH          (1): Arc-tangente hyperbolique
 NEG            (1): Opposé
 IP             (1): Partie entière
 FP             (1): Partie décimale
@@ -35,6 +41,14 @@ XPON           (1): Exponentielle de x
 INV            (1): 1/x
 SQ             (1): Carré
 SQR            (1): Racine carrée
+MINR           (0): Smallest real greater than zero the calcultor can represent
+MAXR           (0): Biggest real the calcultor can represent
+->HMS          (1): Convert a decimal to HMS (h.MMSSss)
+HMS->          (1): Convert a HMS (h.MMSSss) to a decimal
+HMS+           (2): Add two HMS (h.MMSSss)
+HMS-           (2): Subtract two HMS (h.MMSSss)
+D->R           (1): Convert from degrees to radians
+R->D           (1): Convert from radians to degrees
 R->C           (2): Réel à complexe
 C->R           (1): Complexe à réel
 RE             (1): Partie réelle d'un nombre complexe
@@ -145,25 +159,5 @@ Programmes
 Programme                << >>          << DUP + SWAP >>
 Algébrique               ' '            'X+2*Y=Z'
 
-3.14159265358
-3.14159265359
-1.57079632679
--1.57079632679
-0
-(2,3.14159265359)
-(0,0)
-(1,1.57079632679)
-(2,0)
-(.707106781187,.707106781187)
-(2,0)
-(0,1)
-(2,0)
-(.707106781187,.707106781187)
-(-.707106781187,.707106781187)
-(.99999999995,9.9999999995E-6)
-(.707106781187,.707106781187)
-(1,0)
-.785398163398
-2.82842712475
-1.57079632679
-(1,2.35619449019)
+1.505644
+2.354478

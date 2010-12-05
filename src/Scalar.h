@@ -36,22 +36,6 @@ int digit_to_int(const char&);
 char int_to_digit(const int&);
 void remove_leading_zeros(std::string&);
 
-  // Arithmetic
-void numeric_add(const real&, const real&, st_err_t&, real&);
-void numeric_sub(const real&, const real&, st_err_t&, real&);
-void numeric_mul(const real&, const real&, st_err_t&, real&);
-void numeric_div(const real&, const real&, st_err_t&, real&);
-void numeric_ln(const real&, st_err_t&, real&);
-void numeric_exp(const real&, st_err_t&, real&);
-void numeric_pow(const real&, st_err_t&, real&);
-void numeric_cos(const real&, st_err_t&, real&);
-void numeric_sin(const real&, st_err_t&, real&);
-void numeric_tan(const real&, st_err_t&, real&);
-void numeric_acos(const real&, st_err_t&, real&);
-void numeric_asin(const real&, st_err_t&, real&);
-void numeric_atan(const real&, st_err_t&, real&);
-void numeric_sqrt(const real&, st_err_t&, real&);
-
 
 //
 // Coordinates
@@ -131,7 +115,7 @@ class Real : public Scal {
 
 	real r;
 public:
-	friend st_err_t Real_arith(void (*f)(const real&, const real&, st_err_t&, real&), const Real&, const Real&, Real&);
+	friend void Real_arith(void (*f)(const real&, const real&, st_err_t&, real&), const Real&, const Real&, st_err_t&, Real&);
 
 	Real() : r(0) {
 		//std::cout << "Creation of a REAL\n";
@@ -176,21 +160,44 @@ public:
 	void neg() { r = (r == 0 ? 0 : -r); }
 	void conj() { }
 	int cmp(const Real&) const;
-	st_err_t add(const Real&, Real&) const;
-	st_err_t sub(const Real&, Real&) const;
-	st_err_t mul(const Real&, Real&) const;
-	st_err_t div(const Real&, Real&) const;
-	st_err_t pow(const Real&, Real&) const;
+	void add(const Real&, st_err_t&, Real&) const;
+	void sub(const Real&, st_err_t&, Real&) const;
+	void mul(const Real&, st_err_t&, Real&) const;
+	void div(const Real&, st_err_t&, Real&) const;
+	void pow(const Real&, st_err_t&, Cplx&) const;
+	void floor(st_err_t&, Real&) const;
+	void mod(const Real&, st_err_t&, Real&) const;
+	void sqr(st_err_t&, Cplx&) const;
+	void ln(st_err_t&, Cplx&) const;
+	void acos(st_err_t&, Cplx&) const;
+	void asin(st_err_t&, Cplx&) const;
+	void atan(st_err_t&, Real&) const;
+	void cos(st_err_t&, Real&) const;
+	void sin(st_err_t&, Real&) const;
+	void tan(st_err_t&, Real&) const;
+	void exp(st_err_t&, Real&) const;
+	void cosh(st_err_t&, Real&) const;
+	void sinh(st_err_t&, Real&) const;
+	void tanh(st_err_t&, Real&) const;
+	void acosh(st_err_t&, Cplx&) const;
+	void asinh(st_err_t&, Real&) const;
+	void atanh(st_err_t&, Cplx&) const;
+	void to_hms(st_err_t&, Real&) const;
+	void hms_to(st_err_t&, Real&) const;
+	void hms_add(const Real&, st_err_t&, Real&) const;
+	void hms_sub(const Real&, st_err_t&, Real&) const;
+	void d_to_r(st_err_t&, Real&) const;
+	void r_to_d(st_err_t&, Real&) const;
 	void zero() { r = 0; }
 	const std::string to_string(const tostring_t&) const;
 };
 
-st_err_t Real_arith(void (*f)(const real&, const real&, st_err_t&, real&), const Real&, const Real&, Real&);
-st_err_t Real_add(const Real&, const Real&, Real&);
-st_err_t Real_sub(const Real&, const Real&, Real&);
-st_err_t Real_mul(const Real&, const Real&, Real&);
-st_err_t Real_div(const Real&, const Real&, Real&);
-st_err_t Real_pow(const Real&, const Real&, Real&);
+void Real_arith(void (*f)(const real&, const real&, st_err_t&, real&), const Real&, const Real&, st_err_t&, Real&);
+void Real_add(const Real&, const Real&, st_err_t&, Real&);
+void Real_sub(const Real&, const Real&, st_err_t&, Real&);
+void Real_mul(const Real&, const Real&, st_err_t&, Real&);
+void Real_div(const Real&, const Real&, st_err_t&, Real&);
+void Real_pow(const Real&, const Real&, st_err_t&, Real&);
 
 
 //
@@ -206,12 +213,10 @@ class Cplx : public Scal {
 	real re;
 	real im;
 public:
-	friend st_err_t Cplx_add(const Cplx&, const Cplx&, Cplx&);
-	friend st_err_t Cplx_sub(const Cplx&, const Cplx&, Cplx&);
-	friend st_err_t Cplx_mul(const Cplx&, const Cplx&, Cplx&);
-	friend st_err_t Cplx_div(const Cplx&, const Cplx&, Cplx&);
-	//friend st_err_t Cplx_mul_by_Real(const Cplx&, const Real&, Cplx&);
-	//friend st_err_t Cplx_div_by_Real(const Cplx&, const Real&, Cplx&);
+	friend void Cplx_add(const Cplx&, const Cplx&, st_err_t& c, Cplx&);
+	friend void Cplx_sub(const Cplx&, const Cplx&, st_err_t& c, Cplx&);
+	friend void Cplx_mul(const Cplx&, const Cplx&, st_err_t& c, Cplx&);
+	friend void Cplx_div(const Cplx&, const Cplx&, st_err_t& c, Cplx&);
 
 	Cplx() : re(0), im(0) {
 		//std::cout << "Creation of a CPLX\n";
@@ -271,26 +276,39 @@ public:
 	void zero() { re = 0; im = 0; }
 	void neg() { re = (re == 0 ? 0 : -re); im = (im == 0 ? 0 : -im); }
 	void conj() { im = -im; }
-	st_err_t abs(real&) const;
-	st_err_t arg(real&) const;
-	st_err_t r_to_p(Cplx&) const;
-	st_err_t p_to_r(Cplx&) const;
-	st_err_t ln(Cplx&) const;
-	st_err_t exp(Cplx&) const;
-	st_err_t pow(const Cplx&, Cplx&) const;
-	st_err_t sign();
+	void abs(st_err_t&, real&) const;
+	void arg(st_err_t&, real&) const;
+	void r_to_p(st_err_t&, Cplx&) const;
+	void p_to_r(st_err_t&, Cplx&) const;
+	void ln(st_err_t&, Cplx&) const;
+	void exp(st_err_t&, Cplx&) const;
+	void pow(const Cplx&, st_err_t&, Cplx&) const;
+	void sqr(st_err_t&, Cplx&) const;
+	void acos(st_err_t&, Cplx&) const;
+	void asin(st_err_t&, Cplx&) const;
+	void atan(st_err_t&, Cplx&) const;
+	void cos(st_err_t&, Cplx&) const;
+	void sin(st_err_t&, Cplx&) const;
+	void tan(st_err_t&, Cplx&) const;
+	void cosh(st_err_t&, Cplx&) const;
+	void sinh(st_err_t&, Cplx&) const;
+	void tanh(st_err_t&, Cplx&) const;
+	void acosh(st_err_t&, Cplx&) const;
+	void asinh(st_err_t&, Cplx&) const;
+	void atanh(st_err_t&, Cplx&) const;
+	void sign(st_err_t&, Cplx&) const;
 	int cmp(const Cplx&) const;
-	st_err_t add(const Cplx&, Cplx&) const;
-	st_err_t sub(const Cplx&, Cplx&) const;
-	st_err_t mul(const Cplx&, Cplx&) const;
-	st_err_t div(const Cplx&, Cplx&) const;
+	void add(const Cplx&, st_err_t&, Cplx&) const;
+	void sub(const Cplx&, st_err_t&, Cplx&) const;
+	void mul(const Cplx&, st_err_t&, Cplx&) const;
+	void div(const Cplx&, st_err_t&, Cplx&) const;
 	const std::string to_string(const tostring_t&) const;
 };
 
-st_err_t Cplx_add(const Cplx&, const Cplx&, Cplx&);
-st_err_t Cplx_sub(const Cplx&, const Cplx&, Cplx&);
-st_err_t Cplx_mul(const Cplx&, const Cplx&, Cplx&);
-st_err_t Cplx_div(const Cplx&, const Cplx&, Cplx&);
+void Cplx_add(const Cplx&, const Cplx&, st_err_t&, Cplx&);
+void Cplx_sub(const Cplx&, const Cplx&, st_err_t&, Cplx&);
+void Cplx_mul(const Cplx&, const Cplx&, st_err_t&, Cplx&);
+void Cplx_div(const Cplx&, const Cplx&, st_err_t&, Cplx&);
 
 
 //
@@ -385,9 +403,9 @@ public:
 	virtual int cmp(const Matrix<Scalar>&) const;
 
 	  // Multiplication or division by a scalar
-	virtual st_err_t md(st_err_t (*f)(const Scalar&, const Scalar&, Scalar&), const Scalar&);
+	virtual st_err_t md(void (*f)(const Scalar&, const Scalar&, st_err_t&, Scalar&), const Scalar&);
 	  // Addition or subtraction with another vector/matrix of same dimension
-	virtual st_err_t as(st_err_t (*f)(const Scalar&, const Scalar&, Scalar&), Matrix<Scalar>&);
+	virtual st_err_t as(void (*f)(const Scalar&, const Scalar&, st_err_t&, Scalar&), Matrix<Scalar>&);
 	virtual st_err_t create_mul(const Matrix<Scalar>*, Matrix<Scalar>*&) const;
 	virtual st_err_t create_div(const Matrix<Scalar>*, Matrix<Scalar>*&) const;
 };

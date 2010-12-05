@@ -1,0 +1,88 @@
+"0 SQR="
+0 SQR ->STR +
+"-1 SQR="
+-1 SQR ->STR +
+"-2 SQR="
+-2 SQR ->STR +
+"1 SQR="
+1 SQR ->STR +
+"2 SQR="
+2 SQR ->STR +
+"(0,0) SQR="
+(0,0) SQR ->STR +
+"(-1,0) SQR="
+(-1,0) SQR ->STR +
+"(-2,0) SQR="
+(-2,0) SQR ->STR +
+"(1,0) SQR="
+(1,0) SQR ->STR +
+"(2,0) SQR="
+(2,0) SQR ->STR +
+"0 LN="
+0 LN ->STR +
+"-1 LN="
+-1 LN ->STR +
+"-2 LN="
+-2 LN ->STR +
+"1 LN="
+1 LN ->STR +
+"2 LN="
+2 LN ->STR +
+"(0,0) LN="
+(0,0) LN ->STR +
+"(-1,0) LN="
+(-1,0) LN ->STR +
+"(-2,0) LN="
+(-2,0) LN ->STR +
+"(1,0) LN="
+(1,0) LN ->STR +
+"(2,0) LN="
+(2,0) LN ->STR +
+"(1,1) SQR="
+(1,1) SQR ->STR +
+"(2,2) SQR="
+(2,2) SQR ->STR +
+"(-1,-1) SQR="
+(-1,-1) SQR ->STR +
+"(-2,-2) SQR="
+(-2,-2) SQR ->STR +
+"(1,2) SQR="
+(1,2) SQR ->STR +
+"(1,-2) SQR="
+(1,-2) SQR ->STR +
+"(-1, 2) SQR="
+(-1, 2) SQR ->STR +
+"(-1,-2) SQR="
+(-1,-2) SQR ->STR +
+"(2,1) SQR="
+(2,1) SQR ->STR +
+"(2,-1) SQR="
+(2,-1) SQR ->STR +
+"(-2, 1) SQR="
+(-2, 1) SQR ->STR +
+"(-2,-1) SQR="
+(-2,-1) SQR ->STR +
+"(1,1) LN="
+(1,1) LN ->STR +
+"(2,2) LN="
+(2,2) LN ->STR +
+"(-1,-1) LN="
+(-1,-1) LN ->STR +
+"(-2,-2) LN="
+(-2,-2) LN ->STR +
+"(1,2) LN="
+(1,2) LN ->STR +
+"(1,-2) LN="
+(1,-2) LN ->STR +
+"(-1, 2) LN="
+(-1, 2) LN ->STR +
+"(-1,-2) LN="
+(-1,-2) LN ->STR +
+"(2,1) LN="
+(2,1) LN ->STR +
+"(2,-1) LN="
+(2,-1) LN ->STR +
+"(-2, 1) LN="
+(-2, 1) LN ->STR +
+"(-2,-1) LN="
+(-2,-1) LN ->STR +

@@ -22,6 +22,9 @@ using namespace std;
 
 const int DEFAULT_PORTABLE_BIN_BASE = 16;
 
+extern const real MINR;
+extern const real MAXR;
+
 static string st_errors[] = {
 	"",						// ST_ERR_OK
 	"Too Few Arguments",	// ST_ERR_TOO_FEW_ARGUMENTS
@@ -1521,48 +1524,83 @@ static st_err_t bc_about(TransStack&, SIO*, string&) {
   // Arithmetic
 
 void prepare_arith();
-static st_err_t bc_add(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { prepare_arith(); return op1.op_add_generic(op2, ret); }
-static st_err_t bc_sub(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { prepare_arith(); return op1.op_sub_generic(op2, ret); }
-static st_err_t bc_mul(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { prepare_arith(); return op1.op_mul_generic(op2, ret); }
-static st_err_t bc_div(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { prepare_arith(); return op1.op_div_generic(op2, ret); }
-static st_err_t bc_pow(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { prepare_arith(); return op1.op_pow_generic(op2, ret); }
-static st_err_t bc_percent(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { prepare_arith(); return op1.op_percent_generic(op2, ret); }
-static st_err_t bc_percent_ch(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { prepare_arith(); return op1.op_percent_ch_generic(op2, ret); }
-static st_err_t bc_percent_t(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { prepare_arith(); return op1.op_percent_t_generic(op2, ret); }
-static st_err_t bc_mod(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { prepare_arith(); return op1.op_mod_generic(op2, ret); }
-static st_err_t bc_min(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { prepare_arith(); return op1.op_min_generic(op2, ret); }
-static st_err_t bc_max(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { prepare_arith(); return op1.op_max_generic(op2, ret); }
+
+#define IMPLEMENT_BC_TWO_ARGS_GENERIC_FUNC(OP) \
+static st_err_t bc_##OP(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { \
+	prepare_arith(); \
+	return op1.op_##OP##_generic(op2, ret); \
+}
+IMPLEMENT_BC_TWO_ARGS_GENERIC_FUNC(add)
+IMPLEMENT_BC_TWO_ARGS_GENERIC_FUNC(sub)
+IMPLEMENT_BC_TWO_ARGS_GENERIC_FUNC(mul)
+IMPLEMENT_BC_TWO_ARGS_GENERIC_FUNC(div)
+IMPLEMENT_BC_TWO_ARGS_GENERIC_FUNC(pow)
+IMPLEMENT_BC_TWO_ARGS_GENERIC_FUNC(percent)
+IMPLEMENT_BC_TWO_ARGS_GENERIC_FUNC(percent_ch)
+IMPLEMENT_BC_TWO_ARGS_GENERIC_FUNC(percent_t)
+IMPLEMENT_BC_TWO_ARGS_GENERIC_FUNC(mod)
+IMPLEMENT_BC_TWO_ARGS_GENERIC_FUNC(min)
+IMPLEMENT_BC_TWO_ARGS_GENERIC_FUNC(max)
+IMPLEMENT_BC_TWO_ARGS_GENERIC_FUNC(hms_add)
+IMPLEMENT_BC_TWO_ARGS_GENERIC_FUNC(hms_sub)
+
 
   // Real functions
 
-static st_err_t bc_cos(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_cos(ret); }
-static st_err_t bc_sin(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_sin(ret); }
-static st_err_t bc_tan(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_tan(ret); }
-static st_err_t bc_acos(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_acos(ret); }
-static st_err_t bc_asin(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_asin(ret); }
-static st_err_t bc_atan(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_atan(ret); }
-static st_err_t bc_ln(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_ln(ret); }
-static st_err_t bc_exp(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_exp(ret); }
-static st_err_t bc_neg(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_neg(ret); }
-static st_err_t bc_ip(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_ip(ret); }
-static st_err_t bc_fp(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_fp(ret); }
-static st_err_t bc_floor(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_floor(ret); }
-static st_err_t bc_ceil(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_ceil(ret); }
-static st_err_t bc_abs(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_abs(ret); }
-static st_err_t bc_sign(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_sign(ret); }
-static st_err_t bc_mant(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_mant(ret); }
-static st_err_t bc_xpon(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_xpon(ret); }
-static st_err_t bc_inv(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_inv(ret); }
-static st_err_t bc_sq(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_sq(ret); }
-static st_err_t bc_sqr(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_sqr(ret); }
-static st_err_t bc_r_to_c(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { prepare_arith(); return op1.op_r_to_c_generic(op2, ret); }
-static st_err_t bc_c_to_r(TransStack& ts, SIO *args, string&) { return args[0].si->op_c_to_r(ts); }
-static st_err_t bc_re(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_re(ret); }
-static st_err_t bc_im(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_im(ret); }
-static st_err_t bc_conj(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_conj(ret); }
-static st_err_t bc_arg(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_arg(ret); }
-static st_err_t bc_p_to_r(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_p_to_r(ret); }
-static st_err_t bc_r_to_p(StackItem& op1, StackItem*& ret, string&) { prepare_arith(); return op1.op_r_to_p(ret); }
+#define IMPLEMENT_BC_OP_FUNC(OP) \
+static st_err_t bc_##OP(StackItem& op1, StackItem*& ret, string&) { \
+	prepare_arith(); \
+	return op1.op_##OP(ret); \
+}
+IMPLEMENT_BC_OP_FUNC(cos)
+IMPLEMENT_BC_OP_FUNC(sin)
+IMPLEMENT_BC_OP_FUNC(tan)
+IMPLEMENT_BC_OP_FUNC(acos)
+IMPLEMENT_BC_OP_FUNC(asin)
+IMPLEMENT_BC_OP_FUNC(atan)
+IMPLEMENT_BC_OP_FUNC(ln)
+IMPLEMENT_BC_OP_FUNC(exp)
+IMPLEMENT_BC_OP_FUNC(cosh)
+IMPLEMENT_BC_OP_FUNC(sinh)
+IMPLEMENT_BC_OP_FUNC(tanh)
+IMPLEMENT_BC_OP_FUNC(acosh)
+IMPLEMENT_BC_OP_FUNC(asinh)
+IMPLEMENT_BC_OP_FUNC(atanh)
+IMPLEMENT_BC_OP_FUNC(neg)
+IMPLEMENT_BC_OP_FUNC(ip)
+IMPLEMENT_BC_OP_FUNC(fp)
+IMPLEMENT_BC_OP_FUNC(floor)
+IMPLEMENT_BC_OP_FUNC(ceil)
+IMPLEMENT_BC_OP_FUNC(abs)
+IMPLEMENT_BC_OP_FUNC(sign)
+IMPLEMENT_BC_OP_FUNC(mant)
+IMPLEMENT_BC_OP_FUNC(xpon)
+IMPLEMENT_BC_OP_FUNC(inv)
+IMPLEMENT_BC_OP_FUNC(sq)
+IMPLEMENT_BC_OP_FUNC(sqr)
+IMPLEMENT_BC_OP_FUNC(re)
+IMPLEMENT_BC_OP_FUNC(im)
+IMPLEMENT_BC_OP_FUNC(conj)
+IMPLEMENT_BC_OP_FUNC(arg)
+IMPLEMENT_BC_OP_FUNC(p_to_r)
+IMPLEMENT_BC_OP_FUNC(r_to_p)
+IMPLEMENT_BC_OP_FUNC(to_hms)
+IMPLEMENT_BC_OP_FUNC(hms_to)
+IMPLEMENT_BC_OP_FUNC(d_to_r)
+IMPLEMENT_BC_OP_FUNC(r_to_d)
+
+static st_err_t bc_minr(StackItem*& si, string&) { si = new StackItemReal(Real(MINR)); return ST_ERR_OK; }
+static st_err_t bc_maxr(StackItem*& si, string&) { si = new StackItemReal(Real(MAXR)); return ST_ERR_OK; }
+
+static st_err_t bc_r_to_c(StackItem& op1, StackItem& op2, StackItem*& ret, string&) {
+	prepare_arith();
+	return op1.op_r_to_c_generic(op2, ret);
+}
+
+static st_err_t bc_c_to_r(TransStack& ts, SIO *args, string&) {
+	prepare_arith();
+	return args[0].si->op_c_to_r(ts);
+}
 
   // Comparison functions
 
@@ -2326,7 +2364,8 @@ IMPLEMENT_SCALAR_OP(Cplx, StackItemCplx, op_neg, neg)
 #define IMPLEMENT_SCALAR_SQ(Scalar, SI) \
 st_err_t SI::op_sq(StackItem*& ret) { \
 	Scalar res; \
-	st_err_t c = Scalar##_mul(sc, sc, res); \
+	st_err_t c = ST_ERR_OK; \
+	Scalar##_mul(sc, sc, c, res); \
 	if (c == ST_ERR_OK) \
 		ret = new SI(Scalar(res)); \
 	return c; \
@@ -2337,7 +2376,8 @@ IMPLEMENT_SCALAR_SQ(Cplx, StackItemCplx)
 #define IMPLEMENT_INV(Scalar, SI, Unit) \
 st_err_t SI::op_inv(StackItem*& ret) { \
 	Scalar res; \
-	st_err_t c = Scalar##_div(Unit, sc, res); \
+	st_err_t c = ST_ERR_OK; \
+	Scalar##_div(Unit, sc, c, res); \
 	if (c == ST_ERR_OK) \
 		ret = new SI(res); \
 	return c; \
@@ -2346,15 +2386,16 @@ IMPLEMENT_INV(Real, StackItemReal, Real(1))
 IMPLEMENT_INV(Cplx, StackItemCplx, Cplx(1, 0))
 
 template<class Scalar, class SI> st_err_t si_arith
-		(st_err_t (*f)(const Scalar&, const Scalar&, Scalar&), const Scalar& lv, const Scalar& rv, StackItem*& ret) {
+		(void (*f)(const Scalar&, const Scalar&, st_err_t&, Scalar&), const Scalar& lv, const Scalar& rv, StackItem*& ret) {
 	Scalar res;
-	st_err_t c = (*f)(lv, rv, res);
+	st_err_t c = ST_ERR_OK;
+	(*f)(lv, rv, c, res);
 	if (c == ST_ERR_OK)
 		ret = new SI(res);
 	return c;
 }
 
-template<class Scalar, class SI_Mat> st_err_t si_matrix_md(st_err_t (*f)(const Scalar&, const Scalar&, Scalar&),
+template<class Scalar, class SI_Mat> st_err_t si_matrix_md(void (*f)(const Scalar&, const Scalar&, st_err_t&, Scalar&),
 		Matrix<Scalar> *lv, const Scalar& rv, StackItem*& ret) {
 	Matrix<Scalar> *mres = new Matrix<Scalar>(*lv);
 	st_err_t c = mres->md(f, rv);
@@ -2373,7 +2414,7 @@ Matrix<Cplx> *matrix_real_to_cplx(Matrix<Real> *m) {
 	return mres;
 }
 
-st_err_t si_matrix_md2(st_err_t (*f)(const Cplx&, const Cplx&, Cplx&), Matrix<Real> *lv, const Cplx& rv, StackItem*& ret) {
+st_err_t si_matrix_md2(void (*f)(const Cplx&, const Cplx&, st_err_t&, Cplx&), Matrix<Real> *lv, const Cplx& rv, StackItem*& ret) {
 	Matrix<Cplx> *mres = matrix_real_to_cplx(lv);
 	st_err_t c = mres->md(f, rv);
 	if (c == ST_ERR_OK)
@@ -2383,7 +2424,7 @@ st_err_t si_matrix_md2(st_err_t (*f)(const Cplx&, const Cplx&, Cplx&), Matrix<Re
 	return c;
 }
 
-template<class Scalar, class SI_Mat> st_err_t si_matrix_as(st_err_t (*f)(const Scalar&, const Scalar&, Scalar&), Matrix<Scalar> *lv, Matrix<Scalar> *rv, StackItem*& ret) {
+template<class Scalar, class SI_Mat> st_err_t si_matrix_as(void (*f)(const Scalar&, const Scalar&, st_err_t&, Scalar&), Matrix<Scalar> *lv, Matrix<Scalar> *rv, StackItem*& ret) {
 	Matrix<Scalar> *mres = new Matrix<Scalar>(*lv);
 	st_err_t c = mres->as(f, *rv);
 	if (c == ST_ERR_OK)
@@ -2393,7 +2434,7 @@ template<class Scalar, class SI_Mat> st_err_t si_matrix_as(st_err_t (*f)(const S
 	return c;
 }
 
-st_err_t si_matrix_as2(st_err_t (*f)(const Cplx&, const Cplx&, Cplx&), Matrix<Real> *lv, Matrix<Cplx> *rv, StackItem*& ret) {
+st_err_t si_matrix_as2(void (*f)(const Cplx&, const Cplx&, st_err_t&, Cplx&), Matrix<Real> *lv, Matrix<Cplx> *rv, StackItem*& ret) {
 	Matrix<Cplx> *mres = matrix_real_to_cplx(lv);
 	st_err_t c = mres->as(f, *rv);
 	if (c == ST_ERR_OK)
@@ -2403,7 +2444,7 @@ st_err_t si_matrix_as2(st_err_t (*f)(const Cplx&, const Cplx&, Cplx&), Matrix<Re
 	return c;
 }
 
-st_err_t si_matrix_as3(st_err_t (*f)(const Cplx&, const Cplx&, Cplx&), Matrix<Cplx> *lv, Matrix<Real> *rv, StackItem*& ret) {
+st_err_t si_matrix_as3(void (*f)(const Cplx&, const Cplx&, st_err_t&, Cplx&), Matrix<Cplx> *lv, Matrix<Real> *rv, StackItem*& ret) {
 	Matrix<Cplx> *new_rv = matrix_real_to_cplx(rv);
 	st_err_t c = si_matrix_as<Cplx, StackItemMatrixCplx>(f, lv, new_rv, ret);
 	delete new_rv;
@@ -2509,10 +2550,6 @@ st_err_t StackItemReal::op_fp(StackItem*& ret) {
 			r = sc.get_value();
 	} else if ((p = s.find_first_of(PORTABLE_DECIMAL_SEPARATOR)) != string::npos) {
 		s.erase(0, p);
-
-		/*debug_write("post s=");
-		debug_write(s.c_str());*/
-
 		istringstream iss(s);
 		iss >> r;
 		if (sc.get_value() < 0)
@@ -2523,49 +2560,48 @@ st_err_t StackItemReal::op_fp(StackItem*& ret) {
 }
 
 st_err_t StackItemReal::op_percent(StackItemReal* arg1, StackItem*& ret) {
-	real r, r2;
+	Real r, r2;
 	st_err_t c = ST_ERR_OK;
-	numeric_mul(arg1->get_Real().get_value(), sc.get_value(), c, r);
-	numeric_div(r, static_cast<real>(100.0), c, r2);
+	arg1->get_Real().mul(sc, c, r);
+	r.div(Real(100.0), c, r2);
 	if (c == ST_ERR_OK)
-		ret = new StackItemReal(Real(r2));
+		ret = new StackItemReal(r2);
 	return c;
 }
 
 st_err_t StackItemReal::op_percent_ch(StackItemReal* arg1, StackItem*& ret) {
-	real r, r2, r3;
+	Real r, r2, r3;
 	st_err_t c = ST_ERR_OK;
-	numeric_sub(sc.get_value(), arg1->get_Real().get_value(), c, r);
-	numeric_mul(r, static_cast<real>(100.0), c, r2);
-	numeric_div(r2, arg1->get_Real().get_value(), c, r3);
+	sc.sub(arg1->get_Real(), c, r);
+	r.mul(Real(100.0), c, r2);
+	r2.div(arg1->get_Real(), c, r3);
 	if (c == ST_ERR_OK)
-		ret = new StackItemReal(Real(r3));
+		ret = new StackItemReal(r3);
 	return c;
 }
 
 st_err_t StackItemReal::op_percent_t(StackItemReal* arg1, StackItem*& ret) {
-	real r, r2;
+	Real r, r2;
 	st_err_t c = ST_ERR_OK;
-	numeric_mul(sc.get_value(), static_cast<real>(100.0), c, r);
-	numeric_div(r, arg1->get_Real().get_value(), c, r2);
+	sc.mul(Real(100.0), c, r);
+	r.div(arg1->get_Real(), c, r2);
 	if (c == ST_ERR_OK)
-		ret = new StackItemReal(Real(r2));
+		ret = new StackItemReal(r2);
 	return c;
 }
 
-st_err_t StackItemReal::op_mod(StackItemReal* arg1, StackItem*& ret) {
-	real r, r2, r3, r4;
-	st_err_t c = ST_ERR_OK;
-	numeric_div(arg1->get_Real().get_value(), sc.get_value(), c, r);
-	if (c == ST_ERR_OK) {
-		r2 = real_floor(r);
-		numeric_mul(sc.get_value(), r2, c, r3);
-		numeric_sub(arg1->get_Real().get_value(), r3, c, r4);
-		if (c == ST_ERR_OK)
-			ret = new StackItemReal(Real(r4));
-	}
-	return c;
+#define IMPLEMENT_TWO_ARGUMENTS_REAL_FUNCTION(OP) \
+st_err_t StackItemReal::op_##OP(StackItemReal* arg1, StackItem*& ret) { \
+	Real r; \
+	st_err_t c = ST_ERR_OK; \
+	arg1->get_Real().OP(sc, c, r); \
+	if (c == ST_ERR_OK) \
+		ret = new StackItemReal(r); \
+	return c; \
 }
+IMPLEMENT_TWO_ARGUMENTS_REAL_FUNCTION(mod)
+IMPLEMENT_TWO_ARGUMENTS_REAL_FUNCTION(hms_add)
+IMPLEMENT_TWO_ARGUMENTS_REAL_FUNCTION(hms_sub)
 
 st_err_t StackItemReal::op_min(StackItemReal* arg1, StackItem*& ret) {
 	ret = new StackItemReal(arg1->get_Real().get_value() < sc.get_value() ? arg1->get_Real() : sc);
@@ -2577,51 +2613,59 @@ st_err_t StackItemReal::op_max(StackItemReal* arg1, StackItem*& ret) {
 	return ST_ERR_OK;
 }
 
-#define IMPLEMENT_REAL_FUNCTION(op, numeric_op)	\
-st_err_t StackItemReal::op(StackItem*& ret) { \
+void create_Real_or_Cplx_StackItem(const st_err_t& c, const Cplx& cplx, StackItem*& ret) {
+	if (c == ST_ERR_OK) {
+		if (cplx.get_im() != 0)
+			ret = new StackItemCplx(cplx);
+		else
+			ret = new StackItemReal(Real(cplx.get_re()));
+	}
+}
+
+#define IMPLEMENT_REAL_TO_REAL_OR_CPLX_FUNCTION(OP) \
+st_err_t StackItemReal::op_##OP(StackItem*& ret) { \
+	Cplx cplx; \
 	st_err_t c = ST_ERR_OK; \
-	real res; \
-	numeric_op(sc.get_value(), c, res); \
-	if (c == ST_ERR_OK) \
-		ret = new StackItemReal(Real(res)); \
+	sc.OP(c, cplx); \
+	create_Real_or_Cplx_StackItem(c, cplx, ret); \
 	return c; \
 }
-IMPLEMENT_REAL_FUNCTION(op_cos, numeric_cos)
-IMPLEMENT_REAL_FUNCTION(op_sin, numeric_sin)
-IMPLEMENT_REAL_FUNCTION(op_tan, numeric_tan)
-IMPLEMENT_REAL_FUNCTION(op_acos, numeric_acos)
-IMPLEMENT_REAL_FUNCTION(op_asin, numeric_asin)
-IMPLEMENT_REAL_FUNCTION(op_atan, numeric_atan)
-IMPLEMENT_REAL_FUNCTION(op_exp, numeric_exp)
+IMPLEMENT_REAL_TO_REAL_OR_CPLX_FUNCTION(sqr)
+IMPLEMENT_REAL_TO_REAL_OR_CPLX_FUNCTION(ln)
+IMPLEMENT_REAL_TO_REAL_OR_CPLX_FUNCTION(acos)
+IMPLEMENT_REAL_TO_REAL_OR_CPLX_FUNCTION(asin)
+IMPLEMENT_REAL_TO_REAL_OR_CPLX_FUNCTION(acosh)
+IMPLEMENT_REAL_TO_REAL_OR_CPLX_FUNCTION(atanh)
 
-st_err_t StackItemReal::op_ln(StackItem*& ret) {
-	st_err_t c = ST_ERR_OK;
-	real res;
-	if (sc.get_value() < 0) {
-		Cplx c1(sc.get_value(), 0);
-		Cplx cplx;
-		c = c1.ln(cplx);
-		if (c == ST_ERR_OK)
-			ret = new StackItemCplx(cplx);
-	} else {
-		numeric_ln(sc.get_value(), c, res);
-		if (c == ST_ERR_OK)
-			ret = new StackItemReal(Real(res));
-	}
-	return c;
+#define IMPLEMENT_REAL_TO_REAL_FUNCTION(OP) \
+st_err_t StackItemReal::op_##OP(StackItem*& ret) { \
+	st_err_t c = ST_ERR_OK; \
+	Real real; \
+	sc.OP(c, real); \
+	if (c == ST_ERR_OK) \
+		ret = new StackItemReal(real); \
+	return c; \
 }
+IMPLEMENT_REAL_TO_REAL_FUNCTION(atan)
+IMPLEMENT_REAL_TO_REAL_FUNCTION(cos)
+IMPLEMENT_REAL_TO_REAL_FUNCTION(sin)
+IMPLEMENT_REAL_TO_REAL_FUNCTION(tan)
+IMPLEMENT_REAL_TO_REAL_FUNCTION(exp)
+IMPLEMENT_REAL_TO_REAL_FUNCTION(cosh)
+IMPLEMENT_REAL_TO_REAL_FUNCTION(sinh)
+IMPLEMENT_REAL_TO_REAL_FUNCTION(tanh)
+IMPLEMENT_REAL_TO_REAL_FUNCTION(asinh)
+IMPLEMENT_REAL_TO_REAL_FUNCTION(to_hms)
+IMPLEMENT_REAL_TO_REAL_FUNCTION(hms_to)
+IMPLEMENT_REAL_TO_REAL_FUNCTION(d_to_r)
+IMPLEMENT_REAL_TO_REAL_FUNCTION(r_to_d)
 
-st_err_t StackItemReal::op_sqr(StackItem*& ret) {
-	real tmp_r = real_abs(sc.get_value());
+st_err_t StackItemReal::op_pow(StackItemReal *arg1, StackItem*& ret) {
+	Cplx cplx;
 	st_err_t c = ST_ERR_OK;
-	real res;
-	numeric_sqrt(tmp_r, c, res);
-	if (c == ST_ERR_OK) {
-		if (sc.get_value() < 0)
-			ret = new StackItemCplx(Cplx(0, res));
-		else
-			ret = new StackItemReal(Real(res));
-	}
+	arg1->get_Real().pow(sc, c, cplx);
+	int n;
+	create_Real_or_Cplx_StackItem(c, cplx, ret);
 	return c;
 }
 
@@ -2791,16 +2835,19 @@ st_err_t si_cplx_arith(st_err_t (*f)(const Cplx&, const Cplx&, Cplx&), const Cpl
 
 st_err_t StackItemCplx::op_sign(StackItem*& ret) {
 	Cplx cplx = sc;
-	st_err_t c = cplx.sign();
+	st_err_t c = ST_ERR_OK;
+	Cplx cplx2;
+	cplx.sign(c, cplx2);
 	if (c == ST_ERR_OK)
-		ret = new StackItemCplx(cplx);
+		ret = new StackItemCplx(cplx2);
 	return c;
 }
 
 #define IMPLEMENT_CPLX_OPREAL(OP) \
 st_err_t StackItemCplx::op_##OP(StackItem*& ret) { \
 	real r; \
-	st_err_t c = sc.OP(r); \
+	st_err_t c = ST_ERR_OK; \
+	sc.OP(c, r); \
 	if (c == ST_ERR_OK) \
 		ret = new StackItemReal(Real(r)); \
 	return c; \
@@ -2811,7 +2858,8 @@ IMPLEMENT_CPLX_OPREAL(arg)
 #define IMPLEMENT_CPLX_OPCPLX(OP) \
 st_err_t StackItemCplx::op_##OP(StackItem*& ret) { \
 	Cplx cplx; \
-	st_err_t c = sc.OP(cplx); \
+	st_err_t c = ST_ERR_OK; \
+	sc.OP(c, cplx); \
 	if (c == ST_ERR_OK) \
 		ret = new StackItemCplx(cplx); \
 	return c; \
@@ -2820,6 +2868,19 @@ IMPLEMENT_CPLX_OPCPLX(p_to_r)
 IMPLEMENT_CPLX_OPCPLX(r_to_p)
 IMPLEMENT_CPLX_OPCPLX(ln)
 IMPLEMENT_CPLX_OPCPLX(exp)
+IMPLEMENT_CPLX_OPCPLX(sqr)
+IMPLEMENT_CPLX_OPCPLX(acos)
+IMPLEMENT_CPLX_OPCPLX(asin)
+IMPLEMENT_CPLX_OPCPLX(atan)
+IMPLEMENT_CPLX_OPCPLX(cos)
+IMPLEMENT_CPLX_OPCPLX(sin)
+IMPLEMENT_CPLX_OPCPLX(tan)
+IMPLEMENT_CPLX_OPCPLX(cosh)
+IMPLEMENT_CPLX_OPCPLX(sinh)
+IMPLEMENT_CPLX_OPCPLX(tanh)
+IMPLEMENT_CPLX_OPCPLX(acosh)
+IMPLEMENT_CPLX_OPCPLX(asinh)
+IMPLEMENT_CPLX_OPCPLX(atanh)
 
 st_err_t StackItemCplx::op_conj(StackItem*& ret) {
 	Cplx cplx = sc;
@@ -2846,7 +2907,8 @@ st_err_t StackItemCplx::op_div(StackItemMatrixReal *arg1, StackItem*& ret) {
 
 st_err_t StackItemCplx::op_pow(StackItemCplx* arg1, StackItem*& ret) {
 	Cplx cplx;
-	st_err_t c = arg1->sc.pow(sc, cplx);
+	st_err_t c = ST_ERR_OK;
+	arg1->sc.pow(sc, c, cplx);
 	if (c == ST_ERR_OK)
 		ret = new StackItemCplx(cplx);
 	return c;

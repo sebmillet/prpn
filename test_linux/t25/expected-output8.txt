@@ -1,0 +1,28 @@
+R->D Error:
+Bad Argument Type
+D->R Error:
+Bad Argument Type
+R->D Error:
+Bad Argument Type
+D->R Error:
+Bad Argument Type
+-1.5707963268
+0
+1.5707963268
+3.14159265359
+1.74532925199E-2
+-1.74532925199E-2
+-6.28318530718
+6.28318530718
+360
+-360
+-.999999999997
+.999999999997
+-180
+180
+-90.0000000003
+90.0000000003
+0
+(0,0)
+""
+get_class_count() = 0 for watched classes

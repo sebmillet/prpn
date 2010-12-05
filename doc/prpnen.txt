@@ -122,10 +122,10 @@ COMMANDS
 	      Modulus: x - y * FLOOR(x / y)
 
        MIN (2)
-	      Minimum
+	      Minimum of two reals
 
        MAX (2)
-	      Maximum
+	      Maximum of two reals
 
        COS (1)
 	      Cosine
@@ -149,6 +149,24 @@ COMMANDS
 
        EXP (1)
 	      Exponential
+
+       COSH (1)
+	      Hyperbolic cosine
+
+       SINH (1)
+	      Hyperbolic sine
+
+       TANH (1)
+	      Hyperbolic tangent
+
+       ACOSH (1)
+	      Arc-hyperbolic cosine
+
+       ASINH (1)
+	      Arc-hyperbolic sine
+
+       ATANH (1)
+	      Arc-hyperbolic tangent
 
        NEG (1)
 	      Opposite
@@ -182,6 +200,30 @@ COMMANDS
 
        SQR (1)
 	      Square root
+
+       MINR (0)
+	      Smallest real greater than zero the calcultor can represent
+
+       MAXR (0)
+	      Biggest real the calcultor can represent
+
+       ->HMS (1)
+	      Convert a decimal to HMS (h.MMSSss)
+
+       HMS-> (1)
+	      Convert a HMS (h.MMSSss) to a decimal
+
+       HMS+ (2)
+	      Add two HMS (h.MMSSss)
+
+       HMS- (2)
+	      Subtract two HMS (h.MMSSss)
+
+       D->R (1)
+	      Convert from degrees to radians
+
+       R->D (1)
+	      Convert from radians to degrees
 
        R->C (2)
 	      Real to complex

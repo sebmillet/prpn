@@ -6,6 +6,13 @@
 // Sébastien Millet
 // August-September 2009
 
+// Note about complex functions extensions (cosine of a complex, arc-tangent-hyperbolic of complex, etc.):
+// The formulas soucres were found in the following URLs:
+//   http://www.suitcaseofdreams.net/Trigonometric_Functions.htm
+//   http://www.suitcaseofdreams.net/Inverse_Functions.htm
+//   http://www.suitcaseofdreams.net/Hyperbolic_Functions.htm
+//   http://www.suitcaseofdreams.net/Inverse__Hyperbolic_Functions.htm
+
 #include "Common.h"
 #include "Scalar.h"
 #include <sstream>
@@ -56,6 +63,10 @@ bool cfg_realdisp_remove_trailing_dot = false;
 
 
 // General functions
+
+#define ASSERT_STATUS(c) \
+	if (c != ST_ERR_OK) \
+		return;
 
 void prepare_arith() { errno = 0; }
 
@@ -436,7 +447,7 @@ real get_max_real_from_bin_size(const int& m) {
 // *                                                                   *
 // *            IMPORTANT NOTE ABOUT NUMERIC_* FUNCTIONS               *
 // *                                                                   *
-// * The functions MUST be built in a such a way that res can point to *
+// * The functions MUST be built in such a way that res can point to   *
 // * the same object as the first const real& (r or r1 in general.)    *
 // *                                                                   *
 // * This is why res1 intermediate is always used, as a precaution. In *
@@ -445,13 +456,27 @@ real get_max_real_from_bin_size(const int& m) {
 // *                                                                   *
 // * ***************************************************************** *
 
-void numeric_add(const real& r1, const real& r2, st_err_t& c, real& res) {
+static void numeric_add(const real&, const real&, st_err_t&, real&);
+static void numeric_sub(const real&, const real&, st_err_t&, real&);
+static void numeric_mul(const real&, const real&, st_err_t&, real&);
+static void numeric_div(const real&, const real&, st_err_t&, real&);
+static void numeric_ln(const real&, st_err_t&, real&);
+static void numeric_exp(const real&, st_err_t&, real&);
+static void numeric_pow(const real&, st_err_t&, real&);
+static void numeric_cos(const real&, st_err_t&, real&);
+static void numeric_sin(const real&, st_err_t&, real&);
+static void numeric_tan(const real&, st_err_t&, real&);
+static void numeric_acos(const real&, st_err_t&, real&);
+static void numeric_asin(const real&, st_err_t&, real&);
+static void numeric_atan(const real&, st_err_t&, real&);
+static void numeric_sqr(const real&, st_err_t&, real&);
+
+static void numeric_add(const real& r1, const real& r2, st_err_t& c, real& res) {
 	real res1;
 	int s1 = real_sign(r1);
 	int s2 = real_sign(r2);
 	int s;
-	if (c != ST_ERR_OK)
-		return;
+	ASSERT_STATUS(c)
 	if (s1 == s2)
 		s = s1;
 	else if (s1 < 0)
@@ -464,13 +489,12 @@ void numeric_add(const real& r1, const real& r2, st_err_t& c, real& res) {
 	c = real_check_bounds(true, s, res1, res);
 }
 
-void numeric_sub(const real& r1, const real& r2, st_err_t& c, real& res) {
+static void numeric_sub(const real& r1, const real& r2, st_err_t& c, real& res) {
 	real res1;
 	int s1 = real_sign(r1);
 	int s2 = -real_sign(r2);
 	int s;
-	if (c != ST_ERR_OK)
-		return;
+	ASSERT_STATUS(c)
 	if (s1 == s2)
 		s = s1;
 	else if (s1 < 0)
@@ -483,18 +507,16 @@ void numeric_sub(const real& r1, const real& r2, st_err_t& c, real& res) {
 	c = real_check_bounds(true, s, res1, res);
 }
 
-void numeric_mul(const real& r1, const real& r2, st_err_t& c, real& res) {
+static void numeric_mul(const real& r1, const real& r2, st_err_t& c, real& res) {
 	real res1;
-	if (c != ST_ERR_OK)
-		return;
+	ASSERT_STATUS(c)
 	res1 = r1 * r2;
 	c = real_check_bounds(r1 == 0 || r2 == 0, real_sign(r1) * real_sign(r2), res1, res);
 }
 
-void numeric_div(const real& r1, const real& r2, st_err_t& c, real& res) {
+static void numeric_div(const real& r1, const real& r2, st_err_t& c, real& res) {
 	real res1;
-	if (c != ST_ERR_OK)
-		return;
+	ASSERT_STATUS(c)
 	if (r2 == 0) {
 		if (r1 == 0)
 			c = ST_ERR_UNDEFINED_RESULT;
@@ -511,10 +533,9 @@ void numeric_div(const real& r1, const real& r2, st_err_t& c, real& res) {
 	}
 }
 
-void numeric_ln(const real& r, st_err_t& c, real& res) {
+static void numeric_ln(const real& r, st_err_t& c, real& res) {
 	real res1;
-	if (c != ST_ERR_OK)
-		return;
+	ASSERT_STATUS(c)
 	if (r < 0)
 		c = ST_ERR_BAD_ARGUMENT_VALUE;
 	else if (r == 0) {
@@ -528,10 +549,9 @@ void numeric_ln(const real& r, st_err_t& c, real& res) {
 	}
 }
 
-void numeric_exp(const real& r, st_err_t& c, real& res) {
+static void numeric_exp(const real& r, st_err_t& c, real& res) {
 	real res1;
-	if (c != ST_ERR_OK)
-		return;
+	ASSERT_STATUS(c)
 	res1 = exp(r);
 	if (errno && r < 0) {
 		res1 = 0;
@@ -540,10 +560,9 @@ void numeric_exp(const real& r, st_err_t& c, real& res) {
 	c = real_check_bounds(false, 1, res1, res);
 }
 
-void numeric_pow(const real& r1, const real& r2, st_err_t& c, real& res) {
+static void numeric_pow(const real& r1, const real& r2, st_err_t& c, real& res) {
 	real res1;
-	if (c != ST_ERR_OK)
-		return;
+	ASSERT_STATUS(c)
 	real res2;
 	  // a^b = exp(b * ln(a))
 	numeric_ln(r1, c, res1);
@@ -552,18 +571,16 @@ void numeric_pow(const real& r1, const real& r2, st_err_t& c, real& res) {
 	res = res1;
 }
 
-void numeric_cos(const real& r, st_err_t& c, real& res) {
+static void numeric_cos(const real& r, st_err_t& c, real& res) {
 	real res1;
-	if (c != ST_ERR_OK)
-		return;
+	ASSERT_STATUS(c)
 	res1 = cos(r);
 	res = res1;
 }
 
-void numeric_acos(const real& r, st_err_t& c, real& res) {
+static void numeric_acos(const real& r, st_err_t& c, real& res) {
 	real res1;
-	if (c != ST_ERR_OK)
-		return;
+	ASSERT_STATUS(c)
 	res1 = acos(r);
 	if (errno == ERANGE)
 		c = ST_ERR_BAD_ARGUMENT_VALUE;
@@ -571,18 +588,16 @@ void numeric_acos(const real& r, st_err_t& c, real& res) {
 		res = res1;
 }
 
-void numeric_sin(const real& r, st_err_t& c, real& res) {
+static void numeric_sin(const real& r, st_err_t& c, real& res) {
 	real res1;
-	if (c != ST_ERR_OK)
-		return;
+	ASSERT_STATUS(c)
 	res1 = sin(r);
 	res = res1;
 }
 
-void numeric_asin(const real& r, st_err_t& c, real& res) {
+static void numeric_asin(const real& r, st_err_t& c, real& res) {
 	real res1;
-	if (c != ST_ERR_OK)
-		return;
+	ASSERT_STATUS(c)
 	res1 = asin(r);
 	if (errno == ERANGE)
 		c = ST_ERR_BAD_ARGUMENT_VALUE;
@@ -590,18 +605,16 @@ void numeric_asin(const real& r, st_err_t& c, real& res) {
 		res = res1;
 }
 
-void numeric_tan(const real& r, st_err_t& c, real& res) {
+static void numeric_tan(const real& r, st_err_t& c, real& res) {
 	real res1;
-	if (c != ST_ERR_OK)
-		return;
+	ASSERT_STATUS(c)
 	res1 = tan(r);
 	c = real_check_bounds(true, res >= 0 ? 1 : -1, res1, res);
 }
 
-void numeric_atan(const real& r, st_err_t& c, real& res) {
+static void numeric_atan(const real& r, st_err_t& c, real& res) {
 	real res1;
-	if (c != ST_ERR_OK)
-		return;
+	ASSERT_STATUS(c)
 	res1 = atan(r);
 	if (errno == ERANGE)
 		c = ST_ERR_BAD_ARGUMENT_VALUE;
@@ -609,10 +622,9 @@ void numeric_atan(const real& r, st_err_t& c, real& res) {
 		res = res1;
 }
 
-void numeric_sqrt(const real& r, st_err_t& c, real& res) {
+static void numeric_sqr(const real& r, st_err_t& c, real& res) {
 	real res1;
-	if (c != ST_ERR_OK)
-		return;
+	ASSERT_STATUS(c)
 	if (r < 0)
 		c = ST_ERR_BAD_ARGUMENT_VALUE;
 	else {
@@ -824,6 +836,44 @@ int Binary::cmp(const Binary& b) const {
 
 
 //
+// BOTH REAL AND CPLX
+//
+
+#define HYPERBOLIC_SCALAR_FUNCTIONS(SC) \
+inline void hyperbolic_common(const SC& x, st_err_t& c, SC& exp_x, SC& exp_moins_x) { \
+	ASSERT_STATUS(c) \
+	SC moins_x = x; \
+	moins_x.neg(); \
+	x.exp(c, exp_x); \
+	moins_x.exp(c, exp_moins_x); \
+} \
+void SC::cosh(st_err_t& c, SC& res) const { \
+	ASSERT_STATUS(c) \
+	SC exp_x, exp_moins_x, addit; \
+	hyperbolic_common(*this, c, exp_x, exp_moins_x); \
+	exp_x.add(exp_moins_x, c, addit); \
+	addit.div(SC(Real(2)), c, res); \
+} \
+void SC::sinh(st_err_t& c, SC& res) const { \
+	ASSERT_STATUS(c) \
+	SC exp_x, exp_moins_x, addit; \
+	hyperbolic_common(*this, c, exp_x, exp_moins_x); \
+	exp_x.sub(exp_moins_x, c, addit); \
+	addit.div(SC(Real(2)), c, res); \
+} \
+void SC::tanh(st_err_t& c, SC& res) const { \
+	ASSERT_STATUS(c) \
+	SC exp_x, exp_moins_x, addit, soust; \
+	hyperbolic_common(*this, c, exp_x, exp_moins_x); \
+	exp_x.add(exp_moins_x, c, addit); \
+	exp_x.sub(exp_moins_x, c, soust); \
+	soust.div(addit, c, res); \
+}
+HYPERBOLIC_SCALAR_FUNCTIONS(Real)
+HYPERBOLIC_SCALAR_FUNCTIONS(Cplx)
+
+
+//
 // REAL
 //
 
@@ -844,23 +894,236 @@ void Real::trim() { r = real_trim(r); }
 
 int Real::cmp(const Real& rv) const { return r < rv.r ? -1 : (r > rv.r ? 1 : 0); }
 
-st_err_t Real_arith(void (*f)(const real&, const real&, st_err_t&, real&), const Real& lv, const Real& rv, Real& res) {
-	st_err_t c = ST_ERR_OK;
+void Real_arith(void (*f)(const real&, const real&, st_err_t&, real&), const Real& lv, const Real& rv, st_err_t& c, Real& res) {
+	ASSERT_STATUS(c)
 	(*f)(lv.r, rv.r, c, res.r);
-	return c;
 }
 
-st_err_t Real_add(const Real& lv, const Real& rv, Real& res) { return Real_arith(numeric_add, lv, rv, res); }
-st_err_t Real_sub(const Real& lv, const Real& rv, Real& res) { return Real_arith(numeric_sub, lv, rv, res); }
-st_err_t Real_mul(const Real& lv, const Real& rv, Real& res) { return Real_arith(numeric_mul, lv, rv, res); }
-st_err_t Real_div(const Real& lv, const Real& rv, Real& res) { return Real_arith(numeric_div, lv, rv, res); }
-st_err_t Real_pow(const Real& lv, const Real& rv, Real& res) { return Real_arith(numeric_pow, lv, rv, res); }
+void Real_add(const Real& lv, const Real& rv, st_err_t& c, Real& res) { Real_arith(numeric_add, lv, rv, c, res); }
+void Real_sub(const Real& lv, const Real& rv, st_err_t& c, Real& res) { Real_arith(numeric_sub, lv, rv, c, res); }
+void Real_mul(const Real& lv, const Real& rv, st_err_t& c, Real& res) { Real_arith(numeric_mul, lv, rv, c, res); }
+void Real_div(const Real& lv, const Real& rv, st_err_t& c, Real& res) { Real_arith(numeric_div, lv, rv, c, res); }
+void Real_pow(const Real& lv, const Real& rv, st_err_t& c, Real& res) { Real_arith(numeric_pow, lv, rv, c, res); }
 
-st_err_t Real::add(const Real& rv, Real& res) const { return Real_add(*this, rv, res); }
-st_err_t Real::sub(const Real& rv, Real& res) const { return Real_sub(*this, rv, res); }
-st_err_t Real::mul(const Real& rv, Real& res) const { return Real_mul(*this, rv, res); }
-st_err_t Real::div(const Real& rv, Real& res) const { return Real_div(*this, rv, res); }
-st_err_t Real::pow(const Real& rv, Real& res) const { return Real_pow(*this, rv, res); }
+void Real::add(const Real& rv, st_err_t& c, Real& res) const { Real_add(*this, rv, c, res); }
+void Real::sub(const Real& rv, st_err_t& c, Real& res) const { Real_sub(*this, rv, c, res); }
+void Real::mul(const Real& rv, st_err_t& c, Real& res) const { Real_mul(*this, rv, c, res); }
+void Real::div(const Real& rv, st_err_t& c, Real& res) const { Real_div(*this, rv, c, res); }
+
+void Real::floor(st_err_t& c, Real& res) const {
+	ASSERT_STATUS(c)
+	res.r = real_floor(r);
+}
+
+void Real::mod(const Real& rv, st_err_t& c, Real& res) const {
+	ASSERT_STATUS(c)
+	Real real2, real3, real4;
+	div(rv, c, real2);
+	real2.floor(c, real3);
+	real3.mul(rv, c, real4);
+	sub(real4, c, res);
+}
+
+void Real::pow(const Real& rv, st_err_t& c, Cplx& cplx) const {
+	ASSERT_STATUS(c)
+	if (r >= 0) {
+		Real real;
+		Real_pow(*this, rv, c, real);
+		cplx = Cplx(real.r, 0);
+	} else {
+		Cplx cplx2 = Cplx(r, 0);
+		cplx2.pow(Cplx(rv.r, 0), c, cplx);
+	}
+}
+
+void Real::sqr(st_err_t& c, Cplx& cplx) const {
+	ASSERT_STATUS(c)
+	real tmp_r = real_abs(r);
+	real res;
+	numeric_sqr(tmp_r, c, res);
+	if (c == ST_ERR_OK) {
+		if (r < 0)
+			cplx = Cplx(0, res);
+		else
+			cplx = Cplx(res, 0);
+	}
+}
+
+void Real::ln(st_err_t& c, Cplx& cplx) const {
+	ASSERT_STATUS(c)
+	if (r < 0) {
+		Cplx(r, 0).ln(c, cplx);
+		return;
+	}
+	real res;
+	numeric_ln(r, c, res);
+	cplx = Cplx(res, 0);
+}
+
+void Real::acos(st_err_t& c, Cplx& cplx) const {
+	ASSERT_STATUS(c)
+	if (r < -1 || r > 1) {
+		Cplx(r, 0).acos(c, cplx);
+		return;
+	}
+	real res;
+	numeric_acos(r, c, res);
+	cplx = Cplx(res, 0);
+}
+
+void Real::asin(st_err_t& c, Cplx& cplx) const {
+	ASSERT_STATUS(c)
+	if (r < -1 || r > 1) {
+		Cplx(r, 0).asin(c, cplx);
+		return;
+	}
+	real res;
+	numeric_asin(r, c, res);
+	cplx = Cplx(res, 0);
+}
+
+#define IMPLEMENT_REAL_NUMERIC_FUNCTION(OP) \
+void Real::OP(st_err_t& c, Real& res) const { \
+	ASSERT_STATUS(c) \
+	numeric_##OP(r, c, res.r); \
+}
+IMPLEMENT_REAL_NUMERIC_FUNCTION(atan)
+IMPLEMENT_REAL_NUMERIC_FUNCTION(cos)
+IMPLEMENT_REAL_NUMERIC_FUNCTION(sin)
+IMPLEMENT_REAL_NUMERIC_FUNCTION(tan)
+IMPLEMENT_REAL_NUMERIC_FUNCTION(exp)
+
+void Real::acosh(st_err_t& c, Cplx& cplx) const {
+	  // ACOSH real function: arccosh(x) = ln(x+sqr(x^2-1)) for x >= 1
+	ASSERT_STATUS(c)
+	if (r < 1) {
+		Cplx(r, 0).acosh(c, cplx);
+		return;
+	}
+	Real real3, real4, real5;
+	mul(*this, c, real3);
+	real3.sub(Real(1), c, real4);
+	Cplx cplx2;
+	real4.sqr(c, cplx2);
+	add(Real(cplx2.get_re()), c, real5);
+	real5.ln(c, cplx);
+}
+
+void Real::asinh(st_err_t& c, Real& real) const {
+	  // ASINH real function: arcsinh(x) = ln(x+sqr(x^2+1))
+	ASSERT_STATUS(c)
+	Real real3, real4, real5;
+	mul(*this, c, real3);
+	real3.add(Real(1), c, real4);
+	Cplx cplx;
+	real4.sqr(c, cplx);
+	add(Real(cplx.get_re()), c, real5);
+	Cplx cplx2;
+	real5.ln(c, cplx2);
+	real = Real(cplx2.get_re());
+}
+
+void Real::atanh(st_err_t& c, Cplx& cplx) const {
+	  // ATANH real function: arctanh(x) = ln((1+x)/(1-x))/2 for |x| < 1
+	ASSERT_STATUS(c)
+	if (r < -1 || r > 1) {
+		Cplx(r, 0).atanh(c, cplx);
+		return;
+	}
+	Real un_plus_x, un_moins_x, rapport, real2, real3;
+	add(Real(1), c, un_plus_x);
+	Real(1).sub(*this, c, un_moins_x);
+	un_plus_x.div(un_moins_x, c, rapport);
+	rapport.ln(c, cplx);
+	real2 = Real(cplx.get_re());
+	real2.div(Real(2), c, real3);
+	cplx = Cplx(real3.r, 0);
+}
+
+  //
+  // Take a 'decimal' real (a fractional number of hours) and convert it
+  // to an HMS value.
+  // An HMS value is of the form h.MMSSss, where h is a number of hours,
+  // MM a number of minutes (0 <= MM <= 59), SS a number of seconds
+  // (0 <= SS <= 59), and ss a *decimal* part of seconds.
+  // On my old good HP-28S calculator, the number of decimals for the "sub-seconds"
+  // (the ss part) is not limited to hundredths of seconds (two decimals.)
+  // I limit it to two decimals so as to ease hms_add and hms_sub functions.
+  //
+  // Note: works fine with negative values.
+  //
+  // Example:
+  //   2 hours, 35 minutes, 29 seconds and 78 hundredth of seconds is written (in HMS):
+  //     2.352978
+  //   In decimal form (fractional number of hours), it is equal to:
+  //     2.59160555556
+  //   The to_hms member-function will take 2.59160555556 and 'return' (put
+  //   in res) the value 2.352978.
+  //   The hms_to member-function (below) will take 2.352978 and 'return' (put
+  //   in res) the value 2.59160555556.
+void Real::to_hms(st_err_t& c, Real& res) const {
+	ASSERT_STATUS(c)
+	real abs_r = real_abs(r);
+	real ip_abs_r = real_ip(abs_r);
+	real fp = abs_r - ip_abs_r;
+	real minutes = real_ip(fp * 60.0);
+	fp = 60.0 * fp - minutes;
+	real secondes = real_ip(fp * 60.0);
+	fp = 60.0 * fp - secondes;
+	  // We don't go beyond hundredth of seconds in precision, see comment above
+	fp = real_ip(fp * 100.0 + .5) / 100.0;
+	fp /= 10000.0;
+	real tmp = ip_abs_r + minutes / 100.0 + secondes / 10000.0 + fp;
+	if (r < 0)
+		tmp = -tmp;
+	res = Real(tmp);
+}
+
+  // Convert from HMS to a 'decimal' real, see Real::to_hms comment above
+void Real::hms_to(st_err_t& c, Real& res) const {
+	ASSERT_STATUS(c)
+	real abs_r = real_abs(r);
+	real ip_abs_r = real_ip(abs_r);
+	real fp = abs_r - ip_abs_r;
+	real minutes = real_ip(fp * 100.0);
+	fp = 100.0 * fp - minutes;
+	real secondes = real_ip(fp * 100.0);
+	fp = 100.0 * fp - secondes;
+	  // We don't go beyond hundredth of seconds in precision, see Real::to_hms comment above
+	fp = real_ip(fp * 100.0 + .5) / 100.0;
+	real tmp = ip_abs_r + minutes / 60.0 + secondes / 3600.0 + fp / 3600.0;
+	if (r < 0)
+		tmp = -tmp;
+	res = Real(tmp);
+}
+
+#define IMPLEMENT_HMS_ADD_OR_SUB(OP) \
+void Real::hms_##OP(const Real& rv, st_err_t& c, Real& res) const { \
+	ASSERT_STATUS(c) \
+	Real dec_me, dec_rv, sum; \
+	hms_to(c, dec_me); \
+	rv.hms_to(c, dec_rv); \
+	dec_me.OP(dec_rv, c, sum); \
+	sum.to_hms(c, res); \
+}
+IMPLEMENT_HMS_ADD_OR_SUB(add)
+IMPLEMENT_HMS_ADD_OR_SUB(sub)
+
+void Real::d_to_r(st_err_t& c, Real& res) const {
+	ASSERT_STATUS(c)
+	real r2, r3;
+	numeric_mul(r, PI, c, r2);
+	numeric_div(r2, 180.0, c, r3);
+	res = Real(r3);
+}
+
+void Real::r_to_d(st_err_t& c, Real& res) const {
+	ASSERT_STATUS(c)
+	real r2, r3;
+	numeric_mul(r, 180.0, c, r2);
+	numeric_div(r2, PI, c, r3);
+	res = Real(r3);
+}
 
 
 //
@@ -900,31 +1163,29 @@ int Cplx::cmp(const Cplx& rv) const { return re == rv.re && im == rv.im ? 0 : 1;
   // could be the same object as lv. To find this remark directly, search
   // the string
   //   --NUMERIC--
-st_err_t Cplx_add(const Cplx& lv, const Cplx& rv, Cplx& res) {
+void Cplx_add(const Cplx& lv, const Cplx& rv, st_err_t& c, Cplx& res) {
 	Cplx res1;
-	st_err_t c = ST_ERR_OK;
+	ASSERT_STATUS(c)
 	  // Calculate real part
 	numeric_add(lv.re, rv.re, c, res1.re);
 	numeric_add(lv.im, rv.im, c, res1.im);
 	res = res1;
-	return c;
 }
 
-st_err_t Cplx_sub(const Cplx& lv, const Cplx& rv, Cplx& res) {
+void Cplx_sub(const Cplx& lv, const Cplx& rv, st_err_t& c, Cplx& res) {
 	Cplx res1;
-	st_err_t c = ST_ERR_OK;
+	ASSERT_STATUS(c)
 	  // Calculate real part
 	numeric_sub(lv.re, rv.re, c, res1.re);
 	numeric_sub(lv.im, rv.im, c, res1.im);
 	res = res1;
-	return c;
 }
 
-st_err_t Cplx_mul(const Cplx& lv, const Cplx& rv, Cplx& res) {
+void Cplx_mul(const Cplx& lv, const Cplx& rv, st_err_t& c, Cplx& res) {
 	Cplx res1;
 	real x;
 	real y = 0;
-	st_err_t c = ST_ERR_OK;
+	ASSERT_STATUS(c)
 	  // Calculate real part
 	numeric_mul(lv.re, rv.re, c, x);
 	numeric_mul(lv.im, rv.im, c, y);
@@ -934,17 +1195,17 @@ st_err_t Cplx_mul(const Cplx& lv, const Cplx& rv, Cplx& res) {
 	numeric_mul(lv.re, rv.im, c, y);
 	numeric_add(x, y, c, res1.im);
 	res = res1;
-	return c;
 }
 
-st_err_t Cplx_div(const Cplx& lv, const Cplx& rv, Cplx& res) {
+void Cplx_div(const Cplx& lv, const Cplx& rv, st_err_t& c, Cplx& res) {
 	Cplx res1;
 	real x = 0, y = 0, d = 0, t = 0, u = 0, v = 0;
-	st_err_t c = ST_ERR_OK;
-
+	ASSERT_STATUS(c)
 	if (rv.re == 0 && rv.im == 0 && (lv.re != 0 || lv.im != 0)) {
-		if (F->get(FL_INFINITE))
-			return ST_ERR_INFINITE_RESULT;
+		if (F->get(FL_INFINITE)) {
+			c = ST_ERR_INFINITE_RESULT;
+			return;
+		}
 		if (lv.re == 0)
 			res.re = 0;
 		else if (lv.re < 0)
@@ -957,7 +1218,7 @@ st_err_t Cplx_div(const Cplx& lv, const Cplx& rv, Cplx& res) {
 			res.im = -MAXR;
 		else
 			res.im = MAXR;
-		return ST_ERR_OK;
+		return;
 	}
 
 	  // Complex division: x = (ac + bd)/(a^2 + b^2), y = (ad - bc)/(a^2 + b^2)
@@ -975,30 +1236,25 @@ st_err_t Cplx_div(const Cplx& lv, const Cplx& rv, Cplx& res) {
 	numeric_sub(t, u, c, v);
 	numeric_div(v, d, c, res1.im);
 	res = res1;
-	return c;
 }
 
-//st_err_t Real_mul_by_Cplx(const Real& lv, const Cplx& rv, Cplx& res) { return Cplx_mul(Cplx(lv), rv, res); }
-//st_err_t Real_div_by_Cplx(const Real& lv, const Cplx& rv, Cplx& res) { return Cplx_div(Cplx(lv), rv, res); }
+void Cplx::add(const Cplx& rv, st_err_t& c, Cplx& res) const { Cplx_add(*this, rv, c, res); }
+void Cplx::sub(const Cplx& rv, st_err_t& c, Cplx& res) const { Cplx_sub(*this, rv, c, res); }
+void Cplx::mul(const Cplx& rv, st_err_t& c, Cplx& res) const { Cplx_mul(*this, rv, c, res); }
+void Cplx::div(const Cplx& rv, st_err_t& c, Cplx& res) const { Cplx_div(*this, rv, c, res); }
 
-st_err_t Cplx::add(const Cplx& rv, Cplx& res) const { return Cplx_add(*this, rv, res); }
-st_err_t Cplx::sub(const Cplx& rv, Cplx& res) const { return Cplx_sub(*this, rv, res); }
-st_err_t Cplx::mul(const Cplx& rv, Cplx& res) const { return Cplx_mul(*this, rv, res); }
-st_err_t Cplx::div(const Cplx& rv, Cplx& res) const { return Cplx_div(*this, rv, res); }
-
-st_err_t Cplx::abs(real& r) const {
+void Cplx::abs(st_err_t& c, real& r) const {
 	real x, y, t;
-	st_err_t c = ST_ERR_OK;
+	ASSERT_STATUS(c)
 	numeric_mul(re, re, c, x);
 	numeric_mul(im, im, c, y);
 	numeric_add(x, y, c, t);
-	numeric_sqrt(t, c, r);
-	return c;
+	numeric_sqr(t, c, r);
 }
 
-st_err_t Cplx::arg(real& r) const {
+void Cplx::arg(st_err_t& c, real& r) const {
 	real t, r1;
-	st_err_t c = ST_ERR_OK;
+	ASSERT_STATUS(c)
 	if (re == 0) {
 		if (im > 0)
 			r = PI_DIV_2;
@@ -1017,77 +1273,199 @@ st_err_t Cplx::arg(real& r) const {
 		else
 			r = r1;
 	}
-	return c;
 }
 
-st_err_t Cplx::r_to_p(Cplx& cplx) const {
+void Cplx::r_to_p(st_err_t& c, Cplx& cplx) const {
 	real cplx_re, cplx_im;
-	st_err_t c = abs(cplx_re);
-	if (c == ST_ERR_OK)
-		c = arg(cplx_im);
+	ASSERT_STATUS(c)
+	abs(c, cplx_re);
+	arg(c, cplx_im);
 	if (c == ST_ERR_OK)
 		cplx = Cplx(cplx_re, cplx_im);
-	return c;
 }
 
-st_err_t Cplx::p_to_r(Cplx& cplx) const {
+void Cplx::p_to_r(st_err_t& c, Cplx& cplx) const {
 	real x, y, cplx_re, cplx_im;
-	st_err_t c = ST_ERR_OK;
+	ASSERT_STATUS(c)
 	numeric_cos(im, c, x);
 	numeric_mul(x, re, c, cplx_re);
 	numeric_sin(im, c, y);
 	numeric_mul(y, re, c, cplx_im);
 	if (c == ST_ERR_OK)
 		cplx = Cplx(cplx_re, cplx_im);
-	return c;
 }
 
-st_err_t Cplx::ln(Cplx& cplx) const {
+void Cplx::ln(st_err_t& c, Cplx& cplx) const {
 	real x, new_re, new_im;
-	st_err_t c = abs(x);
-	if (c == ST_ERR_OK)
-		c = arg(new_im);
+	ASSERT_STATUS(c)
+	abs(c, x);
+	arg(c, new_im);
 	numeric_ln(x, c, new_re);
-	cplx = Cplx(new_re, new_im);
-	return c;
+	if (c == ST_ERR_OK)
+		cplx = Cplx(new_re, new_im);
 }
 
-st_err_t Cplx::exp(Cplx& cplx) const {
+void Cplx::exp(st_err_t& c, Cplx& cplx) const {
 	real new_re;
-	st_err_t c = ST_ERR_OK;
+	ASSERT_STATUS(c)
 	numeric_exp(re, c, new_re);
 	if (c == ST_ERR_OK) {
 		Cplx c2(new_re, im);
-		c = c2.p_to_r(cplx);
+		c2.p_to_r(c, cplx);
 	}
-	return c;
 }
 
-st_err_t Cplx::pow(const Cplx& rv, Cplx& cplx) const {
-	Cplx c2, c3;
-	st_err_t c = ln(c2);
-	if (c == ST_ERR_OK) {
-		c = rv.mul(c2, c3);
-		if (c == ST_ERR_OK) {
-			c = c3.exp(cplx);
-		}
-	}
-	return c;
+void Cplx::pow(const Cplx& rv, st_err_t& c, Cplx& cplx) const {
+	Cplx cplx2, cplx3;
+	ASSERT_STATUS(c)
+	ln(c, cplx2);
+	rv.mul(cplx2, c, cplx3);
+	cplx3.exp(c, cplx);
+	if (rv.im == 0 && real_ip(rv.re) == rv.re && im == 0)
+		cplx = Cplx(cplx.re, 0);
 }
 
-st_err_t Cplx::sign() {
-	st_err_t c = ST_ERR_OK;
+void Cplx::sqr(st_err_t& c, Cplx& cplx) const {
+	ASSERT_STATUS(c)
+	if (re == 0 && im == 0)
+		cplx = Cplx(0,0);
+	else {
+		pow(Cplx(.5, 0), c, cplx);
+		if (im == 0 && re < 0)
+			cplx.re = 0;
+	 }
+}
+
+void Cplx::acos(st_err_t& c, Cplx& cplx) const {
+	  // ACOS complex function: arccos(z) = -i*ln(z+sqr(z^2-1))
+	Cplx cplx2(*this);
+	Cplx cplx3, cplx4, cplx5, cplx6;
+	ASSERT_STATUS(c)
+	cplx2.mul(*this, c, cplx3);
+	cplx3.sub(Cplx(1, 0), c, cplx4);
+	cplx4.sqr(c, cplx5);
+	cplx5.add(*this, c, cplx5);
+	cplx5.ln(c, cplx6);
+	cplx6.mul(Cplx(0, -1), c, cplx);
+}
+
+void Cplx::asin(st_err_t& c, Cplx& cplx) const {
+	  // ASIN complex function: arcsin(z) = -i*ln(i*z+sqr(1-z^2))
+	Cplx cplx2(*this);
+	Cplx cplx3, cplx4, cplx5, cplx6, cplx7, cplx8;
+	ASSERT_STATUS(c)
+	cplx2.mul(*this, c, cplx3);
+	Cplx(1,0).sub(cplx3, c, cplx4);
+	cplx4.sqr(c, cplx5);
+	mul(Cplx(0,1), c, cplx6);
+	cplx6.add(cplx5, c, cplx7);
+	cplx7.ln(c, cplx8);
+	cplx8.mul(Cplx(0, -1), c, cplx);
+}
+
+void Cplx::atan(st_err_t& c, Cplx& cplx) const {
+	  // ATAN complex function: arctan(z) = i/2*(ln(1-iz)-ln(1+iz))
+	Cplx iz, un_moins_iz, un_plus_iz, ln_un_moins_iz, ln_un_plus_iz, soust;
+	ASSERT_STATUS(c)
+	mul(Cplx(0, 1), c, iz);
+	Cplx(1, 0).sub(iz, c, un_moins_iz);
+	un_moins_iz.ln(c, ln_un_moins_iz);
+	Cplx(1, 0).add(iz, c, un_plus_iz);
+	un_plus_iz.ln(c, ln_un_plus_iz);
+	ln_un_moins_iz.sub(ln_un_plus_iz, c, soust);
+	Cplx(0, .5).mul(soust, c, cplx);
+}
+
+inline void cplx_trigo_common(const Cplx& z, st_err_t& c, Cplx& exp_iz, Cplx& exp_moins_iz) {
+	Cplx iz, cplx2;
+	ASSERT_STATUS(c)
+	z.mul(Cplx(0,1), c, iz);
+	cplx2 = iz;
+	cplx2.neg();
+	iz.exp(c, exp_iz);
+	cplx2.exp(c, exp_moins_iz);
+}
+
+void Cplx::cos(st_err_t& c, Cplx& cplx) const {
+	  // COS complex function: cos(z) = (exp(i*z)+exp(-i*z))/2
+	Cplx exp_iz, exp_moins_iz, cplx2;
+	ASSERT_STATUS(c)
+	cplx_trigo_common(*this, c, exp_iz, exp_moins_iz);
+	exp_iz.add(exp_moins_iz, c, cplx2);
+	cplx2.div(Cplx(2, 0), c, cplx);
+}
+
+void Cplx::sin(st_err_t& c, Cplx& cplx) const {
+	  // SIN complex function: sin(z) = (exp(i*z)-exp(-i*z))/(2*i)
+	Cplx exp_iz, exp_moins_iz, cplx2;
+	ASSERT_STATUS(c)
+	if (re == 0 && im == 0) {
+		cplx.zero();
+		return;
+	}
+	cplx_trigo_common(*this, c, exp_iz, exp_moins_iz);
+	exp_iz.sub(exp_moins_iz, c, cplx2);
+	cplx2.div(Cplx(0, 2), c, cplx);
+}
+
+void Cplx::tan(st_err_t& c, Cplx& cplx) const {
+	  // TAN complex function: tan(z) = (exp(i*z)-exp(-i*z)/(i*(exp(i*z)+exp(-i*z))
+	Cplx exp_iz, exp_moins_iz, soust, addit, cplx2;
+	ASSERT_STATUS(c)
+	cplx_trigo_common(*this, c, exp_iz, exp_moins_iz);
+	exp_iz.sub(exp_moins_iz, c, soust);
+	exp_iz.add(exp_moins_iz, c, addit);
+	soust.div(addit, c, cplx2);
+	cplx2.div(Cplx(0, 1), c, cplx);
+}
+
+void Cplx::acosh(st_err_t& c, Cplx& cplx) const {
+	  // ACOSH complex function: arccosh(z) = ln(z+sqr(z+1)*sqr(z-1))
+	ASSERT_STATUS(c)
+	Cplx z_plus_un, z_moins_un, rc_z_plus_un, rc_z_moins_un, produit, t;
+	add(Cplx(1, 0), c, z_plus_un);
+	z_plus_un.sqr(c, rc_z_plus_un);
+	sub(Cplx(1, 0), c, z_moins_un);
+	z_moins_un.sqr(c, rc_z_moins_un);
+	rc_z_plus_un.mul(rc_z_moins_un, c, produit);
+	add(produit, c, t);
+	t.ln(c, cplx);
+}
+
+void Cplx::asinh(st_err_t& c, Cplx& cplx) const {
+	  // ASINH complex function: arcsinh(z) = ln(z+sqr(z^2+1))
+	ASSERT_STATUS(c)
+	Cplx carre_de_z, carre_de_z_plus_1, rc_carre_de_z_plus_1, t;
+	mul(*this, c, carre_de_z);
+	carre_de_z.add(Cplx(1, 0), c, carre_de_z_plus_1);
+	carre_de_z_plus_1.sqr(c, rc_carre_de_z_plus_1);
+	add(rc_carre_de_z_plus_1, c, t);
+	t.ln(c, cplx);
+}
+
+void Cplx::atanh(st_err_t& c, Cplx& cplx) const {
+	  // ATANH complex function: arctanh(z) = (ln(1+z)-ln(1-z))/2
+	ASSERT_STATUS(c)
+	Cplx un_plus_z, un_moins_z, ln_un_plus_z, ln_un_moins_z, soust;
+	add(Cplx(1, 0), c, un_plus_z);
+	un_plus_z.ln(c, ln_un_plus_z);
+	Cplx(1, 0).sub(*this, c, un_moins_z);
+	un_moins_z.ln(c, ln_un_moins_z);
+	ln_un_plus_z.sub(ln_un_moins_z, c, soust);
+	soust.div(Cplx(2, 0), c, cplx);
+}
+
+void Cplx::sign(st_err_t& c, Cplx& cplx) const {
 	real a, new_re, new_im;
+	ASSERT_STATUS(c)
 	if (re != 0 || im != 0) {
-		c = abs(a);
+		abs(c, a);
 		numeric_div(re, a, c, new_re);
 		numeric_div(im, a, c, new_im);
 		if (c == ST_ERR_OK) {
-			re = new_re;
-			im = new_im;
+			cplx = Cplx(new_re, new_im);
 		}
 	}
-	return c;
 }
 
 
@@ -1166,12 +1544,13 @@ template<class Scalar> Matrix<Scalar>::~Matrix() {
 }
 
   // Multiplication or division by a scalar
-template<class Scalar> st_err_t Matrix<Scalar>::md(st_err_t (*f)(const Scalar&, const Scalar&, Scalar&), const Scalar& sc) {
+template<class Scalar> st_err_t Matrix<Scalar>::md(void (*f)(const Scalar&, const Scalar&, st_err_t& c, Scalar&), const Scalar& sc) {
 	st_err_t c = ST_ERR_OK;
 	Scalar res;
 	for (int i = 0; i < nb_lines; i++) {
 		for (int j = 0; j < nb_columns; j++) {
-			if ((c = (*f)((*mat[i])[j], sc, res)) != ST_ERR_OK)
+			(*f)((*mat[i])[j], sc, c, res);
+			if (c != ST_ERR_OK)
 				break;
 			(*mat[i])[j] = res;
 		}
@@ -1182,7 +1561,7 @@ template<class Scalar> st_err_t Matrix<Scalar>::md(st_err_t (*f)(const Scalar&, 
 }
 
   // Addition or subtraction with another vector/matrix of same dimension
-template<class Scalar> st_err_t Matrix<Scalar>::as(st_err_t (*f)(const Scalar&, const Scalar&, Scalar&),
+template<class Scalar> st_err_t Matrix<Scalar>::as(void (*f)(const Scalar&, const Scalar&, st_err_t&, Scalar&),
 														Matrix<Scalar>& op) {
 	if (nb_lines != op.nb_lines || nb_columns != op.nb_columns || dimension != op.dimension)
 		return ST_ERR_INVALID_DIMENSION;
@@ -1191,7 +1570,8 @@ template<class Scalar> st_err_t Matrix<Scalar>::as(st_err_t (*f)(const Scalar&, 
 	const std::vector< std::vector<Scalar>* >& m2 = op.mat;
 	for (int i = 0; i < nb_lines; i++) {
 		for (int j = 0; j < nb_columns; j++) {
-			if ((c = (*f)((*mat[i])[j], (*m2[i])[j], res)) != ST_ERR_OK)
+			(*f)((*mat[i])[j], (*m2[i])[j], c, res);
+			if (c != ST_ERR_OK)
 				break;
 			(*mat[i])[j] = res;
 		}
@@ -1216,9 +1596,8 @@ template<class Scalar> st_err_t Matrix<Scalar>::create_mul(const Matrix<Scalar> 
 				for (int j = 0; j < multiplier->nb_columns; j++) {
 					total.zero();
 					for (int cursor = 0; cursor < nb_columns; cursor++) {
-						c = (*mat[i])[cursor].mul((*(multiplier->mat)[cursor])[j], cell);
-						if (c == ST_ERR_OK)
-							c = cell.add(total, total);
+						(*mat[i])[cursor].mul((*(multiplier->mat)[cursor])[j], c, cell);
+						cell.add(total, c, total);
 					}
 					if (c != ST_ERR_OK)
 						break;
@@ -1243,9 +1622,8 @@ template<class Scalar> st_err_t Matrix<Scalar>::create_mul(const Matrix<Scalar> 
 			for (int i = 0; i < nb_lines; i++) {
 				total.zero();
 				for (int cursor = 0; cursor < nb_columns; cursor++) {
-					c = (*mat[i])[cursor].mul((*(multiplier->mat)[0])[cursor], cell);
-					if (c == ST_ERR_OK)
-						c = cell.add(total, total);
+					(*mat[i])[cursor].mul((*(multiplier->mat)[0])[cursor], c, cell);
+					cell.add(total, c, total);
 				}
 				if (c != ST_ERR_OK)
 					break;
@@ -1412,17 +1790,19 @@ template<class Scalar> st_err_t Matrix<Scalar>::create_div(const Matrix<Scalar> 
 					debug_write("top(1):");
 					debug_write(top.to_string(TOSTRING_PORTABLE).c_str());
 
-					if ((c = top.mul(alpha, top)) == ST_ERR_OK) {
+					top.mul(alpha, c, top);
+					if (c == ST_ERR_OK) {
 
 						debug_write("top(2):");
 						debug_write(top.to_string(TOSTRING_PORTABLE).c_str());
 
-						if ((c = top.div(beta, top)) == ST_ERR_OK) {
+						top.div(beta, c, top);
+						if (c == ST_ERR_OK) {
 
 							debug_write("top(3):");
 							debug_write(top.to_string(TOSTRING_PORTABLE).c_str());
 
-							c = (*(mm->mat)[reorder[i]])[j].sub(top, (*(mm->mat)[reorder[i]])[j]);
+							(*(mm->mat)[reorder[i]])[j].sub(top, c, (*(mm->mat)[reorder[i]])[j]);
 						}
 					}
 				}
@@ -1430,9 +1810,9 @@ template<class Scalar> st_err_t Matrix<Scalar>::create_div(const Matrix<Scalar> 
 				if (c == ST_ERR_OK) {
 					  // Modify the value of the vector the same way as cells done just before
 					top = (*(vv->mat)[0])[reorder[go_down]];
-					if ((c = top.mul(alpha, top)) == ST_ERR_OK)
-						if ((c = top.div(beta, top)) == ST_ERR_OK)
-							c = (*(vv->mat)[0])[reorder[i]].sub(top, (*(vv->mat)[0])[reorder[i]]);
+					top.mul(alpha, c, top);
+					top.div(beta, c, top);
+					(*(vv->mat)[0])[reorder[i]].sub(top, c, (*(vv->mat)[0])[reorder[i]]);
 				}
 
 #ifdef DEBUG
@@ -1452,11 +1832,10 @@ template<class Scalar> st_err_t Matrix<Scalar>::create_div(const Matrix<Scalar> 
 			t = (*(vv->mat)[0])[reorder[go_up]];
 			for (int i = go_up + 1; i < n; i++) {
 				m = (*(mm->mat)[reorder[go_up]])[i];
-				if ((c = m.mul((*(vv->mat)[0])[reorder[i]], m)) == ST_ERR_OK)
-					c = t.sub(m, t);
+				m.mul((*(vv->mat)[0])[reorder[i]], c, m);
+				t.sub(m, c, t);
 			}
-			if (c == ST_ERR_OK)
-				c = t.div((*(mm->mat)[reorder[go_up]])[go_up], (*(vv->mat)[0])[reorder[go_up]]);
+			t.div((*(mm->mat)[reorder[go_up]])[go_up], c, (*(vv->mat)[0])[reorder[go_up]]);
 		}
 
 		if (c == ST_ERR_OK) {

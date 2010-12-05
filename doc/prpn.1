@@ -126,10 +126,10 @@ Percentage of total: 100 * y / x
 Modulus: x - y * FLOOR(x / y)
 .TP
 .B MIN\ (2)
-Minimum
+Minimum of two reals
 .TP
 .B MAX\ (2)
-Maximum
+Maximum of two reals
 .TP
 .B COS\ (1)
 Cosine
@@ -154,6 +154,24 @@ Logarihtm (e base)
 .TP
 .B EXP\ (1)
 Exponential
+.TP
+.B COSH\ (1)
+Hyperbolic cosine
+.TP
+.B SINH\ (1)
+Hyperbolic sine
+.TP
+.B TANH\ (1)
+Hyperbolic tangent
+.TP
+.B ACOSH\ (1)
+Arc-hyperbolic cosine
+.TP
+.B ASINH\ (1)
+Arc-hyperbolic sine
+.TP
+.B ATANH\ (1)
+Arc-hyperbolic tangent
 .TP
 .B NEG\ (1)
 Opposite
@@ -190,6 +208,30 @@ Square
 .TP
 .B SQR\ (1)
 Square root
+.TP
+.B MINR\ (0)
+Smallest real greater than zero the calcultor can represent
+.TP
+.B MAXR\ (0)
+Biggest real the calcultor can represent
+.TP
+.B ->HMS\ (1)
+Convert a decimal to HMS (h.MMSSss)
+.TP
+.B HMS->\ (1)
+Convert a HMS (h.MMSSss) to a decimal
+.TP
+.B HMS+\ (2)
+Add two HMS (h.MMSSss)
+.TP
+.B HMS-\ (2)
+Subtract two HMS (h.MMSSss)
+.TP
+.B D->R\ (1)
+Convert from degrees to radians
+.TP
+.B R->D\ (1)
+Convert from radians to degrees
 .TP
 .B R->C\ (2)
 Real to complex

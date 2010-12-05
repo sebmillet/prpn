@@ -1,0 +1,9 @@
+8
+(8,0)
+.125
+(.125,0)
+-8
+(-8,0)
+-.125
+(-.125,0)
+get_class_count() = 0 for watched classes
