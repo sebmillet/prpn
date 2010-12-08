@@ -1,3 +1,4 @@
+RAD
 "---- ACOS"
 -2 ACOS
 -1 ACOS

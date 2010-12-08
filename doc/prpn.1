@@ -90,7 +90,7 @@ Commands are followed by the number of arguments they take, in parenthesis. Thes
 Display a help screen
 .TP
 .B _HELP_FLAGS\ (0)
-Display a help screen about flags
+Display the list of flags
 .TP
 .B _EXIT\ (0)
 Quit program
@@ -154,6 +154,18 @@ Logarihtm (e base)
 .TP
 .B EXP\ (1)
 Exponential
+.TP
+.B LOG\ (1)
+Logarithm (10 base)
+.TP
+.B ALOG\ (1)
+10 base exponential (10^x)
+.TP
+.B LNP1\ (1)
+LN(1+x)
+.TP
+.B EXPM\ (1)
+EXP(x)-1
 .TP
 .B COSH\ (1)
 Hyperbolic cosine
@@ -233,6 +245,12 @@ Convert from degrees to radians
 .B R->D\ (1)
 Convert from radians to degrees
 .TP
+.B RAD\ (0)
+Set angular mode to radians
+.TP
+.B DEG\ (0)
+Set angular mode to degrees
+.TP
 .B R->C\ (2)
 Real to complex
 .TP
@@ -240,13 +258,13 @@ Real to complex
 Complex to real
 .TP
 .B RE\ (1)
-Get real part of complex number
+Get real part of a complex number or array
 .TP
 .B IM\ (1)
-Get imaginary part of complex number
+Get imaginary part of a complex number or array
 .TP
 .B CONJ\ (1)
-Get conjugate of complex number
+Get conjugate of a complex number or array
 .TP
 .B ARG\ (1)
 Get argument of a complex number
@@ -385,6 +403,12 @@ Modify the dimension of an array
 .TP
 .B IDN\ (1)
 Create an identity matrix
+.TP
+.B CROSS\ (2)
+Cross product (vectorial product)
+.TP
+.B DOT\ (2)
+Dot product (scalar product)
 .TP
 .B EVAL\ (0)
 Evaluate item

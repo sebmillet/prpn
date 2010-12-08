@@ -56,6 +56,28 @@ static bool cfg_rdm_behavior = DEFAULT_RDM_BEHAVIOR;
 // Functions
 //
 
+extern const BuiltinCommandDescriptor builtinCommands[];
+extern const unsigned int sizeof_builtinCommands;
+
+  // Return ID of builtin command, if recognized, return -1 otherwise.
+  // Built-in command IDs are in the range [0..sizeof_builtinCommands - 1].
+int identify_builtin_command(const string& cmd) {
+	int builtin_id;
+	int up = static_cast<int>(sizeof_builtinCommands);
+	string uc_cmd = cmd;
+	upper_case(uc_cmd);
+	for (builtin_id = 0; builtin_id < up; builtin_id++)
+		if (uc_cmd == builtinCommands[builtin_id].command)
+			break;
+	if (builtin_id < up)
+		return builtin_id;
+	else
+		return -1;
+}
+const char *get_builtin_command_short_description(const int& builtin_id) {
+	return builtinCommands[builtin_id].short_description;
+}
+
 const string simple_string(const StackItem *si) {
 	ToString tostr(TOSTRING_DISPLAY, 1, 0);
 	si->to_string(tostr);
@@ -133,6 +155,34 @@ void get_si_dup_if_necessary(const SIO& s, StackItem*& si) {
 
 const string get_error_string(const st_err_t& c) { return st_errors[c]; }
 
+  // Convert the output of a function from radians to degrees, if needed.
+  // "I needed" = only if actual user settings are set to DEGREES.
+void convert_to_degrees_if_needed(st_err_t& c, Real& x) {
+	if (c == ST_ERR_OK && F->get_angle_mode() == ANGLE_DEG) {
+		Real copy_x = x;
+		copy_x.r_to_d(c, x);
+	}
+}
+
+void convert_to_degrees_if_needed(st_err_t& c, Cplx& cplx) {
+	if (c == ST_ERR_OK && F->get_angle_mode() == ANGLE_DEG && cplx.get_im() == 0) {
+		Real re = Real(cplx.get_re());
+		convert_to_degrees_if_needed(c, re);
+		if (c == ST_ERR_OK)
+			cplx = Cplx(re.get_value(), 0);
+	}
+}
+
+
+  // Convert the input of a function from degrees to radians, if needed.
+  // "I needed" = only if actual user settings are set to DEGREES.
+void convert_to_radians_if_needed(st_err_t& c, Real& x) {
+	if (F->get_angle_mode() == ANGLE_DEG) {
+		Real copy_x = x;
+		copy_x.d_to_r(c, x);
+	}
+}
+
   // Number of columns in a file containing StackItems
 #define RC_FILE_WIDTH			78
 
@@ -176,18 +226,18 @@ static Flag1 default_flags[FL_TAG_IT_END + 1] = {
 	{false, _N("Reserved"), false},	// FL_RESERVED1		46
 	{false, _N("Reserved"), false},	// FL_RESERVED2		47
 	{false, _N("Decimal separator"), false},	// FL_DECIMAL_SEP	48
-	{false, "", false}, {false, _N("Real numbers format"), false},						// FL_REAL_FORMAT_2	49-50
+	{false, "", false}, {false, _N("Real numbers format"), false},		// FL_REAL_FORMAT_2	49-50
 	{false, _N("Tone"), false},	// FL_TONE			51
 	{false, _N("Fast printing"), false},	// FL_FAST_PRINT	52
 	{false, "", false}, {false, "", false}, {false, "", false}, {false, _N("Number of decimals"), false},			// FL_REAL_NB_DECS_4	53-56
-	{false, _N("Underflow processed normally"), false},	// FL_UNDERFLOW_OK	57
+	{false, _N("Underflow processed normally"), false},					// FL_UNDERFLOW_OK	57
 	{false, _N("Overflow processed normally"), false},					// FL_OVERFLOW_OK	58
-	{true, _N("Infinite Result processed normally"), true},			// FL_INFINITE		59
-	{false, _N("Angle"), false},										// FL_ANGLE			60
+	{true, _N("Infinite Result processed normally"), true},				// FL_INFINITE		59
+	{false, _N("Angle, unset for degrees, set for radians"), false},	// FL_ANGLE			60
 	{false, _N("Underflow- processed as an exception"), false},			// FL_UNDERFLOW_NEG_EXCEPT	61
 	{false, _N("Underdlow+ processed as an exception"), false},			// FL_UNDERFLOW_POS_EXCEPT	62
 	{false, _N("Overflow processed as an exception"), false},			// FL_OVERFLOW_EXCEPT		63
-	{false, _N("Infinite Result processed as an exception"), false}	// FL_INFINITE_EXCEPT		64
+	{false, _N("Infinite Result processed as an exception"), false}		// FL_INFINITE_EXCEPT		64
 };
 
 Flags::Flags() {
@@ -337,6 +387,17 @@ void Flags::set_realdisp(const realdisp_t& rd, int nb) {
 		set(i, nb % 2 != 0);
 		nb /= 2;
 	}
+}
+
+angle_t Flags::get_angle_mode() const {
+	return (get(FL_ANGLE) ? ANGLE_RAD : ANGLE_DEG);
+}
+
+void Flags::set_angle_mode(const angle_t& am) {
+	if (am == ANGLE_RAD || am == ANGLE_DEG)
+		set(FL_ANGLE, am == ANGLE_RAD);
+	else
+		throw(CalcFatal(__FILE__, __LINE__, "Flags::set_angle_mode(): unknown angle type"));
 }
 
 
@@ -1543,6 +1604,8 @@ IMPLEMENT_BC_TWO_ARGS_GENERIC_FUNC(min)
 IMPLEMENT_BC_TWO_ARGS_GENERIC_FUNC(max)
 IMPLEMENT_BC_TWO_ARGS_GENERIC_FUNC(hms_add)
 IMPLEMENT_BC_TWO_ARGS_GENERIC_FUNC(hms_sub)
+IMPLEMENT_BC_TWO_ARGS_GENERIC_FUNC(cross)
+IMPLEMENT_BC_TWO_ARGS_GENERIC_FUNC(dot)
 
 
   // Real functions
@@ -1588,9 +1651,23 @@ IMPLEMENT_BC_OP_FUNC(to_hms)
 IMPLEMENT_BC_OP_FUNC(hms_to)
 IMPLEMENT_BC_OP_FUNC(d_to_r)
 IMPLEMENT_BC_OP_FUNC(r_to_d)
+IMPLEMENT_BC_OP_FUNC(log)
+IMPLEMENT_BC_OP_FUNC(alog)
+IMPLEMENT_BC_OP_FUNC(lnp1)
+IMPLEMENT_BC_OP_FUNC(expm)
 
 static st_err_t bc_minr(StackItem*& si, string&) { si = new StackItemReal(Real(MINR)); return ST_ERR_OK; }
 static st_err_t bc_maxr(StackItem*& si, string&) { si = new StackItemReal(Real(MAXR)); return ST_ERR_OK; }
+
+static st_err_t bc_rad(TransStack& ts, SIO* args, string&) {
+	F->set_angle_mode(ANGLE_RAD);
+	return ST_ERR_OK;
+}
+
+static st_err_t bc_deg(TransStack& ts, SIO* args, string&) {
+	F->set_angle_mode(ANGLE_DEG);
+	return ST_ERR_OK;
+}
 
 static st_err_t bc_r_to_c(StackItem& op1, StackItem& op2, StackItem*& ret, string&) {
 	prepare_arith();
@@ -2188,7 +2265,7 @@ static st_err_t bc_undo_levels_get(TransStack& ts, SIO*, string&) {
 #include "Commands.h"
 
 st_err_t StackItemBuiltinCommand::eval(const eval_t&, TransStack& ts, manage_si_t& msi, string& cmd_err) {
-	BuiltinCommandDescriptor& bc = builtinCommands[builtin_id];
+	const BuiltinCommandDescriptor& bc = builtinCommands[builtin_id];
 	msi = MANAGE_SI_DONOTHING;
 
 	cmd_err = bc.command;
@@ -2630,10 +2707,21 @@ st_err_t StackItemReal::op_##OP(StackItem*& ret) { \
 	create_Real_or_Cplx_StackItem(c, cplx, ret); \
 	return c; \
 }
+
+#define IMPLEMENT_REAL_TO_REAL_OR_CPLX_FUNCTION_ANGLE_OUTPUT(OP) \
+st_err_t StackItemReal::op_##OP(StackItem*& ret) { \
+	Cplx cplx; \
+	st_err_t c = ST_ERR_OK; \
+	sc.OP(c, cplx); \
+	convert_to_degrees_if_needed(c, cplx); \
+	create_Real_or_Cplx_StackItem(c, cplx, ret); \
+	return c; \
+}
 IMPLEMENT_REAL_TO_REAL_OR_CPLX_FUNCTION(sqr)
 IMPLEMENT_REAL_TO_REAL_OR_CPLX_FUNCTION(ln)
-IMPLEMENT_REAL_TO_REAL_OR_CPLX_FUNCTION(acos)
-IMPLEMENT_REAL_TO_REAL_OR_CPLX_FUNCTION(asin)
+IMPLEMENT_REAL_TO_REAL_OR_CPLX_FUNCTION(log)
+IMPLEMENT_REAL_TO_REAL_OR_CPLX_FUNCTION_ANGLE_OUTPUT(acos)
+IMPLEMENT_REAL_TO_REAL_OR_CPLX_FUNCTION_ANGLE_OUTPUT(asin)
 IMPLEMENT_REAL_TO_REAL_OR_CPLX_FUNCTION(acosh)
 IMPLEMENT_REAL_TO_REAL_OR_CPLX_FUNCTION(atanh)
 
@@ -2646,11 +2734,24 @@ st_err_t StackItemReal::op_##OP(StackItem*& ret) { \
 		ret = new StackItemReal(real); \
 	return c; \
 }
-IMPLEMENT_REAL_TO_REAL_FUNCTION(atan)
-IMPLEMENT_REAL_TO_REAL_FUNCTION(cos)
-IMPLEMENT_REAL_TO_REAL_FUNCTION(sin)
-IMPLEMENT_REAL_TO_REAL_FUNCTION(tan)
+#define IMPLEMENT_REAL_TO_REAL_FUNCTION_ANGLE_INPUT(OP) \
+st_err_t StackItemReal::op_##OP(StackItem*& ret) { \
+	st_err_t c = ST_ERR_OK; \
+	Real real; \
+	Real local_copy = sc; \
+	convert_to_radians_if_needed(c, local_copy); \
+	local_copy.OP(c, real); \
+	if (c == ST_ERR_OK) \
+		ret = new StackItemReal(real); \
+	return c; \
+}
+IMPLEMENT_REAL_TO_REAL_FUNCTION_ANGLE_INPUT(cos)
+IMPLEMENT_REAL_TO_REAL_FUNCTION_ANGLE_INPUT(sin)
+IMPLEMENT_REAL_TO_REAL_FUNCTION_ANGLE_INPUT(tan)
 IMPLEMENT_REAL_TO_REAL_FUNCTION(exp)
+IMPLEMENT_REAL_TO_REAL_FUNCTION(alog)
+IMPLEMENT_REAL_TO_REAL_FUNCTION(lnp1)
+IMPLEMENT_REAL_TO_REAL_FUNCTION(expm)
 IMPLEMENT_REAL_TO_REAL_FUNCTION(cosh)
 IMPLEMENT_REAL_TO_REAL_FUNCTION(sinh)
 IMPLEMENT_REAL_TO_REAL_FUNCTION(tanh)
@@ -2659,6 +2760,16 @@ IMPLEMENT_REAL_TO_REAL_FUNCTION(to_hms)
 IMPLEMENT_REAL_TO_REAL_FUNCTION(hms_to)
 IMPLEMENT_REAL_TO_REAL_FUNCTION(d_to_r)
 IMPLEMENT_REAL_TO_REAL_FUNCTION(r_to_d)
+
+st_err_t StackItemReal::op_atan(StackItem*& ret) {
+	st_err_t c = ST_ERR_OK;
+	Real res;
+	sc.atan(c, res);
+	convert_to_degrees_if_needed(c, res);
+	if (c == ST_ERR_OK)
+		ret = new StackItemReal(res);
+	return c;
+}
 
 st_err_t StackItemReal::op_pow(StackItemReal *arg1, StackItem*& ret) {
 	Cplx cplx;
@@ -2845,11 +2956,11 @@ st_err_t StackItemCplx::op_sign(StackItem*& ret) {
 
 #define IMPLEMENT_CPLX_OPREAL(OP) \
 st_err_t StackItemCplx::op_##OP(StackItem*& ret) { \
-	real r; \
+	Real r; \
 	st_err_t c = ST_ERR_OK; \
 	sc.OP(c, r); \
 	if (c == ST_ERR_OK) \
-		ret = new StackItemReal(Real(r)); \
+		ret = new StackItemReal(r); \
 	return c; \
 }
 IMPLEMENT_CPLX_OPREAL(abs)
@@ -2864,10 +2975,10 @@ st_err_t StackItemCplx::op_##OP(StackItem*& ret) { \
 		ret = new StackItemCplx(cplx); \
 	return c; \
 }
-IMPLEMENT_CPLX_OPCPLX(p_to_r)
-IMPLEMENT_CPLX_OPCPLX(r_to_p)
 IMPLEMENT_CPLX_OPCPLX(ln)
+IMPLEMENT_CPLX_OPCPLX(log)
 IMPLEMENT_CPLX_OPCPLX(exp)
+IMPLEMENT_CPLX_OPCPLX(alog)
 IMPLEMENT_CPLX_OPCPLX(sqr)
 IMPLEMENT_CPLX_OPCPLX(acos)
 IMPLEMENT_CPLX_OPCPLX(asin)
@@ -2881,6 +2992,33 @@ IMPLEMENT_CPLX_OPCPLX(tanh)
 IMPLEMENT_CPLX_OPCPLX(acosh)
 IMPLEMENT_CPLX_OPCPLX(asinh)
 IMPLEMENT_CPLX_OPCPLX(atanh)
+
+st_err_t StackItemCplx::op_p_to_r(StackItem*& ret) {
+	Cplx cplx;
+	st_err_t c = ST_ERR_OK;
+	Cplx local_copy = sc;
+	Real im = Real(local_copy.get_im());
+	convert_to_radians_if_needed(c, im);
+	local_copy = Cplx(local_copy.get_re(), im.get_value());
+	local_copy.p_to_r(c, cplx);
+	if (c == ST_ERR_OK)
+		ret = new StackItemCplx(cplx);
+	return c;
+}
+
+st_err_t StackItemCplx::op_r_to_p(StackItem*& ret) {
+	Cplx cplx;
+	st_err_t c = ST_ERR_OK;
+	sc.r_to_p(c, cplx);
+	if (c == ST_ERR_OK) {
+		Cplx cplx_copy = cplx;
+		Real im = Real(cplx_copy.get_im());
+		convert_to_degrees_if_needed(c, im);
+		if (c == ST_ERR_OK)
+			ret = new StackItemCplx(Cplx(cplx_copy.get_re(), im.get_value()));
+	}
+	return c;
+}
 
 st_err_t StackItemCplx::op_conj(StackItem*& ret) {
 	Cplx cplx = sc;
@@ -3028,6 +3166,8 @@ IMPLEMENT_MAT_OP_WITH_MAT(StackItemMatrixReal, Real, mul)
 IMPLEMENT_MAT_OP_WITH_MAT(StackItemMatrixReal, Real, div)
 IMPLEMENT_MAT_OP_WITH_MAT(StackItemMatrixCplx, Cplx, mul)
 IMPLEMENT_MAT_OP_WITH_MAT(StackItemMatrixCplx, Cplx, div)
+IMPLEMENT_MAT_OP_WITH_MAT(StackItemMatrixReal, Real, cross)
+IMPLEMENT_MAT_OP_WITH_MAT(StackItemMatrixCplx, Cplx, cross)
 
 #define IMPLEMENT_MAT_OP_CPLX_OP_REAL(OP) \
 st_err_t StackItemMatrixReal::op_##OP(StackItemMatrixCplx *arg1, StackItem*& ret) { \
@@ -3041,6 +3181,7 @@ st_err_t StackItemMatrixReal::op_##OP(StackItemMatrixCplx *arg1, StackItem*& ret
 }
 IMPLEMENT_MAT_OP_CPLX_OP_REAL(mul)
 IMPLEMENT_MAT_OP_CPLX_OP_REAL(div)
+IMPLEMENT_MAT_OP_CPLX_OP_REAL(cross)
 
 #define IMPLEMENT_MAT_OP_REAL_OP_CPLX(OP) \
 st_err_t StackItemMatrixCplx::op_##OP(StackItemMatrixReal *arg1, StackItem*& ret) { \
@@ -3054,6 +3195,7 @@ st_err_t StackItemMatrixCplx::op_##OP(StackItemMatrixReal *arg1, StackItem*& ret
 }
 IMPLEMENT_MAT_OP_REAL_OP_CPLX(mul)
 IMPLEMENT_MAT_OP_REAL_OP_CPLX(div)
+IMPLEMENT_MAT_OP_REAL_OP_CPLX(cross)
 
 #define IMPLEMENT_MAT_OP_NEG(SC) \
 st_err_t StackItemMatrix##SC::op_neg(StackItem*& ret) { \
@@ -3065,6 +3207,48 @@ st_err_t StackItemMatrix##SC::op_neg(StackItem*& ret) { \
 }
 IMPLEMENT_MAT_OP_NEG(Real)
 IMPLEMENT_MAT_OP_NEG(Cplx)
+
+#define IMPLEMENT_MAT_DOT(MATSI, SCALAR, SI) \
+st_err_t MATSI::op_dot(MATSI *arg1, StackItem*& ret) { \
+	SCALAR s; \
+	st_err_t c = arg1->pmat->dot(pmat, s); \
+	if (c == ST_ERR_OK) \
+		ret = new SI(s); \
+	return c; \
+}
+IMPLEMENT_MAT_DOT(StackItemMatrixReal, Real, StackItemReal)
+IMPLEMENT_MAT_DOT(StackItemMatrixCplx, Cplx, StackItemCplx)
+
+st_err_t StackItemMatrixReal::op_dot(StackItemMatrixCplx *arg1, StackItem*& ret) {
+	Matrix<Cplx> *converted_to_matrix_cplx = matrix_real_to_cplx(pmat);
+	Cplx s;
+	st_err_t c = arg1->get_matrix()->dot(converted_to_matrix_cplx, s);
+	if (c == ST_ERR_OK)
+		ret = new StackItemCplx(s);
+	delete converted_to_matrix_cplx;
+	return c;
+}
+
+st_err_t StackItemMatrixCplx::op_dot(StackItemMatrixReal *arg1, StackItem*& ret) {
+	Matrix<Cplx> *converted_to_matrix_cplx = matrix_real_to_cplx(arg1->get_matrix());
+	Cplx s;
+	st_err_t c = converted_to_matrix_cplx->dot(pmat, s);
+	if (c == ST_ERR_OK)
+		ret = new StackItemCplx(s);
+	delete converted_to_matrix_cplx;
+	return c;
+}
+
+#define IMPLEMENT_MAT_ABS(MATSI) \
+st_err_t MATSI::op_abs(StackItem*& ret) { \
+	Real x; \
+	st_err_t c = pmat->abs(x); \
+	if (c == ST_ERR_OK) \
+		ret = new StackItemReal(x); \
+	return c; \
+}
+IMPLEMENT_MAT_ABS(StackItemMatrixReal)
+IMPLEMENT_MAT_ABS(StackItemMatrixCplx)
 
 
 //

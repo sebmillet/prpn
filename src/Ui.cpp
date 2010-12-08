@@ -21,10 +21,14 @@
 
 #include <fstream>
 
+#include "MyIntl.h"
+
 using namespace std;
 
 #define HARD_GUI_MIN_HEIGHT	3
 #define PREFIX_NEXT_INSTRUCTION	">>> "
+
+bool ui_has_menu_bar() { return true; }
 
 static void set_refresh_status_flag();
 static void reset_refresh_status_flag();
@@ -73,6 +77,7 @@ static void refresh_stack(const int&, const bool&);
 static bool refresh_status_flag = true;
 static int status_actual_base = 0;
 static bool status_a_program_is_halted = false;
+static angle_t status_angle_mode = ANGLE_DEG;
 static void set_refresh_status_flag() { refresh_status_flag = true; }
 static void reset_refresh_status_flag() { refresh_status_flag = false; }
 static bool get_refresh_status_flag() { return refresh_status_flag; }
@@ -170,10 +175,222 @@ void ui_string_trim(string& s, const size_t& width, const DisplayStackLayout *ds
 
 
 //
+// Menu
+//
+
+static const MenuDescription menus_descriptions[] = {
+	{_N("&File"), "__MENU__"},
+	{_N("&Flags list"), "_HELP_FLAGS"},
+	{"", "__SEPARATOR__"},
+	{_N("&Quit"), "_EXIT"},
+	{"", ""},
+	{_N("&Commands"), "__MENU__"},
+	{"&Mode", "__MENU__"},
+	{"STD", ""},
+	{"FIX", ""},
+	{"SCI", ""},
+	{"ENG", ""},
+	{"DEG", ""},
+	{"RAD", ""},
+	{"", ""},
+	{"&Trigo", "__MENU__"},
+	{"SIN", ""},
+	{"ASIN", ""},
+	{"COS", ""},
+	{"ACOS", ""},
+	{"TAN", ""},
+	{"ATAN", ""},
+	{"", "__SEPARATOR__"},
+	{"P->R", ""},
+	{"R->P", ""},
+	{"R->C", ""},
+	{"C->R", ""},
+	{"ARG", ""},
+	{"", "__SEPARATOR__"},
+	{"->HMS", ""},
+	{"HMS->", ""},
+	{"HMS+", ""},
+	{"HMS-", ""},
+	{"D->R", ""},
+	{"R->D", ""},
+	{"", ""},
+	{"&Logs", "__MENU__"},
+	{"LOG", ""},
+	{"ALOG", ""},
+	{"LN", ""},
+	{"EXP", ""},
+	{"LNP1", ""},
+	{"EXPM", ""},
+	{"", "__SEPARATOR__"},
+	{"SINH", ""},
+	{"ASINH", ""},
+	{"COSH", ""},
+	{"ACOSH", ""},
+	{"TANH", ""},
+	{"ATANH", ""},
+	{"", ""},
+	{"&Array", "__MENU__"},
+	{"->ARRY", ""},
+	{"ARRY->", ""},
+	{"PUT", ""},
+	{"GET", ""},
+	{"PUTI", ""},
+	{"GETI", ""},
+	{"", "__SEPARATOR__"},
+	{"SIZE", ""},
+	{"RDM", ""},
+	{"TRN", ""},
+	{"CON", ""},
+	{"IDN", ""},
+	{"", "__SEPARATOR__"},
+	{"CROSS", ""},
+	{"DOT", ""},
+	{"ABS", ""},
+	{"", "__SEPARATOR__"},
+	{"R->C", ""},
+	{"C->R", ""},
+	{"RE", ""},
+	{"IM", ""},
+	{"CONJ", ""},
+	{"NEG", ""},
+	{"", ""},
+	{"&Binary", "__MENU__"},
+	{"DEC", ""},
+	{"HEX", ""},
+	{"OCT", ""},
+	{"BIN", ""},
+	{"STWS", ""},
+	{"RCWS", ""},
+	{"", "__SEPARATOR__"},
+	{"R->B", ""},
+	{"B->R", ""},
+	{"", ""},
+	{"&Complex", "__MENU__"},
+	{"R->C", ""},
+	{"C->R", ""},
+	{"RE", ""},
+	{"IM", ""},
+	{"CONJ", ""},
+	{"SIGN", ""},
+	{"", "__SEPARATOR__"},
+	{"R->P", ""},
+	{"P->R", ""},
+	{"ABS", ""},
+	{"NEG", ""},
+	{"ARG", ""},
+	{"", ""},
+	{"&String", "__MENU__"},
+	{"->STR", ""},
+	{"STR->", ""},
+	{"", "__SEPARATOR__"},
+	{"SUB", ""},
+	{"SIZE", ""},
+	{"DISP", ""},
+	{"", ""},
+	{"&List", "__MENU__"},
+	{"->LIST", ""},
+	{"LIST->", ""},
+	{"PUT", ""},
+	{"GET", ""},
+	{"PUTI", ""},
+	{"GETI", ""},
+	{"", "__SEPARATOR__"},
+	{"SUB", ""},
+	{"SIZE", ""},
+	{"", ""},
+	{"&Real", "__MENU__"},
+	{"NEG", ""},
+	{"MAXR", ""},
+	{"MINR", ""},
+	{"", "__SEPARATOR__"},
+	{"ABS", ""},
+	{"SIGN", ""},
+	{"MANT", ""},
+	{"XPON", ""},
+	{"", "__SEPARATOR__"},
+	{"IP", ""},
+	{"FP", ""},
+	{"FLOOR", ""},
+	{"CEIL", ""},
+	{"", "__SEPARATOR__"},
+	{"MAX", ""},
+	{"MIN", ""},
+	{"MOD", ""},
+	{"%T", ""},
+	{"", "__SEPARATOR__"},
+	{"", ""},
+	{"&Stack", "__MENU__"},
+	{"DUP", ""},
+	{"OVER", ""},
+	{"DUP2", ""},
+	{"DROP2", ""},
+	{"ROT", ""},
+	{"LIST->", ""},
+	{"", "__SEPARATOR__"},
+	{"ROLLD", ""},
+	{"PICK", ""},
+	{"DUPN", ""},
+	{"DROPN", ""},
+	{"DEPTH", ""},
+	{"->LIST", ""},
+	{"", ""},
+	{"&Control", "__MENU__"},
+	{"SST", ""},
+	{"HALT", ""},
+	{"ABORT", ""},
+	{"KILL", ""},
+	{"WAIT", ""},
+	{"", "__SEPARATOR__"},
+	{"CLLCD", ""},
+	{"DISP", ""},
+	{"CLMF", ""},
+	{"", ""},
+	{"&Branch", "__MENU__"},
+	{"IF", ""},
+	{"THEN", ""},
+	{"ELSE", ""},
+	{"END", ""},
+	{"", "__SEPARATOR__"},
+	{"START", ""},
+	{"FOR", ""},
+	{"NEXT", ""},
+	{"STEP", ""},
+	{"", "__SEPARATOR__"},
+	{"DO", ""},
+	{"UNTIL", ""},
+	{"END", ""},
+	{"WHILE", ""},
+	{"REPEAT", ""},
+	{"END", ""},
+	{"", ""},
+	{"&Test", "__MENU__"},
+	{"SF", ""},
+	{"CF", ""},
+	{"FS?", ""},
+	{"FC?", ""},
+	{"FS?C", ""},
+	{"FC?C", ""},
+	{"", "__SEPARATOR__"},
+	{"SAME", ""},
+	{"==", ""},
+	{"", "__SEPARATOR__"},
+	{"STOF", ""},
+	{"RCLF", ""},
+	{"", ""},
+	{"", ""},
+	{_N("&Help"), "__MENU__"},
+	{_N("&Manual page"), "_HELP"},
+	{"", "__SEPARATOR__"},
+	{_N("&About"), "_ABOUT"},
+	{"", ""}
+};
+
+
+//
 // Buttons area
 //
 
-const BtnDescription btn_descriptions[] = {
+static const BtnDescription btn_descriptions[] = {
 	{1, "__FF0000__", 0, "_SHIFT", "", 0, ""},
 	{2, "ENTER", 0, "", "EDIT", 0, "_EDIT"},
 	{1, "+/-", 0, "_NEG", "VIEW ^", 0, "_VUP"},
@@ -370,6 +587,11 @@ void ui_post_init() {
 	ui_refresh_display();
 }
 
+void ui_get_menus_descriptions(const MenuDescription*& m, int& nb) {
+	m = menus_descriptions;
+	nb = static_cast<int>(sizeof(menus_descriptions) / sizeof(*menus_descriptions));
+}
+
 void ui_get_buttons_layout_description(const BtnDescription*& b, int& nb) {
 	b = btn_descriptions;
 	nb = static_cast<int>(sizeof(btn_descriptions) / sizeof(*btn_descriptions));
@@ -545,6 +767,10 @@ static void refresh_status() {
 	}
 	if (status_a_program_is_halted != ts->a_program_is_halted()) {
 		status_a_program_is_halted = ts->a_program_is_halted();
+		set_refresh_status_flag();
+	}
+	if (status_angle_mode != F->get_angle_mode()) {
+		status_angle_mode = F->get_angle_mode();
 		set_refresh_status_flag();
 	}
 	if (get_refresh_status_flag()) {

@@ -144,7 +144,7 @@ Affiche un écran d'aide
 <DT><B>_HELP_FLAGS&nbsp;(0)</B>
 
 <DD>
-Affiche un écran d'aide sur les options
+Affiche la liste des indicateurs binaires
 <DT><B>_EXIT&nbsp;(0)</B>
 
 <DD>
@@ -152,7 +152,7 @@ Quitte le programme
 <DT><B>_ABOUT&nbsp;(0)</B>
 
 <DD>
-Affiche des informations au sujet de ce programme
+Informations sur ce programme
 <DT><B>+&nbsp;(2)</B>
 
 <DD>
@@ -192,11 +192,11 @@ Modulo : x - y * FLOOR(x / y)
 <DT><B>MIN&nbsp;(2)</B>
 
 <DD>
-Minimum of two reals
+Minimum de deux réels
 <DT><B>MAX&nbsp;(2)</B>
 
 <DD>
-Maximum of two reals
+Maximum de deux réels
 <DT><B>COS&nbsp;(1)</B>
 
 <DD>
@@ -229,6 +229,22 @@ Logarithme (base e)
 
 <DD>
 Exponentiel
+<DT><B>LOG&nbsp;(1)</B>
+
+<DD>
+Logarithme (base 10)
+<DT><B>ALOG&nbsp;(1)</B>
+
+<DD>
+Exponentiel en base 10 (10^x)
+<DT><B>LNP1&nbsp;(1)</B>
+
+<DD>
+LN(1+x)
+<DT><B>EXPM&nbsp;(1)</B>
+
+<DD>
+EXP(x)-1
 <DT><B>COSH&nbsp;(1)</B>
 
 <DD>
@@ -304,35 +320,43 @@ Racine carrée
 <DT><B>MINR&nbsp;(0)</B>
 
 <DD>
-Smallest real greater than zero the calcultor can represent
+Plus petit réel supérieur à zéro représentable par la calculatrice
 <DT><B>MAXR&nbsp;(0)</B>
 
 <DD>
-Biggest real the calcultor can represent
+Plus grand réel représentable par la calculatrice
 <DT><B>-&gt;HMS&nbsp;(1)</B>
 
 <DD>
-Convert a decimal to HMS (h.MMSSss)
+Convertis un décimal en nombre HMS (h.MMSSss)
 <DT><B>HMS-&gt;&nbsp;(1)</B>
 
 <DD>
-Convert a HMS (h.MMSSss) to a decimal
+Convertis un nombre HMS (h.MMSSss) en décimal
 <DT><B>HMS+&nbsp;(2)</B>
 
 <DD>
-Add two HMS (h.MMSSss)
+Additionne deux nombres HMS (h.MMSSss)
 <DT><B>HMS-&nbsp;(2)</B>
 
 <DD>
-Subtract two HMS (h.MMSSss)
+Soustrais deux nombres HMS (h.MMSSss)
 <DT><B>D-&gt;R&nbsp;(1)</B>
 
 <DD>
-Convert from degrees to radians
+Convertis des degrés en radians (*PI/180)
 <DT><B>R-&gt;D&nbsp;(1)</B>
 
 <DD>
-Convert from radians to degrees
+Convertis des radians en degrés (*180/PI)
+<DT><B>RAD&nbsp;(0)</B>
+
+<DD>
+Utilise le radian pour les mesures angulaires
+<DT><B>DEG&nbsp;(0)</B>
+
+<DD>
+Utilise le degré pour les mesures angulaires
 <DT><B>R-&gt;C&nbsp;(2)</B>
 
 <DD>
@@ -344,19 +368,19 @@ Complexe à réel
 <DT><B>RE&nbsp;(1)</B>
 
 <DD>
-Partie réelle d'un nombre complexe
+Partie réelle d'un nombre complexe ou d'un tableau
 <DT><B>IM&nbsp;(1)</B>
 
 <DD>
-Partie imaginaire d'un nombre complexe
+Partie imaginaire d'un nombre complexe ou d'un tableau
 <DT><B>CONJ&nbsp;(1)</B>
 
 <DD>
-Conjugué du nombre complexe
+Conjugué d'un nombre complexe ou d'un tableau
 <DT><B>ARG&nbsp;(1)</B>
 
 <DD>
-Argument du nombre complexe
+Argument d'un nombre complexe
 <DT><B>R-&gt;P&nbsp;(1)</B>
 
 <DD>
@@ -452,27 +476,27 @@ Renvoie le nombre d'éléments dans la pile
 <DT><B>SF&nbsp;(1)</B>
 
 <DD>
-Active l'option
+Active l'indicateur binaire
 <DT><B>CF&nbsp;(1)</B>
 
 <DD>
-Désactive l'option
+Désactive l'indicateur binaire
 <DT><B>FS?&nbsp;(1)</B>
 
 <DD>
-Renvoie 1 si l'option est activée, 0 sinon
+Renvoie 1 si l'indicateur binaire est activé, 0 sinon
 <DT><B>FC?&nbsp;(1)</B>
 
 <DD>
-Renvoie 0 si l'option est activée, 1 sinon
+Renvoie 0 si l'indicateur binaire est activé, 1 sinon
 <DT><B>FS?C&nbsp;(1)</B>
 
 <DD>
-Exécute FS? et désactive l'option
+Exécute FS? et désactive l'indicateur binaire
 <DT><B>FC?C&nbsp;(1)</B>
 
 <DD>
-Exécute FC? et désactive l'option
+Exécute FC? et désactive l'indicateur binaire
 <DT><B>-&gt;STR&nbsp;(1)</B>
 
 <DD>
@@ -537,6 +561,14 @@ Modifie les dimensions d'un tableau
 
 <DD>
 Crée une matrice identité
+<DT><B>CROSS&nbsp;(2)</B>
+
+<DD>
+Produit vectoriel
+<DT><B>DOT&nbsp;(2)</B>
+
+<DD>
+Produit scalaire
 <DT><B>EVAL&nbsp;(0)</B>
 
 <DD>
@@ -608,11 +640,11 @@ Convertis un réel en entier binaire
 <DT><B>RCLF&nbsp;(0)</B>
 
 <DD>
-Enregistre l'état des options dans un entier binaire
+Enregistre l'état des indicateurs binaires dans un entier binaire
 <DT><B>STOF&nbsp;(1)</B>
 
 <DD>
-Récupère l'état des options depuis un entier binaire
+Récupère l'état des indicateurs binaires depuis un entier binaire
 <DT><B>WAIT&nbsp;(1)</B>
 
 <DD>
@@ -925,6 +957,6 @@ prpn.exe ne peut *pas* être exécuté avec l'option -c. Sous Windows, WxWidgets dé
 This document was created by
 <A HREF="/cgi-bin/man/man2html">man2html</A>,
 using the manual pages.<BR>
-Time: 08:43:12 GMT, December 05, 2010
+Time: 23:19:24 GMT, December 08, 2010
 </BODY>
 </HTML>

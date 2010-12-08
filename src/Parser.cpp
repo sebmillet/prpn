@@ -20,8 +20,8 @@
 
 using namespace std;
 
-extern BuiltinCommandDescriptor builtinCommands[];
-extern const unsigned int sizeof_builtinCommands;
+//extern BuiltinCommandDescriptor builtinCommands[];
+//extern const unsigned int sizeof_builtinCommands;
 extern int os_get_size_of_newline();
 
 const bool late_eof = true;
@@ -506,7 +506,7 @@ bool Itemiser::get_simple_item(ParserError& par, StackItem*& si, item_t& itt) {
 						si = new StackItemExpression(el.s, true);
 				}
 			} else if (el.type == EL_WORD) {
-				size_t i;
+				int builtin_id;
 				size_t x;
 				string uc_s = el.s;
 				upper_case(uc_s);
@@ -517,13 +517,9 @@ bool Itemiser::get_simple_item(ParserError& par, StackItem*& si, item_t& itt) {
 				if (x < sizeof_branch_str) {
 					itt = static_cast<item_t>(x);
 				} else {
-					for (i = 0; i < sizeof_builtinCommands; i++) {
-						if (uc_s == builtinCommands[i].command) {
-							break;
-						}
-					}
-					if (i < sizeof_builtinCommands)  {
-						si = new StackItemBuiltinCommand(i);
+					builtin_id = identify_builtin_command(el.s);
+					if (builtin_id >= 0)  {
+						si = new StackItemBuiltinCommand(builtin_id);
 					} else {
 						si = new StackItemExpression(el.s, false);
 					}

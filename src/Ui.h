@@ -40,6 +40,16 @@ enum {UIK_ANY = -30000, UIK_RETURN, UIK_NEWLINE, UIK_ESCAPE, UIK_UP, UIK_DOWN};
 
 
 //
+// Menu
+//
+
+struct MenuDescription {
+	const char *text;
+	const char *cmd;
+};
+
+
+//
 // Buttons area
 //
 
@@ -133,6 +143,8 @@ bool ui_notify_key_pressed(const int&);
 void ui_reset_is_displaying_error();
 
 void ui_notify_button_pressed(const char *);
+bool ui_has_menu_bar();
+void ui_get_menus_descriptions(const MenuDescription*&, int&);
 void ui_get_buttons_layout_description(const BtnDescription*&, int&);
 
 void ui_decode_color_code(const char*, const char*&, int&, int&, int&);

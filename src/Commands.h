@@ -15,10 +15,10 @@
 #include <string>
 #include <iostream>
 
-BuiltinCommandDescriptor builtinCommands[] = {
+const BuiltinCommandDescriptor builtinCommands[] = {
 	  // Base
 	{0, BC_RAW, CMD_PREFIX_NOSTD "HELP", &bc_help, 0, 0, 0, 0, _N("Display a help screen")},
-	{0, BC_RAW, CMD_PREFIX_NOSTD "HELP_FLAGS", &bc_help_flags, 0, 0, 0, 0, _N("Display a help screen about flags")},
+	{0, BC_RAW, CMD_PREFIX_NOSTD "HELP_FLAGS", &bc_help_flags, 0, 0, 0, 0, _N("Display the list of flags")},
 	{0, BC_RAW, CMD_PREFIX_NOSTD "EXIT", &bc_exit, 0, 0, 0, 0, _N("Quit program")},
 	{0, BC_RAW, CMD_PREFIX_NOSTD "ABOUT", &bc_about, 0, 0, 0, 0, _N("Display information about this program")},
 	  // Arithmetic
@@ -42,6 +42,10 @@ BuiltinCommandDescriptor builtinCommands[] = {
 	{1, BC_FUNCTION_WRAPPER, "ATAN", 0, 0, &bc_atan, 0, 0, _N("Arctan")},
 	{1, BC_FUNCTION_WRAPPER, "LN", 0, 0, &bc_ln, 0, 0, _N("Logarihtm (e base)")},
 	{1, BC_FUNCTION_WRAPPER, "EXP", 0, 0, &bc_exp, 0, 0, _N("Exponential")},
+	{1, BC_FUNCTION_WRAPPER, "LOG", 0, 0, &bc_log, 0, 0, _N("Logarithm (10 base)")},
+	{1, BC_FUNCTION_WRAPPER, "ALOG", 0, 0, &bc_alog, 0, 0, _N("10 base exponential (10^x)")},
+	{1, BC_FUNCTION_WRAPPER, "LNP1", 0, 0, &bc_lnp1, 0, 0, _N("LN(1+x)")},
+	{1, BC_FUNCTION_WRAPPER, "EXPM", 0, 0, &bc_expm, 0, 0, _N("EXP(x)-1")},
 	{1, BC_FUNCTION_WRAPPER, "COSH", 0, 0, &bc_cosh, 0, 0, _N("Hyperbolic cosine")},
 	{1, BC_FUNCTION_WRAPPER, "SINH", 0, 0, &bc_sinh, 0, 0, _N("Hyperbolic sine")},
 	{1, BC_FUNCTION_WRAPPER, "TANH", 0, 0, &bc_tanh, 0, 0, _N("Hyperbolic tangent")},
@@ -68,12 +72,14 @@ BuiltinCommandDescriptor builtinCommands[] = {
 	{2, BC_FUNCTION_WRAPPER, "HMS-", 0, 0, 0, &bc_hms_sub, 0, _N("Subtract two HMS (h.MMSSss)")},
 	{1, BC_FUNCTION_WRAPPER, "D->R", 0, 0, &bc_d_to_r, 0, 0, _N("Convert from degrees to radians")},
 	{1, BC_FUNCTION_WRAPPER, "R->D", 0, 0, &bc_r_to_d, 0, 0, _N("Convert from radians to degrees")},
+	{0, BC_RAW, "RAD", &bc_rad, 0, 0, 0, 0, _N("Set angular mode to radians")},
+	{0, BC_RAW, "DEG", &bc_deg, 0, 0, 0, 0, _N("Set angular mode to degrees")},
 	  // Complex-specific functions
 	{2, BC_FUNCTION_WRAPPER, "R->C", 0, 0, 0, &bc_r_to_c, 0, _N("Real to complex")},
 	{1, BC_RAW, "C->R", &bc_c_to_r, 0, 0, 0, 0, _N("Complex to real")},
-	{1, BC_FUNCTION_WRAPPER, "RE", 0, 0, &bc_re, 0, 0, _N("Get real part of complex number")},
-	{1, BC_FUNCTION_WRAPPER, "IM", 0, 0, &bc_im, 0, 0, _N("Get imaginary part of complex number")},
-	{1, BC_FUNCTION_WRAPPER, "CONJ", 0, 0, &bc_conj, 0, 0, _N("Get conjugate of complex number")},
+	{1, BC_FUNCTION_WRAPPER, "RE", 0, 0, &bc_re, 0, 0, _N("Get real part of a complex number or array")},
+	{1, BC_FUNCTION_WRAPPER, "IM", 0, 0, &bc_im, 0, 0, _N("Get imaginary part of a complex number or array")},
+	{1, BC_FUNCTION_WRAPPER, "CONJ", 0, 0, &bc_conj, 0, 0, _N("Get conjugate of a complex number or array")},
 	{1, BC_FUNCTION_WRAPPER, "ARG", 0, 0, &bc_arg, 0, 0, _N("Get argument of a complex number")},
 	{1, BC_FUNCTION_WRAPPER, "R->P", 0, 0, &bc_r_to_p, 0, 0, _N("Rectangular to polar coordinates")},
 	{1, BC_FUNCTION_WRAPPER, "P->R", 0, 0, &bc_p_to_r, 0, 0, _N("Polar to rectangular coordinates")},
@@ -125,6 +131,8 @@ BuiltinCommandDescriptor builtinCommands[] = {
 	{1, BC_FUNCTION_WRAPPER, "TRN", 0, 0, &bc_trn, 0, 0, _N("Transpose a matrix-type array")},
 	{2, BC_RAW, "RDM", &bc_rdm, 0, 0, 0, 0, _N("Modify the dimension of an array")},
 	{1, BC_FUNCTION_WRAPPER, "IDN", 0, 0, &bc_idn, 0, 0, _N("Create an identity matrix")},
+	{2, BC_FUNCTION_WRAPPER, "CROSS", 0, 0, 0, &bc_cross, 0, _N("Cross product (vectorial product)")},
+	{2, BC_FUNCTION_WRAPPER, "DOT", 0, 0, 0, &bc_dot, 0, _N("Dot product (scalar product)")},
 	  // Variables
 	{0, BC_RAW, "EVAL", &bc_eval, 0, 0, 0, 0, _N("Evaluate item")},
 	{2, BC_RAW, "STO", &bc_sto, 0, 0, 0, 0, _N("Store value in variable name")},
@@ -169,7 +177,7 @@ BuiltinCommandDescriptor builtinCommands[] = {
 	{1, BC_RAW, CMD_PREFIX_NOSTD "UNDO_LEVELS", &bc_undo_levels, 0, 0, 0, 0, _N("Define number of undo levels")},
 	{0, BC_RAW, CMD_PREFIX_NOSTD "UNDO_LEVELS?", &bc_undo_levels_get, 0, 0, 0, 0, _N("Get number of undo levels")}
 };
-extern const unsigned int sizeof_builtinCommands = sizeof(builtinCommands) / sizeof(*builtinCommands);
+const unsigned int sizeof_builtinCommands = sizeof(builtinCommands) / sizeof(*builtinCommands);
 
 const string stack_get_help(const int& dh) {
 	ostringstream sout;

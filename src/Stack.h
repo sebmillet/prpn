@@ -223,6 +223,8 @@ public:
 	virtual st_err_t op_max_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_hms_add_generic(StackItem& arg2, StackItem*& ret) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_hms_sub_generic(StackItem& arg2, StackItem*& ret) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_cross_generic(StackItem& arg2, StackItem*& ret) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_dot_generic(StackItem& arg2, StackItem*& ret) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_cos(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_sin(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_tan(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
@@ -230,7 +232,11 @@ public:
 	virtual st_err_t op_asin(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_atan(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_ln(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_log(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_exp(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_alog(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_lnp1(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_expm(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 
 	virtual st_err_t op_cosh(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_sinh(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
@@ -289,6 +295,10 @@ public:
 	virtual st_err_t op_sub(StackItemMatrixReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_sub(StackItemMatrixCplx*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_r_to_c(StackItemMatrixReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_cross(StackItemMatrixReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_dot(StackItemMatrixReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_cross(StackItemMatrixCplx*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_dot(StackItemMatrixCplx*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	  // Comparisons
 	virtual st_err_t op_lower_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_lower_or_equal_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
@@ -442,6 +452,31 @@ public:
 template<class Scalar, class SI> st_err_t si_arith(void (*f)(const Scalar&, const Scalar&, st_err_t&, Scalar&), const Scalar&, const Scalar&, StackItem*&);
 template<class Scalar, class SI_Mat> st_err_t si_matrix_md(st_err_t (*f)(const Scalar&, const Scalar&, Scalar&), Matrix<Scalar>*, const Scalar&, StackItem*&);
 
+  // Used to avoid a repetition for StackItemReal then StackItemCplx declarations
+#define DECLARE_SCALAR_FUNCTIONS \
+	virtual st_err_t op_abs(StackItem*&); \
+	virtual st_err_t op_sign(StackItem*&); \
+	virtual st_err_t op_cos(StackItem*&); \
+	virtual st_err_t op_sin(StackItem*&); \
+	virtual st_err_t op_tan(StackItem*&); \
+	virtual st_err_t op_acos(StackItem*&); \
+	virtual st_err_t op_asin(StackItem*&); \
+	virtual st_err_t op_atan(StackItem*&); \
+	virtual st_err_t op_ln(StackItem*&); \
+	virtual st_err_t op_log(StackItem*&); \
+	virtual st_err_t op_exp(StackItem*&); \
+	virtual st_err_t op_alog(StackItem*&); \
+	virtual st_err_t op_cosh(StackItem*&); \
+	virtual st_err_t op_sinh(StackItem*&); \
+	virtual st_err_t op_tanh(StackItem*&); \
+	virtual st_err_t op_acosh(StackItem*&); \
+	virtual st_err_t op_asinh(StackItem*&); \
+	virtual st_err_t op_atanh(StackItem*&); \
+	virtual st_err_t op_neg(StackItem*&); \
+	virtual st_err_t op_sq(StackItem*&); \
+	virtual st_err_t op_inv(StackItem*&); \
+	virtual st_err_t op_sqr(StackItem*&);
+
 //
 // StackItemReal
 //
@@ -464,8 +499,6 @@ public:
 	virtual st_err_t op_fp(StackItem*&);
 	virtual st_err_t op_floor(StackItem*&);
 	virtual st_err_t op_ceil(StackItem*&);
-	virtual st_err_t op_abs(StackItem*&);
-	virtual st_err_t op_sign(StackItem*&);
 	virtual st_err_t op_mant(StackItem*&);
 	virtual st_err_t op_xpon(StackItem*&);
 
@@ -509,24 +542,10 @@ public:
 	virtual st_err_t op_mul(StackItemMatrixCplx*, StackItem*&);
 	virtual st_err_t op_div(StackItemMatrixCplx*, StackItem*&);
 
-	virtual st_err_t op_cos(StackItem*&);
-	virtual st_err_t op_sin(StackItem*&);
-	virtual st_err_t op_tan(StackItem*&);
-	virtual st_err_t op_acos(StackItem*&);
-	virtual st_err_t op_asin(StackItem*&);
-	virtual st_err_t op_atan(StackItem*&);
-	virtual st_err_t op_ln(StackItem*&);
-	virtual st_err_t op_exp(StackItem*&);
-	virtual st_err_t op_cosh(StackItem*&);
-	virtual st_err_t op_sinh(StackItem*&);
-	virtual st_err_t op_tanh(StackItem*&);
-	virtual st_err_t op_acosh(StackItem*&);
-	virtual st_err_t op_asinh(StackItem*&);
-	virtual st_err_t op_atanh(StackItem*&);
-	virtual st_err_t op_neg(StackItem*&);
-	virtual st_err_t op_sq(StackItem*&);
-	virtual st_err_t op_inv(StackItem*&);
-	virtual st_err_t op_sqr(StackItem*&);
+	DECLARE_SCALAR_FUNCTIONS
+
+	virtual st_err_t op_lnp1(StackItem*&);
+	virtual st_err_t op_expm(StackItem*&);
 
 	virtual st_err_t op_to_hms(StackItem*&);
 	virtual st_err_t op_hms_to(StackItem*&);
@@ -559,12 +578,6 @@ public:
 
 	virtual st_err_t get_coordinates(TransStack&, StackItem*, Coordinates&);
 	virtual st_err_t increment_coord(TransStack&, const Coordinates&);
-//    virtual st_err_t op_get(TransStack&, StackItemList*, StackItem*&);
-//    virtual st_err_t op_get(TransStack&, StackItemMatrixReal*, StackItem*&);
-//    virtual st_err_t op_get(TransStack&, StackItemMatrixCplx*, StackItem*&);
-//    virtual st_err_t op_put(TransStack&, StackItemList*, SIO&);
-//    virtual st_err_t op_put(TransStack&, StackItemMatrixReal*, SIO&);
-//    virtual st_err_t op_put(TransStack&, StackItemMatrixCplx*, SIO&);
 };
 
 
@@ -588,9 +601,6 @@ public:
 	virtual void to_string(ToString&, const bool& = false) const;
 
 	virtual st_err_t op_c_to_r(TransStack&);
-
-	virtual st_err_t op_abs(StackItem*&);
-	virtual st_err_t op_sign(StackItem*&);
 
 	virtual st_err_t op_add_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_add(this, ret); }
 	virtual st_err_t op_sub_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_sub(this, ret); }
@@ -621,26 +631,7 @@ public:
 	virtual st_err_t op_pow_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_pow(this, ret); }
 	virtual st_err_t op_pow(StackItemCplx* arg1, StackItem*& ret);
 
-	virtual st_err_t op_cos(StackItem*&);
-	virtual st_err_t op_sin(StackItem*&);
-	virtual st_err_t op_tan(StackItem*&);
-	virtual st_err_t op_exp(StackItem*&);
-	virtual st_err_t op_ln(StackItem*&);
-	virtual st_err_t op_sqr(StackItem*&);
-	virtual st_err_t op_acos(StackItem*&);
-	virtual st_err_t op_asin(StackItem*&);
-	virtual st_err_t op_atan(StackItem*&);
-
-	virtual st_err_t op_cosh(StackItem*&);
-	virtual st_err_t op_sinh(StackItem*&);
-	virtual st_err_t op_tanh(StackItem*&);
-	virtual st_err_t op_acosh(StackItem*&);
-	virtual st_err_t op_asinh(StackItem*&);
-	virtual st_err_t op_atanh(StackItem*&);
-
-	virtual st_err_t op_neg(StackItem*&);
-	virtual st_err_t op_sq(StackItem*&);
-	virtual st_err_t op_inv(StackItem*&);
+	DECLARE_SCALAR_FUNCTIONS
 
 	virtual st_err_t op_re(StackItem*&);
 	virtual st_err_t op_im(StackItem*&);
@@ -721,6 +712,14 @@ public:
 	virtual st_err_t op_neg(StackItem*&);
 	virtual st_err_t op_r_to_c_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_r_to_c(this, ret); }
 	virtual st_err_t op_r_to_c(StackItemMatrixReal*, StackItem*&);
+	virtual st_err_t op_abs(StackItem*&);
+
+	virtual st_err_t op_cross_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_cross(this, ret); }
+	virtual st_err_t op_dot_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_dot(this, ret); }
+	virtual st_err_t op_cross(StackItemMatrixReal*, StackItem*&);
+	virtual st_err_t op_dot(StackItemMatrixReal*, StackItem*&);
+	virtual st_err_t op_cross(StackItemMatrixCplx*, StackItem*&);
+	virtual st_err_t op_dot(StackItemMatrixCplx*, StackItem*&);
 
 	virtual st_err_t op_get_generic(TransStack& ts, StackItem& arg2, StackItem*& ret) { return arg2.op_get(ts, this, ret); }
 	virtual st_err_t op_put_generic(TransStack& ts, StackItem& arg2, SIO& s) { return arg2.op_put(ts, this, s); }
@@ -788,10 +787,18 @@ public:
 	virtual st_err_t op_add(StackItemMatrixReal*, StackItem*&);
 	virtual st_err_t op_sub(StackItemMatrixReal*, StackItem*&);
 	virtual st_err_t op_neg(StackItem*&);
+	virtual st_err_t op_abs(StackItem*&);
 
 	virtual st_err_t op_re(StackItem*&);
 	virtual st_err_t op_im(StackItem*&);
 	virtual st_err_t op_conj(StackItem*&);
+
+	virtual st_err_t op_cross_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_cross(this, ret); }
+	virtual st_err_t op_dot_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_dot(this, ret); }
+	virtual st_err_t op_cross(StackItemMatrixReal*, StackItem*&);
+	virtual st_err_t op_dot(StackItemMatrixReal*, StackItem*&);
+	virtual st_err_t op_cross(StackItemMatrixCplx*, StackItem*&);
+	virtual st_err_t op_dot(StackItemMatrixCplx*, StackItem*&);
 
 	virtual st_err_t op_get_generic(TransStack& ts, StackItem& arg2, StackItem*& ret) { return arg2.op_get(ts, this, ret); }
 	virtual st_err_t op_put_generic(TransStack& ts, StackItem& arg2, SIO& s) { return arg2.op_put(ts, this, s); }

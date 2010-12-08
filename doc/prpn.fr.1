@@ -91,13 +91,13 @@ Les commandes sont suivies du nombre d'arguments qu'elles prennent, entre parent
 Affiche un écran d'aide
 .TP
 .B _HELP_FLAGS\ (0)
-Affiche un écran d'aide sur les options
+Affiche la liste des indicateurs binaires
 .TP
 .B _EXIT\ (0)
 Quitte le programme
 .TP
 .B _ABOUT\ (0)
-Affiche des informations au sujet de ce programme
+Informations sur ce programme
 .TP
 .B +\ (2)
 Addition : x + y
@@ -127,10 +127,10 @@ Pourcentage du total : 100 * y / x
 Modulo : x - y * FLOOR(x / y)
 .TP
 .B MIN\ (2)
-Minimum of two reals
+Minimum de deux réels
 .TP
 .B MAX\ (2)
-Maximum of two reals
+Maximum de deux réels
 .TP
 .B COS\ (1)
 Cosinus
@@ -155,6 +155,18 @@ Logarithme (base e)
 .TP
 .B EXP\ (1)
 Exponentiel
+.TP
+.B LOG\ (1)
+Logarithme (base 10)
+.TP
+.B ALOG\ (1)
+Exponentiel en base 10 (10^x)
+.TP
+.B LNP1\ (1)
+LN(1+x)
+.TP
+.B EXPM\ (1)
+EXP(x)-1
 .TP
 .B COSH\ (1)
 Cosinus hyperbolique
@@ -211,28 +223,34 @@ Carré
 Racine carrée
 .TP
 .B MINR\ (0)
-Smallest real greater than zero the calcultor can represent
+Plus petit réel supérieur à zéro représentable par la calculatrice
 .TP
 .B MAXR\ (0)
-Biggest real the calcultor can represent
+Plus grand réel représentable par la calculatrice
 .TP
 .B ->HMS\ (1)
-Convert a decimal to HMS (h.MMSSss)
+Convertis un décimal en nombre HMS (h.MMSSss)
 .TP
 .B HMS->\ (1)
-Convert a HMS (h.MMSSss) to a decimal
+Convertis un nombre HMS (h.MMSSss) en décimal
 .TP
 .B HMS+\ (2)
-Add two HMS (h.MMSSss)
+Additionne deux nombres HMS (h.MMSSss)
 .TP
 .B HMS-\ (2)
-Subtract two HMS (h.MMSSss)
+Soustrais deux nombres HMS (h.MMSSss)
 .TP
 .B D->R\ (1)
-Convert from degrees to radians
+Convertis des degrés en radians (*PI/180)
 .TP
 .B R->D\ (1)
-Convert from radians to degrees
+Convertis des radians en degrés (*180/PI)
+.TP
+.B RAD\ (0)
+Utilise le radian pour les mesures angulaires
+.TP
+.B DEG\ (0)
+Utilise le degré pour les mesures angulaires
 .TP
 .B R->C\ (2)
 Réel à complexe
@@ -241,16 +259,16 @@ Réel à complexe
 Complexe à réel
 .TP
 .B RE\ (1)
-Partie réelle d'un nombre complexe
+Partie réelle d'un nombre complexe ou d'un tableau
 .TP
 .B IM\ (1)
-Partie imaginaire d'un nombre complexe
+Partie imaginaire d'un nombre complexe ou d'un tableau
 .TP
 .B CONJ\ (1)
-Conjugué du nombre complexe
+Conjugué d'un nombre complexe ou d'un tableau
 .TP
 .B ARG\ (1)
-Argument du nombre complexe
+Argument d'un nombre complexe
 .TP
 .B R->P\ (1)
 Conversion des coordonnées d'un nombre complexe de rectangulaire à polaire
@@ -322,22 +340,22 @@ Supprime les N premiers éléments
 Renvoie le nombre d'éléments dans la pile
 .TP
 .B SF\ (1)
-Active l'option
+Active l'indicateur binaire
 .TP
 .B CF\ (1)
-Désactive l'option
+Désactive l'indicateur binaire
 .TP
 .B FS?\ (1)
-Renvoie 1 si l'option est activée, 0 sinon
+Renvoie 1 si l'indicateur binaire est activé, 0 sinon
 .TP
 .B FC?\ (1)
-Renvoie 0 si l'option est activée, 1 sinon
+Renvoie 0 si l'indicateur binaire est activé, 1 sinon
 .TP
 .B FS?C\ (1)
-Exécute FS? et désactive l'option
+Exécute FS? et désactive l'indicateur binaire
 .TP
 .B FC?C\ (1)
-Exécute FC? et désactive l'option
+Exécute FC? et désactive l'indicateur binaire
 .TP
 .B ->STR\ (1)
 Convertis un élément en chaîne de caractères
@@ -386,6 +404,12 @@ Modifie les dimensions d'un tableau
 .TP
 .B IDN\ (1)
 Crée une matrice identité
+.TP
+.B CROSS\ (2)
+Produit vectoriel
+.TP
+.B DOT\ (2)
+Produit scalaire
 .TP
 .B EVAL\ (0)
 Évalue l'élément
@@ -439,10 +463,10 @@ Convertis un entier binaire en réel
 Convertis un réel en entier binaire
 .TP
 .B RCLF\ (0)
-Enregistre l'état des options dans un entier binaire
+Enregistre l'état des indicateurs binaires dans un entier binaire
 .TP
 .B STOF\ (1)
-Récupère l'état des options depuis un entier binaire
+Récupère l'état des indicateurs binaires depuis un entier binaire
 .TP
 .B WAIT\ (1)
 Pause d'une durée définie en secondes

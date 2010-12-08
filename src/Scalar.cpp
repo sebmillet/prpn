@@ -29,6 +29,8 @@ extern const real MINR = 1e-199;
 extern const real MAXR = 9.99999999999e199;
 static const real PI = 3.14159265359;
 static const real PI_DIV_2 = 1.57079632679;
+static const real LN_10 = 2.30258509299;
+static const Cplx C_LN_10 = Cplx(2.30258509299, 0);
 
   // If the constant below is false, then, the "STD" display mode of
   // reals just uses C++ built-in language = the following code:
@@ -461,7 +463,9 @@ static void numeric_sub(const real&, const real&, st_err_t&, real&);
 static void numeric_mul(const real&, const real&, st_err_t&, real&);
 static void numeric_div(const real&, const real&, st_err_t&, real&);
 static void numeric_ln(const real&, st_err_t&, real&);
+static void numeric_log(const real&, st_err_t&, real&);
 static void numeric_exp(const real&, st_err_t&, real&);
+static void numeric_alog(const real&, st_err_t&, real&);
 static void numeric_pow(const real&, st_err_t&, real&);
 static void numeric_cos(const real&, st_err_t&, real&);
 static void numeric_sin(const real&, st_err_t&, real&);
@@ -549,6 +553,13 @@ static void numeric_ln(const real& r, st_err_t& c, real& res) {
 	}
 }
 
+static void numeric_log(const real& r, st_err_t& c, real& res) {
+	real res1;
+	ASSERT_STATUS(c)
+	numeric_ln(r, c, res1);
+	numeric_div(res1, LN_10, c, res);
+}
+
 static void numeric_exp(const real& r, st_err_t& c, real& res) {
 	real res1;
 	ASSERT_STATUS(c)
@@ -560,6 +571,13 @@ static void numeric_exp(const real& r, st_err_t& c, real& res) {
 	c = real_check_bounds(false, 1, res1, res);
 }
 
+static void numeric_alog(const real& r, st_err_t& c, real& res) {
+	real res1;
+	ASSERT_STATUS(c)
+	numeric_mul(r, LN_10, c, res1);
+	numeric_exp(res1, c, res);
+}
+
 static void numeric_pow(const real& r1, const real& r2, st_err_t& c, real& res) {
 	real res1;
 	ASSERT_STATUS(c)
@@ -567,8 +585,7 @@ static void numeric_pow(const real& r1, const real& r2, st_err_t& c, real& res) 
 	  // a^b = exp(b * ln(a))
 	numeric_ln(r1, c, res1);
 	numeric_mul(r2, res1, c, res2);
-	numeric_exp(res2, c, res1);
-	res = res1;
+	numeric_exp(res2, c, res);
 }
 
 static void numeric_cos(const real& r, st_err_t& c, real& res) {
@@ -949,6 +966,17 @@ void Real::sqr(st_err_t& c, Cplx& cplx) const {
 	}
 }
 
+void Real::square_of_abs(st_err_t& c, Real& res) const {
+	ASSERT_STATUS(c)
+	Real x = *this;
+	mul(x, c, res);
+}
+
+void Real::abs(st_err_t& c, Real& res) const {
+	ASSERT_STATUS(c)
+	res = Real(real_abs(r));
+}
+
 void Real::ln(st_err_t& c, Cplx& cplx) const {
 	ASSERT_STATUS(c)
 	if (r < 0) {
@@ -957,6 +985,17 @@ void Real::ln(st_err_t& c, Cplx& cplx) const {
 	}
 	real res;
 	numeric_ln(r, c, res);
+	cplx = Cplx(res, 0);
+}
+
+void Real::log(st_err_t& c, Cplx& cplx) const {
+	ASSERT_STATUS(c)
+	if (r < 0) {
+		Cplx(r, 0).log(c, cplx);
+		return;
+	}
+	real res;
+	numeric_log(r, c, res);
 	cplx = Cplx(res, 0);
 }
 
@@ -992,6 +1031,31 @@ IMPLEMENT_REAL_NUMERIC_FUNCTION(cos)
 IMPLEMENT_REAL_NUMERIC_FUNCTION(sin)
 IMPLEMENT_REAL_NUMERIC_FUNCTION(tan)
 IMPLEMENT_REAL_NUMERIC_FUNCTION(exp)
+IMPLEMENT_REAL_NUMERIC_FUNCTION(alog)
+
+  // FIXME
+  // lnp1(x) = ln(1+x), it is supposed to bring greater accuracy to the result
+  // when x is close to 0.
+  // As you can see below, for the moment it is a simple hack to get this command to work.
+void Real::lnp1(st_err_t& c, Real& res) const {
+	ASSERT_STATUS(c)
+	real r2, r3;
+	numeric_add(r, 1.0, c, r2);
+	numeric_ln(r2, c, r3);
+	res = Real(r3);
+}
+
+  // FIXME
+  // expm(x) = exp(x)-1, it is supposed to bring greater accuracy to the result
+  // when x is close to 0, see also comment about lnp1(x).
+  // As you can see below, for the moment it is a simple hack to get this command to work.
+void Real::expm(st_err_t& c, Real& res) const {
+	ASSERT_STATUS(c)
+	real r2, r3;
+	numeric_exp(r, c, r2);
+	numeric_sub(r2, static_cast<real>(1.0), c, r3);
+	res = Real(r3);
+}
 
 void Real::acosh(st_err_t& c, Cplx& cplx) const {
 	  // ACOSH real function: arccosh(x) = ln(x+sqr(x^2-1)) for x >= 1
@@ -1243,17 +1307,26 @@ void Cplx::sub(const Cplx& rv, st_err_t& c, Cplx& res) const { Cplx_sub(*this, r
 void Cplx::mul(const Cplx& rv, st_err_t& c, Cplx& res) const { Cplx_mul(*this, rv, c, res); }
 void Cplx::div(const Cplx& rv, st_err_t& c, Cplx& res) const { Cplx_div(*this, rv, c, res); }
 
-void Cplx::abs(st_err_t& c, real& r) const {
+void Cplx::square_of_abs(st_err_t& c, Real& res) const {
 	real x, y, t;
 	ASSERT_STATUS(c)
 	numeric_mul(re, re, c, x);
 	numeric_mul(im, im, c, y);
 	numeric_add(x, y, c, t);
-	numeric_sqr(t, c, r);
+	res = Real(t);
 }
 
-void Cplx::arg(st_err_t& c, real& r) const {
-	real t, r1;
+void Cplx::abs(st_err_t& c, Real& res) const {
+	Real x;
+	real r;
+	ASSERT_STATUS(c)
+	square_of_abs(c, x);
+	numeric_sqr(x.get_value(), c, r);
+	res = Real(r);
+}
+
+void Cplx::arg(st_err_t& c, Real& res) const {
+	real t, r1, r;
 	ASSERT_STATUS(c)
 	if (re == 0) {
 		if (im > 0)
@@ -1273,15 +1346,17 @@ void Cplx::arg(st_err_t& c, real& r) const {
 		else
 			r = r1;
 	}
+	ASSERT_STATUS(c)
+	res = Real(r);
 }
 
 void Cplx::r_to_p(st_err_t& c, Cplx& cplx) const {
-	real cplx_re, cplx_im;
+	Real cplx_re, cplx_im;
 	ASSERT_STATUS(c)
 	abs(c, cplx_re);
 	arg(c, cplx_im);
 	if (c == ST_ERR_OK)
-		cplx = Cplx(cplx_re, cplx_im);
+		cplx = Cplx(cplx_re.get_value(), cplx_im.get_value());
 }
 
 void Cplx::p_to_r(st_err_t& c, Cplx& cplx) const {
@@ -1296,13 +1371,21 @@ void Cplx::p_to_r(st_err_t& c, Cplx& cplx) const {
 }
 
 void Cplx::ln(st_err_t& c, Cplx& cplx) const {
-	real x, new_re, new_im;
+	Real x, new_im;
+	real new_re;
 	ASSERT_STATUS(c)
 	abs(c, x);
 	arg(c, new_im);
-	numeric_ln(x, c, new_re);
+	numeric_ln(x.get_value(), c, new_re);
 	if (c == ST_ERR_OK)
-		cplx = Cplx(new_re, new_im);
+		cplx = Cplx(new_re, new_im.get_value());
+}
+
+void Cplx::log(st_err_t& c, Cplx& cplx) const {
+	Cplx tmp;
+	ASSERT_STATUS(c)
+	ln(c, tmp);
+	tmp.div(C_LN_10, c, cplx);
 }
 
 void Cplx::exp(st_err_t& c, Cplx& cplx) const {
@@ -1313,6 +1396,13 @@ void Cplx::exp(st_err_t& c, Cplx& cplx) const {
 		Cplx c2(new_re, im);
 		c2.p_to_r(c, cplx);
 	}
+}
+
+void Cplx::alog(st_err_t& c, Cplx& cplx) const {
+	ASSERT_STATUS(c)
+	Cplx tmp;
+	mul(C_LN_10, c, tmp);
+	tmp.exp(c, cplx);
 }
 
 void Cplx::pow(const Cplx& rv, st_err_t& c, Cplx& cplx) const {
@@ -1456,12 +1546,13 @@ void Cplx::atanh(st_err_t& c, Cplx& cplx) const {
 }
 
 void Cplx::sign(st_err_t& c, Cplx& cplx) const {
-	real a, new_re, new_im;
+	Real a;
+	real new_re, new_im;
 	ASSERT_STATUS(c)
 	if (re != 0 || im != 0) {
 		abs(c, a);
-		numeric_div(re, a, c, new_re);
-		numeric_div(im, a, c, new_im);
+		numeric_div(re, a.get_value(), c, new_re);
+		numeric_div(im, a.get_value(), c, new_im);
 		if (c == ST_ERR_OK) {
 			cplx = Cplx(new_re, new_im);
 		}
@@ -1850,6 +1941,65 @@ template<class Scalar> st_err_t Matrix<Scalar>::create_div(const Matrix<Scalar> 
 		delete []reorder;
 	} else
 		c = ST_ERR_INVALID_DIMENSION;
+	return c;
+}
+
+template<class Scalar> st_err_t Matrix<Scalar>::create_cross(const Matrix<Scalar>* rv, Matrix<Scalar>*& mres) const {
+	st_err_t c = ST_ERR_OK;
+	if (dimension == DIM_VECTOR && rv->dimension == DIM_VECTOR && nb_columns == 3 &&
+			rv->nb_columns == 3 && nb_lines == 1 && rv->nb_lines == 1) {
+		mres = new Matrix<Scalar>(DIM_VECTOR, 1, 3, Scalar(Real(0)));
+		Scalar s1, s2, s3;
+		  // (AxB)(1) = A(2)*B(3) - A(3)*B(2)
+		get_value(0, 1).mul(rv->get_value(0, 2), c, s1);
+		get_value(0, 2).mul(rv->get_value(0, 1), c, s2);
+		s1.sub(s2, c, s3);
+		mres->set_value(0, 0, s3);
+		  // (AxB)(2) = A(3)*B(1) - A(1)*B(3)
+		get_value(0, 2).mul(rv->get_value(0, 0), c, s1);
+		get_value(0, 0).mul(rv->get_value(0, 2), c, s2);
+		s1.sub(s2, c, s3);
+		mres->set_value(0, 1, s3);
+		  // (AxB)(3) = A(1)*B(2) - A(2)*B(1)
+		get_value(0, 0).mul(rv->get_value(0, 1), c, s1);
+		get_value(0, 1).mul(rv->get_value(0, 0), c, s2);
+		s1.sub(s2, c, s3);
+		mres->set_value(0, 2, s3);
+	} else
+		c = ST_ERR_INVALID_DIMENSION;
+	return c;
+}
+
+template<class Scalar> st_err_t Matrix<Scalar>::dot(const Matrix<Scalar>* rv, Scalar& dot) const {
+	st_err_t c = ST_ERR_OK;
+	if (dimension == DIM_VECTOR && rv->dimension == DIM_VECTOR &&
+			nb_columns == rv->nb_columns && nb_lines == 1 && rv->nb_lines == 1) {
+		dot = Scalar(Real(0));
+		Scalar s, t;
+		for (int i = 0; i < nb_columns; i++) {
+			get_value(0, i).mul(rv->get_value(0, i), c, s);
+			dot.add(s, c, t);
+			dot = t;
+		}
+	} else
+		c = ST_ERR_INVALID_DIMENSION;
+	return c;
+}
+
+template<class Scalar> st_err_t Matrix<Scalar>::abs(Real& res) const {
+	st_err_t c = ST_ERR_OK;
+	res = Real(0);
+	Real tmp, tmp2;
+	for (int i = 0; i < nb_lines; i++) {
+		for (int j = 0; j < nb_columns; j++) {
+			get_value(i, j).square_of_abs(c, tmp);
+			res.add(tmp, c, tmp2);
+			res = tmp2;
+		}
+	}
+	Cplx cplx;
+	res.sqr(c, cplx);
+	res = Real(cplx.get_re());
 	return c;
 }
 

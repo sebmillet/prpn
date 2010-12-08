@@ -1,9 +1,9 @@
 Commande (nombre d'arguments) : description
 
 _HELP          (0): Affiche un écran d'aide
-_HELP_FLAGS    (0): Affiche un écran d'aide sur les options
+_HELP_FLAGS    (0): Affiche la liste des indicateurs binaires
 _EXIT          (0): Quitte le programme
-_ABOUT         (0): Affiche des informations au sujet de ce programme
+_ABOUT         (0): Informations sur ce programme
 +              (2): Addition : x + y
 -              (2): Soustraction : x - y
 *              (2): Multiplication : x * y
@@ -13,8 +13,8 @@ _ABOUT         (0): Affiche des informations au sujet de ce programme
 %CH            (2): Pourcentage de changement : 100 * (y - x) / x
 %T             (2): Pourcentage du total : 100 * y / x
 MOD            (2): Modulo : x - y * FLOOR(x / y)
-MIN            (2): Minimum of two reals
-MAX            (2): Maximum of two reals
+MIN            (2): Minimum de deux réels
+MAX            (2): Maximum de deux réels
 COS            (1): Cosinus
 SIN            (1): Sinus
 TAN            (1): Tangente
@@ -23,6 +23,10 @@ ASIN           (1): Arc-sinus
 ATAN           (1): Arc-tangente
 LN             (1): Logarithme (base e)
 EXP            (1): Exponentiel
+LOG            (1): Logarithme (base 10)
+ALOG           (1): Exponentiel en base 10 (10^x)
+LNP1           (1): LN(1+x)
+EXPM           (1): EXP(x)-1
 COSH           (1): Cosinus hyperbolique
 SINH           (1): Sinus hyperbolique
 TANH           (1): Tangente hyperbolique
@@ -41,20 +45,22 @@ XPON           (1): Exponentielle de x
 INV            (1): 1/x
 SQ             (1): Carré
 SQR            (1): Racine carrée
-MINR           (0): Smallest real greater than zero the calcultor can represent
-MAXR           (0): Biggest real the calcultor can represent
-->HMS          (1): Convert a decimal to HMS (h.MMSSss)
-HMS->          (1): Convert a HMS (h.MMSSss) to a decimal
-HMS+           (2): Add two HMS (h.MMSSss)
-HMS-           (2): Subtract two HMS (h.MMSSss)
-D->R           (1): Convert from degrees to radians
-R->D           (1): Convert from radians to degrees
+MINR           (0): Plus petit réel supérieur à zéro représentable par la calculatrice
+MAXR           (0): Plus grand réel représentable par la calculatrice
+->HMS          (1): Convertis un décimal en nombre HMS (h.MMSSss)
+HMS->          (1): Convertis un nombre HMS (h.MMSSss) en décimal
+HMS+           (2): Additionne deux nombres HMS (h.MMSSss)
+HMS-           (2): Soustrais deux nombres HMS (h.MMSSss)
+D->R           (1): Convertis des degrés en radians (*PI/180)
+R->D           (1): Convertis des radians en degrés (*180/PI)
+RAD            (0): Utilise le radian pour les mesures angulaires
+DEG            (0): Utilise le degré pour les mesures angulaires
 R->C           (2): Réel à complexe
 C->R           (1): Complexe à réel
-RE             (1): Partie réelle d'un nombre complexe
-IM             (1): Partie imaginaire d'un nombre complexe
-CONJ           (1): Conjugué du nombre complexe
-ARG            (1): Argument du nombre complexe
+RE             (1): Partie réelle d'un nombre complexe ou d'un tableau
+IM             (1): Partie imaginaire d'un nombre complexe ou d'un tableau
+CONJ           (1): Conjugué d'un nombre complexe ou d'un tableau
+ARG            (1): Argument d'un nombre complexe
 R->P           (1): Conversion des coordonnées d'un nombre complexe de rectangulaire à polaire
 P->R           (1): Conversion des coordonnées d'un nombre complexe de polaire à rectangulaire
 SAME           (2): Est identique
@@ -78,12 +84,12 @@ PICK           (1): Copie le Ne élément
 DUPN           (1): Copie les N premiers éléments
 DROPN          (1): Supprime les N premiers éléments
 DEPTH          (0): Renvoie le nombre d'éléments dans la pile
-SF             (1): Active l'option
-CF             (1): Désactive l'option
-FS?            (1): Renvoie 1 si l'option est activée, 0 sinon
-FC?            (1): Renvoie 0 si l'option est activée, 1 sinon
-FS?C           (1): Exécute FS? et désactive l'option
-FC?C           (1): Exécute FC? et désactive l'option
+SF             (1): Active l'indicateur binaire
+CF             (1): Désactive l'indicateur binaire
+FS?            (1): Renvoie 1 si l'indicateur binaire est activé, 0 sinon
+FC?            (1): Renvoie 0 si l'indicateur binaire est activé, 1 sinon
+FS?C           (1): Exécute FS? et désactive l'indicateur binaire
+FC?C           (1): Exécute FC? et désactive l'indicateur binaire
 ->STR          (1): Convertis un élément en chaîne de caractères
 STR->          (0): Convertis une chaîne de caractère en éléments
 SUB            (3): Extrais le contenu d'une chaîne de caractères ou d'une liste
@@ -100,6 +106,8 @@ CON            (2): Crée un tableau constant
 TRN            (1): Transpose une matrice
 RDM            (2): Modifie les dimensions d'un tableau
 IDN            (1): Crée une matrice identité
+CROSS          (2): Produit vectoriel
+DOT            (2): Produit scalaire
 EVAL           (0): Évalue l'élément
 STO            (2): Enregistre la valeur dans la variable
 RCL            (1): Récupère la valeur de la variable
@@ -117,8 +125,8 @@ STWS           (1): Définis le nombre de bits des entiers binaires (de 1 à 64)
 RCWS           (0): Renvoie le nombre de bits des entiers binaires
 B->R           (1): Convertis un entier binaire en réel
 R->B           (1): Convertis un réel en entier binaire
-RCLF           (0): Enregistre l'état des options dans un entier binaire
-STOF           (1): Récupère l'état des options depuis un entier binaire
+RCLF           (0): Enregistre l'état des indicateurs binaires dans un entier binaire
+STOF           (1): Récupère l'état des indicateurs binaires depuis un entier binaire
 WAIT           (1): Pause d'une durée définie en secondes
 HALT           (0): Suspends l'exécution du programme
 SST            (0): Exécute une instruction dans le programme
@@ -159,5 +167,3 @@ Programmes
 Programme                << >>          << DUP + SWAP >>
 Algébrique               ' '            'X+2*Y=Z'
 
-1.505644
-2.354478

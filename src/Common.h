@@ -97,6 +97,9 @@ void my_append_padr(std::string&, const std::string&, const size_t&);
 void my_sleep_seconds(const int&);
 const std::string integer_to_string(const int&);
 
+int identify_builtin_command(const std::string& cmd);
+const char *get_builtin_command_short_description(const int&);
+
 void upper_case(std::string&);
 void lower_case(std::string&);
 
@@ -165,6 +168,8 @@ enum {
 	FL_TAG_IT_END = 64
 };
 
+typedef enum {ANGLE_RAD, ANGLE_DEG} angle_t;
+
   // State of flags, referred to with FL_ enumeration
 struct Flag1 {
 	bool value;
@@ -201,6 +206,8 @@ public:
 	void set_binary_format(const int&);
 	int get_bin_size() const;
 	void set_bin_size(int);
+	angle_t get_angle_mode() const;
+	void set_angle_mode(const angle_t&);
 };
 
 extern Flags *F;

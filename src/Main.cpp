@@ -406,7 +406,7 @@ int prog_terminate() {
 static int check_class_count() {
 #ifdef DEBUG_CLASS_COUNT
 	if (StackItem::get_class_count() + Stack::get_class_count() + NodeStack::get_class_count() + Real::get_class_count()
-			+ Cplx::get_class_count() + ReadMatrixCell::get_class_count() + CCMatrix::get_class_count()
+			+ Cplx::get_class_count() - 1 + ReadMatrixCell::get_class_count() + CCMatrix::get_class_count()
 			+ ToString::get_class_count() + Var::get_class_count() + Tree::get_class_count() + Binary::get_class_count() + TransStack::get_class_count() == 0) {
 		if (opt_class_count)
 			std::cout << "get_class_count() = 0 for watched classes" << endl;
@@ -417,7 +417,7 @@ static int check_class_count() {
 		std::cout << "Stack class_count: " << Stack::get_class_count() << std::endl;
 		std::cout << "NodeStack class_count: " << NodeStack::get_class_count() << std::endl;
 		std::cout << "Real class_count: " << Real::get_class_count() << std::endl;
-		std::cout << "Cplx class_count: " << Cplx::get_class_count() << std::endl;
+		std::cout << "Cplx class_count: " << Cplx::get_class_count() - 1 << std::endl;
 		std::cout << "ReadMatrixCell class_count: " << ReadMatrixCell::get_class_count() << std::endl;
 		std::cout << "CCMatrix class_count: " << CCMatrix::get_class_count() << std::endl;
 		std::cout << "ToString class_count: " << ToString::get_class_count() << std::endl;

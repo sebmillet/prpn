@@ -33,6 +33,8 @@
 #include "unit_hex.xpm"
 #include "exec_norun.xpm"
 #include "exec_run.xpm"
+#include "angle_deg.xpm"
+#include "angle_rad.xpm"
 
 #include "prpn.xpm"
 
@@ -65,6 +67,12 @@ static const string wxString_to_string(const wxString& wxs) {
 		return string(wxs.mb_str(wxConvLocal));
 	else
 		throw(CalcFatal(__FILE__, __LINE__, "wxString_to_string(): unknown encoding returned by E->get_actual_encoding()"));
+}
+
+  // Maybe we should use strlen() here for stability and portability...
+  // Who knows?
+bool const_char_is_empty(const char *sz) {
+	return sz[0] == '\0';
 }
 
 
@@ -207,14 +215,17 @@ class StatusWindow: public wxScrolledWindow {
 	int horoffset_arrow;
     wxBitmap shiftsel;
 	wxBitmap shiftuns;
+	int horoffset_angle;
+    wxBitmap angle_deg;
+	wxBitmap angle_rad;
 	int horoffset_unit;
 	wxBitmap unit_bin;
 	wxBitmap unit_oct;
 	wxBitmap unit_dec;
 	wxBitmap unit_hex;
 public:
-    StatusWindow(wxWindow *parent, wxWindowID, const wxPoint &pos, const wxSize &size);
-    void OnPaint(wxPaintEvent& event);
+    StatusWindow(wxWindow *, wxWindowID, const wxPoint&, const wxSize&);
+    void OnPaint(wxPaintEvent&);
 
     DECLARE_EVENT_TABLE()
 };
@@ -229,17 +240,21 @@ StatusWindow::StatusWindow(wxWindow *parent, wxWindowID id, const wxPoint &pos, 
 		exec_norun(exec_norun_xpm), exec_run(exec_run_xpm),
 		horoffset_arrow(0),
 		shiftsel(shiftsel_xpm), shiftuns(shiftuns_xpm),
+		horoffset_angle(0),
+		angle_deg(angle_deg_xpm), angle_rad(angle_rad_xpm),
 		horoffset_unit(0),
 		unit_bin(unit_bin_xpm), unit_oct(unit_oct_xpm), unit_dec(unit_dec_xpm), unit_hex(unit_hex_xpm) {
     SetBackgroundColour(MY_CALCULATOR_BACKGROUND_COLOR);
 	int w = exec_run.GetWidth();
 	int w2 = shiftsel.GetWidth();
 	int h = shiftsel.GetHeight();
-	int w3 = unit_bin.GetWidth();
+	int w3 = angle_deg.GetWidth();
+	int w4 = unit_bin.GetWidth();
 	horoffset_exec = MY_STATUS_WINDOW_ITEM_H_MARGIN;
 	horoffset_arrow = w + 2 * MY_STATUS_WINDOW_ITEM_H_MARGIN;
-	horoffset_unit = w + w2 + 3 * MY_STATUS_WINDOW_ITEM_H_MARGIN;
-	SetSize(wxSize(horoffset_unit + w3, h + 2 * MY_STATUS_WINDOW_ITEM_V_MARGIN));
+	horoffset_angle = w + w2 + 3 * MY_STATUS_WINDOW_ITEM_H_MARGIN;
+	horoffset_unit = w + w2 + w3 + 4 * MY_STATUS_WINDOW_ITEM_H_MARGIN;
+	SetSize(wxSize(horoffset_unit + w4, h + 2 * MY_STATUS_WINDOW_ITEM_V_MARGIN));
 }
 
 void StatusWindow::OnPaint(wxPaintEvent&) {
@@ -257,6 +272,10 @@ void StatusWindow::OnPaint(wxPaintEvent&) {
 		dc.DrawBitmap(shiftsel, horoffset_arrow, MY_STATUS_WINDOW_ITEM_V_MARGIN);
 	else
 		dc.DrawBitmap(shiftuns, horoffset_arrow, MY_STATUS_WINDOW_ITEM_V_MARGIN);
+	if (F->get_angle_mode() == ANGLE_DEG)
+		dc.DrawBitmap(angle_deg, horoffset_angle, MY_STATUS_WINDOW_ITEM_V_MARGIN);
+	else if (F->get_angle_mode() == ANGLE_RAD)
+		dc.DrawBitmap(angle_rad, horoffset_angle, MY_STATUS_WINDOW_ITEM_V_MARGIN);
 	wxBitmap *u;
 	switch (ui_dsl.get_base()) {
 		case 2:
@@ -328,6 +347,9 @@ class MyFrame: public wxFrame {
 	wxSizer *topSizer;
 
 	wxBtnAll wxAllButtons;
+
+	const MenuDescription *menus_descriptions;
+	int nb_menus_descriptions;
 	const BtnDescription* btn_descriptions;
 	int nb_btn_descriptions;
 
@@ -342,26 +364,106 @@ class MyFrame: public wxFrame {
 	void display_help(const int&);
 public:
 	friend class UiImplWx;
-	MyFrame(const wxString&, const wxPoint&, const wxSize&, const BtnDescription*&, int&);
+	MyFrame(const wxString&, const wxPoint&, const wxSize&, const MenuDescription*&, int&, const BtnDescription*&, int&);
 	void OnPaint(wxPaintEvent&);
-	void OnQuit(wxCommandEvent&);
+	void OnSize(wxSizeEvent&);
+//    void OnQuit(wxCommandEvent&);
 	void OnAbout(wxCommandEvent&);
 	void OnButton(wxCommandEvent&);
+	void OnMenu(wxCommandEvent&);
 	void OnChar(wxKeyEvent&);
 
 	DECLARE_EVENT_TABLE()
 };
 
-enum {ID_QUIT = 1,
-	ID_ABOUT,
-	ID_TEXTTYPEIN,
-	ID_START_BUTTONS	// Don't use values after ID_START_BUTTONS
+enum {ID_TEXTTYPEIN,
+	ID_START_BUTTONS,	// ID_START_BUTTONS is used to enumerate buttons, so
+						// values above ID_START_BUTTONS are reserved, that's why
+						// ID_START_MENUS is set to 10,000: it enables the interface
+						// to manage up to 9,999 buttons!
+	ID_START_MENUS = 10000
 };
+
+static void build_menu_bar(const MenuDescription* const md, const int& nb, wxMenuBar*& menuBar) {
+
+	enum {MENUDESC_OPEN, MENUDESC_CLOSE, MENUDESC_SEPARATOR, MENUDESC_ITEM};
+
+	const char *empty_sz = "";
+
+	const MenuDescription *e;
+	int e_type;
+    menuBar = new wxMenuBar;
+	vector<int> menu_stack;
+	wxMenu **menus;
+	menus = new wxMenu*[nb];
+	int actual_menu;
+	wxMenu *parent_wxMenu;
+	string s;
+	int builtin_id;
+	for (int i = 0; i < nb || menu_stack.size() >= 1; i++) {
+		if (i < nb) {
+			e = &(md[i]);
+			s = e->cmd;
+			if (const_char_is_empty(e->text) && const_char_is_empty(e->cmd))
+				e_type = MENUDESC_CLOSE;
+			else if (const_char_is_empty(e->text) && s == "__SEPARATOR__")
+				e_type = MENUDESC_SEPARATOR;
+			else if (s == "__MENU__")
+				e_type = MENUDESC_OPEN;
+			else
+				e_type = MENUDESC_ITEM;
+		} else {
+			e_type = MENUDESC_CLOSE;
+		}
+
+		debug_write_i("i = %i", i);
+		debug_write("Command:");
+		debug_write(e->text);
+
+		if (e_type == MENUDESC_OPEN || (e_type != MENUDESC_CLOSE && menu_stack.size() == 0)) {
+			menu_stack.push_back(i);
+			menus[i] = new wxMenu;
+		}
+		if (e_type == MENUDESC_CLOSE) {
+			if (menu_stack.size() >= 1) {
+				actual_menu = menu_stack.back();
+				menu_stack.pop_back();
+				if (menu_stack.size() >= 1) {
+					parent_wxMenu = menus[menu_stack.back()];
+					parent_wxMenu->AppendSubMenu(menus[actual_menu], const_char_to_wxString(_(md[actual_menu].text)));
+				} else {
+					menuBar->Append(menus[actual_menu], const_char_to_wxString(_(md[actual_menu].text)));
+				}
+			}
+		} else if (e_type == MENUDESC_ITEM && menu_stack.size() >= 1) {
+			parent_wxMenu = menus[menu_stack.back()];
+			string cmd = e->cmd;
+			if (cmd.empty())
+				cmd = e->text;
+			builtin_id = identify_builtin_command(cmd);
+			const char *help_sz;
+			if (builtin_id >= 0)
+				help_sz = _(get_builtin_command_short_description(builtin_id));
+			else
+				help_sz = empty_sz;
+			string s = "";
+			s.append(_(e->text));
+			if (!const_char_is_empty(help_sz) && const_char_is_empty(e->cmd)) {
+				s.append("        ");
+				s.append(help_sz);
+			}
+			parent_wxMenu->Append(ID_START_MENUS + i, string_to_wxString(s), const_char_to_wxString(help_sz));
+		} else if (e_type == MENUDESC_SEPARATOR && menu_stack.size() >= 1) {
+			parent_wxMenu = menus[menu_stack.back()];
+			parent_wxMenu->AppendSeparator();
+		}
+	}
+	delete []menus;
+}
 
 BEGIN_EVENT_TABLE(MyFrame, wxFrame)
 	EVT_PAINT(MyFrame::OnPaint)
-	EVT_MENU(ID_QUIT, MyFrame::OnQuit)
-	EVT_MENU(ID_ABOUT, MyFrame::OnAbout)
+	EVT_SIZE(MyFrame::OnSize)
 END_EVENT_TABLE()
 
 IMPLEMENT_APP(MyApp)
@@ -372,26 +474,26 @@ MyFrame* MyApp::get_frame() const {
 	return frame;
 }
 
-MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size, const BtnDescription*& bd, int& nb_bd)
-		: wxFrame(NULL, -1, title, pos, size), btn_descriptions(bd), nb_btn_descriptions(nb_bd) {
+MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
+	const MenuDescription*& md, int& nb_md, const BtnDescription*& bd, int& nb_bd)
+		: wxFrame(NULL, -1, title, pos, size),
+		menus_descriptions(md), nb_menus_descriptions(nb_md), btn_descriptions(bd), nb_btn_descriptions(nb_bd) {
 
     SetIcon(wxIcon(prpn_xpm));
 
 	SetBackgroundColour(MY_CALCULATOR_BACKGROUND_COLOR);
 
-	/*wxMenu *menuFile = new wxMenu;
+	if (ui_has_menu_bar()) {
+		wxMenuBar *menuBar;
+		build_menu_bar(menus_descriptions, nb_menus_descriptions, menuBar);
+		for (int i = 0; i < nb_menus_descriptions; i++) {
+			Connect(ID_START_MENUS + i, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(MyFrame::OnMenu));
+		}
+		SetMenuBar(menuBar);
+	}
 
-	menuFile->Append(ID_ABOUT, _("&About..."));
-	menuFile->AppendSeparator();
-	menuFile->Append(ID_QUIT, _("E&xit"));
-
-	wxMenuBar *menuBar = new wxMenuBar;
-	menuBar->Append(menuFile, _("&File"));
-
-	SetMenuBar(menuBar);*/
-
-	/*CreateStatusBar();
-	SetStatusText(_("Welcome to wxWidgets!"));*/
+//    CreateStatusBar();
+//    SetStatusText(const_char_to_wxString(PACKAGE_NAME));
 
 	topSizer = new wxBoxSizer(wxVERTICAL);
 
@@ -444,14 +546,9 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size, 
 			if (cur_line->btns_index < 0)
 				cur_line->btns_index = i;
 			my_id = ID_START_BUTTONS + i;
-			if (btn_descriptions[i].alt_display != '\0') {
-				bsl.t = new wxStaticText(this, wxID_ANY, const_char_to_wxString(btn_descriptions[i].alt_display),
-						wxPoint(wxDefaultPosition), wxSize(wxDefaultSize), wxALIGN_CENTRE);
-				bsl.s = new wxBoxSizer(wxVERTICAL);
-			} else {
-				bsl.t = NULL;
-				bsl.s = NULL;
-			}
+			bsl.t = new wxStaticText(this, wxID_ANY, const_char_to_wxString(btn_descriptions[i].alt_display),
+							wxPoint(wxDefaultPosition), wxSize(wxDefaultSize), wxALIGN_CENTRE);
+			bsl.s = new wxBoxSizer(wxVERTICAL);
 
 			const char *sz;
 			int cc_r; int cc_g; int cc_b;
@@ -629,20 +726,26 @@ void MyFrame::display_help(const int& dh) {
     dlg->Show();
 }
 
-void MyFrame::OnQuit(wxCommandEvent&) {
-	Close(TRUE);
-}
-
 void MyFrame::OnAbout(wxCommandEvent&) {
-	string w = "Welcome to " PACKAGE_NAME;
+	string w = PACKAGE_NAME;
 	wxMessageBox(string_to_wxString(w), _T("Information"), wxOK | wxICON_INFORMATION, this);
 }
 
 void MyFrame::OnButton(wxCommandEvent& ev) {
 	int btn_index = ev.GetId() - ID_START_BUTTONS;
 	const char *sz = btn_descriptions[btn_index].main_cmd;
-	if (ui_dsl.get_status_shift() && *btn_descriptions[btn_index].alt_cmd != '\0')
+	if (ui_dsl.get_status_shift() && !const_char_is_empty(btn_descriptions[btn_index].alt_cmd))
 		sz = btn_descriptions[btn_index].alt_cmd;
+	ui_notify_button_pressed(sz);
+	textTypein->SetFocus();
+}
+
+void MyFrame::OnMenu(wxCommandEvent& ev) {
+	int menu_index = ev.GetId() - ID_START_MENUS;
+//    debug_write_i("Menu cliqué : %i", menu_index);
+	const char *sz = menus_descriptions[menu_index].cmd;
+	if (const_char_is_empty(sz))
+		sz = menus_descriptions[menu_index].text;
 	ui_notify_button_pressed(sz);
 	textTypein->SetFocus();
 }
@@ -708,6 +811,13 @@ void MyFrame::OnPaint(wxPaintEvent& ev) {
 	
 		xy_set = true;
 	}
+	ev.Skip();
+}
+
+void MyFrame::OnSize(wxSizeEvent& ev) {
+	wxSize s = ev.GetSize();
+	debug_write_i("Width  = %i", s.GetWidth());
+	debug_write_i("Height = %i", s.GetHeight());
 	ev.Skip();
 }
 
@@ -997,10 +1107,14 @@ bool MyApp::OnInit() {
 	if (what_am_i_to_do != PROG_INIT_START_GUI)
 		return true;
 
+	const MenuDescription *menus_descriptions;
+	int nb_menus_descriptions;
+	ui_get_menus_descriptions(menus_descriptions, nb_menus_descriptions);
 	const BtnDescription *btn_descriptions;
 	int nb_btn_descriptions;
 	ui_get_buttons_layout_description(btn_descriptions, nb_btn_descriptions);
-	frame = new MyFrame(_T(PACKAGE_NAME), wxPoint(wxDefaultPosition), wxSize(wxDefaultSize), btn_descriptions, nb_btn_descriptions);
+	frame = new MyFrame(_T(PACKAGE_NAME), wxPoint(wxDefaultPosition), wxSize(wxDefaultSize),
+		menus_descriptions, nb_menus_descriptions, btn_descriptions, nb_btn_descriptions);
 	frame->Show(true);
 	SetTopWindow(frame);
 

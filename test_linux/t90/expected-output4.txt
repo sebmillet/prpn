@@ -1,0 +1,103 @@
+CROSS Error:
+Too Few Arguments
+DOT Error:
+Too Few Arguments
+CROSS Error:
+Too Few Arguments
+DOT Error:
+Too Few Arguments
+CROSS Error:
+Bad Argument Type
+DOT Error:
+Bad Argument Type
+CROSS Error:
+Invalid Dimension
+CROSS Error:
+Invalid Dimension
+CROSS Error:
+Invalid Dimension
+CROSS Error:
+Invalid Dimension
+DOT Error:
+Invalid Dimension
+DOT Error:
+Invalid Dimension
+DOT Error:
+Invalid Dimension
+DOT Error:
+Invalid Dimension
+CROSS Error:
+Invalid Dimension
+CROSS Error:
+Invalid Dimension
+DOT Error:
+Invalid Dimension
+DOT Error:
+Invalid Dimension
+CROSS Error:
+Bad Argument Type
+CROSS Error:
+Bad Argument Type
+DOT Error:
+Bad Argument Type
+DOT Error:
+Bad Argument Type
+0
+1
+[ 0 0 0 ]
+[ 0 0 0 ]
+[ 0 0 0 ]
+[ -1 7 5 ]
+[ 1 -7 -5 ]
+[ (-1,0) (7,0) (5,0) ]
+[ (1,0) (-7,0) (-5,0) ]
+[ (1,0) (-7,0) (-5,0) ]
+[ (-1,0) (7,0) (5,0) ]
+[ (-1,0) (7,0) (5,0) ]
+[ (1,0) (-7,0) (-5,0) ]
+[ (-24,41) (30,-6) (-10,-7) ]
+0
+0
+0
+25
+25
+(25,0)
+(25,0)
+(-25,0)
+(-25,0)
+(25,0)
+(25,0)
+(23,49)
+[ 1 2 ]
+[ 3 4 5 ]
+[ 3 4 5 ]
+[ 1 2 ]
+[ (1,0) (2,0) ]
+[ 3 4 5 ]
+[ 3 4 5 ]
+[ (1,0) (2,0) ]
+[ 1 2 ]
+[ 3 4 5 ]
+[ 3 4 5 ]
+[ 1 2 ]
+[ (1,0) (2,0) ]
+[ 3 4 5 ]
+[ 3 4 5 ]
+[ (1,0) (2,0) ]
+[[ 1 2 3 ]]
+[ 1 2 3 ]
+[ 1 2 3 ]
+[[ 1 2 3 ]]
+[[ 1 2 3 ]]
+[ 1 2 3 ]
+[ 1 2 3 ]
+[[ 1 2 3 ]]
+[ 1 ]
+0
+0
+[ 1 ]
+[ 1 ]
+0
+0
+[ 1 ]
+get_class_count() = 0 for watched classes

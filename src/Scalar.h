@@ -167,6 +167,8 @@ public:
 	void pow(const Real&, st_err_t&, Cplx&) const;
 	void floor(st_err_t&, Real&) const;
 	void mod(const Real&, st_err_t&, Real&) const;
+	void square_of_abs(st_err_t&, Real&) const;
+	void abs(st_err_t&, Real&) const;
 	void sqr(st_err_t&, Cplx&) const;
 	void ln(st_err_t&, Cplx&) const;
 	void acos(st_err_t&, Cplx&) const;
@@ -176,6 +178,10 @@ public:
 	void sin(st_err_t&, Real&) const;
 	void tan(st_err_t&, Real&) const;
 	void exp(st_err_t&, Real&) const;
+	void log(st_err_t&, Cplx&) const;
+	void alog(st_err_t&, Real&) const;
+	void lnp1(st_err_t&, Real&) const;
+	void expm(st_err_t&, Real&) const;
 	void cosh(st_err_t&, Real&) const;
 	void sinh(st_err_t&, Real&) const;
 	void tanh(st_err_t&, Real&) const;
@@ -276,12 +282,15 @@ public:
 	void zero() { re = 0; im = 0; }
 	void neg() { re = (re == 0 ? 0 : -re); im = (im == 0 ? 0 : -im); }
 	void conj() { im = -im; }
-	void abs(st_err_t&, real&) const;
-	void arg(st_err_t&, real&) const;
+	void square_of_abs(st_err_t&, Real&) const;
+	void abs(st_err_t&, Real&) const;
+	void arg(st_err_t&, Real&) const;
 	void r_to_p(st_err_t&, Cplx&) const;
 	void p_to_r(st_err_t&, Cplx&) const;
 	void ln(st_err_t&, Cplx&) const;
 	void exp(st_err_t&, Cplx&) const;
+	void log(st_err_t&, Cplx&) const;
+	void alog(st_err_t&, Cplx&) const;
 	void pow(const Cplx&, st_err_t&, Cplx&) const;
 	void sqr(st_err_t&, Cplx&) const;
 	void acos(st_err_t&, Cplx&) const;
@@ -408,6 +417,9 @@ public:
 	virtual st_err_t as(void (*f)(const Scalar&, const Scalar&, st_err_t&, Scalar&), Matrix<Scalar>&);
 	virtual st_err_t create_mul(const Matrix<Scalar>*, Matrix<Scalar>*&) const;
 	virtual st_err_t create_div(const Matrix<Scalar>*, Matrix<Scalar>*&) const;
+	virtual st_err_t create_cross(const Matrix<Scalar>*, Matrix<Scalar>*&) const;
+	virtual st_err_t dot(const Matrix<Scalar>*, Scalar&) const;
+	virtual st_err_t abs(Real&) const;
 };
 
 st_err_t mat_r_to_c(Matrix<Real>*, Matrix<Real>*, Matrix<Cplx>*&);

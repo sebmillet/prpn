@@ -1,7 +1,7 @@
 Command (number of arguments): description
 
 _HELP          (0): Display a help screen
-_HELP_FLAGS    (0): Display a help screen about flags
+_HELP_FLAGS    (0): Display the list of flags
 _EXIT          (0): Quit program
 _ABOUT         (0): Display information about this program
 +              (2): Addition: x + y
@@ -23,6 +23,10 @@ ASIN           (1): Arcsin
 ATAN           (1): Arctan
 LN             (1): Logarihtm (e base)
 EXP            (1): Exponential
+LOG            (1): Logarithm (10 base)
+ALOG           (1): 10 base exponential (10^x)
+LNP1           (1): LN(1+x)
+EXPM           (1): EXP(x)-1
 COSH           (1): Hyperbolic cosine
 SINH           (1): Hyperbolic sine
 TANH           (1): Hyperbolic tangent
@@ -49,11 +53,13 @@ HMS+           (2): Add two HMS (h.MMSSss)
 HMS-           (2): Subtract two HMS (h.MMSSss)
 D->R           (1): Convert from degrees to radians
 R->D           (1): Convert from radians to degrees
+RAD            (0): Set angular mode to radians
+DEG            (0): Set angular mode to degrees
 R->C           (2): Real to complex
 C->R           (1): Complex to real
-RE             (1): Get real part of complex number
-IM             (1): Get imaginary part of complex number
-CONJ           (1): Get conjugate of complex number
+RE             (1): Get real part of a complex number or array
+IM             (1): Get imaginary part of a complex number or array
+CONJ           (1): Get conjugate of a complex number or array
 ARG            (1): Get argument of a complex number
 R->P           (1): Rectangular to polar coordinates
 P->R           (1): Polar to rectangular coordinates
@@ -100,6 +106,8 @@ CON            (2): Create a constant array
 TRN            (1): Transpose a matrix-type array
 RDM            (2): Modify the dimension of an array
 IDN            (1): Create an identity matrix
+CROSS          (2): Cross product (vectorial product)
+DOT            (2): Dot product (scalar product)
 EVAL           (0): Evaluate item
 STO            (2): Store value in variable name
 RCL            (1): Recall value from variable name
@@ -159,5 +167,3 @@ Procedures
 Program                  << >>          << DUP + SWAP >>
 Algebraic                ' '            'X+2*Y=Z'
 
-1.505644
-2.354478
