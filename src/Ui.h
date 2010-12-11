@@ -13,6 +13,11 @@
 #include "Common.h"
 #include <string>
 
+#define HARD_GUI_MIN_HEIGHT			3
+#define HARD_GUI_MAX_HEIGHT			1000
+#define HARD_INITIAL_GUI_MIN_WIDTH	23
+#define HARD_GUI_MAX_WIDTH			1000
+
 extern int opt_width;
 extern int opt_height;
 extern int opt_min_stack_height;
@@ -32,6 +37,8 @@ void ui_cllcd();
 const std::string stack_get_help(const int&);
 
 void ui_string_trim(std::string&, const size_t&, const DisplayStackLayout*, const bool& = false);
+
+void ui_redim(int);
 
 extern std::string html_help_file;
 extern bool html_help_found;
@@ -95,6 +102,7 @@ class DisplayStackLayout {
 	int max_stack;
 	int shift;
 	int bmenu;
+	bool changed;
 	const char *to_be_continued;
 	int to_be_continued_length;
 	bool status_shift;
@@ -105,6 +113,7 @@ public:
 	int get_width() const;
 	int get_height() const;
 	int get_max_stack() const;
+	void redefine_geometry(int, int);
 	int get_min_stack() const;
 	int get_prompt_height() const;
 	bool redim(const int&);

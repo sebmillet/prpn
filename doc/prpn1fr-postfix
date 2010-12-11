@@ -114,6 +114,17 @@ RPL est le langage de programmation des calculatrices HP fonctionnant en
 notation polonaise inverse.
 .br
 http://en.wikipedia.org/wiki/RPL_%28programming_language%29
+.SH "TRUCS"
+.TP
+.B Augmenter la taille de la zone de saisie
+.br
+Appuyer sur les touches <Ctrl-Entrée>.
+.br
+.br
+.TP
+.B Redimensionner la fenêtre à sa taille originale
+.br
+Double-cliquer sur la partie "statut" de la fenêtre, où les modes angulaire et binaire sont affichés.
 .SH "FICHIERS D'INITIALISATION"
 .TP
 .B ~/.prpn/stackrc
@@ -126,6 +137,15 @@ Structure contenant les variables, et répertoire courant.
 .br
 Autorisation est donnée de copier, distribuer et/ou modifier ce document selon les termes de la licence "GNU General Public License". La version 3 est publiée par la Free Software Foundation.
 .SH BUGS
+.B LNP1 et EXPM
+.TP
+Ces fonctions sont supposées apporter plus de précision au voisinage de x = 0. Rappel :
+LNP1(x) = LN(X + 1) et EXPM(x) = EXP(x) - 1
+.br
+A l'heure actuelle, ces fonctions n'apportent pas plus de précision, elles appellent simplement LN() et EXP().
+.br
+.br
+.TP
 .B Différence entre prpn et prpnc
 .TP
 .I Linux

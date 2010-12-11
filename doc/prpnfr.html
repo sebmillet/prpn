@@ -890,6 +890,27 @@ notation polonaise inverse.
 <A HREF="http://en.wikipedia.org/wiki/RPL_%28programming_language%29">http://en.wikipedia.org/wiki/RPL_%28programming_language%29</A>
 </DL>
 <A NAME="lbAJ">&nbsp;</A>
+<H2>TRUCS</H2>
+
+<DL COMPACT>
+<DT><B>Augmenter la taille de la zone de saisie</B>
+
+<DD>
+<BR>
+
+Appuyer sur les touches &lt;Ctrl-Entrée&gt;.
+<BR>
+
+<BR>
+
+<DT><B>Redimensionner la fenêtre à sa taille originale</B>
+
+<DD>
+<BR>
+
+Double-cliquer sur la partie &quot;statut&quot; de la fenêtre, où les modes angulaire et binaire sont affichés.
+</DL>
+<A NAME="lbAK">&nbsp;</A>
 <H2>FICHIERS D'INITIALISATION</H2>
 
 <DL COMPACT>
@@ -902,19 +923,31 @@ Réglages et contenu de la pile.
 <DD>
 Structure contenant les variables, et répertoire courant.
 </DL>
-<A NAME="lbAK">&nbsp;</A>
+<A NAME="lbAL">&nbsp;</A>
 <H2>AUTEUR</H2>
 
 Écrit par Sébastien Millet &lt;<A HREF="mailto:sebastien.millet1@club-internet.fr">sebastien.millet1@club-internet.fr</A>&gt;.
 <BR>
 
 Autorisation est donnée de copier, distribuer et/ou modifier ce document selon les termes de la licence &quot;GNU General Public License&quot;. La version 3 est publiée par la Free Software Foundation.
-<A NAME="lbAL">&nbsp;</A>
+<A NAME="lbAM">&nbsp;</A>
 <H2>BUGS</H2>
 
-<B>Différence entre prpn et prpnc</B>
+<B>LNP1 et EXPM</B>
 
 <DL COMPACT>
+<DT>Ces fonctions sont supposées apporter plus de précision au voisinage de x = 0. Rappel :<DD>
+LNP1(x) = LN(X + 1) et EXPM(x) = EXP(x) - 1
+<BR>
+
+A l'heure actuelle, ces fonctions n'apportent pas plus de précision, elles appellent simplement LN() et EXP().
+<BR>
+
+<BR>
+
+<DT><B>Différence entre prpn et prpnc</B>
+
+<DD>
 <DT><I>Linux</I>
 
 <DD>
@@ -949,14 +982,15 @@ prpn.exe ne peut *pas* être exécuté avec l'option -c. Sous Windows, WxWidgets dé
 <DT><A HREF="#lbAG">COMMANDES</A><DD>
 <DT><A HREF="#lbAH">RÉSOLUTION DE SYSTÈMES D'ÉQUATIONS LINÉAIRES</A><DD>
 <DT><A HREF="#lbAI">INSTRUCTIONS DE CONTRÔLE DES PROGRAMMES</A><DD>
-<DT><A HREF="#lbAJ">FICHIERS D'INITIALISATION</A><DD>
-<DT><A HREF="#lbAK">AUTEUR</A><DD>
-<DT><A HREF="#lbAL">BUGS</A><DD>
+<DT><A HREF="#lbAJ">TRUCS</A><DD>
+<DT><A HREF="#lbAK">FICHIERS D'INITIALISATION</A><DD>
+<DT><A HREF="#lbAL">AUTEUR</A><DD>
+<DT><A HREF="#lbAM">BUGS</A><DD>
 </DL>
 <HR>
 This document was created by
 <A HREF="/cgi-bin/man/man2html">man2html</A>,
 using the manual pages.<BR>
-Time: 23:32:12 GMT, December 08, 2010
+Time: 17:49:16 GMT, December 11, 2010
 </BODY>
 </HTML>

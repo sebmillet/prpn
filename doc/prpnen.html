@@ -891,6 +891,27 @@ RPL is HP language provided on top of RPN calculators.
 <A HREF="http://en.wikipedia.org/wiki/RPL_%28programming_language%29">http://en.wikipedia.org/wiki/RPL_%28programming_language%29</A>
 </DL>
 <A NAME="lbAJ">&nbsp;</A>
+<H2>TRICKS</H2>
+
+<DL COMPACT>
+<DT><B>Increasing the type-in area</B>
+
+<DD>
+<BR>
+
+Press &lt;Ctrl-Enter&gt;.
+<BR>
+
+<BR>
+
+<DT><B>Resizing the window to the original size</B>
+
+<DD>
+<BR>
+
+Double-click the 'status' area of the window, where the angular mode and binary modes are displayed.
+</DL>
+<A NAME="lbAK">&nbsp;</A>
 <H2>INITIALIZATION FILES</H2>
 
 <DL COMPACT>
@@ -903,19 +924,31 @@ Settings and stack content.
 <DD>
 Variables structure, and actual working directory.
 </DL>
-<A NAME="lbAK">&nbsp;</A>
+<A NAME="lbAL">&nbsp;</A>
 <H2>AUTHOR</H2>
 
 Written by Sébastien Millet &lt;<A HREF="mailto:sebastien.millet1@club-internet.fr">sebastien.millet1@club-internet.fr</A>&gt;.
 <BR>
 
 Permission is granted to copy, distribute and/or modify this document under the terms of the GNU General Public License, Version 3 published by the Free Software Foundation.
-<A NAME="lbAL">&nbsp;</A>
+<A NAME="lbAM">&nbsp;</A>
 <H2>BUGS</H2>
 
-<B>Difference between prpn and prpnc</B>
+<B>LNP1 and EXPM</B>
 
 <DL COMPACT>
+<DT>These functions are supposed to bring extra accuracy near x = 0. Reminder:<DD>
+LNP1(x) = LN(X + 1) and EXPM(x) = EXP(x) - 1
+<BR>
+
+For now, these functions do NOT bring extra accuracy, they just call underlying LN() and EXP() functions.
+<BR>
+
+<BR>
+
+<DT><B>Difference between prpn and prpnc</B>
+
+<DD>
 <DT><I>Linux</I>
 
 <DD>
@@ -950,14 +983,15 @@ prpn.exe can *not* be run with -c. For some reason, under Windows, WxWidgets dis
 <DT><A HREF="#lbAG">COMMANDS</A><DD>
 <DT><A HREF="#lbAH">LINEAR EQUATIONS SYSTEMS RESOLUTION</A><DD>
 <DT><A HREF="#lbAI">PROGRAM CONTROL INSTRUCTIONS</A><DD>
-<DT><A HREF="#lbAJ">INITIALIZATION FILES</A><DD>
-<DT><A HREF="#lbAK">AUTHOR</A><DD>
-<DT><A HREF="#lbAL">BUGS</A><DD>
+<DT><A HREF="#lbAJ">TRICKS</A><DD>
+<DT><A HREF="#lbAK">INITIALIZATION FILES</A><DD>
+<DT><A HREF="#lbAL">AUTHOR</A><DD>
+<DT><A HREF="#lbAM">BUGS</A><DD>
 </DL>
 <HR>
 This document was created by
 <A HREF="/cgi-bin/man/man2html">man2html</A>,
 using the manual pages.<BR>
-Time: 23:32:12 GMT, December 08, 2010
+Time: 17:49:15 GMT, December 11, 2010
 </BODY>
 </HTML>

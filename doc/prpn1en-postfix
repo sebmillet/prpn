@@ -116,6 +116,17 @@ being the first value in the stack
 RPL is HP language provided on top of RPN calculators.
 .br
 http://en.wikipedia.org/wiki/RPL_%28programming_language%29
+.SH "TRICKS"
+.TP
+.B Increasing the type-in area
+.br
+Press <Ctrl-Enter>.
+.br
+.br
+.TP
+.B Resizing the window to the original size
+.br
+Double-click the 'status' area of the window, where the angular mode and binary modes are displayed.
 .SH "INITIALIZATION FILES"
 .TP
 .B ~/.prpn/stackrc
@@ -128,6 +139,15 @@ Written by Sébastien Millet <sebastien.millet1@club-internet.fr>.
 .br
 Permission is granted to copy, distribute and/or modify this document under the terms of the GNU General Public License, Version 3 published by the Free Software Foundation.
 .SH BUGS
+.B LNP1 and EXPM
+.TP
+These functions are supposed to bring extra accuracy near x = 0. Reminder:
+LNP1(x) = LN(X + 1) and EXPM(x) = EXP(x) - 1
+.br
+For now, these functions do NOT bring extra accuracy, they just call underlying LN() and EXP() functions.
+.br
+.br
+.TP
 .B Difference between prpn and prpnc
 .TP
 .I Linux

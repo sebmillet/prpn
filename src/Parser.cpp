@@ -1102,14 +1102,14 @@ st_err_t read_rc_file(TransStack* ts, const tostring_t& tostring, istream& is, c
 			if (!par.set && r) {
 				vs.push_back(SIO(TSO_OUTSIDE_TS, s.si));
 
-				debug_write_i("Item #%i", n);
-				debug_write(simple_string(s.si).c_str());
+//                debug_write_i("Item #%i", n);
+//                debug_write(simple_string(s.si).c_str());
 			}
 			n++;
 		}
 		delete itemise;
 
-		debug_write_i("number of items read: %i", n);
+//        debug_write_i("number of items read: %i", n);
 
 		if (par.set) {
 			cmd_err = "Syntax";

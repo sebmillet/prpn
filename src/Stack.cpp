@@ -1299,7 +1299,7 @@ st_err_t TransStack::do_push_eval(SIO& s, const bool& inside_undo_sequence, stri
 		c = exec1(cmd_err);
 	}
 
-	debug_write_i("Size of exec_stack = %i", static_cast<int>(exec_stack->size()));
+//    debug_write_i("Size of exec_stack = %i", static_cast<int>(exec_stack->size()));
 
 	if (c != ST_ERR_OK && !temporary_copy && allow_halt && exec_stack->size() >= 1)
 		exec_mode = EXECMODE_HALT;
@@ -2321,9 +2321,9 @@ st_err_t StackItemBuiltinCommand::eval(const eval_t&, TransStack& ts, manage_si_
 			ts.transstack_push(args[i].si);
 	} else {
 		for (int i = bc.nb_args - 1; i >= 0; i--) {
-			debug_write("A0");
+//            debug_write("A0");
 			args[i].cleanup();
-			debug_write("A1");
+//            debug_write("A1");
 		}
 	}
 

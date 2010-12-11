@@ -163,7 +163,15 @@ static int my_w0 = -1;
 static int my_h0 = -1;
 static int my_y0 = -1;
 static int my_y1 = -1;
-static int my_ty = -1;
+//static int my_ty = -1;
+static int my_char_width = -1;
+static int my_initial_stack_lines = -1;
+static int my_initial_stack_width = -1;
+static int my_initial_client_width = -1;
+static int my_initial_client_height = -1;
+static int my_min_client_width = -1;
+static int my_min_client_height = -1;
+static wxSize my_frame_initial_size;
 
 static wxDialog *dlg = NULL;
 
@@ -209,6 +217,7 @@ static int my_get_max_stack() {
 //
 
 class StatusWindow: public wxScrolledWindow {
+	wxWindow *my_parent;
 	int horoffset_exec;
 	wxBitmap exec_norun;
 	wxBitmap exec_run;
@@ -226,16 +235,19 @@ class StatusWindow: public wxScrolledWindow {
 public:
     StatusWindow(wxWindow *, wxWindowID, const wxPoint&, const wxSize&);
     void OnPaint(wxPaintEvent&);
+	void OnDblClick(wxMouseEvent&);
 
     DECLARE_EVENT_TABLE()
 };
 
 BEGIN_EVENT_TABLE(StatusWindow, wxScrolledWindow)
     EVT_PAINT(StatusWindow::OnPaint)
+	EVT_LEFT_DCLICK(StatusWindow::OnDblClick)
 END_EVENT_TABLE()
 
 StatusWindow::StatusWindow(wxWindow *parent, wxWindowID id, const wxPoint &pos, const wxSize &size)
 		: wxScrolledWindow(parent, id, pos, size, MY_STATUS_BORDER_STYLE),
+		my_parent(parent),
 		horoffset_exec(0),
 		exec_norun(exec_norun_xpm), exec_run(exec_run_xpm),
 		horoffset_arrow(0),
@@ -372,9 +384,29 @@ public:
 	void OnButton(wxCommandEvent&);
 	void OnMenu(wxCommandEvent&);
 	void OnChar(wxKeyEvent&);
+	void OnDblClick(wxMouseEvent&);
+	void resize_frame_to_initial();
 
 	DECLARE_EVENT_TABLE()
 };
+
+void StatusWindow::OnDblClick(wxMouseEvent& ev) {
+	dynamic_cast<MyFrame *>(GetParent())->resize_frame_to_initial();
+	ev.Skip();
+}
+
+void MyFrame::OnDblClick(wxMouseEvent& ev) {
+	resize_frame_to_initial();
+	ev.Skip();
+}
+
+void MyFrame::resize_frame_to_initial() {
+	if (xy_set) {
+		debug_write("Resetting frame to its initial size");
+		SetClientSize(my_frame_initial_size);
+		textTypein->SetFocus();
+	}
+}
 
 enum {ID_TEXTTYPEIN,
 	ID_START_BUTTONS,	// ID_START_BUTTONS is used to enumerate buttons, so
@@ -416,9 +448,9 @@ static void build_menu_bar(const MenuDescription* const md, const int& nb, wxMen
 			e_type = MENUDESC_CLOSE;
 		}
 
-		debug_write_i("i = %i", i);
-		debug_write("Command:");
-		debug_write(e->text);
+//        debug_write_i("i = %i", i);
+//        debug_write("Command:");
+//        debug_write(e->text);
 
 		if (e_type == MENUDESC_OPEN || (e_type != MENUDESC_CLOSE && menu_stack.size() == 0)) {
 			menu_stack.push_back(i);
@@ -636,43 +668,48 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
 //    debug_write_i("Fake_w = %i", fake_w);
 //    debug_write_i("Fake_h = %i", fake_h);
 
+	SetMinSize(wxSize(10, 10));
+
 	textTypein->SetFocus();
+}
+
+void stack_line_set_font(wxStaticText *t) {
+	t->SetFont(wxFont(MY_STACK_FONTSIZE, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, MY_STACK_FONTWEIGHT, 0));
 }
 
 #define	STACK_INDEX_0	2
 void MyFrame::build_dispStack() {
 	int n = my_get_max_stack();
+	debug_write_i("build_dispStack(): n = %i", n);
 
 	stack_1line l1;
 
-	if (n > static_cast<int>(dispStack.size())) {
-		for (int i = static_cast<int>(dispStack.size()); i < n; i++) {
-			wxPoint wxp;
-			wxSize wxs;
-			if (xy_set) {
-				int y0 = my_y0 + i * (my_y1 - my_y0);
-				wxp = wxPoint(my_x0, y0);
-				wxs = wxSize(my_w0, my_h0);
-			} else {
-				wxp = wxPoint(wxDefaultPosition);
-				wxs = wxSize(wxDefaultSize);
-			}
-			l1.w = new wxWindow(this, wxID_ANY, wxp, wxs, MY_STACK_BORDERSTYLE);
-			l1.t = new wxStaticText(l1.w, wxID_ANY, wxString(wxChar(' '), ui_dsl.get_width()),
-					wxPoint(0, 0), wxs, MY_STACK_BORDERSTYLE);
-			l1.t->SetFont(wxFont(MY_STACK_FONTSIZE, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, MY_STACK_FONTWEIGHT, 0));
-			l1.w->SetBackgroundColour(slcc_to_bg_wxColor(SLCC_NORMAL));
-			l1.t->SetForegroundColour(slcc_to_fg_wxColor(SLCC_NORMAL));
-			dispStack.push_back(l1);
-			topSizer->Insert(STACK_INDEX_0 + i, l1.w, 0, wxALL, MY_STACK_BORDERSIZE);
+	for (int i = static_cast<int>(dispStack.size()); i >= 1; i--) {
+		topSizer->Remove(STACK_INDEX_0 + i - 1);
+		dispStack[i - 1].t->Destroy();
+		dispStack[i - 1].w->Destroy();
+	}
+	dispStack.erase(dispStack.begin(), dispStack.end());
+
+	for (int i = 0; i < n; i++) {
+		wxPoint wxp;
+		wxSize wxs;
+		if (xy_set) {
+			int y0 = my_y0 + i * (my_y1 - my_y0);
+			wxp = wxPoint(my_x0, y0);
+			wxs = wxSize(my_w0, my_h0);
+		} else {
+			wxp = wxPoint(wxDefaultPosition);
+			wxs = wxSize(wxDefaultSize);
 		}
-	} else if (n < static_cast<int>(dispStack.size())) {
-		for (int i = static_cast<int>(dispStack.size()); i > n; i--) {
-			topSizer->Remove(STACK_INDEX_0 + i - 1);
-			dispStack[i - 1].t->Destroy();
-			dispStack[i - 1].w->Destroy();
-		}
-		dispStack.erase(dispStack.begin() + n, dispStack.end());
+		l1.w = new wxWindow(this, wxID_ANY, wxp, wxs, MY_STACK_BORDERSTYLE);
+		l1.t = new wxStaticText(l1.w, wxID_ANY, wxString(wxChar(' '), ui_dsl.get_width()),
+				wxPoint(0, 0), wxs, MY_STACK_BORDERSTYLE);
+		stack_line_set_font(l1.t);
+		l1.w->SetBackgroundColour(slcc_to_bg_wxColor(SLCC_NORMAL));
+		l1.t->SetForegroundColour(slcc_to_fg_wxColor(SLCC_NORMAL));
+		dispStack.push_back(l1);
+		topSizer->Insert(STACK_INDEX_0 + i, l1.w, 0, wxALL, MY_STACK_BORDERSIZE);
 	}
 }
 
@@ -790,6 +827,7 @@ void MyFrame::OnChar(wxKeyEvent& event) {
 
 void MyFrame::OnPaint(wxPaintEvent& ev) {
 	if (!xy_set) {
+		my_frame_initial_size = GetClientSize();
 		int x, y, w, h, x2, y2;
 		dispStack[0].w->GetPosition(&x, &y);
 		dispStack[0].w->GetSize(&w, &h);
@@ -800,7 +838,7 @@ void MyFrame::OnPaint(wxPaintEvent& ev) {
 		my_x0 = x;
 		my_y0 = y;
 		my_y1 = y2;
-		my_ty = ty + my_h0 - 1;
+//        my_ty = ty + my_h0 - 1;
 
 //        debug_write_i("A1: my_x0 = %i", my_x0);
 //        debug_write_i("A1: my_w0 = %i", my_w0);
@@ -808,6 +846,39 @@ void MyFrame::OnPaint(wxPaintEvent& ev) {
 //        debug_write_i("A1: my_y0 = %i", my_y0);
 //        debug_write_i("A1: my_y1 = %i", my_y1);
 //        debug_write_i("A1: my_ty = %i", my_ty);
+
+		wxStaticText *t1 = new wxStaticText(this, wxID_ANY, wxString(wxChar(' '), 1),
+			wxPoint(0, 0), wxSize(wxDefaultSize), MY_STACK_BORDERSTYLE);
+		stack_line_set_font(t1);
+		wxStaticText *t2 = new wxStaticText(this, wxID_ANY, wxString(wxChar(' '), 2),
+			wxPoint(0, 0), wxSize(wxDefaultSize), MY_STACK_BORDERSTYLE);
+		stack_line_set_font(t2);
+		wxSize s1 = t1->GetSize();
+		wxSize s2 = t2->GetSize();
+		t1->Destroy();
+		t2->Destroy();
+		my_char_width = s2.GetWidth() - s1.GetWidth();
+		debug_write_i("PAINT::char width = %i", my_char_width);
+		my_initial_stack_lines = my_get_max_stack();
+		my_initial_stack_width = ui_dsl.get_width();
+		wxSize s = GetClientSize();
+		my_initial_client_width = s.GetWidth();
+		my_initial_client_height = s.GetHeight();
+		debug_write_i("PAINT::initial client width = %i", my_initial_client_width);
+		debug_write_i("PAINT::initial client height = %i", my_initial_client_height);
+
+		wxSize frame_size = GetSize();
+		int fw = frame_size.GetWidth();
+		int fh = frame_size.GetHeight();
+		my_min_client_width = fw + (10 - my_initial_stack_width) * my_char_width;
+		my_min_client_height = fh + (HARD_GUI_MIN_HEIGHT - 1 - my_initial_stack_lines) * (my_y1 - my_y0);
+
+        int yy = my_y0 + (my_get_max_stack() + 1) * (my_y1 - my_y0);
+        int hh = fh - yy;
+
+		debug_write_i("PAINT::minimal client width = %i", my_min_client_width);
+		debug_write_i("PAINT::minimal client height = %i", my_min_client_height);
+		SetMinSize(wxSize(my_min_client_width, my_min_client_height - hh / 2));
 	
 		xy_set = true;
 	}
@@ -815,9 +886,27 @@ void MyFrame::OnPaint(wxPaintEvent& ev) {
 }
 
 void MyFrame::OnSize(wxSizeEvent& ev) {
-	wxSize s = ev.GetSize();
-	debug_write_i("Width  = %i", s.GetWidth());
-	debug_write_i("Height = %i", s.GetHeight());
+	wxSize s = GetClientSize();
+	int new_w = s.GetWidth();
+	int new_h = s.GetHeight();
+	debug_write_i("SIZE::new client width  = %i", new_w);
+	debug_write_i("SIZE::new client height = %i", new_h);
+	debug_write_i("SIZE::my_w0 = %i", my_w0);
+	if (xy_set) {
+		int delta_w = new_w - my_initial_client_width;
+		int delta_chars = delta_w / my_char_width;
+		if (delta_chars < 0 && delta_w % my_char_width != 0)
+			delta_chars -= 1;
+		int target_stack_width = my_initial_stack_width + delta_chars;
+		my_w0 = target_stack_width * my_char_width;
+		debug_write_i("SIZE:: updated my_w0, now = %i", my_w0);
+		debug_write_i("SIZE::New width in chars = %i", target_stack_width);
+		int delta_h = new_h - my_initial_client_height;
+		int delta_lines = delta_h / (my_y1 - my_y0);
+		int target_stack_lines = my_initial_stack_lines + delta_lines;
+		debug_write_i("SIZE::New lines = %i", target_stack_lines);
+		ui_dsl.redefine_geometry(target_stack_lines, target_stack_width);
+	}
 	ev.Skip();
 }
 
@@ -875,6 +964,8 @@ void UiImplWx::set_line(const int& line_number, const slcc_t& color_code, const 
 	f->dispStack[line_number - 1].t->SetForegroundColour(slcc_to_fg_wxColor(color_code));
 	f->dispStack[line_number - 1].w->SetBackgroundColour(slcc_to_bg_wxColor(color_code));
 	f->dispStack[line_number - 1].t->SetLabel(string_to_wxString(s));
+	debug_write_i("Line number #%i set to:", line_number);
+	debug_write(s.c_str());
 }
 
 void UiImplWx::enforce_refresh() { f->Update(); }
@@ -1008,8 +1099,14 @@ void UiImplWx::refresh_stack_height() {
 	f->build_dispStack();
 
 	int y0 = my_y0 + my_get_max_stack() * (my_y1 - my_y0);
-	int h = my_ty - y0 + 1;
-	f->textTypein->SetSize(my_x0, y0, my_w0, h);
+
+	int x, y, w, h;
+	f->textTypein->GetPosition(&x, &y);
+	f->textTypein->GetSize(&w, &h);
+	int bottom = y + my_h0 - 1;
+	int new_h = bottom - y0 + 1;
+
+	f->textTypein->SetSize(my_x0, y0, my_w0, new_h);
 
 //    int ww, hh;
 //    f->path->GetSize(&ww, &hh);

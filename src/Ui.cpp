@@ -25,7 +25,6 @@
 
 using namespace std;
 
-#define HARD_GUI_MIN_HEIGHT	3
 #define PREFIX_NEXT_INSTRUCTION	">>> "
 
 bool ui_has_menu_bar() { return true; }
@@ -151,7 +150,7 @@ static bool get_recalc_stack_flag() { return recalc_stack_flag; }
 
 static void set_syntax_error(const int&, const int&, const int&, const int&);
 
-static void redim(int nb_newlines = -1) {
+void ui_redim(int nb_newlines = -1) {
 	if (nb_newlines == -1)
 		nb_newlines = ui_impl->get_nb_newlines(ui_dsl.get_height());
 	if (ui_dsl.redim(nb_newlines)) {
@@ -180,9 +179,9 @@ void ui_string_trim(string& s, const size_t& width, const DisplayStackLayout *ds
 
 static const MenuDescription menus_descriptions[] = {
 	{_N("&File"), "__MENU__"},
-	{_N("&Flags list"), "_HELP_FLAGS"},
+	{_N("&Flags list"), CMD_PREFIX_NOSTD "HELP_FLAGS"},
 	{"", "__SEPARATOR__"},
-	{_N("&Quit"), "_EXIT"},
+	{_N("&Quit"), CMD_PREFIX_NOSTD "EXIT"},
 	{"", ""},
 	{_N("&Commands"), "__MENU__"},
 	{"&Mode", "__MENU__"},
@@ -192,6 +191,9 @@ static const MenuDescription menus_descriptions[] = {
 	{"ENG", ""},
 	{"DEG", ""},
 	{"RAD", ""},
+	{"", "__SEPARATOR__"},
+	{CMD_PREFIX_NOSTD "UNDO_LEVELS", ""},
+	{CMD_PREFIX_NOSTD "UNDO_LEVELS?", ""},
 	{"", ""},
 	{"&Trigo", "__MENU__"},
 	{"SIN", ""},
@@ -340,6 +342,7 @@ static const MenuDescription menus_descriptions[] = {
 	{"ABORT", ""},
 	{"KILL", ""},
 	{"WAIT", ""},
+	{"CONT", ""},
 	{"", "__SEPARATOR__"},
 	{"CLLCD", ""},
 	{"DISP", ""},
@@ -379,9 +382,9 @@ static const MenuDescription menus_descriptions[] = {
 	{"", ""},
 	{"", ""},
 	{_N("&Help"), "__MENU__"},
-	{_N("&Manual page"), "_HELP"},
+	{_N("&Manual page"), CMD_PREFIX_NOSTD "HELP"},
 	{"", "__SEPARATOR__"},
-	{_N("&About"), "_ABOUT"},
+	{_N("&About"), CMD_PREFIX_NOSTD "ABOUT"},
 	{"", ""}
 };
 
@@ -575,6 +578,12 @@ void ui_init() {
 
 	if (opt_height != -1 && opt_height < HARD_GUI_MIN_HEIGHT && has_gui)
 		opt_height = HARD_GUI_MIN_HEIGHT;
+	if (opt_height > HARD_GUI_MAX_HEIGHT)
+		opt_height = HARD_GUI_MAX_HEIGHT;
+	if (opt_width != -1 && opt_width < HARD_INITIAL_GUI_MIN_WIDTH)
+		opt_width = HARD_INITIAL_GUI_MIN_WIDTH;
+	if (opt_width > HARD_GUI_MAX_WIDTH)
+		opt_width = HARD_GUI_MAX_WIDTH;
 	ui_dsl = DisplayStackLayout(opt_width == -1 ? default_disp_width : opt_width,
 		opt_height == -1 ? default_disp_height : opt_height);
 	if (opt_min_stack_height != -1)
@@ -669,7 +678,7 @@ static void erase_input(const bool& reset_everything) {
 
 	if (reset_everything) {
 		reset_edit_mode();
-		redim(0);
+		ui_redim(0);
 	}
 }
 
@@ -679,10 +688,10 @@ void ui_flush_input(const string& textin, const string& additional_command) {
 	vector<SIO> vs;
 	bool flag_erase_input = true;
 
-	debug_write("textin:");
-	debug_write(textin.c_str());
-	debug_write("additional_command:");
-	debug_write(additional_command.c_str());
+//    debug_write("textin:");
+//    debug_write(textin.c_str());
+//    debug_write("additional_command:");
+//    debug_write(additional_command.c_str());
 
 // STEP 1 in 4: read items from inputs
 
@@ -850,8 +859,11 @@ static void refresh_stack(const int& enforced_nb_stack_elems_to_display, const b
 		disp.resize(i_upper);
 	}
 
-	for (int i = 1; i <= i_upper; i++)
+	for (int i = 1; i <= i_upper; i++) {
 		ui_impl->set_line(i, disp[i - 1].color_code, disp[i - 1].text);
+//        debug_write_i("[[[Line number %i]]]", i - 1);
+//        debug_write(disp[i - 1].text.c_str());
+	}
 	if (enforce_physical_display)
 		ui_impl->enforce_refresh();
 
@@ -959,7 +971,7 @@ static void enter_edit_mode() {
 	tostr.unlock();
 	ui_impl->set_cursor_at_the_beginning();
 	set_refresh_stack_flag();
-	redim();
+	ui_redim();
 }
 
 void ui_notify_button_pressed(const char *c) {
@@ -1050,7 +1062,7 @@ bool ui_notify_key_pressed(const int& k) {
 			  // It is a gruiiiik hack, as it simply ignores the fact that the ENTER key may
 			  // happen while text is selected, text that itself includes newline characters.
 			  // Any way this simplification works not too bad.
-			redim(ui_impl->get_nb_newlines(ui_dsl.get_height()) + 1);
+			ui_redim(ui_impl->get_nb_newlines(ui_dsl.get_height()) + 1);
 			break;
 		case UIK_RETURN:
 			ui_flush_input(ui_impl->get_string(), "");
@@ -1092,17 +1104,16 @@ static const int DISPLAYSTACKLAYOUT_TO_BE_CONTINUED_LENGTH = 3;
 
   // Constructor
 DisplayStackLayout::DisplayStackLayout(const int& w, const int& h) :
-	width(w), height(h), min_stack(h - 1), max_stack(h - 1), shift(0), bmenu(0),
+	width(w), height(h), min_stack(h - 1), max_stack(h - 1), shift(0), bmenu(0), changed(false),
 	to_be_continued(DISPLAYSTACKLAYOUT_TO_BE_CONTINUED), to_be_continued_length(DISPLAYSTACKLAYOUT_TO_BE_CONTINUED_LENGTH),
 	status_shift(false) {
-	
 }
 
   // Copy-constructor
 DisplayStackLayout::DisplayStackLayout(const DisplayStackLayout& dsl) :
 	width(dsl.width), height(dsl.height), min_stack(dsl.min_stack), max_stack(dsl.max_stack),
-	shift(dsl.shift), bmenu(dsl.bmenu), to_be_continued(dsl.to_be_continued),
-	to_be_continued_length(dsl.to_be_continued_length) {
+	shift(dsl.shift), bmenu(dsl.bmenu), changed(dsl.changed),
+	to_be_continued(dsl.to_be_continued), to_be_continued_length(dsl.to_be_continued_length) {
 }
 
 void DisplayStackLayout::set_min_stack_height(const int& i) {
@@ -1113,6 +1124,21 @@ int DisplayStackLayout::get_width() const { return width; }
 int DisplayStackLayout::get_height() const { return height; }
 int DisplayStackLayout::get_min_stack() const { return min_stack; }
 int DisplayStackLayout::get_max_stack() const { return max_stack; }
+void DisplayStackLayout::redefine_geometry(int new_max_stack, int new_width) {
+	if (new_max_stack < HARD_GUI_MIN_HEIGHT - 1)
+		new_max_stack = HARD_GUI_MIN_HEIGHT - 1;
+	if (height != new_max_stack + 1 || max_stack != new_max_stack || new_width != width) {
+		height = new_max_stack + 1;
+		max_stack = new_max_stack;
+		min_stack = max_stack;
+		width = new_width;
+		changed = true;
+		ui_redim();
+		ui_set_recalc_stack_flag();
+		ui_refresh_display();
+	}
+}
+
 int DisplayStackLayout::get_prompt_height() const { return height - max_stack - bmenu; }
 const char *DisplayStackLayout::get_to_be_continued() const { return to_be_continued; }
 int DisplayStackLayout::get_to_be_continued_length() const { return to_be_continued_length; }
@@ -1121,16 +1147,17 @@ bool DisplayStackLayout::redim(const int& nb_newlines) {
 	int target = height - bmenu - nb_newlines - 1;
 	target = (target < 1 ? 1 : target);
 
-	//debug_write_i("height = %i", height);
-	//debug_write_i("min_stack = %i", min_stack);
-	//debug_write_i("max_stack = %i", max_stack);
-	//debug_write_i("nb_newlines = %i", nb_newlines);
-	//debug_write_i("target = %i", target);
+	debug_write_i("height = %i", height);
+	debug_write_i("min_stack = %i", min_stack);
+	debug_write_i("max_stack = %i", max_stack);
+	debug_write_i("nb_newlines = %i", nb_newlines);
+	debug_write_i("target = %i", target);
 
-	if (target != max_stack) {
+	if (target != max_stack || changed) {
 		if (min_stack == max_stack)
 			min_stack = target;
 		max_stack = target;
+		changed = false;
 		return true;
 	}
 	return false;
