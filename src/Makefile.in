@@ -40,6 +40,7 @@ bin_PROGRAMS = prpn$(EXEEXT) prpnc$(EXEEXT)
 @BUILD_CLIENTGUI_TRUE@	prpn.xpm \
 @BUILD_CLIENTGUI_TRUE@	prpn.rc prpn.ico \
 @BUILD_CLIENTGUI_TRUE@	shiftsel.xpm shiftuns.xpm \
+@BUILD_CLIENTGUI_TRUE@	angle_deg.xpm angle_rad.xpm \
 @BUILD_CLIENTGUI_TRUE@	unit_bin.xpm unit_oct.xpm unit_dec.xpm unit_hex.xpm \
 @BUILD_CLIENTGUI_TRUE@	exec_norun.xpm exec_run.xpm
 
@@ -81,8 +82,9 @@ am__prpn_SOURCES_DIST = Main.cpp Compat.cpp Common.h PGetOpt.cpp \
 	platform/os_generic.cpp platform/os_generic.h \
 	platform/os_unknown.h platform/os_unix.h platform/os_win.h \
 	gettext.h MyIntl.h UiImplWx.cpp prpn.xpm prpn.rc prpn.ico \
-	shiftsel.xpm shiftuns.xpm unit_bin.xpm unit_oct.xpm \
-	unit_dec.xpm unit_hex.xpm exec_norun.xpm exec_run.xpm
+	shiftsel.xpm shiftuns.xpm angle_deg.xpm angle_rad.xpm \
+	unit_bin.xpm unit_oct.xpm unit_dec.xpm unit_hex.xpm \
+	exec_norun.xpm exec_run.xpm
 am__objects_1 = prpn-Main.$(OBJEXT) prpn-Compat.$(OBJEXT) \
 	prpn-PGetOpt.$(OBJEXT) prpn-Scalar.$(OBJEXT) \
 	prpn-Stack.$(OBJEXT) prpn-Variable.$(OBJEXT) \

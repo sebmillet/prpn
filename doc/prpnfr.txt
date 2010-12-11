@@ -197,7 +197,7 @@ COMMANDES
 	      Plus petit entier supérieur ou égal à x
 
        ABS (1)
-	      Valeur absolue
+	      Valeur absolue de x
 
        SIGN (1)
 	      Signe de x : peut être -1, 0 ou 1

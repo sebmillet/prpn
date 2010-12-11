@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: prpn 0.5.0\n"
 "Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
 "POT-Creation-Date: 2010-12-09 00:05+0100\n"
-"PO-Revision-Date: 2010-12-09 00:21+0100\n"
+"PO-Revision-Date: 2010-12-09 00:28+0100\n"
 "Last-Translator: Sébastien Millet <sebastien.millet1@club-internet.fr>\n"
 "Language-Team: French\n"
 "MIME-Version: 1.0\n"
@@ -138,8 +138,7 @@ msgstr "Base numérique pour les entiers binaires"
 msgid "Level 1 display"
 msgstr "Affichage du niveau 1"
 
-#: src/Stack.cpp:226
-#: src/Stack.cpp:227
+#: src/Stack.cpp:226 src/Stack.cpp:227
 msgid "Reserved"
 msgstr "Réservé"
 
@@ -227,8 +226,7 @@ msgstr "À propos"
 msgid "Help"
 msgstr "Aide"
 
-#: src/UiImplWx.cpp:705
-#: src/UiImplWx.cpp:718
+#: src/UiImplWx.cpp:705 src/UiImplWx.cpp:718
 msgid "OK"
 msgstr "OK"
 
@@ -386,7 +384,7 @@ msgstr "Plus petit entier supérieur ou égal à x"
 
 #: src/Commands.h:60
 msgid "Absolute of x"
-msgstr "Valeur absolue"
+msgstr "Valeur absolue de x"
 
 #: src/Commands.h:61
 msgid "Sign of x: can be -1, 0 or 1"
@@ -478,11 +476,13 @@ msgstr "Argument d'un nombre complexe"
 
 #: src/Commands.h:84
 msgid "Rectangular to polar coordinates"
-msgstr "Conversion des coordonnées d'un nombre complexe de rectangulaire à polaire"
+msgstr ""
+"Conversion des coordonnées d'un nombre complexe de rectangulaire à polaire"
 
 #: src/Commands.h:85
 msgid "Polar to rectangular coordinates"
-msgstr "Conversion des coordonnées d'un nombre complexe de polaire à rectangulaire"
+msgstr ""
+"Conversion des coordonnées d'un nombre complexe de polaire à rectangulaire"
 
 #: src/Commands.h:87
 msgid "Is identical"
@@ -798,7 +798,9 @@ msgstr "Lis le fichier et met son contenu dans la pile"
 
 #: src/Commands.h:173
 msgid "Write the second item into the file named by the first item"
-msgstr "Écris le second élément de la pile dans le fichier nommé par le premier élément"
+msgstr ""
+"Écris le second élément de la pile dans le fichier nommé par le premier "
+"élément"
 
 #: src/Commands.h:174
 msgid "Internal: tune real 'standard' display management"
@@ -954,10 +956,12 @@ msgstr "Désactivé"
 #, fuzzy
 #~ msgid "&Help about flags"
 #~ msgstr "Affiche un écran d'aide sur les options"
+
 #~ msgid "Minimum"
 #~ msgstr "Minimum"
+
 #~ msgid "Maximum"
 #~ msgstr "Maximum"
+
 #~ msgid "Power"
 #~ msgstr "Puissance"
-

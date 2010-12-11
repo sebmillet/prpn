@@ -38,7 +38,7 @@ IP             (1): Partie entière
 FP             (1): Partie décimale
 FLOOR          (1): Plus grand entier inférieur ou égal à x
 CEIL           (1): Plus petit entier supérieur ou égal à x
-ABS            (1): Valeur absolue
+ABS            (1): Valeur absolue de x
 SIGN           (1): Signe de x : peut être -1, 0 ou 1
 MANT           (1): Mantisse de x
 XPON           (1): Exponentielle de x
