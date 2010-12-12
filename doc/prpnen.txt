@@ -256,10 +256,10 @@ COMMANDS
 	      Display first item on a single line
 
        RDXP (0)
-	      Set the decimal separator to .
+	      Set the decimal separator to '.'
 
        RDXC (0)
-	      Set the decimal separator to ,
+	      Set the decimal separator to ','
 
        R->C (2)
 	      Real to complex

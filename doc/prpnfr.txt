@@ -3,43 +3,43 @@ pRPN(1) 							       pRPN(1)
 
 
 NAME
-       pRPN  -	une  calculatrice en notation polonaise inverse multi systmes
-       dexploitation
+       pRPN  -	une  calculatrice en notation polonaise inverse multi systèmes
+       d'exploitation
 
 
 SYNOPSIS
        prpn [options]
        prpnc [options]
 
-       prpn est lexcutable principal, en mode graphique. prpnc est  la	ver
-       sion en ligne de commande. prpnc est quivalent  prpn -c.
+       prpn est l'exécutable principal, en mode graphique. prpnc est  la  ver‐
+       sion en ligne de commande. prpnc est équivalent à prpn -c.
 
 
 DESCRIPTION
-       Le programme pRPN est une calculatrice en  notation  polonaise  inverse
-       inspire des calculatrices HP de la fin des annes 80.
+       Le  programme  pRPN  est une calculatrice en notation polonaise inverse
+       inspirée des calculatrices HP de la fin des années 80.
 
 OPTIONS
        -h, --help
-	      Affiche laide et quitte.
+	      Affiche l'aide et quitte.
 
        -v --version
-	      Affiche le numro de version et quitte.
+	      Affiche le numéro de version et quitte.
 
        -c, --console
-	      Excution en mode console.
+	      Exécution en mode console.
 
        -w, --width width
-	      Dfinis  la largeur  width, mesure en nombre de caractres. 23
-	      par dfaut.
+	      Définis la largeur à width, mesurée en nombre de caractères.  23
+	      par défaut.
 
        -h, --height height
-	      Dfinis la hauteur  height, mesure en nombre de lignes. 5	par
-	      dfaut.
+	      Définis  la hauteur à height, mesurée en nombre de lignes. 5 par
+	      défaut.
 
        --min-stack-height min-stack-height
-	      Dfinis  la  hauteur  minimale    height,	mesure en nombre de
-	      lignes. height par dfaut. Uniquement en mode console.
+	      Définis la hauteur minimale  à  height,  mesurée	en  nombre  de
+	      lignes. height par défaut. Uniquement en mode console.
 
        -b, --batch
 	      Mode batch, implique le mode console.
@@ -51,12 +51,12 @@ OPTIONS
 	      Affiche le comptage des classes avant de terminer.
 
        -d, --debug debug_option
-	      Mode debug, prend un paramtre.
+	      Mode debug, prend un paramètre.
 
-TYPES OBJETS
-       Donne
+TYPES D'OBJETS
+       Donnée
 
-       Nombre el
+       Nombre réel
 	      1.23456e-25
 
        Nombre complexe
@@ -65,7 +65,7 @@ TYPES OBJETS
        Entier binaire
 	      #    # 123AB
 
-       Chne de caracres
+       Chaîne de caractères
 	      " "  "RESULT"
 
        Vecteur
@@ -78,22 +78,22 @@ TYPES OBJETS
 
        Noms
 
-       Nom	 CALC
+       Nom    ´ ´  ´CALC´
 
-       Procdures
+       Procédures
 
        Programme
 	      << >>	<< DUP + SWAP >>
 
-       Albrique
-		 X+2*Y=Z
+       Algébrique
+	      ´ ´  ´X+2*Y=Z´
 
 COMMANDES
-       Les commandes sont suivies du  nombre  darguments  quelles  prennent,
-       entre parenthses. Ces arguments sont pris dans la pile.
+       Les  commandes  sont  suivies  du nombre d'arguments qu'elles prennent,
+       entre parenthèses. Ces arguments sont pris dans la pile.
 
        _HELP (0)
-	      Affiche un cran daide
+	      Affiche un écran d'aide
 
        _HELP_FLAGS (0)
 	      Affiche la liste des indicateurs binaires
@@ -125,10 +125,10 @@ COMMANDES
 	      Modulo : x - y * FLOOR(x / y)
 
        MIN (2)
-	      Minimum de deux rels
+	      Minimum de deux réels
 
        MAX (2)
-	      Maximum de deux rels
+	      Maximum de deux réels
 
        COS (1)
 	      Cosinus
@@ -184,23 +184,23 @@ COMMANDES
 	      Arc-tangente hyperbolique
 
        NEG (1)
-	      Oppos
+	      Opposé
 
-       IP (1) Partie entire
+       IP (1) Partie entière
 
-       FP (1) Partie dcimale
+       FP (1) Partie décimale
 
        FLOOR (1)
-	      Plus grand entier infrieur ou gal  x
+	      Plus grand entier inférieur ou égal à x
 
        CEIL (1)
-	      Plus petit entier suprieur ou gal  x
+	      Plus petit entier supérieur ou égal à x
 
        ABS (1)
 	      Valeur absolue de x
 
        SIGN (1)
-	      Signe de x : peut tre -1, 0 ou 1
+	      Signe de x : peut être -1, 0 ou 1
 
        MANT (1)
 	      Mantisse de x
@@ -211,30 +211,30 @@ COMMANDES
        INV (1)
 	      1/x
 
-       SQ (1) Carr
+       SQ (1) Carré
 
        SQR (1)
-	      Racine carre
+	      Racine carrée
 
        RDZ (1)
-	      Initialise  la  suite  des  valeurs  alatoires, 0 pour utiliser
-	      lhorloge
+	      Initialise la suite des  valeurs	aléatoires,  0	pour  utiliser
+	      l'horloge
 
        RAND (0)
-	      Produis une valeur alatoire x, 0 <= x < 1
+	      Produis une valeur aléatoire x, 0 <= x < 1
 
        MINR (0)
-	      Plus petit rel suprieur  zro reprsentable par  la  calcula
+	      Plus  petit  réel supérieur à zéro représentable par la calcula‐
 	      trice
 
        MAXR (0)
-	      Plus grand rel reprsentable par la calculatrice
+	      Plus grand réel représentable par la calculatrice
 
        ->HMS (1)
-	      Convertis un dcimal en nombre HMS (h.MMSSss)
+	      Convertis un décimal en nombre HMS (h.MMSSss)
 
        HMS-> (1)
-	      Convertis un nombre HMS (h.MMSSss) en dcimal
+	      Convertis un nombre HMS (h.MMSSss) en décimal
 
        HMS+ (2)
 	      Additionne deux nombres HMS (h.MMSSss)
@@ -243,67 +243,67 @@ COMMANDES
 	      Soustrais deux nombres HMS (h.MMSSss)
 
        D->R (1)
-	      Convertis des degrs en radians (*PI/180)
+	      Convertis des degrés en radians (*PI/180)
 
        R->D (1)
-	      Convertis des radians en degrs (*180/PI)
+	      Convertis des radians en degrés (*180/PI)
 
        RAD (0)
 	      Utilise le radian pour les mesures angulaires
 
        DEG (0)
-	      Utilise le degr pour les mesures angulaires
+	      Utilise le degré pour les mesures angulaires
 
        +ML (0)
-	      Affiche le premier lment sur plusieurs lignes
+	      Affiche le premier élément sur plusieurs lignes
 
        -ML (0)
-	      Affiche le premier lment sur une seule ligne
+	      Affiche le premier élément sur une seule ligne
 
        RDXP (0)
-	      Utilise la caractre . comme sparateur dcimal
+	      Utilise la caractère '.' comme séparateur décimal
 
        RDXC (0)
-	      Utilise la caractre , comme sparateur dcimal
+	      Utilise la caractère ',' comme séparateur décimal
 
        R->C (2)
-	      Rel  complexe
+	      Réel à complexe
 
        C->R (1)
-	      Complexe	rel
+	      Complexe à réel
 
-       RE (1) Partie relle dun nombre complexe ou dun tableau
+       RE (1) Partie réelle d'un nombre complexe ou d'un tableau
 
-       IM (1) Partie imaginaire dun nombre complexe ou dun tableau
+       IM (1) Partie imaginaire d'un nombre complexe ou d'un tableau
 
        CONJ (1)
-	      Conjugu dun nombre complexe ou dun tableau
+	      Conjugué d'un nombre complexe ou d'un tableau
 
        ARG (1)
-	      Argument dun nombre complexe
+	      Argument d'un nombre complexe
 
        R->P (1)
-	      Conversion des coordonnes dun nombre complexe de rectangulaire
-	       polaire
+	      Conversion des coordonnées d'un nombre complexe de rectangulaire
+	      à polaire
 
        P->R (1)
-	      Conversion des coordonnes dun nombre  complexe  de  polaire
+	      Conversion  des  coordonnées  d'un  nombre complexe de polaire à
 	      rectangulaire
 
        SAME (2)
 	      Est identique
 
-       == (2) Est gal
+       == (2) Est égal à
 
-       <> (2) Est diffrent de
+       <> (2) Est différent de
 
        < (2)  Est plus petit que
 
-       <= (2) Est plus petit que, ou gal
+       <= (2) Est plus petit que, ou égal à
 
        > (2)  Est plus grand que
 
-       >= (2) Est plus grand que, ou gal
+       >= (2) Est plus grand que, ou égal à
 
        AND (2)
 	      Et logique
@@ -317,110 +317,110 @@ COMMANDES
 	      Non logique
 
        DUP (1)
-	      Copie le premier lment
+	      Copie le premier élément
 
        SWAP (2)
-	      change les deux premiers lments
+	      Échange les deux premiers éléments
 
        DROP (1)
-	      Supprime le premier lment
+	      Supprime le premier élément
 
        CLEAR (0)
 	      Efface la pile
 
        OVER (2)
-	      Copie le second lment
+	      Copie le second élément
 
        DUP2 (2)
-	      Copie les deux premiers lments
+	      Copie les deux premiers éléments
 
        DROP2 (2)
-	      Supprime les deux premiers lments
+	      Supprime les deux premiers éléments
 
        ROT (3)
-	      Dplace le troisime lment en premire position
+	      Déplace le troisième élément en première position
 
        ROLLD (1)
-	      Dplace le premier lment en Nime position
+	      Déplace le premier élément en Nième position
 
        ROLL (1)
-	      Dplace le Ne lment en premire position
+	      Déplace le Ne élément en première position
 
        PICK (1)
-	      Copie le Ne lment
+	      Copie le Ne élément
 
        DUPN (1)
-	      Copie les N premiers lments
+	      Copie les N premiers éléments
 
        DROPN (1)
-	      Supprime les N premiers lments
+	      Supprime les N premiers éléments
 
        DEPTH (0)
-	      Renvoie le nombre dlments dans la pile
+	      Renvoie le nombre d'éléments dans la pile
 
-       SF (1) Active lindicateur binaire
+       SF (1) Active l'indicateur binaire
 
-       CF (1) Dsactive lindicateur binaire
+       CF (1) Désactive l'indicateur binaire
 
        FS? (1)
-	      Renvoie 1 si lindicateur binaire est activ, 0 sinon
+	      Renvoie 1 si l'indicateur binaire est activé, 0 sinon
 
        FC? (1)
-	      Renvoie 0 si lindicateur binaire est activ, 1 sinon
+	      Renvoie 0 si l'indicateur binaire est activé, 1 sinon
 
        FS?C (1)
-	      Excute FS? et dsactive lindicateur binaire
+	      Exécute FS? et désactive l'indicateur binaire
 
        FC?C (1)
-	      Excute FC? et dsactive lindicateur binaire
+	      Exécute FC? et désactive l'indicateur binaire
 
        ->STR (1)
-	      Convertis un lment en chane de caractres
+	      Convertis un élément en chaîne de caractères
 
        STR-> (0)
-	      Convertis une chane de caractre en lments
+	      Convertis une chaîne de caractère en éléments
 
        SUB (3)
-	      Extrais le contenu dune chane de caractres ou dune liste
+	      Extrais le contenu d'une chaîne de caractères ou d'une liste
 
        ->LIST (1)
-	      Mets les lments dans une liste
+	      Mets les éléments dans une liste
 
        LIST-> (1)
-	      Convertis la liste en ses lments
+	      Convertis la liste en ses éléments
 
        GET (2)
-	      Extrais un lment dune liste ou dun tableau
+	      Extrais un élément d'une liste ou d'un tableau
 
        GETI (2)
-	      Extrais un lment dune liste ou dun tableau par incrments
+	      Extrais un élément d'une liste ou d'un tableau par incréments
 
        PUT (3)
-	      Remplace un lment dans une liste ou un tableau
+	      Remplace un élément dans une liste ou un tableau
 
        PUTI (3)
-	      Remplace un lment dans une liste ou un tableau par incrments
+	      Remplace un élément dans une liste ou un tableau par incréments
 
        SIZE (1)
-	      Dimension dune liste ou dun tableau
+	      Dimension d'une liste ou d'un tableau
 
        ARRY-> (1)
-	      Remplace un tableau par ses lments
+	      Remplace un tableau par ses éléments
 
        ->ARRY (1)
-	      Cre un tableau avec les lments de la pile
+	      Crée un tableau avec les éléments de la pile
 
        CON (2)
-	      Cre un tableau constant
+	      Crée un tableau constant
 
        TRN (1)
 	      Transpose une matrice
 
        RDM (2)
-	      Modifie les dimensions dun tableau
+	      Modifie les dimensions d'un tableau
 
        IDN (1)
-	      Cre une matrice identit
+	      Crée une matrice identité
 
        CROSS (2)
 	      Produit vectoriel
@@ -429,30 +429,30 @@ COMMANDES
 	      Produit scalaire
 
        EVAL (0)
-	      value llment
+	      Évalue l'élément
 
        STO (2)
 	      Enregistre la valeur dans la variable
 
        RCL (1)
-	      Rcupre la valeur de la variable
+	      Récupère la valeur de la variable
 
        PURGE (1)
 	      Supprime la variable
 
        VARS (0)
-	      Renvoie la liste des variables dans le rpertoire courant
+	      Renvoie la liste des variables dans le répertoire courant
 
        PATH (0)
-	      Renvoie le rpertoire en cours sous forme de liste
+	      Renvoie le répertoire en cours sous forme de liste
 
        CRDIR (1)
-	      Cre un rpertoire
+	      Crée un répertoire
 
        HOME (0)
-	      Dfinis le rpertoire racine comme rpertoire courant
+	      Définis le répertoire racine comme répertoire courant
 
-       UP (0) Dfinis le rpertoire parent comme rpertoire courant
+       UP (0) Définis le répertoire parent comme répertoire courant
 
        BIN (0)
 	      Utilise le mode binaire pour les entiers binaires
@@ -461,99 +461,99 @@ COMMANDES
 	      Utilise le mode octal pour les entiers binaires
 
        DEC (0)
-	      Utilise le mode dcimal pour les entiers binaires
+	      Utilise le mode décimal pour les entiers binaires
 
        HEX (0)
-	      Utilise le mode hexadcimal pour les entiers binaires
+	      Utilise le mode hexadécimal pour les entiers binaires
 
        STWS (1)
-	      Dfinis le nombre de bits des entiers binaires (de 1  64)
+	      Définis le nombre de bits des entiers binaires (de 1 à 64)
 
        RCWS (0)
 	      Renvoie le nombre de bits des entiers binaires
 
        B->R (1)
-	      Convertis un entier binaire en rel
+	      Convertis un entier binaire en réel
 
        R->B (1)
-	      Convertis un rel en entier binaire
+	      Convertis un réel en entier binaire
 
        RCLF (0)
-	      Enregistre  ltat	des  indicateurs  binaires  dans  un  entier
+	      Enregistre  l'état  des  indicateurs  binaires  dans  un	entier
 	      binaire
 
        STOF (1)
-	      Rcupre  ltat  des  indicateurs  binaires	depuis	un  entier
+	      Récupère	l'état	des  indicateurs  binaires  depuis  un	entier
 	      binaire
 
        WAIT (1)
-	      Pause dune dure dfinie en secondes
+	      Pause d'une durée définie en secondes
 
        HALT (0)
-	      Suspends lexcution du programme
+	      Suspends l'exécution du programme
 
        SST (0)
-	      Excute une instruction dans le programme
+	      Exécute une instruction dans le programme
 
        ABORT (0)
-	      Arrte lexcution du programme courant
+	      Arrête l'exécution du programme courant
 
        KILL (0)
-	      Arrte lexcution de tous les programmes
+	      Arrête l'exécution de tous les programmes
 
        CONT (0)
-	      Reprends lexcution du programme
+	      Reprends l'exécution du programme
 
        STD (0)
-	      Rgle laffichage des rels	standard
+	      Règle l'affichage des réels à 'standard'
 
        SCI (1)
-	      Rgle laffichage des rels	scientifique
+	      Règle l'affichage des réels à 'scientifique'
 
        FIX (1)
-	      Rgle laffichage des rels	nombre de dcimales fixe
+	      Règle l'affichage des réels à 'nombre de décimales fixe'
 
        ENG (1)
-	      Rgle laffichage des rels	ingnieur
+	      Règle l'affichage des réels à 'ingénieur'
 
        CLLCD (0)
-	      Efface lcran
+	      Efface l'écran
 
        CLMF (0)
-	      Dsarme  lindicateur  daffichage  =>  dgle laffichage de la
+	      Désarme l'indicateur d'affichage =>  dégèle  l'affichage	de  la
 	      pile
 
        DISP (2)
-	      Affiche une chane de caractres sur une ligne de lcran
+	      Affiche une chaîne de caractères sur une ligne de l'écran
 
        _READ (1)
 	      Lis le fichier et met son contenu dans la pile
 
        _WRITE (2)
-	      cris le second lment de la pile dans le fichier nomm par	le
-	      premier lment
+	      Écris  le second élément de la pile dans le fichier nommé par le
+	      premier élément
 
        _HACK-REAL-MGMT (1)
-	      Interne  :  rgle	la  gestion  de laffichage des rels en mode
-	      standard
+	      Interne : règle la gestion de  l'affichage  des  réels  en  mode
+	      'standard'
 
        _HACK-REAL-DOT (1)
-	      Interne : dtermine sil faut afficher un point    la  fin	des
-	      rels
+	      Interne  :  détermine  s'il  faut afficher un point à la fin des
+	      réels
 
        UNDO (0)
-	      Annule la dernire commande, 50 niveaux par dfaut
+	      Annule la dernière commande, 50 niveaux par défaut
 
        _UNDO_LEVELS (1)
-	      Dfinis le nombre de niveaux dannulation
+	      Définis le nombre de niveaux d'annulation
 
        _UNDO_LEVELS? (0)
-	      Renvoie le nombre de niveaux dannulations
+	      Renvoie le nombre de niveaux d'annulations
 
-SOLUTION DE SYSMESQUATIONS LIAIRES
-       Vous  pouvez  rsoudre  un systme dquations linaires en divisant un
+RÉSOLUTION DE SYSTÈMES D'ÉQUATIONS LINÉAIRES
+       Vous pouvez résoudre un système d'équations linéaires  en  divisant  un
        vecteur par une matrice.
-	      Exemple Vous voudriez rsoudre le systme
+	      Exemple Vous voudriez résoudre le système
 		2x - y + z = 13
 		x + 5y +3z = 3
 		-2x + 4z = 4
@@ -561,153 +561,153 @@ SOLUTION DE SYSMESQUATIONS LIAIRES
 		[13 3 4]
 	      Ensuite saisissez la matrice
 		[[2 -1 1][1 5 3][-2 0 4]]
-	      Faites  une  division en cliquant sur le bouton /. Le rsultat
-	      est l :
+	      Faites  une  division en cliquant sur le bouton '/'. Le résultat
+	      est là :
 		[4 -2 3]
 	      Ce qui se lit "la solution est x = 4, y = -2 et z = 3"
 
-INSTRUCTIONS DE CONTLE DES PROGRAMMES
-       Note au sujet des booens
-	      Un test (IF, WHILE ou UNTIL, cf. ci-aprs) prend une valeur dans
-	      la  pile.  Cette valeur doit tre de type rel. Toute valeur non
-	      nulle est traite comme VRAI, une valeur nulle comme FAUX.
-	      Ci-dessous, le terme "en bas de la pile" se rapporte    lobjet
-	      situ au niveau 1 de la pile.
+INSTRUCTIONS DE CONTRÔLE DES PROGRAMMES
+       Note au sujet des booléens
+	      Un test (IF, WHILE ou UNTIL, cf. ci-après) prend une valeur dans
+	      la  pile.  Cette valeur doit être de type réel. Toute valeur non
+	      nulle est traitée comme VRAI, une valeur nulle comme FAUX.
+	      Ci-dessous, le terme "en bas de la pile" se rapporte  à  l'objet
+	      situé au niveau 1 de la pile.
 
-       quence IF/THEN/ELSE/END
-	      Excute les instructions entre IF et THEN.
-	      Ensuite, prends llment en bas de la pile, sil est vrai (voir
-	      ci-dessus), excute les instructions entre THEN et ELSE (ou  END
-	      sil ny a pas de ELSE), sinon excute les instructions du ELSE.
+       Séquence IF/THEN/ELSE/END
+	      Exécute les instructions entre IF et THEN.
+	      Ensuite, prends l'élément en bas de la pile, s'il est vrai (voir
+	      ci-dessus), exécute les instructions entre THEN et ELSE (ou  END
+	      s'il n'y a pas de ELSE), sinon exécute les instructions du ELSE.
 	      ELSE est facultatif.
 
        Exemple 1
-	      Prends llment en bas de la pile et indique sil est suprieur
-	      ou gal  zro, ou bien ngatif
-	      << IF 0 >= THEN "Positif ou nul" ELSE "Ngatif" END >>
+	      Prends l'élément en bas de la pile et indique s'il est supérieur
+	      ou égal à zéro, ou bien négatif
+	      << IF 0 >= THEN "Positif ou nul" ELSE "Négatif" END >>
 
        Exemple 2
-	      Excute toujours les instructions du THEN
-	      << IF 1 THEN "Toujours excut" ELSE "Jamais excut" END >>
+	      Exécute toujours les instructions du THEN
+	      << IF 1 THEN "Toujours exécuté" ELSE "Jamais exécuté" END >>
 
        Exemple 3
 	      Ne fais rien (!)
-	      << IF 0 THEN "Jamais excut" END >>
+	      << IF 0 THEN "Jamais exécuté" END >>
 
-       quence WHILE/REPEAT/END
-	      Excute les instructions entre WHILE et REPEAT.
-	      Ensuite, prends llment en bas de la pile, sil est vrai (voir
-	      ci-dessus), excute les instructions  du  REPEAT  et  recommence
-	      depuis le dbut du WHILE.
+       Séquence WHILE/REPEAT/END
+	      Exécute les instructions entre WHILE et REPEAT.
+	      Ensuite, prends l'élément en bas de la pile, s'il est vrai (voir
+	      ci-dessus), exécute les instructions  du	REPEAT	et  recommence
+	      depuis le début du WHILE.
 
        Exemple
 	      Calcule  le  plus  petit	N pour lequel somme(i^2 avec i prenant
-	      toutes les valeurs entires dans lintervalle 1..N) >= 100
-	      << 0 0 -> n << WHILE DUP 100 < REPEAT n SQ + n 1 + n STO END n
+	      toutes les valeurs entières dans l'intervalle 1..N) >= 100
+	      << 0 0 -> n << WHILE DUP 100 < REPEAT n SQ + n 1 + 'n' STO END n
 	      >> >>
 
-       quence DO/UNTIL/END
-	      Excute  les  instructions entre DO et UNTIL puis entre UNTIL et
+       Séquence DO/UNTIL/END
+	      Exécute  les  instructions entre DO et UNTIL puis entre UNTIL et
 	      END.
-	      Ensuite, prends llment en bas de la pile, sil est vrai (voir
-	      ci-dessus), recommence depuis le dbut du DO.
+	      Ensuite, prends l'élément en bas de la pile, s'il est vrai (voir
+	      ci-dessus), recommence depuis le début du DO.
 
        Exemple
 	      Calcule  le  plus  petit	N pour lequel somme(1/i avec i prenant
-	      toutes les valeurs entires dans lintervalle 1..N) >= 3
-	      << 0 0 -> n << DO n 1 + n STO n INV + UNTIL DUP 7 >= END n  >>
+	      toutes les valeurs entières dans l'intervalle 1..N) >= 3
+	      << 0 0 -> n << DO n 1 + 'n' STO n INV + UNTIL DUP 7 >= END n  >>
 	      >>
 
-       quence FOR|START/NEXT|STEP
-	      FOR  ou  START  dmarre une boucle en prenant deux arguments, le
-	      premier (deuxime niveau de la pile) tant la valeur du compteur
-	      au  dpart,  le  deuxime  (premier  niveau de la pile) tant la
-	      valeur  cible  du  compteur,  au-del  de	laquelle  la   boucle
-	      sarrte.
-	      START  est  une  boucle  anonyme.  FOR prend un nom et lutilise
+       Séquence FOR|START/NEXT|STEP
+	      FOR  ou  START  démarre une boucle en prenant deux arguments, le
+	      premier (deuxième niveau de la pile) étant la valeur du compteur
+	      au  départ,  le  deuxième  (premier  niveau de la pile) étant la
+	      valeur  cible  du  compteur,  au-delà  de  laquelle  la	boucle
+	      s'arrête.
+	      START  est  une  boucle  anonyme.  FOR prend un nom et l'utilise
 	      comme variable locale pour le compteur.
-	      NEXT incrmente le compteur dune unit si la valeur  cible	est
-	      suprieure    la  valeur  de  dpart, le dcrmente dune unit
+	      NEXT incrémente le compteur d'une unité si la valeur  cible  est
+	      supérieure  à  la  valeur  de  départ, le décrémente d'une unité
 	      sinon.
-	      STEP prend la valeur en bas de la pile et lajoute au  compteur.
-	      NEXT  peut  tre  utilis indiffremment avec FOR et START, mme
+	      STEP prend la valeur en bas de la pile et l'ajoute au  compteur.
+	      NEXT  peut  être	utilisé indifféremment avec FOR et START, même
 	      chose pour STEP.
 
        Exemple 1
-	      Calcule la somme des carrs des entiers de 1  10
+	      Calcule la somme des carrés des entiers de 1 à 10
 	      << 0 1 10 FOR i i SQ + NEXT >>
 
        Exemple 2
-	      Calcule somme(2^i avec i prenant	toutes	les  valeurs  entires
-	      dans  lintervalle  1..N),  N  tant  la premire valeur dans la
+	      Calcule somme(2^i avec i prenant	toutes	les  valeurs  entières
+	      dans  l'intervalle  1..N),  N  étant  la première valeur dans la
 	      pile.
 	      << 0 1 1 4 ROLL START DUP ROT + SWAP 2 * NEXT DROP >> EVAL
 
        Exemple 3
 	      Calcule somme(i avec i prenant toutes les valeurs impaires  dans
-	      lintervalle 1..N), N tant la premire valeur dans la pile.
+	      l'intervalle 1..N), N étant la première valeur dans la pile.
 	      << 0 1 ROT FOR i i + 2 STEP >>
 
        Documentation RPL
-	      RPL  est	le langage de programmation des calculatrices HP fonc
+	      RPL  est	le langage de programmation des calculatrices HP fonc‐
 	      tionnant en notation polonaise inverse.
 	      http://en.wikipedia.org/wiki/RPL_%28programming_language%29
 
 TRUCS
        Augmenter la taille de la zone de saisie
-	      Appuyer sur les touches <Ctrl-Entre>.
+	      Appuyer sur les touches <Ctrl-Entrée>.
 
-       Redimensionner la fetre sa taille originale
-	      Double-cliquer sur la partie "statut"  de  la  fentre,  o  les
-	      modes angulaire et binaire sont affichs.
+       Redimensionner la fenêtre à sa taille originale
+	      Double-cliquer sur la partie "statut"  de  la  fenêtre,  où  les
+	      modes angulaire et binaire sont affichés.
 
-FICHIERS INITIALISATION
+FICHIERS D'INITIALISATION
        ~/.prpn/stackrc
-	      Rglages et contenu de la pile.
+	      Réglages et contenu de la pile.
 
        ~/.prpn/varsrc
-	      Structure contenant les variables, et rpertoire courant.
+	      Structure contenant les variables, et répertoire courant.
 
 AUTEUR
-       crit par Sbastien Millet <sebastien.millet1@club-internet.fr>.
-       Autorisation  est  donne de copier, distribuer et/ou modifier ce docu
+       Écrit par Sébastien Millet <sebastien.millet1@club-internet.fr>.
+       Autorisation  est  donnée de copier, distribuer et/ou modifier ce docu‐
        ment selon les termes de la licence "GNU General  Public  License".  La
-       version 3 est publie par la Free Software Foundation.
+       version 3 est publiée par la Free Software Foundation.
 
 BUGS
        LNP1 et EXPM
 
-       Ces fonctions sont supposes apporter plus de prcision au voisinage de
+       Ces fonctions sont supposées apporter plus de précision au voisinage de
        x = 0. Rappel :
 	      LNP1(x) = LN(X + 1) et EXPM(x) = EXP(x) - 1
-	      A  lheure  actuelle,  ces  fonctions  napportent	pas  plus de
-	      prcision, elles appellent simplement LN() et EXP().
+	      A l'heure  actuelle,  ces  fonctions  n'apportent  pas  plus  de
+	      précision, elles appellent simplement LN() et EXP().
 
-       Difrence entre prpn et prpnc
+       Différence entre prpn et prpnc
 
-       Linux  prpn peut tre excut avec loption -c. Dans ce cas le rsultat
-	      est  presque  quivalent	prpnc. "Presque" seulement. prpn est
-	      compil avec la librairie WxWidgets et initialise des ressources
-	      graphiques  au  dmarrage.  Si les ressources graphiques ne sont
-	      pas trouves, le programme ne dmarre pas. Par exemple, si	vous
-	      excutez la commande suivante
+       Linux  prpn peut être exécuté avec l'option -c. Dans ce cas le résultat
+	      est presque équivalent à prpnc. "Presque"  seulement.  prpn  est
+	      compilé avec la librairie WxWidgets et initialise des ressources
+	      graphiques au démarrage. Si les ressources  graphiques  ne  sont
+	      pas  trouvées, le programme ne démarre pas. Par exemple, si vous
+	      exécutez la commande suivante
 		   DISPLAY="" prpn -c
-	      Vous obtenez ce rsultat
+	      Vous obtenez ce résultat
 		   Error: Unable to initialize gtk, is DISPLAY set properly?
-	      prpnc rsout ce problme, car il nest *pas* compil avec WxWid
-	      gets et peut fonctionner dans un terminal ne disposant  daucune
-	      ressource graphique. Un moyen lgant de rgler cette difficult
-	      serait  dempcher	WxWidgets   dinitialiser   les	 ressources
-	      graphiques  lorsque loption -c est prsente. Si vous connaissez
-	      un moyen robuste de le faire  (portable  quels  que  soient  les
-	      systmes  et  les	versions...),  lauteur	de  ce programme est
-	      intress !
+	      prpnc résout ce problème, car il n'est *pas* compilé avec WxWid‐
+	      gets  et peut fonctionner dans un terminal ne disposant d'aucune
+	      ressource graphique. Un moyen élégant de régler cette difficulté
+	      serait   d'empêcher   WxWidgets	d'initialiser  les  ressources
+	      graphiques lorsque l'option -c est présente. Si vous  connaissez
+	      un  moyen  robuste  de  le  faire (portable quels que soient les
+	      systèmes et les  versions...),  l'auteur	de  ce	programme  est
+	      intéressé !
 
        Windows
-	      prpn.exe ne peut *pas* tre excut avec loption -c. Sous  Win
-	      dows,  WxWidgets	dconnecte  le  processus  de  son terminal de
-	      contrle. La solution est la mme que sous	Linux,	sauf  quici
-	      cest  obligatoire  :  vous  devez  utiliser  prpnc.exe  si vous
+	      prpn.exe	ne peut *pas* être exécuté avec l'option -c. Sous Win‐
+	      dows, WxWidgets déconnecte  le  processus  de  son  terminal  de
+	      contrôle.  La  solution  est la même que sous Linux, sauf qu'ici
+	      c'est obligatoire  :  vous  devez  utiliser  prpnc.exe  si  vous
 	      souhaitez utiliser la version en ligne de commande.
 
 
