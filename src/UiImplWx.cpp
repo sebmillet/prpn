@@ -512,7 +512,7 @@ MyFrame* MyApp::get_frame() const {
 void MyFrame::check_path_width() {
 	int l = 0;
 	wxStaticText *tmp;
-	int wtmp, htmp, w, h;
+	int wtmp, htmp;
 	wxSize s = GetClientSize();
 	int read_width = s.GetWidth();
 	debug_write_i("read_width = %i", read_width);
