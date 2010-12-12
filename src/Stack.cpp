@@ -2891,9 +2891,10 @@ st_err_t StackItemReal::op_not(StackItem*& ret) {
 
 
 
+	srand(time(NULL));
 	n = rand();
 	debug_write_i("Rand = %i", n);
-	ret = new StackItemReal(Real(RAND_MAX));
+	ret = new StackItemReal(Real(n));
 
 
 
