@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: prpn 0.5.0\n"
 "Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
-"POT-Creation-Date: 2010-12-12 15:40+0100\n"
+"POT-Creation-Date: 2010-12-12 16:29+0100\n"
 "PO-Revision-Date: 2010-12-12 15:43+0100\n"
 "Last-Translator: Sébastien Millet <sebastien.millet1@club-internet.fr>\n"
 "Language-Team: French\n"
@@ -138,8 +138,7 @@ msgstr "Base numérique pour les entiers binaires"
 msgid "Level 1 display"
 msgstr "Affichage du niveau 1"
 
-#: src/Stack.cpp:226
-#: src/Stack.cpp:227
+#: src/Stack.cpp:226 src/Stack.cpp:227
 msgid "Reserved"
 msgstr "Réservé"
 
@@ -227,12 +226,11 @@ msgstr "&Page de manuel"
 msgid "&About"
 msgstr "À propos"
 
-#: src/UiImplWx.cpp:720
+#: src/UiImplWx.cpp:710
 msgid "Help"
 msgstr "Aide"
 
-#: src/UiImplWx.cpp:742
-#: src/UiImplWx.cpp:755
+#: src/UiImplWx.cpp:732 src/UiImplWx.cpp:745
 msgid "OK"
 msgstr "OK"
 
@@ -506,11 +504,13 @@ msgstr "Argument d'un nombre complexe"
 
 #: src/Commands.h:90
 msgid "Rectangular to polar coordinates"
-msgstr "Conversion des coordonnées d'un nombre complexe de rectangulaire à polaire"
+msgstr ""
+"Conversion des coordonnées d'un nombre complexe de rectangulaire à polaire"
 
 #: src/Commands.h:91
 msgid "Polar to rectangular coordinates"
-msgstr "Conversion des coordonnées d'un nombre complexe de polaire à rectangulaire"
+msgstr ""
+"Conversion des coordonnées d'un nombre complexe de polaire à rectangulaire"
 
 #: src/Commands.h:93
 msgid "Is identical"
@@ -842,7 +842,9 @@ msgstr "Lis le fichier et met son contenu dans la pile"
 
 #: src/Commands.h:183
 msgid "Write the second item into the file named by the first item"
-msgstr "Écris le second élément de la pile dans le fichier nommé par le premier élément"
+msgstr ""
+"Écris le second élément de la pile dans le fichier nommé par le premier "
+"élément"
 
 #: src/Commands.h:184
 msgid "Internal: tune real 'standard' display management"
@@ -998,10 +1000,12 @@ msgstr "Désactivé"
 #, fuzzy
 #~ msgid "&Help about flags"
 #~ msgstr "Affiche un écran d'aide sur les options"
+
 #~ msgid "Minimum"
 #~ msgstr "Minimum"
+
 #~ msgid "Maximum"
 #~ msgstr "Maximum"
+
 #~ msgid "Power"
 #~ msgstr "Puissance"
-
