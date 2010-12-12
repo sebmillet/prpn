@@ -18,35 +18,6 @@
 #include <iostream>
 #endif
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-#include <cstdlib>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 using namespace std;
 
 const int DEFAULT_PORTABLE_BIN_BASE = 16;
@@ -1685,6 +1656,12 @@ IMPLEMENT_BC_OP_FUNC(alog)
 IMPLEMENT_BC_OP_FUNC(lnp1)
 IMPLEMENT_BC_OP_FUNC(expm)
 
+static st_err_t bc_rdz(StackItem& op1, StackItem*&, string&) { return op1.op_rdz(); }
+static st_err_t bc_rand(StackItem*& si, string&) {
+	si = new StackItemReal(Real(my_rand()));
+	return ST_ERR_OK;
+}
+
 static st_err_t bc_minr(StackItem*& si, string&) { si = new StackItemReal(Real(MINR)); return ST_ERR_OK; }
 static st_err_t bc_maxr(StackItem*& si, string&) { si = new StackItemReal(Real(MAXR)); return ST_ERR_OK; }
 
@@ -2719,6 +2696,12 @@ st_err_t StackItemReal::op_max(StackItemReal* arg1, StackItem*& ret) {
 	return ST_ERR_OK;
 }
 
+st_err_t StackItemReal::op_rdz() {
+	st_err_t c = ST_ERR_OK;
+	my_srand(sc.get_value());
+	return ST_ERR_OK;
+}
+
 void create_Real_or_Cplx_StackItem(const st_err_t& c, const Cplx& cplx, StackItem*& ret) {
 	if (c == ST_ERR_OK) {
 		if (cplx.get_im() != 0)
@@ -2886,21 +2869,7 @@ st_err_t StackItemReal::op_not(StackItem*& ret) {
 	st_err_t c = to_integer(n);
 	if (c != ST_ERR_OK)
 		return c;
-
-
-
-
-
-	srand(time(NULL));
-	n = rand();
-	debug_write_i("Rand = %i", n);
-	ret = new StackItemReal(Real(n));
-
-
-
-
-
-//    ret = new StackItemReal(Real(!n));
+	ret = new StackItemReal(Real(!n));
 	return ST_ERR_OK;
 }
 

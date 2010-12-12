@@ -18,6 +18,7 @@
 #include <sstream>
 #include <cerrno>
 #include <cmath>
+#include <cstdlib>
 
 using namespace std;
 
@@ -438,6 +439,24 @@ real real_xpon(const real& r) {
 
 real get_max_real_from_bin_size(const int& m) {
 	return exp((real)m * log(2.0));
+}
+
+real my_rand() {
+	int n = rand();
+	return (static_cast<real>(n) / RAND_MAX);
+}
+
+void my_srand(real seed) {
+	if (seed < 0)
+		seed = 0;
+	if (seed > 1)
+		seed = 1;
+	int sr;
+	if (seed != 0)
+		sr = seed * RAND_MAX;
+	else
+		sr = time(NULL);
+	srand(sr);
 }
 
 

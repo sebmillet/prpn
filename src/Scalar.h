@@ -35,6 +35,8 @@ real get_max_real_from_bin_size(const int&);
 int digit_to_int(const char&);
 char int_to_digit(const int&);
 void remove_leading_zeros(std::string&);
+real my_rand();
+void my_srand(real);
 
 
 //

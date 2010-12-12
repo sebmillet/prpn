@@ -64,6 +64,8 @@ const BuiltinCommandDescriptor builtinCommands[] = {
 	{1, BC_FUNCTION_WRAPPER, "INV", 0, 0, &bc_inv, 0, 0, _N("1/x")},
 	{1, BC_FUNCTION_WRAPPER, "SQ", 0, 0, &bc_sq, 0, 0, _N("Square")},
 	{1, BC_FUNCTION_WRAPPER, "SQR", 0, 0, &bc_sqr, 0, 0, _N("Square root")},
+	{1, BC_COMMAND_WRAPPER, "RDZ", 0, 0, &bc_rdz, 0, 0, _N("Initializes random values series, 0 to start from a timer value")},
+	{0, BC_FUNCTION_WRAPPER, "RAND", 0, &bc_rand, 0, 0, 0, _N("Get a random value x, 0 <= x < 1")},
 	{0, BC_FUNCTION_WRAPPER, "MINR", 0, &bc_minr, 0, 0, 0, _N("Smallest real greater than zero the calcultor can represent")},
 	{0, BC_FUNCTION_WRAPPER, "MAXR", 0, &bc_maxr, 0, 0, 0, _N("Biggest real the calcultor can represent")},
 	{1, BC_FUNCTION_WRAPPER, "->HMS", 0, 0, &bc_to_hms, 0, 0, _N("Convert a decimal to HMS (h.MMSSss)")},

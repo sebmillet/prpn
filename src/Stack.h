@@ -209,6 +209,7 @@ public:
 	virtual st_err_t op_sign(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_mant(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_xpon(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_rdz() { return ST_ERR_BAD_ARGUMENT_TYPE; }
 
 	virtual st_err_t op_add_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_sub_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
@@ -508,6 +509,7 @@ public:
 	virtual st_err_t op_ceil(StackItem*&);
 	virtual st_err_t op_mant(StackItem*&);
 	virtual st_err_t op_xpon(StackItem*&);
+	virtual st_err_t op_rdz();
 
 	virtual st_err_t op_add_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_add(this, ret); }
 	virtual st_err_t op_sub_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_sub(this, ret); }
