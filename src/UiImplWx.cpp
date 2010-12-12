@@ -369,10 +369,12 @@ class MyFrame: public wxFrame {
 	wxWindow *w_path;
 	wxStaticText *path;
 	int path_width;
+	int path_width_associated_stack_width_in_pixels;
 
 	vector<stack_1line> dispStack;
 	wxTextCtrl *textTypein;
 	void build_dispStack();
+	void check_path_width();
 	void display_help(const int&);
 public:
 	friend class UiImplWx;
@@ -422,7 +424,7 @@ static void build_menu_bar(const MenuDescription* const md, const int& nb, wxMen
 
 	const char *empty_sz = "";
 
-	const MenuDescription *e;
+	const MenuDescription *e = NULL;
 	int e_type;
     menuBar = new wxMenuBar;
 	vector<int> menu_stack;
@@ -506,11 +508,32 @@ MyFrame* MyApp::get_frame() const {
 	return frame;
 }
 
+  // Calculate the width of the path area (to be able to end the string with "..." if needed)
+void MyFrame::check_path_width() {
+	int l = 0;
+	wxStaticText *tmp;
+	int wtmp, htmp, w, h;
+	dispStack[0].t->GetSize(&w, &h);
+	debug_write_i("wref = %i", w);
+	if (path_width_associated_stack_width_in_pixels != w) {
+		do {
+			l++;
+			tmp = new wxStaticText(this, wxID_ANY, wxString(wxChar(' '), l), wxPoint(0, 0), wxSize(wxDefaultSize),
+				MY_PATH_BORDERSTYLE);
+			tmp->SetFont(wxFont(MY_PATH_FONTSIZE, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, MY_PATH_FONTWEIGHT, 0));
+			tmp->GetSize(&wtmp, &htmp);
+			tmp->Destroy();
+		} while (wtmp < path_width_associated_stack_width_in_pixels);
+		path_width = l - 1;
+		path_width_associated_stack_width_in_pixels = w;
+	}
+}
+
 MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
 	const MenuDescription*& md, int& nb_md, const BtnDescription*& bd, int& nb_bd)
 		: wxFrame(NULL, -1, title, pos, size),
-		menus_descriptions(md), nb_menus_descriptions(nb_md), btn_descriptions(bd), nb_btn_descriptions(nb_bd) {
-
+		menus_descriptions(md), nb_menus_descriptions(nb_md), btn_descriptions(bd), nb_btn_descriptions(nb_bd),
+		path_width(-1), path_width_associated_stack_width_in_pixels(-1) {
     SetIcon(wxIcon(prpn_xpm));
 
 	SetBackgroundColour(MY_CALCULATOR_BACKGROUND_COLOR);
@@ -642,6 +665,8 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
 		}
 	}
 
+	check_path_width();
+
 	SetMinSize(wxSize(10, 10));
 
 	textTypein->SetFocus();
@@ -685,22 +710,6 @@ void MyFrame::build_dispStack() {
 		dispStack.push_back(l1);
 		topSizer->Insert(STACK_INDEX_0 + i, l1.w, 0, wxALL, MY_STACK_BORDERSIZE);
 	}
-
-	  // Calculate the width of the path area (to be able to end the string with "..." if needed)
-	int l = 0;
-	wxStaticText *tmp;
-	int wtmp, htmp, w_ref, h_ref;
-	dispStack[0].t->GetSize(&w_ref, &h_ref);
-	debug_write_i("wref = %i", w_ref);
-	do {
-		l++;
-		tmp = new wxStaticText(this, wxID_ANY, wxString(wxChar(' '), l), wxPoint(0, 0), wxSize(wxDefaultSize),
-			MY_PATH_BORDERSTYLE);
-		tmp->SetFont(wxFont(MY_PATH_FONTSIZE, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, MY_PATH_FONTWEIGHT, 0));
-		tmp->GetSize(&wtmp, &htmp);
-		tmp->Destroy();
-	} while (wtmp < w_ref);
-	path_width = l - 1;
 }
 
 void MyFrame::display_help(const int& dh) {
@@ -1087,6 +1096,7 @@ void UiImplWx::neg() {
 
 void UiImplWx::refresh_stack_height() {
 	f->build_dispStack();
+	f->check_path_width();
 
 	int y0 = my_y0 + my_get_max_stack() * (my_y1 - my_y0);
 

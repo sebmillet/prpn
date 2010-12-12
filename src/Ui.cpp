@@ -849,7 +849,6 @@ static void refresh_stack(const int& enforced_nb_stack_elems_to_display, const b
 		string* ps;
 		slcc_t color_code;
 		for (i = 1; i <= i_upper && !no_more_lines; i++) {
-			color_code = SLCC_NORMAL;
 			if (is_displaying_error && i == 1) {
 				color_code = SLCC_ERROR;
 				ps = &display_error_l1;
