@@ -1665,12 +1665,12 @@ static st_err_t bc_rand(StackItem*& si, string&) {
 static st_err_t bc_minr(StackItem*& si, string&) { si = new StackItemReal(Real(MINR)); return ST_ERR_OK; }
 static st_err_t bc_maxr(StackItem*& si, string&) { si = new StackItemReal(Real(MAXR)); return ST_ERR_OK; }
 
-static st_err_t bc_rad(TransStack& ts, SIO* args, string&) {
+static st_err_t bc_rad(TransStack&, SIO*, string&) {
 	F->set_angle_mode(ANGLE_RAD);
 	return ST_ERR_OK;
 }
 
-static st_err_t bc_deg(TransStack& ts, SIO* args, string&) {
+static st_err_t bc_deg(TransStack&, SIO*, string&) {
 	F->set_angle_mode(ANGLE_DEG);
 	return ST_ERR_OK;
 }
@@ -2697,7 +2697,6 @@ st_err_t StackItemReal::op_max(StackItemReal* arg1, StackItem*& ret) {
 }
 
 st_err_t StackItemReal::op_rdz() {
-	st_err_t c = ST_ERR_OK;
 	my_srand(sc.get_value());
 	return ST_ERR_OK;
 }
@@ -2787,7 +2786,6 @@ st_err_t StackItemReal::op_pow(StackItemReal *arg1, StackItem*& ret) {
 	Cplx cplx;
 	st_err_t c = ST_ERR_OK;
 	arg1->get_Real().pow(sc, c, cplx);
-	int n;
 	create_Real_or_Cplx_StackItem(c, cplx, ret);
 	return c;
 }

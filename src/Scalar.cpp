@@ -19,6 +19,7 @@
 #include <cerrno>
 #include <cmath>
 #include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
@@ -453,9 +454,9 @@ void my_srand(real seed) {
 		seed = 1;
 	int sr;
 	if (seed != 0)
-		sr = seed * RAND_MAX;
+		sr = static_cast<int>(seed * RAND_MAX);
 	else
-		sr = time(NULL);
+		sr = static_cast<int>(time(NULL));
 	srand(sr);
 }
 
@@ -485,7 +486,7 @@ static void numeric_ln(const real&, st_err_t&, real&);
 static void numeric_log(const real&, st_err_t&, real&);
 static void numeric_exp(const real&, st_err_t&, real&);
 static void numeric_alog(const real&, st_err_t&, real&);
-static void numeric_pow(const real&, st_err_t&, real&);
+static void numeric_pow(const real&, const real&, st_err_t&, real&);
 static void numeric_cos(const real&, st_err_t&, real&);
 static void numeric_sin(const real&, st_err_t&, real&);
 static void numeric_tan(const real&, st_err_t&, real&);
@@ -2114,9 +2115,9 @@ template<class Scalar> int Matrix<Scalar>::cmp(const Matrix<Scalar>& op) const {
 	return 0;
 }
 
-st_err_t mat_r_to_c(Matrix<Real> *m_re, Matrix<Cplx> *m_im, Matrix<Cplx>*& mres) {
-	return ST_ERR_INTERNAL;
-}
+//st_err_t mat_r_to_c(Matrix<Real> *m_re, Matrix<Cplx> *m_im, Matrix<Cplx>*& mres) {
+//	return ST_ERR_INTERNAL;
+//}
 
 template class Matrix<Real>;
 template class Matrix<Cplx>;

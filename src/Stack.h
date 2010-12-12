@@ -222,10 +222,10 @@ public:
 	virtual st_err_t op_mod_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_min_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_max_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
-	virtual st_err_t op_hms_add_generic(StackItem& arg2, StackItem*& ret) { return ST_ERR_BAD_ARGUMENT_TYPE; }
-	virtual st_err_t op_hms_sub_generic(StackItem& arg2, StackItem*& ret) { return ST_ERR_BAD_ARGUMENT_TYPE; }
-	virtual st_err_t op_cross_generic(StackItem& arg2, StackItem*& ret) { return ST_ERR_BAD_ARGUMENT_TYPE; }
-	virtual st_err_t op_dot_generic(StackItem& arg2, StackItem*& ret) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_hms_add_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_hms_sub_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_cross_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_dot_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_cos(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_sin(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_tan(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
