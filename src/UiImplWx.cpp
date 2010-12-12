@@ -369,7 +369,7 @@ class MyFrame: public wxFrame {
 	wxWindow *w_path;
 	wxStaticText *path;
 	int path_width;
-	int path_width_associated_stack_width_in_pixels;
+	int last_read_width;
 
 	vector<stack_1line> dispStack;
 	wxTextCtrl *textTypein;
@@ -513,9 +513,10 @@ void MyFrame::check_path_width() {
 	int l = 0;
 	wxStaticText *tmp;
 	int wtmp, htmp, w, h;
-	dispStack[0].t->GetSize(&w, &h);
-	debug_write_i("wref = %i", w);
-	if (path_width_associated_stack_width_in_pixels != w) {
+	wxSize s = GetClientSize();
+	int read_width = s.GetWidth();
+	debug_write_i("read_width = %i", read_width);
+	if (read_width != last_read_width) {
 		do {
 			l++;
 			tmp = new wxStaticText(this, wxID_ANY, wxString(wxChar(' '), l), wxPoint(0, 0), wxSize(wxDefaultSize),
@@ -523,9 +524,9 @@ void MyFrame::check_path_width() {
 			tmp->SetFont(wxFont(MY_PATH_FONTSIZE, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, MY_PATH_FONTWEIGHT, 0));
 			tmp->GetSize(&wtmp, &htmp);
 			tmp->Destroy();
-		} while (wtmp < path_width_associated_stack_width_in_pixels);
+		} while (wtmp < read_width);
 		path_width = l - 1;
-		path_width_associated_stack_width_in_pixels = w;
+		last_read_width = read_width;
 	}
 }
 
@@ -533,7 +534,7 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
 	const MenuDescription*& md, int& nb_md, const BtnDescription*& bd, int& nb_bd)
 		: wxFrame(NULL, -1, title, pos, size),
 		menus_descriptions(md), nb_menus_descriptions(nb_md), btn_descriptions(bd), nb_btn_descriptions(nb_bd),
-		path_width(-1), path_width_associated_stack_width_in_pixels(-1) {
+		path_width(-1), last_read_width(-1) {
     SetIcon(wxIcon(prpn_xpm));
 
 	SetBackgroundColour(MY_CALCULATOR_BACKGROUND_COLOR);
@@ -710,6 +711,8 @@ void MyFrame::build_dispStack() {
 		dispStack.push_back(l1);
 		topSizer->Insert(STACK_INDEX_0 + i, l1.w, 0, wxALL, MY_STACK_BORDERSIZE);
 	}
+//    int h;
+//    dispStack[0].t->GetSize(&read_path_width_associated_stack_width_in_pixels, &h);
 }
 
 void MyFrame::display_help(const int& dh) {
