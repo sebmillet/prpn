@@ -1151,7 +1151,7 @@ void DisplayStackLayout::redefine_geometry(int new_max_stack, int new_width) {
 		min_stack = max_stack;
 		width = new_width;
 		changed = true;
-		ui_redim();
+		ui_redim(0);
 		ui_set_recalc_stack_flag();
 		ui_refresh_display();
 	}

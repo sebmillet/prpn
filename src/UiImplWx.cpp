@@ -1106,7 +1106,7 @@ void UiImplWx::refresh_stack_height() {
 	int x, y, w, h;
 	f->textTypein->GetPosition(&x, &y);
 	f->textTypein->GetSize(&w, &h);
-	int bottom = y + my_h0 - 1;
+	int bottom = y + h - 1;
 	int new_h = bottom - y0 + 1;
 
 	f->textTypein->SetSize(my_x0, y0, my_w0, new_h);
