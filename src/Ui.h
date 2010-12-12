@@ -43,6 +43,9 @@ void ui_redim(int);
 extern std::string html_help_file;
 extern bool html_help_found;
 
+enum {REFRESH_PATH_PRE, REFRESH_PATH_POST};
+
+  // Standard known key codes
 enum {UIK_ANY = -30000, UIK_RETURN, UIK_NEWLINE, UIK_ESCAPE, UIK_UP, UIK_DOWN};
 
 
@@ -178,7 +181,7 @@ public:
 	virtual void refresh_statuswin() = 0;
 	virtual void set_line(const int&, const slcc_t&, const std::string&) = 0;
 	virtual void enforce_refresh() = 0;
-	virtual void refresh_display_path(const std::string&, const bool&) = 0;
+	virtual void refresh_display_path(const std::string&, const bool&, const int&) = 0;
 	virtual void set_syntax_error(const int&, const int&, const int&, const int&) = 0;
 	virtual const std::string get_string() = 0;
 	virtual void erase_input() = 0;

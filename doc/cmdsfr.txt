@@ -45,6 +45,8 @@ XPON           (1): Exponentielle de x
 INV            (1): 1/x
 SQ             (1): Carré
 SQR            (1): Racine carrée
+RDZ            (1): Initialise la suite des valeurs aléatoires, 0 pour utiliser l'horloge
+RAND           (0): Produis une valeur aléatoire x, 0 <= x < 1
 MINR           (0): Plus petit réel supérieur à zéro représentable par la calculatrice
 MAXR           (0): Plus grand réel représentable par la calculatrice
 ->HMS          (1): Convertis un décimal en nombre HMS (h.MMSSss)
@@ -55,6 +57,10 @@ D->R           (1): Convertis des degrés en radians (*PI/180)
 R->D           (1): Convertis des radians en degrés (*180/PI)
 RAD            (0): Utilise le radian pour les mesures angulaires
 DEG            (0): Utilise le degré pour les mesures angulaires
++ML            (0): Affiche le premier élément sur plusieurs lignes
+-ML            (0): Affiche le premier élément sur une seule ligne
+RDXP           (0): Utilise la caractère '.' comme séparateur décimal
+RDXC           (0): Utilise la caractère ',' comme séparateur décimal
 R->C           (2): Réel à complexe
 C->R           (1): Complexe à réel
 RE             (1): Partie réelle d'un nombre complexe ou d'un tableau
@@ -70,10 +76,10 @@ SAME           (2): Est identique
 <=             (2): Est plus petit que, ou égal à
 >              (2): Est plus grand que
 >=             (2): Est plus grand que, ou égal à
-AND            (2): Logical and
-OR             (2): Logical or
-XOR            (2): Logical xor
-NOT            (1): Logical not
+AND            (2): Et logique
+OR             (2): Ou logique
+XOR            (2): Xor logique (exclusion)
+NOT            (1): Non logique
 DUP            (1): Copie le premier élément
 SWAP           (2): Échange les deux premiers éléments
 DROP           (1): Supprime le premier élément
@@ -171,5 +177,7 @@ Programmes
 Programme                << >>          << DUP + SWAP >>
 Algébrique               ' '            'X+2*Y=Z'
 
-1
-1
+,142857142857
+[[ 1 2 ]  [ 3 4 ]]
+[[ ,142857142857 ,285714285714 ]  [ ,428571428571 ,571428571429 ]]
+(1,2;3)

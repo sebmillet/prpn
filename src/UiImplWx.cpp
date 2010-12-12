@@ -642,32 +642,6 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
 		}
 	}
 
-	  // Calculate the width of the path area (to be able to end the string with "..." if needed)
-	int l = 0;
-	wxStaticText *tmp;
-	int wtmp, htmp, w_ref, h_ref;
-	dispStack[0].t->GetSize(&w_ref, &h_ref);
-	debug_write_i("wref = %i", w_ref);
-	do {
-		l++;
-		tmp = new wxStaticText(this, wxID_ANY, wxString(wxChar(' '), l), wxPoint(0, 0), wxSize(wxDefaultSize),
-			MY_PATH_BORDERSTYLE);
-		tmp->SetFont(wxFont(MY_PATH_FONTSIZE, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, MY_PATH_FONTWEIGHT, 0));
-		tmp->GetSize(&wtmp, &htmp);
-		tmp->Destroy();
-	} while (wtmp < w_ref);
-	path_width = l - 1;
-
-//    int ww, hh;
-//    stwin->GetSize(&ww, &hh);
-//    stwin->SetSize(w_ref, hh + 50);
-//    int fake_w, fake_h;
-//    w_path->SetSize(w_ref, h_ref);
-
-//    w_path->GetSize(&fake_w, &fake_h);
-//    debug_write_i("Fake_w = %i", fake_w);
-//    debug_write_i("Fake_h = %i", fake_h);
-
 	SetMinSize(wxSize(10, 10));
 
 	textTypein->SetFocus();
@@ -711,6 +685,22 @@ void MyFrame::build_dispStack() {
 		dispStack.push_back(l1);
 		topSizer->Insert(STACK_INDEX_0 + i, l1.w, 0, wxALL, MY_STACK_BORDERSIZE);
 	}
+
+	  // Calculate the width of the path area (to be able to end the string with "..." if needed)
+	int l = 0;
+	wxStaticText *tmp;
+	int wtmp, htmp, w_ref, h_ref;
+	dispStack[0].t->GetSize(&w_ref, &h_ref);
+	debug_write_i("wref = %i", w_ref);
+	do {
+		l++;
+		tmp = new wxStaticText(this, wxID_ANY, wxString(wxChar(' '), l), wxPoint(0, 0), wxSize(wxDefaultSize),
+			MY_PATH_BORDERSTYLE);
+		tmp->SetFont(wxFont(MY_PATH_FONTSIZE, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, MY_PATH_FONTWEIGHT, 0));
+		tmp->GetSize(&wtmp, &htmp);
+		tmp->Destroy();
+	} while (wtmp < w_ref);
+	path_width = l - 1;
 }
 
 void MyFrame::display_help(const int& dh) {
@@ -928,7 +918,7 @@ public:
 	virtual void refresh_statuswin();
 	virtual void set_line(const int&, const slcc_t&, const string&);
 	virtual void enforce_refresh();
-	virtual void refresh_display_path(const string&, const bool&);
+	virtual void refresh_display_path(const string&, const bool&, const int&);
 	virtual void set_syntax_error(const int&, const int&, const int&, const int&);
 	virtual const std::string get_string();
 	virtual void erase_input();
@@ -970,17 +960,17 @@ void UiImplWx::set_line(const int& line_number, const slcc_t& color_code, const 
 
 void UiImplWx::enforce_refresh() { f->Update(); }
 
-void UiImplWx::refresh_display_path(const string& s, const bool& modified) {
-
-	debug_write_i("PATH REFRESH = %i", static_cast<int>(modified));
-	debug_write(s.c_str());
-
-	if (modified) {
-		string s_mod = s;
-		ui_string_trim(s_mod, f->path_width, &ui_dsl, true);
-		f->path->SetLabel(string_to_wxString(s_mod));
-		debug_write("Path:");
+void UiImplWx::refresh_display_path(const string& s, const bool& modified, const int& when) {
+	if (when == REFRESH_PATH_POST) {
+		debug_write_i("PATH REFRESH = %i", static_cast<int>(modified));
 		debug_write(s.c_str());
+		if (modified) {
+			string s_mod = s;
+			ui_string_trim(s_mod, f->path_width, &ui_dsl, true);
+			f->path->SetLabel(string_to_wxString(s_mod));
+			debug_write("Path:");
+			debug_write(s.c_str());
+		}
 	}
 }
 

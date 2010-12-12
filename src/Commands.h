@@ -76,6 +76,10 @@ const BuiltinCommandDescriptor builtinCommands[] = {
 	{1, BC_FUNCTION_WRAPPER, "R->D", 0, 0, &bc_r_to_d, 0, 0, _N("Convert from radians to degrees")},
 	{0, BC_RAW, "RAD", &bc_rad, 0, 0, 0, 0, _N("Set angular mode to radians")},
 	{0, BC_RAW, "DEG", &bc_deg, 0, 0, 0, 0, _N("Set angular mode to degrees")},
+	{0, BC_RAW, "+ML", &bc_set_ml, 0, 0, 0, 0, _N("Display first item on multilpe lines")},
+	{0, BC_RAW, "-ML", &bc_unset_ml, 0, 0, 0, 0, _N("Display first item on a single line")},
+	{0, BC_RAW, "RDXP", &bc_rdxp, 0, 0, 0, 0, _N("Set the decimal separator to '.'")},
+	{0, BC_RAW, "RDXC", &bc_rdxc, 0, 0, 0, 0, _N("Set the decimal separator to ','")},
 	  // Complex-specific functions
 	{2, BC_FUNCTION_WRAPPER, "R->C", 0, 0, 0, &bc_r_to_c, 0, _N("Real to complex")},
 	{1, BC_RAW, "C->R", &bc_c_to_r, 0, 0, 0, 0, _N("Complex to real")},

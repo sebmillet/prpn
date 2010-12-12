@@ -2115,10 +2115,6 @@ template<class Scalar> int Matrix<Scalar>::cmp(const Matrix<Scalar>& op) const {
 	return 0;
 }
 
-//st_err_t mat_r_to_c(Matrix<Real> *m_re, Matrix<Cplx> *m_im, Matrix<Cplx>*& mres) {
-//	return ST_ERR_INTERNAL;
-//}
-
 template class Matrix<Real>;
 template class Matrix<Cplx>;
 

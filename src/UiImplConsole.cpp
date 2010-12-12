@@ -44,7 +44,7 @@ public:
 	virtual void ui_set_error_call_back(const string&, const string&);
 	virtual void set_line(const int&, const slcc_t&, const string&);
 	virtual void enforce_refresh();
-	virtual void refresh_display_path(const string&, const bool&);
+	virtual void refresh_display_path(const string&, const bool&, const int&);
 	virtual void set_syntax_error(const int&, const int&, const int&, const int&);
 	virtual const std::string get_string();
 	virtual void erase_input();
@@ -80,11 +80,13 @@ void UiImplConsole::set_line(const int&, const slcc_t&, const string& s) { cout 
 
 void UiImplConsole::enforce_refresh() { }
 
-void UiImplConsole::refresh_display_path(const string& s, const bool&) {
-	if (!opt_batch) {
-		string s_mod = s;
-		ui_string_trim(s_mod, ui_dsl.get_width(), &ui_dsl, true);
-		cout << s_mod << endl;
+void UiImplConsole::refresh_display_path(const string& s, const bool&, const int& when) {
+	if (when == REFRESH_PATH_PRE) {
+		if (!opt_batch) {
+			string s_mod = s;
+			ui_string_trim(s_mod, ui_dsl.get_width(), &ui_dsl, true);
+			cout << s_mod << endl;
+		}
 	}
 }
 

@@ -216,8 +216,15 @@ COMMANDES
        SQR (1)
 	      Racine carre
 
+       RDZ (1)
+	      Initialise  la  suite  des  valeurs  alatoires, 0 pour utiliser
+	      lhorloge
+
+       RAND (0)
+	      Produis une valeur alatoire x, 0 <= x < 1
+
        MINR (0)
-	      Plus  petit  rel suprieur  zro reprsentable par la calcula
+	      Plus petit rel suprieur  zro reprsentable par  la  calcula
 	      trice
 
        MAXR (0)
@@ -247,6 +254,18 @@ COMMANDES
        DEG (0)
 	      Utilise le degr pour les mesures angulaires
 
+       +ML (0)
+	      Affiche le premier lment sur plusieurs lignes
+
+       -ML (0)
+	      Affiche le premier lment sur une seule ligne
+
+       RDXP (0)
+	      Utilise la caractre . comme sparateur dcimal
+
+       RDXC (0)
+	      Utilise la caractre , comme sparateur dcimal
+
        R->C (2)
 	      Rel  complexe
 
@@ -268,7 +287,7 @@ COMMANDES
 	       polaire
 
        P->R (1)
-	      Conversion  des  coordonnes  dun	nombre complexe de polaire
+	      Conversion des coordonnes dun nombre  complexe  de  polaire
 	      rectangulaire
 
        SAME (2)
@@ -287,15 +306,15 @@ COMMANDES
        >= (2) Est plus grand que, ou gal
 
        AND (2)
-	      Logical and
+	      Et logique
 
-       OR (2) Logical or
+       OR (2) Ou logique
 
        XOR (2)
-	      Logical xor
+	      Xor logique (exclusion)
 
        NOT (1)
-	      Logical not
+	      Non logique
 
        DUP (1)
 	      Copie le premier lment
@@ -501,7 +520,7 @@ COMMANDES
 	      Efface lcran
 
        CLMF (0)
-	      Dsarme lindicateur daffichage =>	dgle  laffichage  de  la
+	      Dsarme  lindicateur  daffichage  =>  dgle laffichage de la
 	      pile
 
        DISP (2)
@@ -511,15 +530,15 @@ COMMANDES
 	      Lis le fichier et met son contenu dans la pile
 
        _WRITE (2)
-	      cris  le second lment de la pile dans le fichier nomm par le
+	      cris le second lment de la pile dans le fichier nomm par	le
 	      premier lment
 
        _HACK-REAL-MGMT (1)
-	      Interne : rgle la gestion de  laffichage	des  rels  en  mode
+	      Interne  :  rgle	la  gestion  de laffichage des rels en mode
 	      standard
 
        _HACK-REAL-DOT (1)
-	      Interne  :  dtermine  sil  faut afficher un point  la fin des
+	      Interne : dtermine sil faut afficher un point    la  fin	des
 	      rels
 
        UNDO (0)
@@ -532,7 +551,7 @@ COMMANDES
 	      Renvoie le nombre de niveaux dannulations
 
 SOLUTION DE SYSMESQUATIONS LIAIRES
-       Vous pouvez rsoudre un systme dquations linaires  en  divisant  un
+       Vous  pouvez  rsoudre  un systme dquations linaires en divisant un
        vecteur par une matrice.
 	      Exemple Vous voudriez rsoudre le systme
 		2x - y + z = 13
@@ -542,7 +561,7 @@ SOLUTION DE SYSMESQUATIONS LIAIRES
 		[13 3 4]
 	      Ensuite saisissez la matrice
 		[[2 -1 1][1 5 3][-2 0 4]]
-	      Faites une division en cliquant sur le bouton /.	Le  rsultat
+	      Faites  une  division en cliquant sur le bouton /. Le rsultat
 	      est l :
 		[4 -2 3]
 	      Ce qui se lit "la solution est x = 4, y = -2 et z = 3"
@@ -550,15 +569,15 @@ SOLUTION DE SYSMESQUATIONS LIAIRES
 INSTRUCTIONS DE CONTLE DES PROGRAMMES
        Note au sujet des booens
 	      Un test (IF, WHILE ou UNTIL, cf. ci-aprs) prend une valeur dans
-	      la pile.	Cette valeur doit tre de type rel. Toute valeur  non
+	      la  pile.  Cette valeur doit tre de type rel. Toute valeur non
 	      nulle est traite comme VRAI, une valeur nulle comme FAUX.
-	      Ci-dessous,  le  terme "en bas de la pile" se rapporte  lobjet
+	      Ci-dessous, le terme "en bas de la pile" se rapporte    lobjet
 	      situ au niveau 1 de la pile.
 
        quence IF/THEN/ELSE/END
 	      Excute les instructions entre IF et THEN.
 	      Ensuite, prends llment en bas de la pile, sil est vrai (voir
-	      ci-dessus),  excute les instructions entre THEN et ELSE (ou END
+	      ci-dessus), excute les instructions entre THEN et ELSE (ou  END
 	      sil ny a pas de ELSE), sinon excute les instructions du ELSE.
 	      ELSE est facultatif.
 
@@ -578,40 +597,40 @@ INSTRUCTIONS DE CONTLE DES PROGRAMMES
        quence WHILE/REPEAT/END
 	      Excute les instructions entre WHILE et REPEAT.
 	      Ensuite, prends llment en bas de la pile, sil est vrai (voir
-	      ci-dessus),  excute  les	instructions  du REPEAT et recommence
+	      ci-dessus), excute les instructions  du  REPEAT  et  recommence
 	      depuis le dbut du WHILE.
 
        Exemple
-	      Calcule le plus petit N pour lequel  somme(i^2  avec  i  prenant
+	      Calcule  le  plus  petit	N pour lequel somme(i^2 avec i prenant
 	      toutes les valeurs entires dans lintervalle 1..N) >= 100
 	      << 0 0 -> n << WHILE DUP 100 < REPEAT n SQ + n 1 + n STO END n
 	      >> >>
 
        quence DO/UNTIL/END
-	      Excute les instructions entre DO et UNTIL puis entre  UNTIL  et
+	      Excute  les  instructions entre DO et UNTIL puis entre UNTIL et
 	      END.
 	      Ensuite, prends llment en bas de la pile, sil est vrai (voir
 	      ci-dessus), recommence depuis le dbut du DO.
 
        Exemple
-	      Calcule le plus petit N pour lequel  somme(1/i  avec  i  prenant
+	      Calcule  le  plus  petit	N pour lequel somme(1/i avec i prenant
 	      toutes les valeurs entires dans lintervalle 1..N) >= 3
-	      <<  0 0 -> n << DO n 1 + n STO n INV + UNTIL DUP 7 >= END n >>
+	      << 0 0 -> n << DO n 1 + n STO n INV + UNTIL DUP 7 >= END n  >>
 	      >>
 
        quence FOR|START/NEXT|STEP
-	      FOR ou START dmarre une boucle en prenant  deux  arguments,  le
+	      FOR  ou  START  dmarre une boucle en prenant deux arguments, le
 	      premier (deuxime niveau de la pile) tant la valeur du compteur
-	      au dpart, le deuxime (premier niveau  de	la  pile)  tant  la
-	      valeur   cible  du  compteur,  au-del  de  laquelle  la  boucle
+	      au  dpart,  le  deuxime  (premier  niveau de la pile) tant la
+	      valeur  cible  du  compteur,  au-del  de	laquelle  la   boucle
 	      sarrte.
-	      START est une boucle anonyme. FOR  prend	un  nom  et  lutilise
+	      START  est  une  boucle  anonyme.  FOR prend un nom et lutilise
 	      comme variable locale pour le compteur.
-	      NEXT  incrmente  le compteur dune unit si la valeur cible est
-	      suprieure  la valeur de  dpart,  le  dcrmente  dune  unit
+	      NEXT incrmente le compteur dune unit si la valeur  cible	est
+	      suprieure    la  valeur  de  dpart, le dcrmente dune unit
 	      sinon.
-	      STEP  prend la valeur en bas de la pile et lajoute au compteur.
-	      NEXT peut tre utilis indiffremment avec FOR  et  START,  mme
+	      STEP prend la valeur en bas de la pile et lajoute au  compteur.
+	      NEXT  peut  tre  utilis indiffremment avec FOR et START, mme
 	      chose pour STEP.
 
        Exemple 1
@@ -619,18 +638,18 @@ INSTRUCTIONS DE CONTLE DES PROGRAMMES
 	      << 0 1 10 FOR i i SQ + NEXT >>
 
        Exemple 2
-	      Calcule  somme(2^i  avec	i  prenant toutes les valeurs entires
-	      dans lintervalle 1..N), N tant  la  premire  valeur  dans  la
+	      Calcule somme(2^i avec i prenant	toutes	les  valeurs  entires
+	      dans  lintervalle  1..N),  N  tant  la premire valeur dans la
 	      pile.
 	      << 0 1 1 4 ROLL START DUP ROT + SWAP 2 * NEXT DROP >> EVAL
 
        Exemple 3
-	      Calcule  somme(i avec i prenant toutes les valeurs impaires dans
+	      Calcule somme(i avec i prenant toutes les valeurs impaires  dans
 	      lintervalle 1..N), N tant la premire valeur dans la pile.
 	      << 0 1 ROT FOR i i + 2 STEP >>
 
        Documentation RPL
-	      RPL est le langage de programmation des calculatrices  HP  fonc
+	      RPL  est	le langage de programmation des calculatrices HP fonc
 	      tionnant en notation polonaise inverse.
 	      http://en.wikipedia.org/wiki/RPL_%28programming_language%29
 
@@ -639,7 +658,7 @@ TRUCS
 	      Appuyer sur les touches <Ctrl-Entre>.
 
        Redimensionner la fetre sa taille originale
-	      Double-cliquer  sur  la  partie  "statut"  de la fentre, o les
+	      Double-cliquer sur la partie "statut"  de  la  fentre,  o  les
 	      modes angulaire et binaire sont affichs.
 
 FICHIERS INITIALISATION
@@ -651,8 +670,8 @@ FICHIERS INITIALISATION
 
 AUTEUR
        crit par Sbastien Millet <sebastien.millet1@club-internet.fr>.
-       Autorisation est donne de copier, distribuer et/ou modifier  ce	docu
-       ment  selon  les  termes de la licence "GNU General Public License". La
+       Autorisation  est  donne de copier, distribuer et/ou modifier ce docu
+       ment selon les termes de la licence "GNU General  Public  License".  La
        version 3 est publie par la Free Software Foundation.
 
 BUGS
@@ -661,34 +680,34 @@ BUGS
        Ces fonctions sont supposes apporter plus de prcision au voisinage de
        x = 0. Rappel :
 	      LNP1(x) = LN(X + 1) et EXPM(x) = EXP(x) - 1
-	      A lheure	actuelle,  ces	fonctions  napportent  pas  plus  de
+	      A  lheure  actuelle,  ces  fonctions  napportent	pas  plus de
 	      prcision, elles appellent simplement LN() et EXP().
 
        Difrence entre prpn et prpnc
 
        Linux  prpn peut tre excut avec loption -c. Dans ce cas le rsultat
-	      est presque quivalent  prpnc. "Presque"  seulement.  prpn  est
+	      est  presque  quivalent	prpnc. "Presque" seulement. prpn est
 	      compil avec la librairie WxWidgets et initialise des ressources
-	      graphiques au dmarrage. Si les ressources  graphiques  ne  sont
-	      pas  trouves, le programme ne dmarre pas. Par exemple, si vous
+	      graphiques  au  dmarrage.  Si les ressources graphiques ne sont
+	      pas trouves, le programme ne dmarre pas. Par exemple, si	vous
 	      excutez la commande suivante
 		   DISPLAY="" prpn -c
 	      Vous obtenez ce rsultat
 		   Error: Unable to initialize gtk, is DISPLAY set properly?
 	      prpnc rsout ce problme, car il nest *pas* compil avec WxWid
-	      gets  et peut fonctionner dans un terminal ne disposant daucune
+	      gets et peut fonctionner dans un terminal ne disposant  daucune
 	      ressource graphique. Un moyen lgant de rgler cette difficult
-	      serait   dempcher   WxWidgets   dinitialiser  les  ressources
-	      graphiques lorsque loption -c est prsente. Si vous  connaissez
-	      un  moyen  robuste  de  le  faire (portable quels que soient les
-	      systmes et les  versions...),  lauteur  de  ce  programme  est
+	      serait  dempcher	WxWidgets   dinitialiser   les	 ressources
+	      graphiques  lorsque loption -c est prsente. Si vous connaissez
+	      un moyen robuste de le faire  (portable  quels  que  soient  les
+	      systmes  et  les	versions...),  lauteur	de  ce programme est
 	      intress !
 
        Windows
-	      prpn.exe	ne peut *pas* tre excut avec loption -c. Sous Win
-	      dows, WxWidgets dconnecte  le  processus	de  son  terminal  de
-	      contrle.	La  solution  est la mme que sous Linux, sauf quici
-	      cest obligatoire	:  vous  devez	utiliser  prpnc.exe  si  vous
+	      prpn.exe ne peut *pas* tre excut avec loption -c. Sous  Win
+	      dows,  WxWidgets	dconnecte  le  processus  de  son terminal de
+	      contrle. La solution est la mme que sous	Linux,	sauf  quici
+	      cest  obligatoire  :  vous  devez  utiliser  prpnc.exe  si vous
 	      souhaitez utiliser la version en ligne de commande.
 
 

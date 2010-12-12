@@ -1665,15 +1665,14 @@ static st_err_t bc_rand(StackItem*& si, string&) {
 static st_err_t bc_minr(StackItem*& si, string&) { si = new StackItemReal(Real(MINR)); return ST_ERR_OK; }
 static st_err_t bc_maxr(StackItem*& si, string&) { si = new StackItemReal(Real(MAXR)); return ST_ERR_OK; }
 
-static st_err_t bc_rad(TransStack&, SIO*, string&) {
-	F->set_angle_mode(ANGLE_RAD);
-	return ST_ERR_OK;
-}
+static st_err_t bc_rad(TransStack&, SIO*, string&) { F->set_angle_mode(ANGLE_RAD); return ST_ERR_OK; }
+static st_err_t bc_deg(TransStack&, SIO*, string&) { F->set_angle_mode(ANGLE_DEG); return ST_ERR_OK; }
 
-static st_err_t bc_deg(TransStack&, SIO*, string&) {
-	F->set_angle_mode(ANGLE_DEG);
-	return ST_ERR_OK;
-}
+static st_err_t bc_set_ml(TransStack&, SIO*, string&)  { F->set(FL_DISPLAY_L1, true); return ST_ERR_OK; }
+static st_err_t bc_unset_ml(TransStack&, SIO*, string&)  { F->set(FL_DISPLAY_L1, false); return ST_ERR_OK; }
+
+static st_err_t bc_rdxp(TransStack&, SIO*, string&)  { F->set(FL_DECIMAL_SEP, false); return ST_ERR_OK; }
+static st_err_t bc_rdxc(TransStack&, SIO*, string&)  { F->set(FL_DECIMAL_SEP, true); return ST_ERR_OK; }
 
 static st_err_t bc_r_to_c(StackItem& op1, StackItem& op2, StackItem*& ret, string&) {
 	prepare_arith();

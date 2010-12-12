@@ -222,6 +222,12 @@ Carré
 .B SQR\ (1)
 Racine carrée
 .TP
+.B RDZ\ (1)
+Initialise la suite des valeurs aléatoires, 0 pour utiliser l'horloge
+.TP
+.B RAND\ (0)
+Produis une valeur aléatoire x, 0 <= x < 1
+.TP
 .B MINR\ (0)
 Plus petit réel supérieur à zéro représentable par la calculatrice
 .TP
@@ -251,6 +257,18 @@ Utilise le radian pour les mesures angulaires
 .TP
 .B DEG\ (0)
 Utilise le degré pour les mesures angulaires
+.TP
+.B +ML\ (0)
+Affiche le premier élément sur plusieurs lignes
+.TP
+.B -ML\ (0)
+Affiche le premier élément sur une seule ligne
+.TP
+.B RDXP\ (0)
+Utilise la caractère '.' comme séparateur décimal
+.TP
+.B RDXC\ (0)
+Utilise la caractère ',' comme séparateur décimal
 .TP
 .B R->C\ (2)
 Réel à complexe
@@ -298,16 +316,16 @@ Est plus grand que
 Est plus grand que, ou égal à
 .TP
 .B AND\ (2)
-Logical and
+Et logique
 .TP
 .B OR\ (2)
-Logical or
+Ou logique
 .TP
 .B XOR\ (2)
-Logical xor
+Xor logique (exclusion)
 .TP
 .B NOT\ (1)
-Logical not
+Non logique
 .TP
 .B DUP\ (1)
 Copie le premier élément

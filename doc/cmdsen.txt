@@ -45,6 +45,8 @@ XPON           (1): Exponent of x
 INV            (1): 1/x
 SQ             (1): Square
 SQR            (1): Square root
+RDZ            (1): Initializes random values series, 0 to start from a timer value
+RAND           (0): Get a random value x, 0 <= x < 1
 MINR           (0): Smallest real greater than zero the calcultor can represent
 MAXR           (0): Biggest real the calcultor can represent
 ->HMS          (1): Convert a decimal to HMS (h.MMSSss)
@@ -55,6 +57,10 @@ D->R           (1): Convert from degrees to radians
 R->D           (1): Convert from radians to degrees
 RAD            (0): Set angular mode to radians
 DEG            (0): Set angular mode to degrees
++ML            (0): Display first item on multilpe lines
+-ML            (0): Display first item on a single line
+RDXP           (0): Set the decimal separator to '.'
+RDXC           (0): Set the decimal separator to ','
 R->C           (2): Real to complex
 C->R           (1): Complex to real
 RE             (1): Get real part of a complex number or array
@@ -171,5 +177,7 @@ Procedures
 Program                  << >>          << DUP + SWAP >>
 Algebraic                ' '            'X+2*Y=Z'
 
-1
-1
+,142857142857
+[[ 1 2 ]  [ 3 4 ]]
+[[ ,142857142857 ,285714285714 ]  [ ,428571428571 ,571428571429 ]]
+(1,2;3)

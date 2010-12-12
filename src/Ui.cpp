@@ -179,6 +179,7 @@ void ui_string_trim(string& s, const size_t& width, const DisplayStackLayout *ds
 
 static const MenuDescription menus_descriptions[] = {
 	{_N("&File"), "__MENU__"},
+	{_N("&Edit"), "_EDIT"},
 	{_N("&Flags list"), CMD_PREFIX_NOSTD "HELP_FLAGS"},
 	{"", "__SEPARATOR__"},
 	{_N("&Quit"), CMD_PREFIX_NOSTD "EXIT"},
@@ -191,6 +192,11 @@ static const MenuDescription menus_descriptions[] = {
 	{"ENG", ""},
 	{"DEG", ""},
 	{"RAD", ""},
+	{"", "__SEPARATOR__"},
+	{"+ML", ""},
+	{"-ML", ""},
+	{"RDXP", ""},
+	{"RDXC", ""},
 	{"", "__SEPARATOR__"},
 	{CMD_PREFIX_NOSTD "UNDO_LEVELS", ""},
 	{CMD_PREFIX_NOSTD "UNDO_LEVELS?", ""},
@@ -374,6 +380,10 @@ static const MenuDescription menus_descriptions[] = {
 	{"FS?C", ""},
 	{"FC?C", ""},
 	{"", "__SEPARATOR__"},
+	{"AND", ""},
+	{"OR", ""},
+	{"XOR", ""},
+	{"NOT", ""},
 	{"SAME", ""},
 	{"==", ""},
 	{"", "__SEPARATOR__"},
@@ -760,13 +770,21 @@ void ui_flush_input(const string& textin, const string& additional_command) {
 		ui_impl->quit();
 }
 
-static void refresh_path() {
-	static string cache_path;
+  // When should be set to either REFRESH_PATH_PRE, or, REFRESH_PATH_POST
+  // FIXME
+  //   We are mixing GUI considerations with internal stuff... Very gruiiik!
+static void refresh_path(const int& when) {
+	static string cache_path = "";
+	static int last_width = -1;
 	bool has_changed = ts->vars.update_si_path();
 	if (has_changed) {
 		cache_path = ts->vars.get_si_path_string();
 	}
-	ui_impl->refresh_display_path(cache_path, has_changed);
+	if (when == REFRESH_PATH_POST && last_width != ui_dsl.get_width()) {
+		last_width = ui_dsl.get_width();
+		has_changed = true;
+	}
+	ui_impl->refresh_display_path(cache_path, has_changed, when);
 }
 
 static void refresh_status() {
@@ -875,8 +893,9 @@ static void refresh_stack(const int& enforced_nb_stack_elems_to_display, const b
 
 void ui_refresh_display(const int& enforced_nb_stack_elems_to_display) {
 	refresh_status();
-	refresh_path();
+	refresh_path(REFRESH_PATH_PRE);
 	refresh_stack(enforced_nb_stack_elems_to_display, false);
+	refresh_path(REFRESH_PATH_POST);
 }
 
 void ui_set_error(const std::string& l1, const std::string& l2) {

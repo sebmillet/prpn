@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: prpn 0.5.1\n"
 "Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
-"POT-Creation-Date: 2010-12-09 00:05+0100\n"
+"POT-Creation-Date: 2010-12-12 15:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -193,8 +193,12 @@ msgstr ""
 msgid "Infinite Result processed as an exception"
 msgstr ""
 
-#: src/Ui.cpp:182
+#: src/Ui.cpp:181
 msgid "&File"
+msgstr ""
+
+#: src/Ui.cpp:182
+msgid "&Edit"
 msgstr ""
 
 #: src/Ui.cpp:183
@@ -209,23 +213,23 @@ msgstr ""
 msgid "&Commands"
 msgstr ""
 
-#: src/Ui.cpp:381
+#: src/Ui.cpp:394
 msgid "&Help"
 msgstr ""
 
-#: src/Ui.cpp:382
+#: src/Ui.cpp:395
 msgid "&Manual page"
 msgstr ""
 
-#: src/Ui.cpp:384
+#: src/Ui.cpp:397
 msgid "&About"
 msgstr ""
 
-#: src/UiImplWx.cpp:683
+#: src/UiImplWx.cpp:720
 msgid "Help"
 msgstr ""
 
-#: src/UiImplWx.cpp:705 src/UiImplWx.cpp:718
+#: src/UiImplWx.cpp:742 src/UiImplWx.cpp:755
 msgid "OK"
 msgstr ""
 
@@ -410,537 +414,577 @@ msgid "Square root"
 msgstr ""
 
 #: src/Commands.h:67
-msgid "Smallest real greater than zero the calcultor can represent"
+msgid "Initializes random values series, 0 to start from a timer value"
 msgstr ""
 
 #: src/Commands.h:68
-msgid "Biggest real the calcultor can represent"
+msgid "Get a random value x, 0 <= x < 1"
 msgstr ""
 
 #: src/Commands.h:69
-msgid "Convert a decimal to HMS (h.MMSSss)"
+msgid "Smallest real greater than zero the calcultor can represent"
 msgstr ""
 
 #: src/Commands.h:70
-msgid "Convert a HMS (h.MMSSss) to a decimal"
+msgid "Biggest real the calcultor can represent"
 msgstr ""
 
 #: src/Commands.h:71
-msgid "Add two HMS (h.MMSSss)"
+msgid "Convert a decimal to HMS (h.MMSSss)"
 msgstr ""
 
 #: src/Commands.h:72
-msgid "Subtract two HMS (h.MMSSss)"
+msgid "Convert a HMS (h.MMSSss) to a decimal"
 msgstr ""
 
 #: src/Commands.h:73
-msgid "Convert from degrees to radians"
+msgid "Add two HMS (h.MMSSss)"
 msgstr ""
 
 #: src/Commands.h:74
-msgid "Convert from radians to degrees"
+msgid "Subtract two HMS (h.MMSSss)"
 msgstr ""
 
 #: src/Commands.h:75
-msgid "Set angular mode to radians"
+msgid "Convert from degrees to radians"
 msgstr ""
 
 #: src/Commands.h:76
-msgid "Set angular mode to degrees"
+msgid "Convert from radians to degrees"
+msgstr ""
+
+#: src/Commands.h:77
+msgid "Set angular mode to radians"
 msgstr ""
 
 #: src/Commands.h:78
-msgid "Real to complex"
+msgid "Set angular mode to degrees"
 msgstr ""
 
 #: src/Commands.h:79
-msgid "Complex to real"
+msgid "Display first item on multilpe lines"
 msgstr ""
 
 #: src/Commands.h:80
-msgid "Get real part of a complex number or array"
+msgid "Display first item on a single line"
 msgstr ""
 
 #: src/Commands.h:81
-msgid "Get imaginary part of a complex number or array"
+msgid "Set the decimal separator to '.'"
 msgstr ""
 
 #: src/Commands.h:82
-msgid "Get conjugate of a complex number or array"
-msgstr ""
-
-#: src/Commands.h:83
-msgid "Get argument of a complex number"
+msgid "Set the decimal separator to ','"
 msgstr ""
 
 #: src/Commands.h:84
-msgid "Rectangular to polar coordinates"
+msgid "Real to complex"
 msgstr ""
 
 #: src/Commands.h:85
-msgid "Polar to rectangular coordinates"
+msgid "Complex to real"
+msgstr ""
+
+#: src/Commands.h:86
+msgid "Get real part of a complex number or array"
 msgstr ""
 
 #: src/Commands.h:87
-msgid "Is identical"
+msgid "Get imaginary part of a complex number or array"
 msgstr ""
 
 #: src/Commands.h:88
-msgid "Equal to"
+msgid "Get conjugate of a complex number or array"
 msgstr ""
 
 #: src/Commands.h:89
-msgid "Different from"
+msgid "Get argument of a complex number"
 msgstr ""
 
 #: src/Commands.h:90
-msgid "Lower than"
+msgid "Rectangular to polar coordinates"
 msgstr ""
 
 #: src/Commands.h:91
-msgid "Lower than or equal to"
-msgstr ""
-
-#: src/Commands.h:92
-msgid "Greater than"
+msgid "Polar to rectangular coordinates"
 msgstr ""
 
 #: src/Commands.h:93
-msgid "Greater than or equal to"
+msgid "Is identical"
+msgstr ""
+
+#: src/Commands.h:94
+msgid "Equal to"
 msgstr ""
 
 #: src/Commands.h:95
-msgid "Copy the first item"
+msgid "Different from"
 msgstr ""
 
 #: src/Commands.h:96
-msgid "Exchange the first two items"
+msgid "Lower than"
 msgstr ""
 
 #: src/Commands.h:97
-msgid "Delete the first item"
+msgid "Lower than or equal to"
 msgstr ""
 
 #: src/Commands.h:98
-msgid "Clear the stack"
+msgid "Greater than"
 msgstr ""
 
 #: src/Commands.h:99
-msgid "Copy the second item"
+msgid "Greater than or equal to"
 msgstr ""
 
 #: src/Commands.h:100
-msgid "Copy the first two items"
+msgid "Logical and"
 msgstr ""
 
 #: src/Commands.h:101
-msgid "Delete the first two items"
+msgid "Logical or"
 msgstr ""
 
 #: src/Commands.h:102
-msgid "Move the third item to the first position"
+msgid "Logical xor"
 msgstr ""
 
 #: src/Commands.h:103
-msgid "Move the first item to the Nth position"
-msgstr ""
-
-#: src/Commands.h:104
-msgid "Move the Nth item to the first position"
+msgid "Logical not"
 msgstr ""
 
 #: src/Commands.h:105
-msgid "Copy the Nth item"
+msgid "Copy the first item"
 msgstr ""
 
 #: src/Commands.h:106
-msgid "Copy the n first items"
+msgid "Exchange the first two items"
 msgstr ""
 
 #: src/Commands.h:107
-msgid "Delete the n first items"
+msgid "Delete the first item"
 msgstr ""
 
 #: src/Commands.h:108
-msgid "Get the number of items"
+msgid "Clear the stack"
+msgstr ""
+
+#: src/Commands.h:109
+msgid "Copy the second item"
 msgstr ""
 
 #: src/Commands.h:110
-msgid "Set flag"
+msgid "Copy the first two items"
 msgstr ""
 
 #: src/Commands.h:111
-msgid "Clear flag"
+msgid "Delete the first two items"
 msgstr ""
 
 #: src/Commands.h:112
-msgid "Return 1 if flag is set, 0 otherwise"
+msgid "Move the third item to the first position"
 msgstr ""
 
 #: src/Commands.h:113
-msgid "Return 0 if flag is set, 1 otherwise"
+msgid "Move the first item to the Nth position"
 msgstr ""
 
 #: src/Commands.h:114
-msgid "Do FS? then clear flag"
+msgid "Move the Nth item to the first position"
 msgstr ""
 
 #: src/Commands.h:115
-msgid "Do FC? then clear flag"
+msgid "Copy the Nth item"
+msgstr ""
+
+#: src/Commands.h:116
+msgid "Copy the n first items"
 msgstr ""
 
 #: src/Commands.h:117
-msgid "Convert to string"
+msgid "Delete the n first items"
 msgstr ""
 
 #: src/Commands.h:118
-msgid "Convert from string"
+msgid "Get the number of items"
 msgstr ""
 
-#: src/Commands.h:119
-msgid "Extract content from a string or a list"
+#: src/Commands.h:120
+msgid "Set flag"
 msgstr ""
 
 #: src/Commands.h:121
-msgid "Items to list"
+msgid "Clear flag"
 msgstr ""
 
 #: src/Commands.h:122
-msgid "Extract items from list"
+msgid "Return 1 if flag is set, 0 otherwise"
 msgstr ""
 
 #: src/Commands.h:123
-msgid "Get an item from a list or array"
+msgid "Return 0 if flag is set, 1 otherwise"
 msgstr ""
 
 #: src/Commands.h:124
-msgid "Get an item from a list or array by increments"
+msgid "Do FS? then clear flag"
 msgstr ""
 
 #: src/Commands.h:125
-msgid "Put an item into a list or array"
-msgstr ""
-
-#: src/Commands.h:126
-msgid "Put an item into a list or array by increments"
+msgid "Do FC? then clear flag"
 msgstr ""
 
 #: src/Commands.h:127
-msgid "Dimension of a list or array"
+msgid "Convert to string"
 msgstr ""
 
 #: src/Commands.h:128
-msgid "Replace an array by all its elements"
+msgid "Convert from string"
 msgstr ""
 
 #: src/Commands.h:129
-msgid "Create an array from a list of elements"
-msgstr ""
-
-#: src/Commands.h:130
-msgid "Create a constant array"
+msgid "Extract content from a string or a list"
 msgstr ""
 
 #: src/Commands.h:131
-msgid "Transpose a matrix-type array"
+msgid "Items to list"
 msgstr ""
 
 #: src/Commands.h:132
-msgid "Modify the dimension of an array"
+msgid "Extract items from list"
 msgstr ""
 
 #: src/Commands.h:133
-msgid "Create an identity matrix"
+msgid "Get an item from a list or array"
 msgstr ""
 
 #: src/Commands.h:134
-msgid "Cross product (vectorial product)"
+msgid "Get an item from a list or array by increments"
 msgstr ""
 
 #: src/Commands.h:135
-msgid "Dot product (scalar product)"
+msgid "Put an item into a list or array"
+msgstr ""
+
+#: src/Commands.h:136
+msgid "Put an item into a list or array by increments"
 msgstr ""
 
 #: src/Commands.h:137
-msgid "Evaluate item"
+msgid "Dimension of a list or array"
 msgstr ""
 
 #: src/Commands.h:138
-msgid "Store value in variable name"
+msgid "Replace an array by all its elements"
 msgstr ""
 
 #: src/Commands.h:139
-msgid "Recall value from variable name"
+msgid "Create an array from a list of elements"
 msgstr ""
 
 #: src/Commands.h:140
-msgid "Remove a variable"
+msgid "Create a constant array"
 msgstr ""
 
 #: src/Commands.h:141
-msgid "Get the list of variables in current directory"
+msgid "Transpose a matrix-type array"
 msgstr ""
 
 #: src/Commands.h:142
-msgid "Get the list from root to current directory"
+msgid "Modify the dimension of an array"
 msgstr ""
 
 #: src/Commands.h:143
-msgid "Create a directory"
+msgid "Create an identity matrix"
 msgstr ""
 
 #: src/Commands.h:144
-msgid "Set root directory as the current one"
+msgid "Cross product (vectorial product)"
 msgstr ""
 
 #: src/Commands.h:145
-msgid "Make the parent directory the current one"
+msgid "Dot product (scalar product)"
 msgstr ""
 
 #: src/Commands.h:147
-msgid "Use binary mode for binary integers"
+msgid "Evaluate item"
 msgstr ""
 
 #: src/Commands.h:148
-msgid "Use octal mode for binary integers"
+msgid "Store value in variable name"
 msgstr ""
 
 #: src/Commands.h:149
-msgid "Use decimal mode for binary integers"
+msgid "Recall value from variable name"
 msgstr ""
 
 #: src/Commands.h:150
-msgid "Use hexadecimal mode for binary integers"
+msgid "Remove a variable"
 msgstr ""
 
 #: src/Commands.h:151
-msgid "Define the number of bits in binary integers (1 to 64)"
+msgid "Get the list of variables in current directory"
 msgstr ""
 
 #: src/Commands.h:152
-msgid "Get the number of bits in binary integers"
+msgid "Get the list from root to current directory"
 msgstr ""
 
 #: src/Commands.h:153
-msgid "Convert a binary integer into a real"
+msgid "Create a directory"
 msgstr ""
 
 #: src/Commands.h:154
-msgid "Convert a real into a binary integer"
+msgid "Set root directory as the current one"
 msgstr ""
 
 #: src/Commands.h:155
-msgid "Save flag states in a binary integer"
+msgid "Make the parent directory the current one"
 msgstr ""
 
-#: src/Commands.h:156
-msgid "Read flag states from a binary integer"
+#: src/Commands.h:157
+msgid "Use binary mode for binary integers"
 msgstr ""
 
 #: src/Commands.h:158
-msgid "Wait a number of seconds"
+msgid "Use octal mode for binary integers"
 msgstr ""
 
 #: src/Commands.h:159
-msgid "Halt program execution"
+msgid "Use decimal mode for binary integers"
 msgstr ""
 
 #: src/Commands.h:160
-msgid "Execute one step in the program"
+msgid "Use hexadecimal mode for binary integers"
 msgstr ""
 
 #: src/Commands.h:161
-msgid "Abort current program execution"
+msgid "Define the number of bits in binary integers (1 to 64)"
 msgstr ""
 
 #: src/Commands.h:162
-msgid "Abort all programs execution"
+msgid "Get the number of bits in binary integers"
 msgstr ""
 
 #: src/Commands.h:163
-msgid "Resume program execution"
+msgid "Convert a binary integer into a real"
+msgstr ""
+
+#: src/Commands.h:164
+msgid "Convert a real into a binary integer"
 msgstr ""
 
 #: src/Commands.h:165
-msgid "Set reals display to 'standard'"
+msgid "Save flag states in a binary integer"
 msgstr ""
 
 #: src/Commands.h:166
-msgid "Set reals display to 'scientific'"
-msgstr ""
-
-#: src/Commands.h:167
-msgid "Set reals display to 'fixed number of decimals'"
+msgid "Read flag states from a binary integer"
 msgstr ""
 
 #: src/Commands.h:168
-msgid "Set reals display to 'engineering'"
+msgid "Wait a number of seconds"
 msgstr ""
 
 #: src/Commands.h:169
-msgid "Clear the screen"
+msgid "Halt program execution"
 msgstr ""
 
 #: src/Commands.h:170
-msgid "Clear the message flag => unfreeze stack display"
+msgid "Execute one step in the program"
 msgstr ""
 
 #: src/Commands.h:171
-msgid "Display an item on a line of the screen"
+msgid "Abort current program execution"
 msgstr ""
 
 #: src/Commands.h:172
-msgid "Read file and puts its content in the stack"
+msgid "Abort all programs execution"
 msgstr ""
 
 #: src/Commands.h:173
-msgid "Write the second item into the file named by the first item"
-msgstr ""
-
-#: src/Commands.h:174
-msgid "Internal: tune real 'standard' display management"
+msgid "Resume program execution"
 msgstr ""
 
 #: src/Commands.h:175
-msgid "Internal: set whether or not to keep a trailing dot in reals display"
+msgid "Set reals display to 'standard'"
 msgstr ""
 
 #: src/Commands.h:176
-msgid "Undo last command, 50 levels by default"
+msgid "Set reals display to 'scientific'"
 msgstr ""
 
 #: src/Commands.h:177
-msgid "Define number of undo levels"
+msgid "Set reals display to 'fixed number of decimals'"
 msgstr ""
 
 #: src/Commands.h:178
-msgid "Get number of undo levels"
+msgid "Set reals display to 'engineering'"
+msgstr ""
+
+#: src/Commands.h:179
+msgid "Clear the screen"
+msgstr ""
+
+#: src/Commands.h:180
+msgid "Clear the message flag => unfreeze stack display"
+msgstr ""
+
+#: src/Commands.h:181
+msgid "Display an item on a line of the screen"
+msgstr ""
+
+#: src/Commands.h:182
+msgid "Read file and puts its content in the stack"
+msgstr ""
+
+#: src/Commands.h:183
+msgid "Write the second item into the file named by the first item"
+msgstr ""
+
+#: src/Commands.h:184
+msgid "Internal: tune real 'standard' display management"
 msgstr ""
 
 #: src/Commands.h:185
-msgid "Command (number of arguments): description"
+msgid "Internal: set whether or not to keep a trailing dot in reals display"
+msgstr ""
+
+#: src/Commands.h:186
+msgid "Undo last command, 50 levels by default"
+msgstr ""
+
+#: src/Commands.h:187
+msgid "Define number of undo levels"
+msgstr ""
+
+#: src/Commands.h:188
+msgid "Get number of undo levels"
 msgstr ""
 
 #: src/Commands.h:195
-msgid "Object type"
-msgstr ""
-
-#: src/Commands.h:196
-msgid "Symbol"
-msgstr ""
-
-#: src/Commands.h:196
-msgid "Example"
-msgstr ""
-
-#: src/Commands.h:200
-msgid "Data"
-msgstr ""
-
-#: src/Commands.h:201
-msgid "Real Number"
-msgstr ""
-
-#: src/Commands.h:202
-msgid "1.23456e-25"
-msgstr ""
-
-#: src/Commands.h:203
-msgid "Complex Number"
-msgstr ""
-
-#: src/Commands.h:204
-msgid "(123.45, 678.90)"
+msgid "Command (number of arguments): description"
 msgstr ""
 
 #: src/Commands.h:205
-msgid "Binary Integer"
+msgid "Object type"
 msgstr ""
 
 #: src/Commands.h:206
-msgid "# 123AB"
+msgid "Symbol"
 msgstr ""
 
-#: src/Commands.h:207
-msgid "String"
-msgstr ""
-
-#: src/Commands.h:208
-msgid "\"RESULT\""
-msgstr ""
-
-#: src/Commands.h:209
-msgid "Vector"
+#: src/Commands.h:206
+msgid "Example"
 msgstr ""
 
 #: src/Commands.h:210
-msgid "[1.23 4.56 7.89]"
+msgid "Data"
 msgstr ""
 
 #: src/Commands.h:211
-msgid "Matrix"
+msgid "Real Number"
 msgstr ""
 
 #: src/Commands.h:212
-msgid "[[1.23 4.56] [6.54 3.21]]"
+msgid "1.23456e-25"
 msgstr ""
 
 #: src/Commands.h:213
-msgid "List"
+msgid "Complex Number"
 msgstr ""
 
 #: src/Commands.h:214
-msgid "{1.23 \"ABC\" # 45d}"
+msgid "(123.45, 678.90)"
+msgstr ""
+
+#: src/Commands.h:215
+msgid "Binary Integer"
 msgstr ""
 
 #: src/Commands.h:216
-msgid "Names"
+msgid "# 123AB"
 msgstr ""
 
 #: src/Commands.h:217
-msgid "Name"
+msgid "String"
 msgstr ""
 
 #: src/Commands.h:218
-msgid "'CALC'"
+msgid "\"RESULT\""
+msgstr ""
+
+#: src/Commands.h:219
+msgid "Vector"
 msgstr ""
 
 #: src/Commands.h:220
-msgid "Procedures"
+msgid "[1.23 4.56 7.89]"
 msgstr ""
 
 #: src/Commands.h:221
-msgid "Program"
+msgid "Matrix"
 msgstr ""
 
 #: src/Commands.h:222
-msgid "<< DUP + SWAP >>"
+msgid "[[1.23 4.56] [6.54 3.21]]"
 msgstr ""
 
 #: src/Commands.h:223
-msgid "Algebraic"
+msgid "List"
 msgstr ""
 
 #: src/Commands.h:224
-msgid "'X+2*Y=Z'"
+msgid "{1.23 \"ABC\" # 45d}"
 msgstr ""
 
-#: src/Commands.h:229
-msgid "Flag #"
+#: src/Commands.h:226
+msgid "Names"
+msgstr ""
+
+#: src/Commands.h:227
+msgid "Name"
+msgstr ""
+
+#: src/Commands.h:228
+msgid "'CALC'"
 msgstr ""
 
 #: src/Commands.h:230
-msgid "Description"
+msgid "Procedures"
 msgstr ""
 
 #: src/Commands.h:231
+msgid "Program"
+msgstr ""
+
+#: src/Commands.h:232
+msgid "<< DUP + SWAP >>"
+msgstr ""
+
+#: src/Commands.h:233
+msgid "Algebraic"
+msgstr ""
+
+#: src/Commands.h:234
+msgid "'X+2*Y=Z'"
+msgstr ""
+
+#: src/Commands.h:239
+msgid "Flag #"
+msgstr ""
+
+#: src/Commands.h:240
+msgid "Description"
+msgstr ""
+
+#: src/Commands.h:241
 msgid "Status"
 msgstr ""
 
-#: src/Commands.h:245
+#: src/Commands.h:255
 msgid "Set"
 msgstr ""
 
-#: src/Commands.h:245
+#: src/Commands.h:255
 msgid "Unset"
 msgstr ""
