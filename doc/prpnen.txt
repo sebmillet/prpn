@@ -26,15 +26,15 @@ OPTIONS
 	      Display version information and exit.
 
        -c, --console
-	      Run in console mode. Useful for prpn only. prpnc	runs  only  in
+	      Run  in  console	mode. Useful for prpn only. prpnc runs only in
 	      console mode.
 
        -w, --width width
-	      Set  width  to width, measured in number of characters. Defaults
+	      Set width to width, measured in number of  characters.  Defaults
 	      to 23.
 
        -h, --height height
-	      Set height to height, measured in number of lines.  Defaults  to
+	      Set  height  to height, measured in number of lines. Defaults to
 	      5.
 
        --min-stack-height min-stack-height
@@ -75,7 +75,7 @@ OBJECT TYPES
 
        Names
 
-       Name	 CALC
+       Name   ´ ´  ´CALC´
 
        Procedures
 
@@ -83,10 +83,10 @@ OBJECT TYPES
 	      << >>	<< DUP + SWAP >>
 
        Algebraic
-		 X+2*Y=Z
+	      ´ ´  ´X+2*Y=Z´
 
 COMMANDS
-       Commands are followed by the number of arguments they take,  in	paren
+       Commands  are  followed by the number of arguments they take, in paren‐
        thesis. These arguments are taken from the stack.
 
        _HELP (0)
@@ -496,16 +496,16 @@ COMMANDS
 	      Resume program execution
 
        STD (0)
-	      Set reals display to standard
+	      Set reals display to 'standard'
 
        SCI (1)
-	      Set reals display to scientific
+	      Set reals display to 'scientific'
 
        FIX (1)
-	      Set reals display to fixed number of decimals
+	      Set reals display to 'fixed number of decimals'
 
        ENG (1)
-	      Set reals display to engineering
+	      Set reals display to 'engineering'
 
        CLLCD (0)
 	      Clear the screen
@@ -523,10 +523,10 @@ COMMANDS
 	      Write the second item into the file named by the first item
 
        _HACK-REAL-MGMT (1)
-	      Internal: tune real standard display management
+	      Internal: tune real 'standard' display management
 
        _HACK-REAL-DOT (1)
-	      Internal:  set  whether  or  not to keep a trailing dot in reals
+	      Internal: set whether or not to keep a  trailing	dot  in  reals
 	      display
 
        UNDO (0)
@@ -548,24 +548,24 @@ LINEAR EQUATIONS SYSTEMS RESOLUTION
 		[13 3 4]
 	      Then type in the matrix
 		[[2 -1 1][1 5 3][-2 0 4]]
-	      Do a division by clicking the / button. Here you go  with  the
+	      Do  a  division by clicking the '/' button. Here you go with the
 	      result:
 		[4 -2 3]
 	      That reads "the solution is x = 4, y = -2 and z = 3"
 
 PROGRAM CONTROL INSTRUCTIONS
        Note about booleans
-	      A  test  (IF,  WHILE  or UNTIL, see below) takes one item in the
-	      stack. The item must be of type  real.  Any  non-null  value  is
+	      A test (IF, WHILE or UNTIL, see below) takes  one  item  in  the
+	      stack.  The  item  must  be  of type real. Any non-null value is
 	      treated as TRUE, a null value is FALSE.
-	      Below,  the term "bottom item of the stack" refers to the actual
+	      Below, the term "bottom item of the stack" refers to the	actual
 	      object at level 1 of the stack.
 
        IF/THEN/ELSE/END sequence
 	      Execute the instructions between IF and THEN.
-	      Then, take the bottom item of the stack,	if  it	is  true  (see
-	      above),  execute	the instructions between THEN and ELSE (or END
-	      if ELSE is not provided), otherwise execute  the	ELSE  instruc
+	      Then,  take  the	bottom	item  of the stack, if it is true (see
+	      above), execute the instructions between THEN and ELSE  (or  END
+	      if  ELSE	is  not provided), otherwise execute the ELSE instruc‐
 	      tions. ELSE is optional.
 
        Example 1
@@ -583,36 +583,36 @@ PROGRAM CONTROL INSTRUCTIONS
 
        WHILE/REPEAT/END sequence
 	      Execute the instructions between WHILE and REPEAT.
-	      Then take the bottom item of the	stack,	if  it	is  true  (see
-	      above),  execute the instructions after REPEAT, then restart the
+	      Then  take  the  bottom  item  of  the stack, if it is true (see
+	      above), execute the instructions after REPEAT, then restart  the
 	      sequence from the beginning of the WHILE.
 
        Example
-	      Calculate the smallest N for which sum(i^2  with	i  taking  all
+	      Calculate  the  smallest	N  for which sum(i^2 with i taking all
 	      integer values in the range 1..N) >= 100
-	      << 0 0 -> n << WHILE DUP 100 < REPEAT n SQ + n 1 + n STO END n
+	      << 0 0 -> n << WHILE DUP 100 < REPEAT n SQ + n 1 + 'n' STO END n
 	      >> >>
 
        DO/UNTIL/END sequence
-	      Execute the instructions between DO  and	UNTIL,	then,  between
+	      Execute  the  instructions  between  DO and UNTIL, then, between
 	      UNTIL and END.
-	      Then,  take  the	bottom	item  of the stack, if it is true (see
+	      Then, take the bottom item of the stack,	if  it	is  true  (see
 	      above), restart the sequence from the beginning of the DO.
 
        Example
-	      Calculate the smallest N for which sum(1/i  with	i  taking  all
+	      Calculate  the  smallest	N  for which sum(1/i with i taking all
 	      integer values in the range 1..N) >= 3
-	      <<  0 0 -> n << DO n 1 + n STO n INV + UNTIL DUP 7 >= END n >>
+	      << 0 0 -> n << DO n 1 + 'n' STO n INV + UNTIL DUP 7 >= END n  >>
 	      >>
 
        FOR|START/NEXT|STEP sequence
-	      FOR or START launches a loop. It takes two arguments, the  first
-	      argument	(second  level	in  the stack) being the start counter
-	      value, the second one (first level in the stack) being the  tar
+	      FOR  or START launches a loop. It takes two arguments, the first
+	      argument (second level in the stack)  being  the	start  counter
+	      value,  the second one (first level in the stack) being the tar‐
 	      get counter value, beyond which to stop the loop.
-	      START  is an anonymous loop, FOR takes one name and uses it as a
+	      START is an anonymous loop, FOR takes one name and uses it as  a
 	      local variable for the loop counter.
-	      NEXT adds 1 to the counter if the target	is  greater  than  the
+	      NEXT  adds  1  to  the counter if the target is greater than the
 	      start, subtracts 1 otherwise.
 	      STEP takes one argument in the stack and adds it to the counter.
 	      NEXT can be used with either FOR or START, same with STEP.
@@ -622,12 +622,12 @@ PROGRAM CONTROL INSTRUCTIONS
 	      << 0 1 10 FOR i i SQ + NEXT >>
 
        Example 2
-	      Calculate sum(2^i with i taking all integer values in the  range
+	      Calculate  sum(2^i with i taking all integer values in the range
 	      1..N), N being the first value in the stack
 	      << 0 1 1 4 ROLL START DUP ROT + SWAP 2 * NEXT DROP >> EVAL
 
        Example 3
-	      Calculate  sum(i	with  i  taking  all odd integer values in the
+	      Calculate sum(i with i taking all  odd  integer  values  in  the
 	      range 1..N), N being the first value in the stack
 	      << 0 1 ROT FOR i i + 2 STEP >>
 
@@ -640,7 +640,7 @@ TRICKS
 	      Press <Ctrl-Enter>.
 
        Resizing the window to the original size
-	      Double-click the status area of the window, where the  angular
+	      Double-click  the 'status' area of the window, where the angular
 	      mode and binary modes are displayed.
 
 INITIALIZATION FILES
@@ -651,15 +651,15 @@ INITIALIZATION FILES
 	      Variables structure, and actual working directory.
 
 AUTHOR
-       Written by Sbastien Millet <sebastien.millet1@club-internet.fr>.
-       Permission  is  granted to copy, distribute and/or modify this document
-       under the terms of the GNU General Public License, Version 3  published
+       Written by Sébastien Millet <sebastien.millet1@club-internet.fr>.
+       Permission is granted to copy, distribute and/or modify	this  document
+       under  the terms of the GNU General Public License, Version 3 published
        by the Free Software Foundation.
 
 BUGS
        LNP1 and EXPM
 
-       These  functions  are  supposed	to  bring  extra  accuracy near x = 0.
+       These functions are supposed to	bring  extra  accuracy	near  x  =  0.
        Reminder:
 	      LNP1(x) = LN(X + 1) and EXPM(x) = EXP(x) - 1
 	      For  now, these functions do NOT bring extra accuracy, they just
@@ -667,10 +667,10 @@ BUGS
 
        Difference between prpn and prpnc
 
-       Linux  prpn can be run with -c option. In that case it is almost  iden
+       Linux  prpn can be run with -c option. In that case it is almost  iden‐
 	      tical  to  prpnc. "Almost" only. prpn is compiled with WxWidgets
 	      library and performs GUI-specific initializations upon  startup.
-	      If graphical resources arent found, it wont execute. For exam
+	      If graphical resources aren't found, it won't execute. For exam‐
 	      ple, if you run the following command
 		   DISPLAY="" prpn -c
 	      You get this result
@@ -680,13 +680,13 @@ BUGS
 	      resources at all. Note a clean way to improve all this would  be
 	      to  prevent  WxWidgets  from initializing the GUI whenever -c is
 	      provided. If you know how to do that in a robust	way  (portable
-	      across  systems and versions...), this program author is inter
+	      across  systems and versions...), this program' author is inter‐
 	      ested!
 
        Windows
-	      prpn.exe can *not* be run with -c. For some reason,  under  Win
-	      dows,  WxWidgets	disconnects  the running program from the con
-	      trolling terminal. The solutions is the same  as	Linux  except
+	      prpn.exe can *not* be run with -c. For some reason,  under  Win‐
+	      dows,  WxWidgets	disconnects  the running program from the con‐
+	      trolling terminal. The solutions is the same  as	Linux'	except
 	      that  under  Windows, it is mandatory: you must run prpnc.exe if
 	      you wish to use the command line version of the calculator.
 
