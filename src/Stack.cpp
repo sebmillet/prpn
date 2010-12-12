@@ -18,6 +18,35 @@
 #include <iostream>
 #endif
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+#include <cstdlib>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 using namespace std;
 
 const int DEFAULT_PORTABLE_BIN_BASE = 16;
@@ -1686,23 +1715,23 @@ static st_err_t bc_same(StackItem& op1, StackItem& op2, StackItem*& ret, string&
 	ret = new StackItemReal(Real(res));
 	return ST_ERR_OK;
 }
-static st_err_t bc_equal(StackItem& op1, StackItem& op2, StackItem*& ret, string&) {
-	return op1.op_equal_generic(op2, ret);
+
+#define IMPLEMENT_OP_LOGICAL(OP) \
+static st_err_t bc_##OP(StackItem& op1, StackItem& op2, StackItem*& ret, string&) { \
+	return op1.op_##OP##_generic(op2, ret); \
 }
-static st_err_t bc_notequal(StackItem& op1, StackItem& op2, StackItem*& ret, string&) {
-	return op1.op_notequal_generic(op2, ret);
-}
-static st_err_t bc_lower(StackItem& op1, StackItem& op2, StackItem*& ret, string&) {
-	return op1.op_lower_generic(op2, ret);
-}
-static st_err_t bc_lower_or_equal(StackItem& op1, StackItem& op2, StackItem*& ret, string&) {
-	return op1.op_lower_or_equal_generic(op2, ret);
-}
-static st_err_t bc_greater(StackItem& op1, StackItem& op2, StackItem*& ret, string&) {
-	return op1.op_greater_generic(op2, ret);
-}
-static st_err_t bc_greater_or_equal(StackItem& op1, StackItem& op2, StackItem*& ret, string&) {
-	return op1.op_greater_or_equal_generic(op2, ret);
+IMPLEMENT_OP_LOGICAL(equal)
+IMPLEMENT_OP_LOGICAL(notequal)
+IMPLEMENT_OP_LOGICAL(lower)
+IMPLEMENT_OP_LOGICAL(lower_or_equal)
+IMPLEMENT_OP_LOGICAL(greater)
+IMPLEMENT_OP_LOGICAL(greater_or_equal)
+IMPLEMENT_OP_LOGICAL(and)
+IMPLEMENT_OP_LOGICAL(or)
+IMPLEMENT_OP_LOGICAL(xor)
+
+static st_err_t bc_not(StackItem& op1, StackItem*& ret, string&) {
+	return op1.op_not(ret);
 }
 
   // Stack manipulation commands
@@ -2822,6 +2851,55 @@ st_err_t StackItemReal::op_greater(StackItemReal *arg1, StackItem*& ret) {
 st_err_t StackItemReal::op_greater_or_equal(StackItemReal *arg1, StackItem*& ret) {
 	real res = (arg1->sc.cmp(sc) >= 0 ? 1 : 0);
 	ret = new StackItemReal(Real(res));
+	return ST_ERR_OK;
+}
+
+#define REAL_LOGIC_PREFIX \
+	int n1, n2; \
+	st_err_t c = arg1->to_integer(n1); \
+	if (c != ST_ERR_OK) \
+		return c; \
+	c = to_integer(n2); \
+	if (c != ST_ERR_OK) \
+		return c;
+
+st_err_t StackItemReal::op_and(StackItemReal *arg1, StackItem*& ret) {
+	REAL_LOGIC_PREFIX
+	ret = new StackItemReal(Real(n1 != 0 && n2 != 0));
+	return ST_ERR_OK;
+}
+
+st_err_t StackItemReal::op_or(StackItemReal *arg1, StackItem*& ret) {
+	REAL_LOGIC_PREFIX
+	ret = new StackItemReal(Real(n1 != 0 || n2 != 0));
+	return ST_ERR_OK;
+}
+
+st_err_t StackItemReal::op_xor(StackItemReal *arg1, StackItem*& ret) {
+	REAL_LOGIC_PREFIX
+	ret = new StackItemReal(Real((n1 == 0 && n2 != 0) || n1 != 0 && n2 == 0));
+	return ST_ERR_OK;
+}
+
+st_err_t StackItemReal::op_not(StackItem*& ret) {
+	int n;
+	st_err_t c = to_integer(n);
+	if (c != ST_ERR_OK)
+		return c;
+
+
+
+
+
+	n = rand();
+	debug_write_i("Rand = %i", n);
+	ret = new StackItemReal(Real(RAND_MAX));
+
+
+
+
+
+//    ret = new StackItemReal(Real(!n));
 	return ST_ERR_OK;
 }
 

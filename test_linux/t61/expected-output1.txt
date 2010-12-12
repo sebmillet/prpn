@@ -1,0 +1,37 @@
+AND Error:
+Too Few Arguments
+OR Error:
+Too Few Arguments
+XOR Error:
+Too Few Arguments
+NOT Error:
+Too Few Arguments
+AND Error:
+Too Few Arguments
+OR Error:
+Too Few Arguments
+XOR Error:
+Too Few Arguments
+AND Error:
+Bad Argument Type
+OR Error:
+Bad Argument Type
+XOR Error:
+Bad Argument Type
+NOT Error:
+Bad Argument Type
+1
+0
+0
+0
+1
+0
+1
+1
+1
+0
+1
+1
+0
+""
+get_class_count() = 0 for watched classes

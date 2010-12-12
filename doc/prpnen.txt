@@ -280,6 +280,17 @@ COMMANDS
 
        >= (2) Greater than or equal to
 
+       AND (2)
+	      Logical and
+
+       OR (2) Logical or
+
+       XOR (2)
+	      Logical xor
+
+       NOT (1)
+	      Logical not
+
        DUP (1)
 	      Copy the first item
 

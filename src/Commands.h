@@ -91,6 +91,10 @@ const BuiltinCommandDescriptor builtinCommands[] = {
 	{2, BC_FUNCTION_WRAPPER, "<=", 0, 0, 0, &bc_lower_or_equal, 0, _N("Lower than or equal to")},
 	{2, BC_FUNCTION_WRAPPER, ">", 0, 0, 0, &bc_greater, 0, _N("Greater than")},
 	{2, BC_FUNCTION_WRAPPER, ">=", 0, 0, 0, &bc_greater_or_equal, 0, _N("Greater than or equal to")},
+	{2, BC_FUNCTION_WRAPPER, "AND", 0, 0, 0, &bc_and, 0, _N("Logical and")},
+	{2, BC_FUNCTION_WRAPPER, "OR", 0, 0, 0, &bc_or, 0, _N("Logical or")},
+	{2, BC_FUNCTION_WRAPPER, "XOR", 0, 0, 0, &bc_xor, 0, _N("Logical xor")},
+	{1, BC_FUNCTION_WRAPPER, "NOT", 0, 0, &bc_not, 0, 0, _N("Logical not")},
 	  // Stack manipulation commands
 	{1, BC_RAW, "DUP", &bc_dup, 0, 0, 0, 0, _N("Copy the first item")},
 	{2, BC_RAW, "SWAP", &bc_swap, 0, 0, 0, 0, _N("Exchange the first two items")},

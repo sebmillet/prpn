@@ -304,6 +304,9 @@ public:
 	virtual st_err_t op_lower_or_equal_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_greater_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_greater_or_equal_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_and_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_or_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_xor_generic(StackItem&, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_lower(StackItemReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_lower_or_equal(StackItemReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_greater(StackItemReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
@@ -316,6 +319,10 @@ public:
 	virtual st_err_t op_lower_or_equal(StackItemString*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_greater(StackItemString*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 	virtual st_err_t op_greater_or_equal(StackItemString*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_and(StackItemReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_or(StackItemReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_xor(StackItemReal*, StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
+	virtual st_err_t op_not(StackItem*&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
 
 	  // LIST AND ARRAYS
 	virtual st_err_t op_list_to(TransStack&, const tso_t&) { return ST_ERR_BAD_ARGUMENT_TYPE; }
@@ -557,10 +564,17 @@ public:
 	virtual st_err_t op_lower_or_equal_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_lower_or_equal(this, ret); }
 	virtual st_err_t op_greater_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_greater(this, ret); }
 	virtual st_err_t op_greater_or_equal_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_greater_or_equal(this, ret); }
+	virtual st_err_t op_and_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_and(this, ret); }
+	virtual st_err_t op_or_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_or(this, ret); }
+	virtual st_err_t op_xor_generic(StackItem& arg2, StackItem*& ret) { return arg2.op_xor(this, ret); }
 	virtual st_err_t op_lower(StackItemReal*, StackItem*&);
 	virtual st_err_t op_lower_or_equal(StackItemReal*, StackItem*&);
 	virtual st_err_t op_greater(StackItemReal*, StackItem*&);
 	virtual st_err_t op_greater_or_equal(StackItemReal*, StackItem*&);
+	virtual st_err_t op_and(StackItemReal*, StackItem*&);
+	virtual st_err_t op_or(StackItemReal*, StackItem*&);
+	virtual st_err_t op_xor(StackItemReal*, StackItem*&);
+	virtual st_err_t op_not(StackItem*&);
 
 	virtual st_err_t op_r_to_b(StackItem*&);
 

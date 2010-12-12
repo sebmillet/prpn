@@ -70,6 +70,10 @@ SAME           (2): Est identique
 <=             (2): Est plus petit que, ou égal à
 >              (2): Est plus grand que
 >=             (2): Est plus grand que, ou égal à
+AND            (2): Logical and
+OR             (2): Logical or
+XOR            (2): Logical xor
+NOT            (1): Logical not
 DUP            (1): Copie le premier élément
 SWAP           (2): Échange les deux premiers éléments
 DROP           (1): Supprime le premier élément
@@ -167,9 +171,5 @@ Programmes
 Programme                << >>          << DUP + SWAP >>
 Algébrique               ' '            'X+2*Y=Z'
 
-[[ 1 2 3 4 5 6 7 ]  [ 10 11 12 13 14 15 16 ]]
-[ 1 2 3 4 5 6 7 8 ]
-253
 1
-0
-[[ 1 ]  [ 2 ]  [ 3 ]  [ 4 ]  [ 5 ]  [ 6 ]  [ 7 ]]
+1
