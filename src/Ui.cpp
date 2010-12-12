@@ -69,7 +69,7 @@ static void ui_set_status_shift(const bool& b) {
 
 static IntervalShift ui_shift = {0, 0, 0};
 
-static void refresh_path();
+static void refresh_path(const int&);
 static void refresh_status();
 static void refresh_stack(const int&, const bool&);
 
