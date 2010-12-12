@@ -35,7 +35,8 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(-,root,root,-)
 %{_bindir}/%{name}
-%{_datadir}/man/man1/prpn.1.gz
+%{_bindir}/%{name}c
+%{_datadir}/man/*
 %{_docdir}/%{name}/README
 %{_docdir}/%{name}/prpnen.html
 %{_docdir}/%{name}/prpnen.txt

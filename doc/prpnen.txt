@@ -692,4 +692,4 @@ BUGS
 
 
 
-October 03, 2010		 version 0.5.1			       pRPN(1)
+December 12, 2010		 version 0.5.1			       pRPN(1)

@@ -776,10 +776,10 @@ void ui_flush_input(const string& textin, const string& additional_command) {
 static void refresh_path(const int& when) {
 	static string cache_path = "";
 	static int last_width = -1;
-	bool has_changed = ts->vars.update_si_path();
-	if (has_changed) {
-		cache_path = ts->vars.get_si_path_string();
-	}
+	static bool has_changed = false;
+	if (when == REFRESH_PATH_PRE)
+		if (has_changed = ts->vars.update_si_path())
+			cache_path = ts->vars.get_si_path_string();
 	if (when == REFRESH_PATH_POST && last_width != ui_dsl.get_width()) {
 		last_width = ui_dsl.get_width();
 		has_changed = true;
