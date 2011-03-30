@@ -1578,7 +1578,7 @@ static st_err_t bc_help_flags(TransStack&, SIO*, string&) {
 static st_err_t bc_exit(TransStack&, SIO*, string&) { return ST_ERR_EXIT; }
 
 static st_err_t bc_about(TransStack&, SIO*, string&) {
-	ui_set_error(PACKAGE_STRING DEBUG_VERSION_STRING, "Sébastien Millet 2010");
+	ui_set_error(PACKAGE_STRING DEBUG_VERSION_STRING, _("Sebastien Millet 2011"));
 	return ST_ERR_OK;
 }
 

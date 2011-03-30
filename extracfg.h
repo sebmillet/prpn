@@ -13,13 +13,13 @@
 #define PACKAGE_NAME	"pRPN"
 #endif
 #ifndef PACKAGE_VERSION
-#define PACKAGE_VERSION	"0.5.1"
+#define PACKAGE_VERSION	"0.5.2"
 #endif
 #ifndef VERSION
-#define VERSION	0.5.1
+#define VERSION	0.5.2
 #endif
 #ifndef PACKAGE_STRING
-#define PACKAGE_STRING	"pRPN 0.5.1"
+#define PACKAGE_STRING	"pRPN 0.5.2"
 #endif
 #ifndef PACKAGE_BUGREPORT
 #define PACKAGE_BUGREPORT	 "sebastien.millet1@club-internet.fr"

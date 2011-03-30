@@ -6,4 +6,4 @@ del pRPNfr.html
 del pRPNfr.txt
 del fr.mo
 del README.TXT
-del prpn-0.5.1.tar.gz
+del prpn-0.5.2.tar.gz

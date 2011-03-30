@@ -1,11 +1,11 @@
 Name:           prpn
-Version:        0.5.1
+Version:        0.5.2
 Release:        1
 Summary:        A Reverse Polish Notation calculator
 Group:          Applications/Engineering
 License:        GPLv3+
 URL:            http://prpn.origo.ethz.ch
-Source0:        http://download.origo.ethz.ch/prpn/1970/prpn-0.5.1.tar.gz
+Source0:        http://download.origo.ethz.ch/prpn/1970/prpn-0.5.2.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  wxGTK-devel >= 2.8, gettext, desktop-file-utils
 Requires:       wxGTK >= 2.8
@@ -47,6 +47,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog COPYING INSTALL NEWS README
 
 %changelog
-* Sun Sep 05 2010 Sébastien Millet <sebastien.millet1@club-internet.fr>
-- Initial spec for prpn-0.5.1
+* Tue Mar 29 2011 Sébastien Millet <sebastien.millet1@club-internet.fr>
+- Initial spec for prpn-0.5.2
 
