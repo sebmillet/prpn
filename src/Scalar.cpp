@@ -1025,7 +1025,7 @@ void Real::acos(st_err_t& c, Cplx& cplx) const {
 		Cplx(r, 0).acos(c, cplx);
 		return;
 	}
-	real res;
+	real res = 0;
 	numeric_acos(r, c, res);
 	cplx = Cplx(res, 0);
 }
@@ -1036,7 +1036,7 @@ void Real::asin(st_err_t& c, Cplx& cplx) const {
 		Cplx(r, 0).asin(c, cplx);
 		return;
 	}
-	real res;
+	real res = 0;
 	numeric_asin(r, c, res);
 	cplx = Cplx(res, 0);
 }

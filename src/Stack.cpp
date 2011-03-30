@@ -1578,7 +1578,9 @@ static st_err_t bc_help_flags(TransStack&, SIO*, string&) {
 static st_err_t bc_exit(TransStack&, SIO*, string&) { return ST_ERR_EXIT; }
 
 static st_err_t bc_about(TransStack&, SIO*, string&) {
-	ui_set_error(PACKAGE_STRING DEBUG_VERSION_STRING, _("Sebastien Millet 2011"));
+    // It is important to "translate" this string to benefit from the re-encoding side-effect,
+    // if needed.
+	ui_set_error(PACKAGE_STRING DEBUG_VERSION_STRING, _("Sébastien Millet 2011"));
 	return ST_ERR_OK;
 }
 
@@ -2857,7 +2859,7 @@ st_err_t StackItemReal::op_or(StackItemReal *arg1, StackItem*& ret) {
 
 st_err_t StackItemReal::op_xor(StackItemReal *arg1, StackItem*& ret) {
 	REAL_LOGIC_PREFIX
-	ret = new StackItemReal(Real((n1 == 0 && n2 != 0) || n1 != 0 && n2 == 0));
+	ret = new StackItemReal(Real((n1 == 0 && n2 != 0) || (n1 != 0 && n2 == 0)));
 	return ST_ERR_OK;
 }
 
