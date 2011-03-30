@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: prpn 0.5.2\n"
 "Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
-"POT-Creation-Date: 2011-03-30 21:23+0200\n"
+"POT-Creation-Date: 2011-03-30 21:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -218,15 +218,15 @@ msgstr ""
 msgid "&Commands"
 msgstr ""
 
-#: src/Ui.cpp:394
+#: src/Ui.cpp:393
 msgid "&Help"
 msgstr ""
 
-#: src/Ui.cpp:395
+#: src/Ui.cpp:394
 msgid "&Manual page"
 msgstr ""
 
-#: src/Ui.cpp:397
+#: src/Ui.cpp:396
 msgid "&About"
 msgstr ""
 
