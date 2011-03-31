@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: prpn 0.5.2\n"
 "Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
-"POT-Creation-Date: 2011-03-31 20:21+0200\n"
+"POT-Creation-Date: 2011-03-31 20:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -194,8 +194,8 @@ msgstr ""
 msgid "Infinite Result processed as an exception"
 msgstr ""
 
-#: src/Stack.cpp:1583
-msgid "Sébastien Millet, 2011"
+#: src/Stack.cpp:1589
+msgid "Sebastien Millet, 2011"
 msgstr ""
 
 #: src/Ui.cpp:181
