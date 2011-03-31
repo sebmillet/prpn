@@ -88,79 +88,79 @@ Mode debug, prend un paramètre.
 Les commandes sont suivies du nombre d'arguments qu'elles prennent, entre parenthèses. Ces arguments sont pris dans la pile.
 .TP
 .B _HELP\ (0)
-Display a help screen
+Affiche un écran d'aide
 .TP
 .B _HELP_FLAGS\ (0)
-Display the list of flags
+Affiche la liste des indicateurs binaires
 .TP
 .B _EXIT\ (0)
-Quit program
+Quitte le programme
 .TP
 .B _ABOUT\ (0)
-Display information about this program
+Informations sur ce programme
 .TP
 .B +\ (2)
-Addition: x + y
+Addition : x + y
 .TP
 .B -\ (2)
-Subtraction: x - y
+Soustraction : x - y
 .TP
 .B *\ (2)
-Multiplication: x * y
+Multiplication : x * y
 .TP
 .B /\ (2)
-Division: x / y
+Division : x / y
 .TP
 .B ^\ (2)
-Power: x ^ y
+Puissance : x ^ y
 .TP
 .B %\ (2)
-Percentage: (x * y) / 100
+Pourcentage : (x * y) / 100
 .TP
 .B %CH\ (2)
-Percentage change: 100 * (y - x) / x
+Pourcentage de changement : 100 * (y - x) / x
 .TP
 .B %T\ (2)
-Percentage of total: 100 * y / x
+Pourcentage du total : 100 * y / x
 .TP
 .B MOD\ (2)
-Modulus: x - y * FLOOR(x / y)
+Modulo : x - y * FLOOR(x / y)
 .TP
 .B MIN\ (2)
-Minimum of two reals
+Minimum de deux réels
 .TP
 .B MAX\ (2)
-Maximum of two reals
+Maximum de deux réels
 .TP
 .B COS\ (1)
-Cosine
+Cosinus
 .TP
 .B SIN\ (1)
-Sine
+Sinus
 .TP
 .B TAN\ (1)
-Tangent
+Tangente
 .TP
 .B ACOS\ (1)
-Arccos
+Arc-cosinus
 .TP
 .B ASIN\ (1)
-Arcsin
+Arc-sinus
 .TP
 .B ATAN\ (1)
-Arctan
+Arc-tangente
 .TP
 .B LN\ (1)
-Logarihtm (e base)
+Logarithme (base e)
 .TP
 .B EXP\ (1)
-Exponential
+Exponentiel
 .TP
 .B LOG\ (1)
-Logarithm (10 base)
+Logarithme (base 10)
 .TP
 .B ALOG\ (1)
-10 base exponential (10^x)
+Exponentiel en base 10 (10^x)
 .TP
 .B LNP1\ (1)
 LN(1+x)
@@ -169,394 +169,394 @@ LN(1+x)
 EXP(x)-1
 .TP
 .B COSH\ (1)
-Hyperbolic cosine
+Cosinus hyperbolique
 .TP
 .B SINH\ (1)
-Hyperbolic sine
+Sinus hyperbolique
 .TP
 .B TANH\ (1)
-Hyperbolic tangent
+Tangente hyperbolique
 .TP
 .B ACOSH\ (1)
-Arc-hyperbolic cosine
+Arc-cosinus hyperbolique
 .TP
 .B ASINH\ (1)
-Arc-hyperbolic sine
+Arc-sinus hyperbolique
 .TP
 .B ATANH\ (1)
-Arc-hyperbolic tangent
+Arc-tangente hyperbolique
 .TP
 .B NEG\ (1)
-Opposite
+Opposé
 .TP
 .B IP\ (1)
-Integer part
+Partie entière
 .TP
 .B FP\ (1)
-Fractional part
+Partie décimale
 .TP
 .B FLOOR\ (1)
-Greatest integer lower than or equal to x
+Plus grand entier inférieur ou égal à x
 .TP
 .B CEIL\ (1)
-Lowest integer greater than or equal to x
+Plus petit entier supérieur ou égal à x
 .TP
 .B ABS\ (1)
-Absolute of x
+Valeur absolue de x
 .TP
 .B SIGN\ (1)
-Sign of x: can be -1, 0 or 1
+Signe de x : peut être -1, 0 ou 1
 .TP
 .B MANT\ (1)
-Mantisse of x
+Mantisse de x
 .TP
 .B XPON\ (1)
-Exponent of x
+Exponentielle de x
 .TP
 .B INV\ (1)
 1/x
 .TP
 .B SQ\ (1)
-Square
+Carré
 .TP
 .B SQR\ (1)
-Square root
+Racine carrée
 .TP
 .B RDZ\ (1)
-Initializes random values series, 0 to start from a timer value
+Initialise la suite des valeurs aléatoires, 0 pour utiliser l'horloge
 .TP
 .B RAND\ (0)
-Get a random value x, 0 <= x < 1
+Produis une valeur aléatoire x, 0 <= x < 1
 .TP
 .B MINR\ (0)
-Smallest real greater than zero the calcultor can represent
+Plus petit réel supérieur à zéro représentable par la calculatrice
 .TP
 .B MAXR\ (0)
-Biggest real the calcultor can represent
+Plus grand réel représentable par la calculatrice
 .TP
 .B ->HMS\ (1)
-Convert a decimal to HMS (h.MMSSss)
+Convertis un décimal en nombre HMS (h.MMSSss)
 .TP
 .B HMS->\ (1)
-Convert a HMS (h.MMSSss) to a decimal
+Convertis un nombre HMS (h.MMSSss) en décimal
 .TP
 .B HMS+\ (2)
-Add two HMS (h.MMSSss)
+Additionne deux nombres HMS (h.MMSSss)
 .TP
 .B HMS-\ (2)
-Subtract two HMS (h.MMSSss)
+Soustrais deux nombres HMS (h.MMSSss)
 .TP
 .B D->R\ (1)
-Convert from degrees to radians
+Convertis des degrés en radians (*PI/180)
 .TP
 .B R->D\ (1)
-Convert from radians to degrees
+Convertis des radians en degrés (*180/PI)
 .TP
 .B RAD\ (0)
-Set angular mode to radians
+Utilise le radian pour les mesures angulaires
 .TP
 .B DEG\ (0)
-Set angular mode to degrees
+Utilise le degré pour les mesures angulaires
 .TP
 .B +ML\ (0)
-Display first item on multilpe lines
+Affiche le premier élément sur plusieurs lignes
 .TP
 .B -ML\ (0)
-Display first item on a single line
+Affiche le premier élément sur une seule ligne
 .TP
 .B RDXP\ (0)
-Set the decimal separator to '.'
+Utilise la caractère '.' comme séparateur décimal
 .TP
 .B RDXC\ (0)
-Set the decimal separator to ','
+Utilise la caractère ',' comme séparateur décimal
 .TP
 .B R->C\ (2)
-Real to complex
+Réel à complexe
 .TP
 .B C->R\ (1)
-Complex to real
+Complexe à réel
 .TP
 .B RE\ (1)
-Get real part of a complex number or array
+Partie réelle d'un nombre complexe ou d'un tableau
 .TP
 .B IM\ (1)
-Get imaginary part of a complex number or array
+Partie imaginaire d'un nombre complexe ou d'un tableau
 .TP
 .B CONJ\ (1)
-Get conjugate of a complex number or array
+Conjugué d'un nombre complexe ou d'un tableau
 .TP
 .B ARG\ (1)
-Get argument of a complex number
+Argument d'un nombre complexe
 .TP
 .B R->P\ (1)
-Rectangular to polar coordinates
+Conversion des coordonnées d'un nombre complexe de rectangulaire à polaire
 .TP
 .B P->R\ (1)
-Polar to rectangular coordinates
+Conversion des coordonnées d'un nombre complexe de polaire à rectangulaire
 .TP
 .B SAME\ (2)
-Is identical
+Est identique
 .TP
 .B ==\ (2)
-Equal to
+Est égal à
 .TP
 .B <>\ (2)
-Different from
+Est différent de
 .TP
 .B <\ (2)
-Lower than
+Est plus petit que
 .TP
 .B <=\ (2)
-Lower than or equal to
+Est plus petit que, ou égal à
 .TP
 .B >\ (2)
-Greater than
+Est plus grand que
 .TP
 .B >=\ (2)
-Greater than or equal to
+Est plus grand que, ou égal à
 .TP
 .B AND\ (2)
-Logical and
+Et logique
 .TP
 .B OR\ (2)
-Logical or
+Ou logique
 .TP
 .B XOR\ (2)
-Logical xor
+Xor logique (exclusion)
 .TP
 .B NOT\ (1)
-Logical not
+Non logique
 .TP
 .B DUP\ (1)
-Copy the first item
+Copie le premier élément
 .TP
 .B SWAP\ (2)
-Exchange the first two items
+Échange les deux premiers éléments
 .TP
 .B DROP\ (1)
-Delete the first item
+Supprime le premier élément
 .TP
 .B CLEAR\ (0)
-Clear the stack
+Efface la pile
 .TP
 .B OVER\ (2)
-Copy the second item
+Copie le second élément
 .TP
 .B DUP2\ (2)
-Copy the first two items
+Copie les deux premiers éléments
 .TP
 .B DROP2\ (2)
-Delete the first two items
+Supprime les deux premiers éléments
 .TP
 .B ROT\ (3)
-Move the third item to the first position
+Déplace le troisième élément en première position
 .TP
 .B ROLLD\ (1)
-Move the first item to the Nth position
+Déplace le premier élément en Nième position
 .TP
 .B ROLL\ (1)
-Move the Nth item to the first position
+Déplace le Ne élément en première position
 .TP
 .B PICK\ (1)
-Copy the Nth item
+Copie le Ne élément
 .TP
 .B DUPN\ (1)
-Copy the n first items
+Copie les N premiers éléments
 .TP
 .B DROPN\ (1)
-Delete the n first items
+Supprime les N premiers éléments
 .TP
 .B DEPTH\ (0)
-Get the number of items
+Renvoie le nombre d'éléments dans la pile
 .TP
 .B SF\ (1)
-Set flag
+Active l'indicateur binaire
 .TP
 .B CF\ (1)
-Clear flag
+Désactive l'indicateur binaire
 .TP
 .B FS?\ (1)
-Return 1 if flag is set, 0 otherwise
+Renvoie 1 si l'indicateur binaire est activé, 0 sinon
 .TP
 .B FC?\ (1)
-Return 0 if flag is set, 1 otherwise
+Renvoie 0 si l'indicateur binaire est activé, 1 sinon
 .TP
 .B FS?C\ (1)
-Do FS? then clear flag
+Exécute FS? et désactive l'indicateur binaire
 .TP
 .B FC?C\ (1)
-Do FC? then clear flag
+Exécute FC? et désactive l'indicateur binaire
 .TP
 .B ->STR\ (1)
-Convert to string
+Convertis un élément en chaîne de caractères
 .TP
 .B STR->\ (0)
-Convert from string
+Convertis une chaîne de caractère en éléments
 .TP
 .B SUB\ (3)
-Extract content from a string or a list
+Extrais le contenu d'une chaîne de caractères ou d'une liste
 .TP
 .B ->LIST\ (1)
-Items to list
+Mets les éléments dans une liste
 .TP
 .B LIST->\ (1)
-Extract items from list
+Convertis la liste en ses éléments
 .TP
 .B GET\ (2)
-Get an item from a list or array
+Extrais un élément d'une liste ou d'un tableau
 .TP
 .B GETI\ (2)
-Get an item from a list or array by increments
+Extrais un élément d'une liste ou d'un tableau par incréments
 .TP
 .B PUT\ (3)
-Put an item into a list or array
+Remplace un élément dans une liste ou un tableau
 .TP
 .B PUTI\ (3)
-Put an item into a list or array by increments
+Remplace un élément dans une liste ou un tableau par incréments
 .TP
 .B SIZE\ (1)
-Dimension of a list or array
+Dimension d'une liste ou d'un tableau
 .TP
 .B ARRY->\ (1)
-Replace an array by all its elements
+Remplace un tableau par ses éléments
 .TP
 .B ->ARRY\ (1)
-Create an array from a list of elements
+Crée un tableau avec les éléments de la pile
 .TP
 .B CON\ (2)
-Create a constant array
+Crée un tableau constant
 .TP
 .B TRN\ (1)
-Transpose a matrix-type array
+Transpose une matrice
 .TP
 .B RDM\ (2)
-Modify the dimension of an array
+Modifie les dimensions d'un tableau
 .TP
 .B IDN\ (1)
-Create an identity matrix
+Crée une matrice identité
 .TP
 .B CROSS\ (2)
-Cross product (vectorial product)
+Produit vectoriel
 .TP
 .B DOT\ (2)
-Dot product (scalar product)
+Produit scalaire
 .TP
 .B EVAL\ (0)
-Evaluate item
+Évalue l'élément
 .TP
 .B STO\ (2)
-Store value in variable name
+Enregistre la valeur dans la variable
 .TP
 .B RCL\ (1)
-Recall value from variable name
+Récupère la valeur de la variable
 .TP
 .B PURGE\ (1)
-Remove a variable
+Supprime la variable
 .TP
 .B VARS\ (0)
-Get the list of variables in current directory
+Renvoie la liste des variables dans le répertoire courant
 .TP
 .B PATH\ (0)
-Get the list from root to current directory
+Renvoie le répertoire en cours sous forme de liste
 .TP
 .B CRDIR\ (1)
-Create a directory
+Crée un répertoire
 .TP
 .B HOME\ (0)
-Set root directory as the current one
+Définis le répertoire racine comme répertoire courant
 .TP
 .B UP\ (0)
-Make the parent directory the current one
+Définis le répertoire parent comme répertoire courant
 .TP
 .B BIN\ (0)
-Use binary mode for binary integers
+Utilise le mode binaire pour les entiers binaires
 .TP
 .B OCT\ (0)
-Use octal mode for binary integers
+Utilise le mode octal pour les entiers binaires
 .TP
 .B DEC\ (0)
-Use decimal mode for binary integers
+Utilise le mode décimal pour les entiers binaires
 .TP
 .B HEX\ (0)
-Use hexadecimal mode for binary integers
+Utilise le mode hexadécimal pour les entiers binaires
 .TP
 .B STWS\ (1)
-Define the number of bits in binary integers (1 to 64)
+Définis le nombre de bits des entiers binaires (de 1 à 64)
 .TP
 .B RCWS\ (0)
-Get the number of bits in binary integers
+Renvoie le nombre de bits des entiers binaires
 .TP
 .B B->R\ (1)
-Convert a binary integer into a real
+Convertis un entier binaire en réel
 .TP
 .B R->B\ (1)
-Convert a real into a binary integer
+Convertis un réel en entier binaire
 .TP
 .B RCLF\ (0)
-Save flag states in a binary integer
+Enregistre l'état des indicateurs binaires dans un entier binaire
 .TP
 .B STOF\ (1)
-Read flag states from a binary integer
+Récupère l'état des indicateurs binaires depuis un entier binaire
 .TP
 .B WAIT\ (1)
-Wait a number of seconds
+Pause d'une durée définie en secondes
 .TP
 .B HALT\ (0)
-Halt program execution
+Suspends l'exécution du programme
 .TP
 .B SST\ (0)
-Execute one step in the program
+Exécute une instruction dans le programme
 .TP
 .B ABORT\ (0)
-Abort current program execution
+Arrête l'exécution du programme courant
 .TP
 .B KILL\ (0)
-Abort all programs execution
+Arrête l'exécution de tous les programmes
 .TP
 .B CONT\ (0)
-Resume program execution
+Reprends l'exécution du programme
 .TP
 .B STD\ (0)
-Set reals display to 'standard'
+Règle l'affichage des réels à 'standard'
 .TP
 .B SCI\ (1)
-Set reals display to 'scientific'
+Règle l'affichage des réels à 'scientifique'
 .TP
 .B FIX\ (1)
-Set reals display to 'fixed number of decimals'
+Règle l'affichage des réels à 'nombre de décimales fixe'
 .TP
 .B ENG\ (1)
-Set reals display to 'engineering'
+Règle l'affichage des réels à 'ingénieur'
 .TP
 .B CLLCD\ (0)
-Clear the screen
+Efface l'écran
 .TP
 .B CLMF\ (0)
-Clear the message flag => unfreeze stack display
+Désarme l'indicateur d'affichage => dégèle l'affichage de la pile
 .TP
 .B DISP\ (2)
-Display an item on a line of the screen
+Affiche une chaîne de caractères sur une ligne de l'écran
 .TP
 .B _READ\ (1)
-Read file and puts its content in the stack
+Lis le fichier et met son contenu dans la pile
 .TP
 .B _WRITE\ (2)
-Write the second item into the file named by the first item
+Écris le second élément de la pile dans le fichier nommé par le premier élément
 .TP
 .B _HACK-REAL-MGMT\ (1)
-Internal: tune real 'standard' display management
+Interne : règle la gestion de l'affichage des réels en mode 'standard'
 .TP
 .B _HACK-REAL-DOT\ (1)
-Internal: set whether or not to keep a trailing dot in reals display
+Interne : détermine s'il faut afficher un point à la fin des réels
 .TP
 .B UNDO\ (0)
-Undo last command, 50 levels by default
+Annule la dernière commande, 50 niveaux par défaut
 .TP
 .B _UNDO_LEVELS\ (1)
-Define number of undo levels
+Définis le nombre de niveaux d'annulation
 .TP
 .B _UNDO_LEVELS?\ (0)
-Get number of undo levels
+Renvoie le nombre de niveaux d'annulations
 .SH "RÉSOLUTION DE SYSTÈMES D'ÉQUATIONS LINÉAIRES"
 .TP
 Vous pouvez résoudre un système d'équations linéaires en divisant un vecteur par une matrice.

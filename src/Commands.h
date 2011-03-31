@@ -252,8 +252,7 @@ const string stack_get_help(const int& dh) {
 				s.erase(); E->append_padr(s, integer_to_string(i), 12 - E->get_string_length(c.c_str())); o << s;
 				sout << c + o.str();
 				s.erase(); E->append_padr(s, _(d), 75); sout << s;
-				sout << (F->get_default(i) ? _("Set") : _("Unset"));
-				//if (i != FL_TAG_IT_END)
+				sout << (F->get(i) ? _("Set") : _("Unset"));
 				sout << endl;
 				c = "";
 			}

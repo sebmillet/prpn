@@ -93,71 +93,71 @@ COMMANDES
        entre parenthèses. Ces arguments sont pris dans la pile.
 
        _HELP (0)
-	      Display a help screen
+	      Affiche un écran d'aide
 
        _HELP_FLAGS (0)
-	      Display the list of flags
+	      Affiche la liste des indicateurs binaires
 
        _EXIT (0)
-	      Quit program
+	      Quitte le programme
 
        _ABOUT (0)
-	      Display information about this program
+	      Informations sur ce programme
 
-       + (2)  Addition: x + y
+       + (2)  Addition : x + y
 
-       - (2)  Subtraction: x - y
+       - (2)  Soustraction : x - y
 
-       * (2)  Multiplication: x * y
+       * (2)  Multiplication : x * y
 
-       / (2)  Division: x / y
+       / (2)  Division : x / y
 
-       ^ (2)  Power: x ^ y
+       ^ (2)  Puissance : x ^ y
 
-       % (2)  Percentage: (x * y) / 100
+       % (2)  Pourcentage : (x * y) / 100
 
        %CH (2)
-	      Percentage change: 100 * (y - x) / x
+	      Pourcentage de changement : 100 * (y - x) / x
 
-       %T (2) Percentage of total: 100 * y / x
+       %T (2) Pourcentage du total : 100 * y / x
 
        MOD (2)
-	      Modulus: x - y * FLOOR(x / y)
+	      Modulo : x - y * FLOOR(x / y)
 
        MIN (2)
-	      Minimum of two reals
+	      Minimum de deux réels
 
        MAX (2)
-	      Maximum of two reals
+	      Maximum de deux réels
 
        COS (1)
-	      Cosine
+	      Cosinus
 
        SIN (1)
-	      Sine
+	      Sinus
 
        TAN (1)
-	      Tangent
+	      Tangente
 
        ACOS (1)
-	      Arccos
+	      Arc-cosinus
 
        ASIN (1)
-	      Arcsin
+	      Arc-sinus
 
        ATAN (1)
-	      Arctan
+	      Arc-tangente
 
-       LN (1) Logarihtm (e base)
+       LN (1) Logarithme (base e)
 
        EXP (1)
-	      Exponential
+	      Exponentiel
 
        LOG (1)
-	      Logarithm (10 base)
+	      Logarithme (base 10)
 
        ALOG (1)
-	      10 base exponential (10^x)
+	      Exponentiel en base 10 (10^x)
 
        LNP1 (1)
 	      LN(1+x)
@@ -166,383 +166,392 @@ COMMANDES
 	      EXP(x)-1
 
        COSH (1)
-	      Hyperbolic cosine
+	      Cosinus hyperbolique
 
        SINH (1)
-	      Hyperbolic sine
+	      Sinus hyperbolique
 
        TANH (1)
-	      Hyperbolic tangent
+	      Tangente hyperbolique
 
        ACOSH (1)
-	      Arc-hyperbolic cosine
+	      Arc-cosinus hyperbolique
 
        ASINH (1)
-	      Arc-hyperbolic sine
+	      Arc-sinus hyperbolique
 
        ATANH (1)
-	      Arc-hyperbolic tangent
+	      Arc-tangente hyperbolique
 
        NEG (1)
-	      Opposite
+	      Opposé
 
-       IP (1) Integer part
+       IP (1) Partie entière
 
-       FP (1) Fractional part
+       FP (1) Partie décimale
 
        FLOOR (1)
-	      Greatest integer lower than or equal to x
+	      Plus grand entier inférieur ou égal à x
 
        CEIL (1)
-	      Lowest integer greater than or equal to x
+	      Plus petit entier supérieur ou égal à x
 
        ABS (1)
-	      Absolute of x
+	      Valeur absolue de x
 
        SIGN (1)
-	      Sign of x: can be -1, 0 or 1
+	      Signe de x : peut être -1, 0 ou 1
 
        MANT (1)
-	      Mantisse of x
+	      Mantisse de x
 
        XPON (1)
-	      Exponent of x
+	      Exponentielle de x
 
        INV (1)
 	      1/x
 
-       SQ (1) Square
+       SQ (1) Carré
 
        SQR (1)
-	      Square root
+	      Racine carrée
 
        RDZ (1)
-	      Initializes random values series, 0 to start from a timer value
+	      Initialise la suite des  valeurs	aléatoires,  0	pour  utiliser
+	      l'horloge
 
        RAND (0)
-	      Get a random value x, 0 <= x < 1
+	      Produis une valeur aléatoire x, 0 <= x < 1
 
        MINR (0)
-	      Smallest real greater than zero the calcultor can represent
+	      Plus  petit  réel supérieur à zéro représentable par la calcula‐
+	      trice
 
        MAXR (0)
-	      Biggest real the calcultor can represent
+	      Plus grand réel représentable par la calculatrice
 
        ->HMS (1)
-	      Convert a decimal to HMS (h.MMSSss)
+	      Convertis un décimal en nombre HMS (h.MMSSss)
 
        HMS-> (1)
-	      Convert a HMS (h.MMSSss) to a decimal
+	      Convertis un nombre HMS (h.MMSSss) en décimal
 
        HMS+ (2)
-	      Add two HMS (h.MMSSss)
+	      Additionne deux nombres HMS (h.MMSSss)
 
        HMS- (2)
-	      Subtract two HMS (h.MMSSss)
+	      Soustrais deux nombres HMS (h.MMSSss)
 
        D->R (1)
-	      Convert from degrees to radians
+	      Convertis des degrés en radians (*PI/180)
 
        R->D (1)
-	      Convert from radians to degrees
+	      Convertis des radians en degrés (*180/PI)
 
        RAD (0)
-	      Set angular mode to radians
+	      Utilise le radian pour les mesures angulaires
 
        DEG (0)
-	      Set angular mode to degrees
+	      Utilise le degré pour les mesures angulaires
 
        +ML (0)
-	      Display first item on multilpe lines
+	      Affiche le premier élément sur plusieurs lignes
 
        -ML (0)
-	      Display first item on a single line
+	      Affiche le premier élément sur une seule ligne
 
        RDXP (0)
-	      Set the decimal separator to '.'
+	      Utilise la caractère '.' comme séparateur décimal
 
        RDXC (0)
-	      Set the decimal separator to ','
+	      Utilise la caractère ',' comme séparateur décimal
 
        R->C (2)
-	      Real to complex
+	      Réel à complexe
 
        C->R (1)
-	      Complex to real
+	      Complexe à réel
 
-       RE (1) Get real part of a complex number or array
+       RE (1) Partie réelle d'un nombre complexe ou d'un tableau
 
-       IM (1) Get imaginary part of a complex number or array
+       IM (1) Partie imaginaire d'un nombre complexe ou d'un tableau
 
        CONJ (1)
-	      Get conjugate of a complex number or array
+	      Conjugué d'un nombre complexe ou d'un tableau
 
        ARG (1)
-	      Get argument of a complex number
+	      Argument d'un nombre complexe
 
        R->P (1)
-	      Rectangular to polar coordinates
+	      Conversion des coordonnées d'un nombre complexe de rectangulaire
+	      à polaire
 
        P->R (1)
-	      Polar to rectangular coordinates
+	      Conversion  des  coordonnées  d'un  nombre complexe de polaire à
+	      rectangulaire
 
        SAME (2)
-	      Is identical
+	      Est identique
 
-       == (2) Equal to
+       == (2) Est égal à
 
-       <> (2) Different from
+       <> (2) Est différent de
 
-       < (2)  Lower than
+       < (2)  Est plus petit que
 
-       <= (2) Lower than or equal to
+       <= (2) Est plus petit que, ou égal à
 
-       > (2)  Greater than
+       > (2)  Est plus grand que
 
-       >= (2) Greater than or equal to
+       >= (2) Est plus grand que, ou égal à
 
        AND (2)
-	      Logical and
+	      Et logique
 
-       OR (2) Logical or
+       OR (2) Ou logique
 
        XOR (2)
-	      Logical xor
+	      Xor logique (exclusion)
 
        NOT (1)
-	      Logical not
+	      Non logique
 
        DUP (1)
-	      Copy the first item
+	      Copie le premier élément
 
        SWAP (2)
-	      Exchange the first two items
+	      Échange les deux premiers éléments
 
        DROP (1)
-	      Delete the first item
+	      Supprime le premier élément
 
        CLEAR (0)
-	      Clear the stack
+	      Efface la pile
 
        OVER (2)
-	      Copy the second item
+	      Copie le second élément
 
        DUP2 (2)
-	      Copy the first two items
+	      Copie les deux premiers éléments
 
        DROP2 (2)
-	      Delete the first two items
+	      Supprime les deux premiers éléments
 
        ROT (3)
-	      Move the third item to the first position
+	      Déplace le troisième élément en première position
 
        ROLLD (1)
-	      Move the first item to the Nth position
+	      Déplace le premier élément en Nième position
 
        ROLL (1)
-	      Move the Nth item to the first position
+	      Déplace le Ne élément en première position
 
        PICK (1)
-	      Copy the Nth item
+	      Copie le Ne élément
 
        DUPN (1)
-	      Copy the n first items
+	      Copie les N premiers éléments
 
        DROPN (1)
-	      Delete the n first items
+	      Supprime les N premiers éléments
 
        DEPTH (0)
-	      Get the number of items
+	      Renvoie le nombre d'éléments dans la pile
 
-       SF (1) Set flag
+       SF (1) Active l'indicateur binaire
 
-       CF (1) Clear flag
+       CF (1) Désactive l'indicateur binaire
 
        FS? (1)
-	      Return 1 if flag is set, 0 otherwise
+	      Renvoie 1 si l'indicateur binaire est activé, 0 sinon
 
        FC? (1)
-	      Return 0 if flag is set, 1 otherwise
+	      Renvoie 0 si l'indicateur binaire est activé, 1 sinon
 
        FS?C (1)
-	      Do FS? then clear flag
+	      Exécute FS? et désactive l'indicateur binaire
 
        FC?C (1)
-	      Do FC? then clear flag
+	      Exécute FC? et désactive l'indicateur binaire
 
        ->STR (1)
-	      Convert to string
+	      Convertis un élément en chaîne de caractères
 
        STR-> (0)
-	      Convert from string
+	      Convertis une chaîne de caractère en éléments
 
        SUB (3)
-	      Extract content from a string or a list
+	      Extrais le contenu d'une chaîne de caractères ou d'une liste
 
        ->LIST (1)
-	      Items to list
+	      Mets les éléments dans une liste
 
        LIST-> (1)
-	      Extract items from list
+	      Convertis la liste en ses éléments
 
        GET (2)
-	      Get an item from a list or array
+	      Extrais un élément d'une liste ou d'un tableau
 
        GETI (2)
-	      Get an item from a list or array by increments
+	      Extrais un élément d'une liste ou d'un tableau par incréments
 
        PUT (3)
-	      Put an item into a list or array
+	      Remplace un élément dans une liste ou un tableau
 
        PUTI (3)
-	      Put an item into a list or array by increments
+	      Remplace un élément dans une liste ou un tableau par incréments
 
        SIZE (1)
-	      Dimension of a list or array
+	      Dimension d'une liste ou d'un tableau
 
        ARRY-> (1)
-	      Replace an array by all its elements
+	      Remplace un tableau par ses éléments
 
        ->ARRY (1)
-	      Create an array from a list of elements
+	      Crée un tableau avec les éléments de la pile
 
        CON (2)
-	      Create a constant array
+	      Crée un tableau constant
 
        TRN (1)
-	      Transpose a matrix-type array
+	      Transpose une matrice
 
        RDM (2)
-	      Modify the dimension of an array
+	      Modifie les dimensions d'un tableau
 
        IDN (1)
-	      Create an identity matrix
+	      Crée une matrice identité
 
        CROSS (2)
-	      Cross product (vectorial product)
+	      Produit vectoriel
 
        DOT (2)
-	      Dot product (scalar product)
+	      Produit scalaire
 
        EVAL (0)
-	      Evaluate item
+	      Évalue l'élément
 
        STO (2)
-	      Store value in variable name
+	      Enregistre la valeur dans la variable
 
        RCL (1)
-	      Recall value from variable name
+	      Récupère la valeur de la variable
 
        PURGE (1)
-	      Remove a variable
+	      Supprime la variable
 
        VARS (0)
-	      Get the list of variables in current directory
+	      Renvoie la liste des variables dans le répertoire courant
 
        PATH (0)
-	      Get the list from root to current directory
+	      Renvoie le répertoire en cours sous forme de liste
 
        CRDIR (1)
-	      Create a directory
+	      Crée un répertoire
 
        HOME (0)
-	      Set root directory as the current one
+	      Définis le répertoire racine comme répertoire courant
 
-       UP (0) Make the parent directory the current one
+       UP (0) Définis le répertoire parent comme répertoire courant
 
        BIN (0)
-	      Use binary mode for binary integers
+	      Utilise le mode binaire pour les entiers binaires
 
        OCT (0)
-	      Use octal mode for binary integers
+	      Utilise le mode octal pour les entiers binaires
 
        DEC (0)
-	      Use decimal mode for binary integers
+	      Utilise le mode décimal pour les entiers binaires
 
        HEX (0)
-	      Use hexadecimal mode for binary integers
+	      Utilise le mode hexadécimal pour les entiers binaires
 
        STWS (1)
-	      Define the number of bits in binary integers (1 to 64)
+	      Définis le nombre de bits des entiers binaires (de 1 à 64)
 
        RCWS (0)
-	      Get the number of bits in binary integers
+	      Renvoie le nombre de bits des entiers binaires
 
        B->R (1)
-	      Convert a binary integer into a real
+	      Convertis un entier binaire en réel
 
        R->B (1)
-	      Convert a real into a binary integer
+	      Convertis un réel en entier binaire
 
        RCLF (0)
-	      Save flag states in a binary integer
+	      Enregistre  l'état  des  indicateurs  binaires  dans  un	entier
+	      binaire
 
        STOF (1)
-	      Read flag states from a binary integer
+	      Récupère	l'état	des  indicateurs  binaires  depuis  un	entier
+	      binaire
 
        WAIT (1)
-	      Wait a number of seconds
+	      Pause d'une durée définie en secondes
 
        HALT (0)
-	      Halt program execution
+	      Suspends l'exécution du programme
 
        SST (0)
-	      Execute one step in the program
+	      Exécute une instruction dans le programme
 
        ABORT (0)
-	      Abort current program execution
+	      Arrête l'exécution du programme courant
 
        KILL (0)
-	      Abort all programs execution
+	      Arrête l'exécution de tous les programmes
 
        CONT (0)
-	      Resume program execution
+	      Reprends l'exécution du programme
 
        STD (0)
-	      Set reals display to 'standard'
+	      Règle l'affichage des réels à 'standard'
 
        SCI (1)
-	      Set reals display to 'scientific'
+	      Règle l'affichage des réels à 'scientifique'
 
        FIX (1)
-	      Set reals display to 'fixed number of decimals'
+	      Règle l'affichage des réels à 'nombre de décimales fixe'
 
        ENG (1)
-	      Set reals display to 'engineering'
+	      Règle l'affichage des réels à 'ingénieur'
 
        CLLCD (0)
-	      Clear the screen
+	      Efface l'écran
 
        CLMF (0)
-	      Clear the message flag => unfreeze stack display
+	      Désarme l'indicateur d'affichage =>  dégèle  l'affichage	de  la
+	      pile
 
        DISP (2)
-	      Display an item on a line of the screen
+	      Affiche une chaîne de caractères sur une ligne de l'écran
 
        _READ (1)
-	      Read file and puts its content in the stack
+	      Lis le fichier et met son contenu dans la pile
 
        _WRITE (2)
-	      Write the second item into the file named by the first item
+	      Écris  le second élément de la pile dans le fichier nommé par le
+	      premier élément
 
        _HACK-REAL-MGMT (1)
-	      Internal: tune real 'standard' display management
+	      Interne : règle la gestion de  l'affichage  des  réels  en  mode
+	      'standard'
 
        _HACK-REAL-DOT (1)
-	      Internal: set whether or not to keep a  trailing	dot  in  reals
-	      display
+	      Interne  :  détermine  s'il  faut afficher un point à la fin des
+	      réels
 
        UNDO (0)
-	      Undo last command, 50 levels by default
+	      Annule la dernière commande, 50 niveaux par défaut
 
        _UNDO_LEVELS (1)
-	      Define number of undo levels
+	      Définis le nombre de niveaux d'annulation
 
        _UNDO_LEVELS? (0)
-	      Get number of undo levels
+	      Renvoie le nombre de niveaux d'annulations
 
 RÉSOLUTION DE SYSTÈMES D'ÉQUATIONS LINÉAIRES
-       Vous  pouvez  résoudre  un système d'équations linéaires en divisant un
+       Vous pouvez résoudre un système d'équations linéaires  en  divisant  un
        vecteur par une matrice.
 	      Exemple Vous voudriez résoudre le système
 		2x - y + z = 13
@@ -552,7 +561,7 @@ RÉSOLUTION DE SYSTÈMES D'ÉQUATIONS LINÉAIRES
 		[13 3 4]
 	      Ensuite saisissez la matrice
 		[[2 -1 1][1 5 3][-2 0 4]]
-	      Faites une division en cliquant sur le bouton '/'.  Le  résultat
+	      Faites  une  division en cliquant sur le bouton '/'. Le résultat
 	      est là :
 		[4 -2 3]
 	      Ce qui se lit "la solution est x = 4, y = -2 et z = 3"
@@ -560,15 +569,15 @@ RÉSOLUTION DE SYSTÈMES D'ÉQUATIONS LINÉAIRES
 INSTRUCTIONS DE CONTRÔLE DES PROGRAMMES
        Note au sujet des booléens
 	      Un test (IF, WHILE ou UNTIL, cf. ci-après) prend une valeur dans
-	      la pile.	Cette valeur doit être de type réel. Toute valeur  non
+	      la  pile.  Cette valeur doit être de type réel. Toute valeur non
 	      nulle est traitée comme VRAI, une valeur nulle comme FAUX.
-	      Ci-dessous,  le  terme "en bas de la pile" se rapporte à l'objet
+	      Ci-dessous, le terme "en bas de la pile" se rapporte  à  l'objet
 	      situé au niveau 1 de la pile.
 
        Séquence IF/THEN/ELSE/END
 	      Exécute les instructions entre IF et THEN.
 	      Ensuite, prends l'élément en bas de la pile, s'il est vrai (voir
-	      ci-dessus),  exécute les instructions entre THEN et ELSE (ou END
+	      ci-dessus), exécute les instructions entre THEN et ELSE (ou  END
 	      s'il n'y a pas de ELSE), sinon exécute les instructions du ELSE.
 	      ELSE est facultatif.
 
@@ -588,40 +597,40 @@ INSTRUCTIONS DE CONTRÔLE DES PROGRAMMES
        Séquence WHILE/REPEAT/END
 	      Exécute les instructions entre WHILE et REPEAT.
 	      Ensuite, prends l'élément en bas de la pile, s'il est vrai (voir
-	      ci-dessus),  exécute  les  instructions  du REPEAT et recommence
+	      ci-dessus), exécute les instructions  du	REPEAT	et  recommence
 	      depuis le début du WHILE.
 
        Exemple
-	      Calcule le plus petit N pour lequel  somme(i^2  avec  i  prenant
+	      Calcule  le  plus  petit	N pour lequel somme(i^2 avec i prenant
 	      toutes les valeurs entières dans l'intervalle 1..N) >= 100
 	      << 0 0 -> n << WHILE DUP 100 < REPEAT n SQ + n 1 + 'n' STO END n
 	      >> >>
 
        Séquence DO/UNTIL/END
-	      Exécute les instructions entre DO et UNTIL puis entre  UNTIL  et
+	      Exécute  les  instructions entre DO et UNTIL puis entre UNTIL et
 	      END.
 	      Ensuite, prends l'élément en bas de la pile, s'il est vrai (voir
 	      ci-dessus), recommence depuis le début du DO.
 
        Exemple
-	      Calcule le plus petit N pour lequel  somme(1/i  avec  i  prenant
+	      Calcule  le  plus  petit	N pour lequel somme(1/i avec i prenant
 	      toutes les valeurs entières dans l'intervalle 1..N) >= 3
-	      <<  0 0 -> n << DO n 1 + 'n' STO n INV + UNTIL DUP 7 >= END n >>
+	      << 0 0 -> n << DO n 1 + 'n' STO n INV + UNTIL DUP 7 >= END n  >>
 	      >>
 
        Séquence FOR|START/NEXT|STEP
-	      FOR ou START démarre une boucle en prenant  deux	arguments,  le
+	      FOR  ou  START  démarre une boucle en prenant deux arguments, le
 	      premier (deuxième niveau de la pile) étant la valeur du compteur
-	      au départ, le deuxième (premier niveau  de  la  pile)  étant  la
-	      valeur   cible  du  compteur,  au-delà  de  laquelle  la	boucle
+	      au  départ,  le  deuxième  (premier  niveau de la pile) étant la
+	      valeur  cible  du  compteur,  au-delà  de  laquelle  la	boucle
 	      s'arrête.
-	      START est une boucle anonyme. FOR  prend	un  nom  et  l'utilise
+	      START  est  une  boucle  anonyme.  FOR prend un nom et l'utilise
 	      comme variable locale pour le compteur.
-	      NEXT  incrémente	le compteur d'une unité si la valeur cible est
-	      supérieure à la valeur de  départ,  le  décrémente  d'une  unité
+	      NEXT incrémente le compteur d'une unité si la valeur  cible  est
+	      supérieure  à  la  valeur  de  départ, le décrémente d'une unité
 	      sinon.
-	      STEP  prend la valeur en bas de la pile et l'ajoute au compteur.
-	      NEXT peut être utilisé indifféremment avec FOR  et  START,  même
+	      STEP prend la valeur en bas de la pile et l'ajoute au  compteur.
+	      NEXT  peut  être	utilisé indifféremment avec FOR et START, même
 	      chose pour STEP.
 
        Exemple 1
@@ -629,18 +638,18 @@ INSTRUCTIONS DE CONTRÔLE DES PROGRAMMES
 	      << 0 1 10 FOR i i SQ + NEXT >>
 
        Exemple 2
-	      Calcule  somme(2^i  avec	i  prenant toutes les valeurs entières
-	      dans l'intervalle 1..N), N étant	la  première  valeur  dans  la
+	      Calcule somme(2^i avec i prenant	toutes	les  valeurs  entières
+	      dans  l'intervalle  1..N),  N  étant  la première valeur dans la
 	      pile.
 	      << 0 1 1 4 ROLL START DUP ROT + SWAP 2 * NEXT DROP >> EVAL
 
        Exemple 3
-	      Calcule  somme(i avec i prenant toutes les valeurs impaires dans
+	      Calcule somme(i avec i prenant toutes les valeurs impaires  dans
 	      l'intervalle 1..N), N étant la première valeur dans la pile.
 	      << 0 1 ROT FOR i i + 2 STEP >>
 
        Documentation RPL
-	      RPL est le langage de programmation des calculatrices  HP  fonc‐
+	      RPL  est	le langage de programmation des calculatrices HP fonc‐
 	      tionnant en notation polonaise inverse.
 	      http://en.wikipedia.org/wiki/RPL_%28programming_language%29
 
@@ -649,7 +658,7 @@ TRUCS
 	      Appuyer sur les touches <Ctrl-Entrée>.
 
        Redimensionner la fenêtre à sa taille originale
-	      Double-cliquer  sur  la  partie  "statut"  de la fenêtre, où les
+	      Double-cliquer sur la partie "statut"  de  la  fenêtre,  où  les
 	      modes angulaire et binaire sont affichés.
 
 FICHIERS D'INITIALISATION
@@ -661,8 +670,8 @@ FICHIERS D'INITIALISATION
 
 AUTEUR
        Écrit par Sébastien Millet <sebastien.millet1@club-internet.fr>.
-       Autorisation est donnée de copier, distribuer et/ou modifier  ce  docu‐
-       ment  selon  les  termes de la licence "GNU General Public License". La
+       Autorisation  est  donnée de copier, distribuer et/ou modifier ce docu‐
+       ment selon les termes de la licence "GNU General  Public  License".  La
        version 3 est publiée par la Free Software Foundation.
 
 BUGS
@@ -671,34 +680,34 @@ BUGS
        Ces fonctions sont supposées apporter plus de précision au voisinage de
        x = 0. Rappel :
 	      LNP1(x) = LN(X + 1) et EXPM(x) = EXP(x) - 1
-	      A  l'heure  actuelle,  ces  fonctions  n'apportent  pas  plus de
+	      A l'heure  actuelle,  ces  fonctions  n'apportent  pas  plus  de
 	      précision, elles appellent simplement LN() et EXP().
 
        Différence entre prpn et prpnc
 
        Linux  prpn peut être exécuté avec l'option -c. Dans ce cas le résultat
-	      est  presque  équivalent	à prpnc. "Presque" seulement. prpn est
+	      est presque équivalent à prpnc. "Presque"  seulement.  prpn  est
 	      compilé avec la librairie WxWidgets et initialise des ressources
-	      graphiques  au  démarrage.  Si les ressources graphiques ne sont
-	      pas trouvées, le programme ne démarre pas. Par exemple, si  vous
+	      graphiques au démarrage. Si les ressources  graphiques  ne  sont
+	      pas  trouvées, le programme ne démarre pas. Par exemple, si vous
 	      exécutez la commande suivante
 		   DISPLAY="" prpn -c
 	      Vous obtenez ce résultat
 		   Error: Unable to initialize gtk, is DISPLAY set properly?
 	      prpnc résout ce problème, car il n'est *pas* compilé avec WxWid‐
-	      gets et peut fonctionner dans un terminal ne disposant  d'aucune
+	      gets  et peut fonctionner dans un terminal ne disposant d'aucune
 	      ressource graphique. Un moyen élégant de régler cette difficulté
-	      serait  d'empêcher  WxWidgets   d'initialiser   les   ressources
-	      graphiques  lorsque l'option -c est présente. Si vous connaissez
-	      un moyen robuste de le faire  (portable  quels  que  soient  les
-	      systèmes	et  les  versions...),	l'auteur  de  ce programme est
+	      serait   d'empêcher   WxWidgets	d'initialiser  les  ressources
+	      graphiques lorsque l'option -c est présente. Si vous  connaissez
+	      un  moyen  robuste  de  le  faire (portable quels que soient les
+	      systèmes et les  versions...),  l'auteur	de  ce	programme  est
 	      intéressé !
 
        Windows
-	      prpn.exe ne peut *pas* être exécuté avec l'option -c. Sous  Win‐
-	      dows,  WxWidgets	déconnecte  le	processus  de  son terminal de
-	      contrôle. La solution est la même que sous  Linux,  sauf	qu'ici
-	      c'est  obligatoire  :  vous  devez  utiliser  prpnc.exe  si vous
+	      prpn.exe	ne peut *pas* être exécuté avec l'option -c. Sous Win‐
+	      dows, WxWidgets déconnecte  le  processus  de  son  terminal  de
+	      contrôle.  La  solution  est la même que sous Linux, sauf qu'ici
+	      c'est obligatoire  :  vous  devez  utiliser  prpnc.exe  si  vous
 	      souhaitez utiliser la version en ligne de commande.
 
 
