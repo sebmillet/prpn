@@ -1580,7 +1580,11 @@ static st_err_t bc_exit(TransStack&, SIO*, string&) { return ST_ERR_EXIT; }
 static st_err_t bc_about(TransStack&, SIO*, string&) {
     // It is important to "translate" this string to benefit from the re-encoding side-effect,
     // if needed.
-	ui_set_error(PACKAGE_STRING DEBUG_VERSION_STRING, _("Sebastien Millet, 2011"));
+	const char *A = _N("[TRANSLATE_SPECIAL_AUTHOR]");
+	string author = _(A);
+	if (author == A)
+		author = "Sébastien Millet 2011";
+	ui_set_error(PACKAGE_STRING DEBUG_VERSION_STRING, author);
 	return ST_ERR_OK;
 }
 

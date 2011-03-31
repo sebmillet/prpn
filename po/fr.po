@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: prpn 0.5.0\n"
 "Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
-"POT-Creation-Date: 2011-03-31 21:00+0200\n"
-"PO-Revision-Date: 2011-03-31 21:01+0100\n"
+"POT-Creation-Date: 2011-03-31 21:37+0200\n"
+"PO-Revision-Date: 2011-03-31 21:37+0100\n"
 "Last-Translator: Sébastien Millet <sebastien.millet1@club-internet.fr>\n"
 "Language-Team: French\n"
 "Language: \n"
@@ -197,7 +197,7 @@ msgid "Infinite Result processed as an exception"
 msgstr "Infinite Result (résultat infini) traité en exception"
 
 #: src/Stack.cpp:1583
-msgid "Sebastien Millet, 2011"
+msgid "[TRANSLATE_SPECIAL_AUTHOR]"
 msgstr "Sébastien Millet 2011"
 
 #: src/Ui.cpp:181
@@ -997,6 +997,14 @@ msgstr "Activé"
 msgid "Unset"
 msgstr "Désactivé"
 
+#~ msgid "SMT"
+#~ msgstr "Sébastien Millet 2011"
+
+#, fuzzy
+#~ msgid ">Sebastien Millet 2011"
+#~ msgstr "Sébastien Millet 2011"
+#~ msgid "abcd"
+#~ msgstr "dcba"
 #~ msgid "Angle"
 #~ msgstr "Angle"
 
