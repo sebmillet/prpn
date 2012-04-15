@@ -40,6 +40,7 @@ public:
 	UiImplConsole();
 	virtual ~UiImplConsole();
 
+  virtual void notify_ui_change();
 	virtual void refresh_statuswin();
 	virtual void ui_set_error_call_back(const string&, const string&);
 	virtual void set_line(const int&, const slcc_t&, const string&);
@@ -51,6 +52,8 @@ public:
 	virtual const string get_first_char();
 	virtual bool space_at_the_left_of_the_cursor();
 	virtual int get_nb_newlines(const int&);
+  virtual int get_nb_menu_buttons();
+  virtual void set_menu_button(const int&, const menu_button_t&);
 	virtual void insert_text(const char *);
 	virtual void append_line(const char *);
 	virtual void set_cursor_at_the_beginning();
@@ -73,6 +76,8 @@ public:
 UiImplConsole::UiImplConsole() : UiImpl() { }
 
 UiImplConsole::~UiImplConsole() { }
+
+void UiImplConsole::notify_ui_change() { }
 
 void UiImplConsole::refresh_statuswin() { }
 
@@ -104,6 +109,11 @@ void UiImplConsole::ui_set_error_call_back(const string& l1, const string& l2) {
   // The functions below have little meaning in a console context
 void UiImplConsole::erase_input() { }
 int UiImplConsole::get_nb_newlines(const int&) { return -1; }
+int UiImplConsole::get_nb_menu_buttons() {
+  return 0;
+}
+void UiImplConsole::set_menu_button(const int&, const menu_button_t&) {
+}
 void UiImplConsole::insert_text(const char *) { }
 void UiImplConsole::append_line(const char *) { }
 void UiImplConsole::set_cursor_at_the_beginning() { }
@@ -155,7 +165,8 @@ void console_loop() {
 			ui_dsl = DisplayStackLayout(0, 0);
 
 		string input;
-		ui_post_init();
+		ui_post_init_before_ui_build();
+		ui_post_init_after_ui_build();
 		while(!quit_requested && cin.good()) {
 			getline(cin, input);
 			if (!cin.good())

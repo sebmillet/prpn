@@ -1,27 +1,27 @@
-pRPN(1) 							       pRPN(1)
+pRPN(1)								       pRPN(1)
 
 
 
 NAME
        pRPN  -	une  calculatrice en notation polonaise inverse multi systèmes
-       d'exploitation
+       d’exploitation
 
 
 SYNOPSIS
        prpn [options]
        prpnc [options]
 
-       prpn est l'exécutable principal, en mode graphique. prpnc est  la  ver‐
+       prpn est l’exécutable principal, en mode graphique. prpnc est  la  ver-
        sion en ligne de commande. prpnc est équivalent à prpn -c.
 
 
 DESCRIPTION
-       Le  programme  pRPN  est une calculatrice en notation polonaise inverse
+       Le programme pRPN est une calculatrice en  notation  polonaise  inverse
        inspirée des calculatrices HP de la fin des années 80.
 
 OPTIONS
        -h, --help
-	      Affiche l'aide et quitte.
+	      Affiche l’aide et quitte.
 
        -v --version
 	      Affiche le numéro de version et quitte.
@@ -30,15 +30,15 @@ OPTIONS
 	      Exécution en mode console.
 
        -w, --width width
-	      Définis la largeur à width, mesurée en nombre de caractères.  23
+	      Définis  la largeur à width, mesurée en nombre de caractères. 23
 	      par défaut.
 
        -h, --height height
-	      Définis  la hauteur à height, mesurée en nombre de lignes. 5 par
+	      Définis la hauteur à height, mesurée en nombre de lignes. 5  par
 	      défaut.
 
        --min-stack-height min-stack-height
-	      Définis la hauteur minimale  à  height,  mesurée	en  nombre  de
+	      Définis  la  hauteur  minimale  à	 height,  mesurée en nombre de
 	      lignes. height par défaut. Uniquement en mode console.
 
        -b, --batch
@@ -53,7 +53,7 @@ OPTIONS
        -d, --debug debug_option
 	      Mode debug, prend un paramètre.
 
-TYPES D'OBJETS
+TYPES D’OBJETS
        Donnée
 
        Nombre réel
@@ -63,7 +63,7 @@ TYPES D'OBJETS
 	      ( )  (123.45, 678.90)
 
        Entier binaire
-	      #    # 123AB
+	      #	   # 123AB
 
        Chaîne de caractères
 	      " "  "RESULT"
@@ -89,11 +89,11 @@ TYPES D'OBJETS
 	      ´ ´  ´X+2*Y=Z´
 
 COMMANDES
-       Les  commandes  sont  suivies  du nombre d'arguments qu'elles prennent,
+       Les commandes sont suivies du  nombre  d’arguments  qu’elles  prennent,
        entre parenthèses. Ces arguments sont pris dans la pile.
 
        _HELP (0)
-	      Affiche un écran d'aide
+	      Affiche un écran d’aide
 
        _HELP_FLAGS (0)
 	      Affiche la liste des indicateurs binaires
@@ -217,14 +217,14 @@ COMMANDES
 	      Racine carrée
 
        RDZ (1)
-	      Initialise la suite des  valeurs	aléatoires,  0	pour  utiliser
-	      l'horloge
+	      Initialise  la  suite  des  valeurs  aléatoires, 0 pour utiliser
+	      l’horloge
 
        RAND (0)
 	      Produis une valeur aléatoire x, 0 <= x < 1
 
        MINR (0)
-	      Plus  petit  réel supérieur à zéro représentable par la calcula‐
+	      Plus petit réel supérieur à zéro représentable par  la  calcula-
 	      trice
 
        MAXR (0)
@@ -261,10 +261,10 @@ COMMANDES
 	      Affiche le premier élément sur une seule ligne
 
        RDXP (0)
-	      Utilise la caractère '.' comme séparateur décimal
+	      Utilise la caractère ’.’ comme séparateur décimal
 
        RDXC (0)
-	      Utilise la caractère ',' comme séparateur décimal
+	      Utilise la caractère ’,’ comme séparateur décimal
 
        R->C (2)
 	      Réel à complexe
@@ -272,22 +272,22 @@ COMMANDES
        C->R (1)
 	      Complexe à réel
 
-       RE (1) Partie réelle d'un nombre complexe ou d'un tableau
+       RE (1) Partie réelle d’un nombre complexe ou d’un tableau
 
-       IM (1) Partie imaginaire d'un nombre complexe ou d'un tableau
+       IM (1) Partie imaginaire d’un nombre complexe ou d’un tableau
 
        CONJ (1)
-	      Conjugué d'un nombre complexe ou d'un tableau
+	      Conjugué d’un nombre complexe ou d’un tableau
 
        ARG (1)
-	      Argument d'un nombre complexe
+	      Argument d’un nombre complexe
 
        R->P (1)
-	      Conversion des coordonnées d'un nombre complexe de rectangulaire
+	      Conversion des coordonnées d’un nombre complexe de rectangulaire
 	      à polaire
 
        P->R (1)
-	      Conversion  des  coordonnées  d'un  nombre complexe de polaire à
+	      Conversion des coordonnées d’un nombre  complexe	de  polaire  à
 	      rectangulaire
 
        SAME (2)
@@ -356,23 +356,23 @@ COMMANDES
 	      Supprime les N premiers éléments
 
        DEPTH (0)
-	      Renvoie le nombre d'éléments dans la pile
+	      Renvoie le nombre d’éléments dans la pile
 
-       SF (1) Active l'indicateur binaire
+       SF (1) Active l’indicateur binaire
 
-       CF (1) Désactive l'indicateur binaire
+       CF (1) Désactive l’indicateur binaire
 
        FS? (1)
-	      Renvoie 1 si l'indicateur binaire est activé, 0 sinon
+	      Renvoie 1 si l’indicateur binaire est activé, 0 sinon
 
        FC? (1)
-	      Renvoie 0 si l'indicateur binaire est activé, 1 sinon
+	      Renvoie 0 si l’indicateur binaire est activé, 1 sinon
 
        FS?C (1)
-	      Exécute FS? et désactive l'indicateur binaire
+	      Exécute FS? et désactive l’indicateur binaire
 
        FC?C (1)
-	      Exécute FC? et désactive l'indicateur binaire
+	      Exécute FC? et désactive l’indicateur binaire
 
        ->STR (1)
 	      Convertis un élément en chaîne de caractères
@@ -381,7 +381,7 @@ COMMANDES
 	      Convertis une chaîne de caractère en éléments
 
        SUB (3)
-	      Extrais le contenu d'une chaîne de caractères ou d'une liste
+	      Extrais le contenu d’une chaîne de caractères ou d’une liste
 
        ->LIST (1)
 	      Mets les éléments dans une liste
@@ -390,10 +390,10 @@ COMMANDES
 	      Convertis la liste en ses éléments
 
        GET (2)
-	      Extrais un élément d'une liste ou d'un tableau
+	      Extrais un élément d’une liste ou d’un tableau
 
        GETI (2)
-	      Extrais un élément d'une liste ou d'un tableau par incréments
+	      Extrais un élément d’une liste ou d’un tableau par incréments
 
        PUT (3)
 	      Remplace un élément dans une liste ou un tableau
@@ -402,7 +402,7 @@ COMMANDES
 	      Remplace un élément dans une liste ou un tableau par incréments
 
        SIZE (1)
-	      Dimension d'une liste ou d'un tableau
+	      Dimension d’une liste ou d’un tableau
 
        ARRY-> (1)
 	      Remplace un tableau par ses éléments
@@ -417,7 +417,7 @@ COMMANDES
 	      Transpose une matrice
 
        RDM (2)
-	      Modifie les dimensions d'un tableau
+	      Modifie les dimensions d’un tableau
 
        IDN (1)
 	      Crée une matrice identité
@@ -429,7 +429,7 @@ COMMANDES
 	      Produit scalaire
 
        EVAL (0)
-	      Évalue l'élément
+	      Évalue l’élément
 
        STO (2)
 	      Enregistre la valeur dans la variable
@@ -479,79 +479,82 @@ COMMANDES
 	      Convertis un réel en entier binaire
 
        RCLF (0)
-	      Enregistre  l'état  des  indicateurs  binaires  dans  un	entier
+	      Enregistre  l’état  des  indicateurs  binaires  dans  un	entier
 	      binaire
 
        STOF (1)
-	      Récupère	l'état	des  indicateurs  binaires  depuis  un	entier
+	      Récupère	l’état	des  indicateurs  binaires  depuis  un	entier
 	      binaire
 
        WAIT (1)
-	      Pause d'une durée définie en secondes
+	      Pause d’une durée définie en secondes
 
        HALT (0)
-	      Suspends l'exécution du programme
+	      Suspends l’exécution du programme
 
        SST (0)
 	      Exécute une instruction dans le programme
 
        ABORT (0)
-	      Arrête l'exécution du programme courant
+	      Arrête l’exécution du programme courant
 
        KILL (0)
-	      Arrête l'exécution de tous les programmes
+	      Arrête l’exécution de tous les programmes
 
        CONT (0)
-	      Reprends l'exécution du programme
+	      Reprends l’exécution du programme
 
        STD (0)
-	      Règle l'affichage des réels à 'standard'
+	      Règle l’affichage des réels à ’standard’
 
        SCI (1)
-	      Règle l'affichage des réels à 'scientifique'
+	      Règle l’affichage des réels à ’scientifique’
 
        FIX (1)
-	      Règle l'affichage des réels à 'nombre de décimales fixe'
+	      Règle l’affichage des réels à ’nombre de décimales fixe’
 
        ENG (1)
-	      Règle l'affichage des réels à 'ingénieur'
+	      Règle l’affichage des réels à ’ingénieur’
 
        CLLCD (0)
-	      Efface l'écran
+	      Efface l’écran
 
        CLMF (0)
-	      Désarme l'indicateur d'affichage =>  dégèle  l'affichage	de  la
+	      Désarme  l’indicateur  d’affichage  =>  dégèle l’affichage de la
 	      pile
 
        DISP (2)
-	      Affiche une chaîne de caractères sur une ligne de l'écran
+	      Affiche une chaîne de caractères sur une ligne de l’écran
 
        _READ (1)
 	      Lis le fichier et met son contenu dans la pile
 
        _WRITE (2)
-	      Écris  le second élément de la pile dans le fichier nommé par le
+	      Écris le second élément de la pile dans le fichier nommé par  le
 	      premier élément
 
        _HACK-REAL-MGMT (1)
-	      Interne : règle la gestion de  l'affichage  des  réels  en  mode
-	      'standard'
+	      Interne  :  règle	 la  gestion  de l’affichage des réels en mode
+	      ’standard’
 
        _HACK-REAL-DOT (1)
-	      Interne  :  détermine  s'il  faut afficher un point à la fin des
+	      Interne : détermine s’il faut afficher un point  à  la  fin  des
 	      réels
 
        UNDO (0)
 	      Annule la dernière commande, 50 niveaux par défaut
 
        _UNDO_LEVELS (1)
-	      Définis le nombre de niveaux d'annulation
+	      Définis le nombre de niveaux d’annulation
 
        _UNDO_LEVELS? (0)
-	      Renvoie le nombre de niveaux d'annulations
+	      Renvoie le nombre de niveaux d’annulations
 
-RÉSOLUTION DE SYSTÈMES D'ÉQUATIONS LINÉAIRES
-       Vous pouvez résoudre un système d'équations linéaires  en  divisant  un
+       _UISET (1)
+	      Définis le type d’interface utilisateur
+
+RÉSOLUTION DE SYSTÈMES D’ÉQUATIONS LINÉAIRES
+       Vous  pouvez  résoudre  un système d’équations linéaires en divisant un
        vecteur par une matrice.
 	      Exemple Vous voudriez résoudre le système
 		2x - y + z = 13
@@ -561,7 +564,7 @@ RÉSOLUTION DE SYSTÈMES D'ÉQUATIONS LINÉAIRES
 		[13 3 4]
 	      Ensuite saisissez la matrice
 		[[2 -1 1][1 5 3][-2 0 4]]
-	      Faites  une  division en cliquant sur le bouton '/'. Le résultat
+	      Faites  une  division en cliquant sur le bouton ’/’. Le résultat
 	      est là :
 		[4 -2 3]
 	      Ce qui se lit "la solution est x = 4, y = -2 et z = 3"
@@ -569,20 +572,20 @@ RÉSOLUTION DE SYSTÈMES D'ÉQUATIONS LINÉAIRES
 INSTRUCTIONS DE CONTRÔLE DES PROGRAMMES
        Note au sujet des booléens
 	      Un test (IF, WHILE ou UNTIL, cf. ci-après) prend une valeur dans
-	      la  pile.  Cette valeur doit être de type réel. Toute valeur non
+	      la  pile.	 Cette valeur doit être de type réel. Toute valeur non
 	      nulle est traitée comme VRAI, une valeur nulle comme FAUX.
-	      Ci-dessous, le terme "en bas de la pile" se rapporte  à  l'objet
+	      Ci-dessous, le terme "en bas de la pile" se rapporte  à  l’objet
 	      situé au niveau 1 de la pile.
 
        Séquence IF/THEN/ELSE/END
 	      Exécute les instructions entre IF et THEN.
-	      Ensuite, prends l'élément en bas de la pile, s'il est vrai (voir
+	      Ensuite, prends l’élément en bas de la pile, s’il est vrai (voir
 	      ci-dessus), exécute les instructions entre THEN et ELSE (ou  END
-	      s'il n'y a pas de ELSE), sinon exécute les instructions du ELSE.
+	      s’il n’y a pas de ELSE), sinon exécute les instructions du ELSE.
 	      ELSE est facultatif.
 
        Exemple 1
-	      Prends l'élément en bas de la pile et indique s'il est supérieur
+	      Prends l’élément en bas de la pile et indique s’il est supérieur
 	      ou égal à zéro, ou bien négatif
 	      << IF 0 >= THEN "Positif ou nul" ELSE "Négatif" END >>
 
@@ -596,40 +599,40 @@ INSTRUCTIONS DE CONTRÔLE DES PROGRAMMES
 
        Séquence WHILE/REPEAT/END
 	      Exécute les instructions entre WHILE et REPEAT.
-	      Ensuite, prends l'élément en bas de la pile, s'il est vrai (voir
+	      Ensuite, prends l’élément en bas de la pile, s’il est vrai (voir
 	      ci-dessus), exécute les instructions  du	REPEAT	et  recommence
 	      depuis le début du WHILE.
 
        Exemple
-	      Calcule  le  plus  petit	N pour lequel somme(i^2 avec i prenant
-	      toutes les valeurs entières dans l'intervalle 1..N) >= 100
-	      << 0 0 -> n << WHILE DUP 100 < REPEAT n SQ + n 1 + 'n' STO END n
+	      Calcule  le  plus	 petit	N pour lequel somme(i^2 avec i prenant
+	      toutes les valeurs entières dans l’intervalle 1..N) >= 100
+	      << 0 0 -> n << WHILE DUP 100 < REPEAT n SQ + n 1 + ’n’ STO END n
 	      >> >>
 
        Séquence DO/UNTIL/END
 	      Exécute  les  instructions entre DO et UNTIL puis entre UNTIL et
 	      END.
-	      Ensuite, prends l'élément en bas de la pile, s'il est vrai (voir
+	      Ensuite, prends l’élément en bas de la pile, s’il est vrai (voir
 	      ci-dessus), recommence depuis le début du DO.
 
        Exemple
-	      Calcule  le  plus  petit	N pour lequel somme(1/i avec i prenant
-	      toutes les valeurs entières dans l'intervalle 1..N) >= 3
-	      << 0 0 -> n << DO n 1 + 'n' STO n INV + UNTIL DUP 7 >= END n  >>
+	      Calcule  le  plus	 petit	N pour lequel somme(1/i avec i prenant
+	      toutes les valeurs entières dans l’intervalle 1..N) >= 3
+	      << 0 0 -> n << DO n 1 + ’n’ STO n INV + UNTIL DUP 7 >= END n  >>
 	      >>
 
        Séquence FOR|START/NEXT|STEP
 	      FOR  ou  START  démarre une boucle en prenant deux arguments, le
 	      premier (deuxième niveau de la pile) étant la valeur du compteur
-	      au  départ,  le  deuxième  (premier  niveau de la pile) étant la
-	      valeur  cible  du  compteur,  au-delà  de  laquelle  la	boucle
-	      s'arrête.
-	      START  est  une  boucle  anonyme.  FOR prend un nom et l'utilise
+	      au  départ,  le  deuxième	 (premier  niveau de la pile) étant la
+	      valeur  cible  du	 compteur,  au-delà  de	 laquelle  la	boucle
+	      s’arrête.
+	      START  est  une  boucle  anonyme.	 FOR prend un nom et l’utilise
 	      comme variable locale pour le compteur.
-	      NEXT incrémente le compteur d'une unité si la valeur  cible  est
-	      supérieure  à  la  valeur  de  départ, le décrémente d'une unité
+	      NEXT incrémente le compteur d’une unité si la valeur  cible  est
+	      supérieure  à  la	 valeur	 de  départ, le décrémente d’une unité
 	      sinon.
-	      STEP prend la valeur en bas de la pile et l'ajoute au  compteur.
+	      STEP prend la valeur en bas de la pile et l’ajoute au  compteur.
 	      NEXT  peut  être	utilisé indifféremment avec FOR et START, même
 	      chose pour STEP.
 
@@ -639,17 +642,17 @@ INSTRUCTIONS DE CONTRÔLE DES PROGRAMMES
 
        Exemple 2
 	      Calcule somme(2^i avec i prenant	toutes	les  valeurs  entières
-	      dans  l'intervalle  1..N),  N  étant  la première valeur dans la
+	      dans  l’intervalle  1..N),  N  étant  la première valeur dans la
 	      pile.
 	      << 0 1 1 4 ROLL START DUP ROT + SWAP 2 * NEXT DROP >> EVAL
 
        Exemple 3
 	      Calcule somme(i avec i prenant toutes les valeurs impaires  dans
-	      l'intervalle 1..N), N étant la première valeur dans la pile.
+	      l’intervalle 1..N), N étant la première valeur dans la pile.
 	      << 0 1 ROT FOR i i + 2 STEP >>
 
        Documentation RPL
-	      RPL  est	le langage de programmation des calculatrices HP fonc‐
+	      RPL  est	le langage de programmation des calculatrices HP fonc-
 	      tionnant en notation polonaise inverse.
 	      http://en.wikipedia.org/wiki/RPL_%28programming_language%29
 
@@ -658,10 +661,10 @@ TRUCS
 	      Appuyer sur les touches <Ctrl-Entrée>.
 
        Redimensionner la fenêtre à sa taille originale
-	      Double-cliquer sur la partie "statut"  de  la  fenêtre,  où  les
+	      Double-cliquer sur la partie "statut"  de	 la  fenêtre,  où  les
 	      modes angulaire et binaire sont affichés.
 
-FICHIERS D'INITIALISATION
+FICHIERS D’INITIALISATION
        ~/.prpn/stackrc
 	      Réglages et contenu de la pile.
 
@@ -670,8 +673,8 @@ FICHIERS D'INITIALISATION
 
 AUTEUR
        Écrit par Sébastien Millet <sebastien.millet1@club-internet.fr>.
-       Autorisation  est  donnée de copier, distribuer et/ou modifier ce docu‐
-       ment selon les termes de la licence "GNU General  Public  License".  La
+       Autorisation  est  donnée de copier, distribuer et/ou modifier ce docu-
+       ment selon les termes de la licence "GNU General	 Public	 License".  La
        version 3 est publiée par la Free Software Foundation.
 
 BUGS
@@ -680,36 +683,36 @@ BUGS
        Ces fonctions sont supposées apporter plus de précision au voisinage de
        x = 0. Rappel :
 	      LNP1(x) = LN(X + 1) et EXPM(x) = EXP(x) - 1
-	      A l'heure  actuelle,  ces  fonctions  n'apportent  pas  plus  de
+	      A	 l’heure  actuelle,  ces  fonctions  n’apportent  pas  plus de
 	      précision, elles appellent simplement LN() et EXP().
 
        Différence entre prpn et prpnc
 
-       Linux  prpn peut être exécuté avec l'option -c. Dans ce cas le résultat
-	      est presque équivalent à prpnc. "Presque"  seulement.  prpn  est
+       Linux  prpn peut être exécuté avec l’option -c. Dans ce cas le résultat
+	      est  presque  équivalent	à prpnc. "Presque" seulement. prpn est
 	      compilé avec la librairie WxWidgets et initialise des ressources
-	      graphiques au démarrage. Si les ressources  graphiques  ne  sont
-	      pas  trouvées, le programme ne démarre pas. Par exemple, si vous
+	      graphiques  au  démarrage.  Si les ressources graphiques ne sont
+	      pas trouvées, le programme ne démarre pas. Par exemple, si  vous
 	      exécutez la commande suivante
 		   DISPLAY="" prpn -c
 	      Vous obtenez ce résultat
 		   Error: Unable to initialize gtk, is DISPLAY set properly?
-	      prpnc résout ce problème, car il n'est *pas* compilé avec WxWid‐
-	      gets  et peut fonctionner dans un terminal ne disposant d'aucune
+	      prpnc résout ce problème, car il n’est *pas* compilé avec WxWid-
+	      gets et peut fonctionner dans un terminal ne disposant  d’aucune
 	      ressource graphique. Un moyen élégant de régler cette difficulté
-	      serait   d'empêcher   WxWidgets	d'initialiser  les  ressources
-	      graphiques lorsque l'option -c est présente. Si vous  connaissez
-	      un  moyen  robuste  de  le  faire (portable quels que soient les
-	      systèmes et les  versions...),  l'auteur	de  ce	programme  est
+	      serait  d’empêcher  WxWidgets   d’initialiser   les   ressources
+	      graphiques  lorsque l’option -c est présente. Si vous connaissez
+	      un moyen robuste de le faire  (portable  quels  que  soient  les
+	      systèmes	et  les	 versions...),	l’auteur  de  ce programme est
 	      intéressé !
 
        Windows
-	      prpn.exe	ne peut *pas* être exécuté avec l'option -c. Sous Win‐
-	      dows, WxWidgets déconnecte  le  processus  de  son  terminal  de
-	      contrôle.  La  solution  est la même que sous Linux, sauf qu'ici
-	      c'est obligatoire  :  vous  devez  utiliser  prpnc.exe  si  vous
+	      prpn.exe ne peut *pas* être exécuté avec l’option -c. Sous  Win-
+	      dows,  WxWidgets	déconnecte  le	processus  de  son terminal de
+	      contrôle. La solution est la même que sous  Linux,  sauf	qu’ici
+	      c’est  obligatoire  :  vous  devez  utiliser  prpnc.exe  si vous
 	      souhaitez utiliser la version en ligne de commande.
 
 
 
-29 mars 2011			 version 0.5.2			       pRPN(1)
+15 avril 2012			 version 0.5.3			       pRPN(1)

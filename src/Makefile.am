@@ -17,6 +17,14 @@ bin_PROGRAMS=prpn prpnc
 prpn_SOURCES=${MAINSOURCES}
 prpnc_SOURCES=${MAINSOURCES}
 
+Wxskin.cpp: png/hp28s_unix.h png/hp28s_win.h
+
+png/hp28s_unix.h: png/hp28s_unix.png
+	xd -dhp28s_unix png/hp28s_unix.png > $@
+
+png/hp28s_win.h: png/hp28s_win.png
+	xd -dhp28s_win png/hp28s_win.png > $@
+
 AM_CPPFLAGS=-DPKG_DOCDIR="\"${docdir}\"" -DPKG_HTMLDIR="\"${htmldir}\""
 AM_CPPFLAGS+= -DPKG_PREFIX="\"${prefix}\"" -DPKG_DATADIR="\"${datadir}\""
 AM_CPPFLAGS+= -DPKG_BINDIR="\"${bindir}\"" -DPKG_LOCALEDIR=\"$(localedir)\"
@@ -41,12 +49,11 @@ endif
 if BUILD_CLIENTGUI
 
 prpn_SOURCES+=UiImplWx.cpp \
-	prpn.xpm \
+	Wxskin.cpp Wxskin.h \
 	prpn.rc prpn.ico \
-	shiftsel.xpm shiftuns.xpm \
-	angle_deg.xpm angle_rad.xpm \
-	unit_bin.xpm unit_oct.xpm unit_dec.xpm unit_hex.xpm \
-	exec_norun.xpm exec_run.xpm
+	xpm \
+	png/hp28s_unix.h png/hp28s_unix.png \
+	png/hp28s_win.h png/hp28s_win.png
 prpn_CXXFLAGS=@WX_CXXFLAGS@ -DFOREIGN_MAIN
 prpn_LDFLAGS=@WX_LIBS@
 

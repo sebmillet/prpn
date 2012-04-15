@@ -157,6 +157,7 @@ _HACK-REAL-DOT (1): Internal: set whether or not to keep a trailing dot in reals
 UNDO           (0): Undo last command, 50 levels by default
 _UNDO_LEVELS   (1): Define number of undo levels
 _UNDO_LEVELS?  (0): Get number of undo levels
+_UISET         (1): Define the type of user interface
 
 Object type              Symbol         Example
 ------------------------ -------------- -------------------------
@@ -177,4 +178,9 @@ Procedures
 Program                  << >>          << DUP + SWAP >>
 Algebraic                ' '            'X+2*Y=Z'
 
-"éééèèèè "
+1
+'_UISET'
+[[ 18 18 18 ]  [ 1 2 3 ]]
+(151,3)
+(151,3)
+[[ 2.57142857143 2.57142857143 2.57142857143 ]  [ .142857142857 .285714285714 .428571428571 ]]

@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: prpn 0.5.2\n"
+"Project-Id-Version: prpn 0.5.3\n"
 "Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
-"POT-Creation-Date: 2011-03-31 21:37+0200\n"
+"POT-Creation-Date: 2012-04-15 13:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,63 +17,63 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/Main.cpp:105
+#: src/Main.cpp:106
 msgid "Try `"
 msgstr ""
 
-#: src/Main.cpp:105
+#: src/Main.cpp:106
 msgid " --help' for more information."
 msgstr ""
 
-#: src/Main.cpp:109
+#: src/Main.cpp:110
 msgid "Usage: "
 msgstr ""
 
-#: src/Main.cpp:109
+#: src/Main.cpp:110
 msgid " [options]..."
 msgstr ""
 
-#: src/Main.cpp:110
+#: src/Main.cpp:111
 msgid "Print this usage and exit"
 msgstr ""
 
-#: src/Main.cpp:111
+#: src/Main.cpp:112
 msgid "Print version information and exit"
 msgstr ""
 
-#: src/Main.cpp:112
+#: src/Main.cpp:113
 msgid "Run in text mode"
 msgstr ""
 
-#: src/Main.cpp:113
+#: src/Main.cpp:114
 msgid "Width of the display, in characters (default: 23)"
 msgstr ""
 
-#: src/Main.cpp:114
+#: src/Main.cpp:115
 msgid "Height of the display, in lines (default: 5)"
 msgstr ""
 
-#: src/Main.cpp:115
+#: src/Main.cpp:116
 msgid "Minimum height of the stack display, in lines"
 msgstr ""
 
-#: src/Main.cpp:116
+#: src/Main.cpp:117
 msgid "Only in text mode"
 msgstr ""
 
-#: src/Main.cpp:117
+#: src/Main.cpp:118
 msgid "Batch mode = display the stack once before exiting"
 msgstr ""
 
-#: src/Main.cpp:118
+#: src/Main.cpp:119
 msgid "Ignore rc files"
 msgstr ""
 
-#: src/Main.cpp:119
+#: src/Main.cpp:120
 msgid "Display class count before exiting"
 msgstr ""
 
-#: src/Main.cpp:120
+#: src/Main.cpp:121
 msgid "<debug options> Turn debugging on"
 msgstr ""
 
@@ -198,43 +198,47 @@ msgstr ""
 msgid "[TRANSLATE_SPECIAL_AUTHOR]"
 msgstr ""
 
-#: src/Ui.cpp:181
+#: src/Ui.cpp:456
 msgid "&File"
 msgstr ""
 
-#: src/Ui.cpp:182
+#: src/Ui.cpp:457
 msgid "&Edit"
 msgstr ""
 
-#: src/Ui.cpp:183
+#: src/Ui.cpp:458
 msgid "&Flags list"
 msgstr ""
 
-#: src/Ui.cpp:185
+#: src/Ui.cpp:460
 msgid "&Quit"
 msgstr ""
 
-#: src/Ui.cpp:187
+#: src/Ui.cpp:462 src/UiImplWx.cpp:514
+msgid "__INTERFACE__"
+msgstr ""
+
+#: src/Ui.cpp:464
 msgid "&Commands"
 msgstr ""
 
-#: src/Ui.cpp:393
+#: src/Ui.cpp:670
 msgid "&Help"
 msgstr ""
 
-#: src/Ui.cpp:394
+#: src/Ui.cpp:671
 msgid "&Manual page"
 msgstr ""
 
-#: src/Ui.cpp:396
+#: src/Ui.cpp:673
 msgid "&About"
 msgstr ""
 
-#: src/UiImplWx.cpp:722
+#: src/UiImplWx.cpp:974
 msgid "Help"
 msgstr ""
 
-#: src/UiImplWx.cpp:744 src/UiImplWx.cpp:757
+#: src/UiImplWx.cpp:996 src/UiImplWx.cpp:1009
 msgid "OK"
 msgstr ""
 
@@ -866,130 +870,134 @@ msgstr ""
 msgid "Get number of undo levels"
 msgstr ""
 
-#: src/Commands.h:195
+#: src/Commands.h:189
+msgid "Define the type of user interface"
+msgstr ""
+
+#: src/Commands.h:196
 msgid "Command (number of arguments): description"
 msgstr ""
 
-#: src/Commands.h:205
+#: src/Commands.h:206
 msgid "Object type"
 msgstr ""
 
-#: src/Commands.h:206
+#: src/Commands.h:207
 msgid "Symbol"
 msgstr ""
 
-#: src/Commands.h:206
+#: src/Commands.h:207
 msgid "Example"
 msgstr ""
 
-#: src/Commands.h:210
+#: src/Commands.h:211
 msgid "Data"
 msgstr ""
 
-#: src/Commands.h:211
+#: src/Commands.h:212
 msgid "Real Number"
 msgstr ""
 
-#: src/Commands.h:212
+#: src/Commands.h:213
 msgid "1.23456e-25"
 msgstr ""
 
-#: src/Commands.h:213
+#: src/Commands.h:214
 msgid "Complex Number"
 msgstr ""
 
-#: src/Commands.h:214
+#: src/Commands.h:215
 msgid "(123.45, 678.90)"
 msgstr ""
 
-#: src/Commands.h:215
+#: src/Commands.h:216
 msgid "Binary Integer"
 msgstr ""
 
-#: src/Commands.h:216
+#: src/Commands.h:217
 msgid "# 123AB"
 msgstr ""
 
-#: src/Commands.h:217
+#: src/Commands.h:218
 msgid "String"
 msgstr ""
 
-#: src/Commands.h:218
+#: src/Commands.h:219
 msgid "\"RESULT\""
 msgstr ""
 
-#: src/Commands.h:219
+#: src/Commands.h:220
 msgid "Vector"
 msgstr ""
 
-#: src/Commands.h:220
+#: src/Commands.h:221
 msgid "[1.23 4.56 7.89]"
 msgstr ""
 
-#: src/Commands.h:221
+#: src/Commands.h:222
 msgid "Matrix"
 msgstr ""
 
-#: src/Commands.h:222
+#: src/Commands.h:223
 msgid "[[1.23 4.56] [6.54 3.21]]"
 msgstr ""
 
-#: src/Commands.h:223
+#: src/Commands.h:224
 msgid "List"
 msgstr ""
 
-#: src/Commands.h:224
+#: src/Commands.h:225
 msgid "{1.23 \"ABC\" # 45d}"
 msgstr ""
 
-#: src/Commands.h:226
+#: src/Commands.h:227
 msgid "Names"
 msgstr ""
 
-#: src/Commands.h:227
+#: src/Commands.h:228
 msgid "Name"
 msgstr ""
 
-#: src/Commands.h:228
+#: src/Commands.h:229
 msgid "'CALC'"
 msgstr ""
 
-#: src/Commands.h:230
+#: src/Commands.h:231
 msgid "Procedures"
 msgstr ""
 
-#: src/Commands.h:231
+#: src/Commands.h:232
 msgid "Program"
 msgstr ""
 
-#: src/Commands.h:232
+#: src/Commands.h:233
 msgid "<< DUP + SWAP >>"
 msgstr ""
 
-#: src/Commands.h:233
+#: src/Commands.h:234
 msgid "Algebraic"
 msgstr ""
 
-#: src/Commands.h:234
+#: src/Commands.h:235
 msgid "'X+2*Y=Z'"
 msgstr ""
 
-#: src/Commands.h:239
+#: src/Commands.h:240
 msgid "Flag #"
 msgstr ""
 
-#: src/Commands.h:240
+#: src/Commands.h:241
 msgid "Description"
 msgstr ""
 
-#: src/Commands.h:241
+#: src/Commands.h:242
 msgid "Status"
 msgstr ""
 
-#: src/Commands.h:255
+#: src/Commands.h:256
 msgid "Set"
 msgstr ""
 
-#: src/Commands.h:255
+#: src/Commands.h:256
 msgid "Unset"
 msgstr ""

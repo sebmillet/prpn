@@ -18,6 +18,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstdio>
+#include <cstdarg>
 
 #include "platform/os_generic.h"
 
@@ -531,6 +532,18 @@ void debug_write_i(const char *s, const int& i) {
 	cz = new char[n + 1];
 	snprintf(cz, n, s, i);
 	debug_write(cz);
+	delete []cz;
+}
+
+void debug_write_v(const char *fmt, ...) {
+  va_list args;
+  va_start(args, fmt);
+  char *cz;
+  int l = strlen(fmt) * 2 + 100;
+  cz = new char[l];
+  vsnprintf(cz, l, fmt, args);
+	debug_write(cz);
+  va_end(args);
 	delete []cz;
 }
 

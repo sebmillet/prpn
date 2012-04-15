@@ -4,7 +4,7 @@
 // RPN calculator
 
 // Sébastien Millet
-// August 2009 - April 2010
+// August 2009 - April 2012
 
 #ifndef PACKAGE
 #define PACKAGE	"prpn"
@@ -13,13 +13,13 @@
 #define PACKAGE_NAME	"pRPN"
 #endif
 #ifndef PACKAGE_VERSION
-#define PACKAGE_VERSION	"0.5.2"
+#define PACKAGE_VERSION	"0.5.3"
 #endif
 #ifndef VERSION
-#define VERSION	0.5.2
+#define VERSION	0.5.3
 #endif
 #ifndef PACKAGE_STRING
-#define PACKAGE_STRING	"pRPN 0.5.2"
+#define PACKAGE_STRING	"pRPN 0.5.3"
 #endif
 #ifndef PACKAGE_BUGREPORT
 #define PACKAGE_BUGREPORT	 "sebastien.millet1@club-internet.fr"

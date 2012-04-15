@@ -157,6 +157,7 @@ _HACK-REAL-DOT (1): Interne : détermine s'il faut afficher un point à la fin des
 UNDO           (0): Annule la dernière commande, 50 niveaux par défaut
 _UNDO_LEVELS   (1): Définis le nombre de niveaux d'annulation
 _UNDO_LEVELS?  (0): Renvoie le nombre de niveaux d'annulations
+_UISET         (1): Définis le type d'interface utilisateur
 
 Type d'objet             Symbole        Exemple
 ------------------------ -------------- -------------------------
@@ -177,4 +178,9 @@ Programmes
 Programme                << >>          << DUP + SWAP >>
 Algébrique               ' '            'X+2*Y=Z'
 
-"éééèèèè "
+1
+'_UISET'
+[[ 18 18 18 ]  [ 1 2 3 ]]
+(151,3)
+(151,3)
+[[ 2.57142857143 2.57142857143 2.57142857143 ]  [ .142857142857 .285714285714 .428571428571 ]]

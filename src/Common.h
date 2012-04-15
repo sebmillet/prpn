@@ -259,6 +259,7 @@ public:
 void debug_write(const char *);
 void debug_write_truncate(const char *);
 void debug_write_i(const char *, const int&);
+void debug_write_v(const char *, ...);
 
 #else	// !DEBUG
 
@@ -267,6 +268,9 @@ void debug_write_i(const char *, const int&);
 #endif
 #ifndef debug_write_i
 #define debug_write_i(x,y)
+#endif
+#ifndef debug_write_v
+#define debug_write_v(...)
 #endif
 #ifndef debug_write_truncate
 #define debug_write_truncate(x)
