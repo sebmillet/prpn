@@ -20,7 +20,7 @@
 	<option name="DEBUG">
 		<values>0,1</values>
 		<values-description>Release,Debug</values-description>
-		<default-value>1</default-value>
+		<default-value>0</default-value>
 	</option>
 	<set var="DEBUG_FLAG">
 		<if cond="DEBUG=='0'">off</if>
@@ -56,7 +56,7 @@
 		<headers>Common.h Scalar.h Stack.h Commands.h Variable.h Parser.h PGetOpt.h Ui.h
 			MyString.h
 			platform/os_generic.h platform/os_win.h platform/os_unix.h
-			gettext.h MyIntl.h Wxskin.h
+			gettext.h MyIntl.h Wxskin.h png/hp28s_unix.h png/hp28s_win.h
 		</headers>
 		<sources>Main.cpp Compat.cpp PGetOpt.cpp Scalar.cpp Stack.cpp Variable.cpp Parser.cpp Ui.cpp
 			MyString.cpp
@@ -68,10 +68,9 @@
 		<debug-info>$(DEBUG_FLAG)</debug-info>
 		<optimize>$(OPTIMIZE_FLAG)</optimize>
 		<define>FOREIGN_MAIN</define>
-		<define>WX_DEBUG=0</define>
-		<define>BUILD=debug</define>
 		<define>DEBUG</define>
 		<define>DEBUG_FILE</define>
+		<define>WX_DEBUG=0</define>
 		<include>"$(MYINCLUDE)"</include>
 		<lib-path>"$(MYLIB)"</lib-path>
 		<sys-lib>$(LIBINTL)</sys-lib>

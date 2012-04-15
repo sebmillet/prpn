@@ -79,7 +79,8 @@ PRPN_OBJECTS =  \
 	prpn_MyString.obj \
 	prpn_os_generic.obj \
 	prpn_UiImplConsole.obj \
-	prpn_UiImplWx.obj
+	prpn_UiImplWx.obj \
+	prpn_Wxskin.obj
 PRPN_RESOURCES =  \
 	prpn_prpn.res
 PRPNC_CXXFLAGS = /MDd /DWIN32 /D_CONSOLE /DENABLE_NLS=$(WITH_NLS) /W4 /Zi /D_DEBUG \
@@ -225,6 +226,9 @@ prpn_UiImplConsole.obj: .\UiImplConsole.cpp
 
 prpn_UiImplWx.obj: .\UiImplWx.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(PRPN_CXXFLAGS) .\UiImplWx.cpp
+
+prpn_Wxskin.obj: .\Wxskin.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPN_CXXFLAGS) .\Wxskin.cpp
 
 prpn_prpn.res: .\prpn.rc
 	rc /fo$@  /d WIN32 $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) /d __WXMSW__ /i $(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) /i $(WX_DIR)\include /d _WINDOWS /d ENABLE_NLS=$(WITH_NLS) /d _DEBUG /d FOREIGN_MAIN /d DEBUG /d DEBUG_FILE /i "C:\Progra~1\GnuWin32\include" .\prpn.rc

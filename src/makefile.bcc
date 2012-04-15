@@ -99,7 +99,8 @@ PRPN_OBJECTS =  \
 	prpn_MyString.obj \
 	prpn_os_generic.obj \
 	prpn_UiImplConsole.obj \
-	prpn_UiImplWx.obj
+	prpn_UiImplWx.obj \
+	prpn_Wxskin.obj
 PRPNC_CXXFLAGS = -I$(BCCDIR)\include -DENABLE_NLS=0 -v -Od -DDEBUG -DDEBUG_FILE \
 	-I"C:\Progra~1\GnuWin32\include" -w-8022 $(CPPFLAGS) $(CXXFLAGS)
 PRPNC_OBJECTS =  \
@@ -242,6 +243,9 @@ prpn_UiImplConsole.obj: .\UiImplConsole.cpp
 
 prpn_UiImplWx.obj: .\UiImplWx.cpp
 	$(CXX) -q -c -P -o$@ $(PRPN_CXXFLAGS) .\UiImplWx.cpp
+
+prpn_Wxskin.obj: .\Wxskin.cpp
+	$(CXX) -q -c -P -o$@ $(PRPN_CXXFLAGS) .\Wxskin.cpp
 
 prpn_prpn.res: .\prpn.rc
 	brcc32 -32 -r -fo$@ -i$(BCCDIR)\include  $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) -d__WXMSW__ -i$(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) -i$(WX_DIR)\include -dENABLE_NLS=0 -dFOREIGN_MAIN -dDEBUG -dDEBUG_FILE -i"C:\Progra~1\GnuWin32\include" .\prpn.rc

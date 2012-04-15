@@ -39,13 +39,13 @@
 		<headers>Common.h Scalar.h Stack.h Commands.h Variable.h Parser.h PGetOpt.h Ui.h
 			MyString.h
 			platform/os_generic.h platform/os_win.h platform/os_unix.h
-			gettext.h MyIntl.h
+			gettext.h MyIntl.h Wxskin.h png/hp28s_unix.h png/hp28s_win.h
 		</headers>
 		<sources>Main.cpp Compat.cpp PGetOpt.cpp Scalar.cpp Stack.cpp Variable.cpp Parser.cpp Ui.cpp
 			MyString.cpp
 			platform/os_generic.cpp
 			UiImplConsole.cpp
-			UiImplWx.cpp
+			UiImplWx.cpp Wxskin.cpp
 		</sources>
 		<warnings>max</warnings>
 		<debug-info>$(DEBUG_FLAG)</debug-info>

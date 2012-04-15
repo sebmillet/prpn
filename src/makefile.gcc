@@ -73,6 +73,7 @@ PRPN_OBJECTS =  \
 	prpn_os_generic.o \
 	prpn_UiImplConsole.o \
 	prpn_UiImplWx.o \
+	prpn_Wxskin.o \
 	prpn_prpn_rc.o
 PRPNC_CXXFLAGS = -DENABLE_NLS=$(WITH_NLS) -W -Wall -g -O0 -DDEBUG -DDEBUG_FILE \
 	-I"C:\Progra~1\GnuWin32\include" $(CPPFLAGS) $(CXXFLAGS)
@@ -228,6 +229,9 @@ prpn_UiImplConsole.o: ./UiImplConsole.cpp
 	$(CXX) -c -o $@ $(PRPN_CXXFLAGS) $(CPPDEPS) $<
 
 prpn_UiImplWx.o: ./UiImplWx.cpp
+	$(CXX) -c -o $@ $(PRPN_CXXFLAGS) $(CPPDEPS) $<
+
+prpn_Wxskin.o: ./Wxskin.cpp
 	$(CXX) -c -o $@ $(PRPN_CXXFLAGS) $(CPPDEPS) $<
 
 prpn_prpn_rc.o: ./prpn.rc
