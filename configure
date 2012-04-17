@@ -9871,6 +9871,12 @@ fi
 
 
 
+# Hack to successfully link wuth gcc version 4.6, cf. URL
+# http://ubuntuforums.org/showthread.php?p=11347972&posted=1#post11347972
+# It is gruiiik, but don't know how to change the options order
+# in g++ call.
+CXXFLAGS="$CXXFLAGS -Wl,--no-as-needed"
+
 # Checks for programs.
 ac_ext=cpp
 ac_cpp='$CXXCPP $CPPFLAGS'

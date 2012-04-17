@@ -19,6 +19,10 @@ prpnc_SOURCES=${MAINSOURCES}
 
 Wxskin.cpp: png/hp28s_unix.h png/hp28s_win.h
 
+# xd is not available by default. It converts a binary file into
+# a file that can be compiled as C code.
+# It can be found here (as of 17/04/2012):
+#   http://www.fourmilab.ch/xd/
 png/hp28s_unix.h: png/hp28s_unix.png
 	xd -dhp28s_unix png/hp28s_unix.png > $@
 

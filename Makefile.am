@@ -8,6 +8,7 @@ EXTRA_DIST=ABOUT-NLS admin/config.rpath test_linux extracfg.h wininst images \
 	makefile.bcc makefile.gcc makefile.vc \
 	src/makefile.bcc src/makefile.gcc src/makefile.vc \
 	prpn.desktop prpn.png \
+  bootstrap \
 	prpn.spec gen-win-makefiles.cmd \
 	src/png/hp28s_unix.png src/png/hp28s_win.png
 

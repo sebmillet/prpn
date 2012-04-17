@@ -34,6 +34,8 @@
 #include "xpm/enter-sel.xpm"
 #include "xpm/white-large-unsel.xpm"
 #include "xpm/white-large-sel.xpm"
+#include "xpm/white-div-unsel.xpm"
+#include "xpm/white-div-sel.xpm"
 
 #ifdef PROG_WINDOWS
 #include "png/hp28s_win.h"
@@ -42,6 +44,10 @@
 #ifdef PROG_UNIXLIKE
 #include "png/hp28s_unix.h"
 #endif
+
+// Uncomment if you wish to test a background image file (found
+// in program working directory) instead of png/*.h-based data.
+//#define HACK_BACKGROUND_IMAGE "hp.bmp"
 
 using namespace std;
 
@@ -86,9 +92,13 @@ void skin_t::load_bitmaps() {
   wxImageHandler * pngLoader = new wxPNGHandler();
   wxImage::AddHandler(pngLoader);
 
+#ifdef HACK_BACKGROUND_IMAGE
+  frame_bg_image = new wxBitmap(const_char_to_wxString(HACK_BACKGROUND_IMAGE), wxBITMAP_TYPE_BMP);
+#else
   wxMemoryInputStream mem(raw_data_frame_bg_image, sizeof_raw_data_frame_bg_image);
   wxImage img(mem, frame_bg_image_type);
   frame_bg_image = new wxBitmap(img);
+#endif
 
   status_exec_norun = new wxBitmap(char_status_exec_norun);
   status_exec_run = new wxBitmap(char_status_exec_run);
@@ -150,7 +160,7 @@ skin_btn_t skin_btn_hp28s[] = {
   {{76, 277, 35, 29}, gray_small_unsel_xpm, gray_small_sel_xpm, " MENU", "_MENU-ROOT", "_MENU-MODE", 2, 0, NULL, NULL},
   {{120, 277, 35, 29}, gray_small_unsel_xpm, gray_small_sel_xpm, "TRIG", "_MENU-TRIG", "_MENU-LOGS", 2, 0, NULL, NULL},
   {{163, 277, 35, 29}, gray_small_unsel_xpm, gray_small_sel_xpm, "COPY", "_COPY", "_PASTE", 2, 0, NULL, NULL},
-  {{207, 277, 35, 29}, gray_small_unsel_xpm, gray_small_sel_xpm, "USER", "_MENU-USER", "", 2, 0, NULL, NULL},
+  {{207, 277, 35, 29}, gray_small_unsel_xpm, gray_small_sel_xpm, "USER", "_MENU-USER", "VARS", 2, 0, NULL, NULL},
   {{250, 277, 35, 29}, white_small_unsel_xpm, white_small_sel_xpm, "NEXT", "_MENU-NEXT", "_MENU-PREV", 3, 0, NULL, NULL},
 
     // 3rd row
@@ -158,11 +168,11 @@ skin_btn_t skin_btn_hp28s[] = {
   {{120, 318, 35, 29}, gray_small_unsel_xpm, gray_small_sel_xpm, "CHS", "_NEG", "_VUP", 0, -1, NULL, NULL},
   {{163, 318, 35, 29}, gray_small_unsel_xpm, gray_small_sel_xpm, "EEX", "_E", "_VDOWN", 0, -1, NULL, NULL},
   {{207, 318, 35, 29}, gray_small_unsel_xpm, gray_small_sel_xpm, "DROP", "DROP", "ROLL", 2, 0, NULL, NULL},
-  {{250, 318, 35, 29}, white_small_unsel_xpm, white_small_sel_xpm, "SWAP", "SWAP", "_NOOP", 3, 0, NULL, NULL},
+  {{250, 318, 35, 29}, white_small_unsel_xpm, white_small_sel_xpm, "SWAP", "SWAP", "ROLLD", 3, 0, NULL, NULL},
 
     // 4th row
-  {{32, 359, 35, 29}, gray_small_unsel_xpm, gray_small_sel_xpm, "'", "'", "", 0, 0, NULL, NULL},
-  {{81, 359, 45, 29}, white_large_unsel_xpm, white_large_sel_xpm, "7", "7", "", 1, 0, NULL, NULL},
+  {{32, 359, 35, 29}, gray_small_unsel_xpm, gray_small_sel_xpm, "'", "'", "UP", 0, 0, NULL, NULL},
+  {{81, 359, 45, 29}, white_large_unsel_xpm, white_large_sel_xpm, "7", "7", "HOME", 1, 0, NULL, NULL},
   {{134, 359, 45, 29}, white_large_unsel_xpm, white_large_sel_xpm, "8", "8", "UNDO", 1, 0, NULL, NULL},
   {{187, 359, 45, 29}, white_large_unsel_xpm, white_large_sel_xpm, "9", "9", "_NOOP", 1, 0, NULL, NULL},
   {{240, 359, 45, 29}, white_large_unsel_xpm, white_large_sel_xpm, "/", "/", "INV", 6, -1, NULL, NULL},
@@ -184,7 +194,7 @@ skin_btn_t skin_btn_hp28s[] = {
     // 7th row
   {{32, 481, 35, 29}, gray_small_unsel_xpm, gray_small_sel_xpm, "ON", "_ON", "_EXIT", 0, -1, NULL, NULL},
   {{81, 481, 45, 29}, white_large_unsel_xpm, white_large_sel_xpm, "0", "0", "CLEAR", 1, 0, NULL, NULL},
-  {{134, 481, 45, 29}, white_large_unsel_xpm, white_large_sel_xpm, ".", ".", "'PI'", 7, -6, NULL, NULL},
+  {{134, 481, 45, 29}, white_large_unsel_xpm, white_large_sel_xpm, ".", ".", "3.14159265359", 7, -6, NULL, NULL},
   {{187, 481, 45, 29}, white_large_unsel_xpm, white_large_sel_xpm, ",", ",", "_NOOP", 7, -7, NULL, NULL},
   {{240, 481, 45, 29}, white_large_unsel_xpm, white_large_sel_xpm, "+", "+", "SQ", 6, -1, NULL, NULL},
 };
@@ -205,7 +215,7 @@ skin_btn_t skin_btn_hp28s[] = {
   {{65, 299, 45, 40}, gray_small_unsel_xpm, gray_small_sel_xpm, " MENU", "_MENU-ROOT", "_MENU-MODE", 2, 0, NULL, NULL},
   {{112, 299, 45, 40}, gray_small_unsel_xpm, gray_small_sel_xpm, "TRIG", "_MENU-TRIG", "_MENU-LOGS", 2, 0, NULL, NULL},
   {{160, 299, 45, 40}, gray_small_unsel_xpm, gray_small_sel_xpm, "COPY", "_COPY", "_PASTE", 2, 0, NULL, NULL},
-  {{207, 299, 45, 40}, gray_small_unsel_xpm, gray_small_sel_xpm, "USER", "_MENU-USER", "", 2, 0, NULL, NULL},
+  {{207, 299, 45, 40}, gray_small_unsel_xpm, gray_small_sel_xpm, "USER", "_MENU-USER", "VARS", 2, 0, NULL, NULL},
   {{255, 299, 45, 40}, white_small_unsel_xpm, white_small_sel_xpm, "NEXT", "_MENU-NEXT", "_MENU-PREV", 3, 0, NULL, NULL},
 
     // 3rd row
@@ -213,14 +223,14 @@ skin_btn_t skin_btn_hp28s[] = {
   {{113, 352, 45, 40}, gray_small_unsel_xpm, gray_small_sel_xpm, "CHS", "_NEG", "_VUP", 0, -1, NULL, NULL},
   {{160, 352, 45, 40}, gray_small_unsel_xpm, gray_small_sel_xpm, "EEX", "_E", "_VDOWN", 0, -1, NULL, NULL},
   {{208, 352, 45, 40}, gray_small_unsel_xpm, gray_small_sel_xpm, "DROP", "DROP", "ROLL", 2, 0, NULL, NULL},
-  {{255, 352, 45, 40}, white_small_unsel_xpm, white_small_sel_xpm, "SWAP", "SWAP", "_NOOP", 3, 0, NULL, NULL},
+  {{255, 352, 45, 40}, white_small_unsel_xpm, white_small_sel_xpm, "SWAP", "SWAP", "ROLLD", 3, 0, NULL, NULL},
 
     // 4th row
-  {{17, 405, 45, 40}, gray_small_unsel_xpm, gray_small_sel_xpm, "'", "'", "", 0, 0, NULL, NULL},
-  {{72, 405, 55, 40}, white_large_unsel_xpm, white_large_sel_xpm, "7", "7", "", 1, 0, NULL, NULL},
+  {{17, 405, 45, 40}, gray_small_unsel_xpm, gray_small_sel_xpm, "'", "'", "UP", 0, 0, NULL, NULL},
+  {{72, 405, 55, 40}, white_large_unsel_xpm, white_large_sel_xpm, "7", "7", "HOME", 1, 0, NULL, NULL},
   {{130, 405, 55, 40}, white_large_unsel_xpm, white_large_sel_xpm, "8", "8", "UNDO", 1, 0, NULL, NULL},
   {{187, 405, 55, 40}, white_large_unsel_xpm, white_large_sel_xpm, "9", "9", "_NOOP", 1, 0, NULL, NULL},
-  {{245, 405, 55, 40}, white_large_unsel_xpm, white_large_sel_xpm, "/", "/", "INV", 6, -1, NULL, NULL},
+  {{245, 405, 55, 40}, white_div_unsel_xpm, white_div_sel_xpm, "", "/", "INV", 6, -1, NULL, NULL},
 
     // 5th row
   {{17, 457, 45, 40}, gray_small_unsel_xpm, gray_small_sel_xpm, "STO", "STO", "RCL", 0, -1, NULL, NULL},
@@ -239,7 +249,7 @@ skin_btn_t skin_btn_hp28s[] = {
     // 7th row
   {{17, 563, 45, 40}, gray_small_unsel_xpm, gray_small_sel_xpm, "ON", "_ON", "_EXIT", 0, -1, NULL, NULL},
   {{72, 563, 55, 40}, white_large_unsel_xpm, white_large_sel_xpm, "0", "0", "CLEAR", 1, 0, NULL, NULL},
-  {{130, 563, 55, 40}, white_large_unsel_xpm, white_large_sel_xpm, ".", ".", "'PI'", 7, -6, NULL, NULL},
+  {{130, 563, 55, 40}, white_large_unsel_xpm, white_large_sel_xpm, ".", ".", "3.14159265359", 7, -6, NULL, NULL},
   {{187, 563, 55, 40}, white_large_unsel_xpm, white_large_sel_xpm, ",", ",", "_NOOP", 7, -7, NULL, NULL},
   {{245, 563, 55, 40}, white_large_unsel_xpm, white_large_sel_xpm, "+", "+", "SQ", 6, -1, NULL, NULL},
 };
@@ -283,8 +293,14 @@ struct skin_t skin_hp28s = {
   NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
 
     // stack
+#ifdef PROG_UNIXLIKE
   {29, 77, 253, 22},
   22,       // Stack step (= height of each element)
+#endif
+#ifdef PROG_WINDOWS
+  {29, 77, 253, 21},
+  21,       // Stack step (= height of each element)
+#endif
   4,        // Number of items displayed in the stack
   HP28S_GRAY, (*wxBLACK), // Bg/fg color in normal mode
   (*wxBLACK), HP28S_GRAY, // Bg/fg color in inverted mode
