@@ -68,9 +68,6 @@
 		<debug-info>$(DEBUG_FLAG)</debug-info>
 		<optimize>$(OPTIMIZE_FLAG)</optimize>
 		<define>FOREIGN_MAIN</define>
-		<define>DEBUG</define>
-		<define>DEBUG_FILE</define>
-		<define>WX_DEBUG=0</define>
 		<include>"$(MYINCLUDE)"</include>
 		<lib-path>"$(MYLIB)"</lib-path>
 		<sys-lib>$(LIBINTL)</sys-lib>
