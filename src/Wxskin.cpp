@@ -168,7 +168,7 @@ skin_btn_t skin_btn_hp28s[] = {
   {{120, 318, 35, 29}, gray_small_unsel_xpm, gray_small_sel_xpm, "CHS", "_NEG", "_VUP", 0, -1, NULL, NULL},
   {{163, 318, 35, 29}, gray_small_unsel_xpm, gray_small_sel_xpm, "EEX", "_E", "_VDOWN", 0, -1, NULL, NULL},
   {{207, 318, 35, 29}, gray_small_unsel_xpm, gray_small_sel_xpm, "DROP", "DROP", "ROLL", 2, 0, NULL, NULL},
-  {{250, 318, 35, 29}, white_small_unsel_xpm, white_small_sel_xpm, "SWAP", "SWAP", "ROLLD", 3, 0, NULL, NULL},
+  {{250, 318, 35, 29}, gray_small_unsel_xpm, gray_small_sel_xpm, "SWAP", "SWAP", "ROLLD", 2, 0, NULL, NULL},
 
     // 4th row
   {{32, 359, 35, 29}, gray_small_unsel_xpm, gray_small_sel_xpm, "'", "'", "UP", 0, 0, NULL, NULL},
@@ -223,7 +223,7 @@ skin_btn_t skin_btn_hp28s[] = {
   {{113, 352, 45, 40}, gray_small_unsel_xpm, gray_small_sel_xpm, "CHS", "_NEG", "_VUP", 0, -1, NULL, NULL},
   {{160, 352, 45, 40}, gray_small_unsel_xpm, gray_small_sel_xpm, "EEX", "_E", "_VDOWN", 0, -1, NULL, NULL},
   {{208, 352, 45, 40}, gray_small_unsel_xpm, gray_small_sel_xpm, "DROP", "DROP", "ROLL", 2, 0, NULL, NULL},
-  {{255, 352, 45, 40}, white_small_unsel_xpm, white_small_sel_xpm, "SWAP", "SWAP", "ROLLD", 3, 0, NULL, NULL},
+  {{255, 352, 45, 40}, gray_small_unsel_xpm, gray_small_sel_xpm, "SWAP", "SWAP", "ROLLD", 2, 0, NULL, NULL},
 
     // 4th row
   {{17, 405, 45, 40}, gray_small_unsel_xpm, gray_small_sel_xpm, "'", "'", "UP", 0, 0, NULL, NULL},
