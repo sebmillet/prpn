@@ -492,9 +492,9 @@ BEGIN_EVENT_TABLE(myBitmapButton, wxWindow)
 END_EVENT_TABLE()
 
 myBitmapButton::myBitmapButton(MyFrame *p, wxWindowID id, wxBitmap *rel, wxBitmap *prs,
-  wxPoint pos, wxSize size, const char *mcmd, const char *acmd) : parent(p), released(*rel), pressed(*prs),
-  main_cmd(mcmd), alt_cmd(acmd), is_down(false),
-  wxWindow(p, id, pos, size, wxBORDER_NONE) {
+		wxPoint pos, wxSize size, const char *mcmd, const char *acmd)
+			: wxWindow(p, id, pos, size, wxBORDER_NONE), parent(p), released(*rel), pressed(*prs),
+				main_cmd(mcmd), alt_cmd(acmd), is_down(false) {
 }
 
 void myBitmapButton::OnPaint(wxPaintEvent& ev) {
@@ -507,7 +507,6 @@ void myBitmapButton::OnPaint(wxPaintEvent& ev) {
 
 void myBitmapButton::OnClick(wxMouseEvent& ev) {
   const char *sz;
-  int btn_index = ev.GetId() - ID_START_BUTTONS_SKIN;
   sz = main_cmd;
   if (ui_dsl.get_status_shift() && !const_char_is_empty(alt_cmd))
     sz = alt_cmd;
@@ -973,7 +972,9 @@ int MyFrame::get_nb_menu_buttons() {
   } else if (gui == GUI_SKIN) {
     debug_write_v("MyFrame::get_nb_menu_buttons(): return %lu", skin_menu_buttons.size());
     return skin_menu_buttons.size();
-}
+	}
+	// Never executed...
+	return 0;
 }
 
 void MyFrame::notify_ui_change() {
