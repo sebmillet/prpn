@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: prpn 0.5.3\n"
+"Project-Id-Version: prpn 0.5.4\n"
 "Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
-"POT-Creation-Date: 2012-04-21 17:46+0200\n"
+"POT-Creation-Date: 2012-04-21 18:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -214,7 +214,7 @@ msgstr ""
 msgid "&Quit"
 msgstr ""
 
-#: src/Ui.cpp:462 src/UiImplWx.cpp:588
+#: src/Ui.cpp:462 src/UiImplWx.cpp:587
 msgid "__INTERFACE__"
 msgstr ""
 
@@ -234,11 +234,11 @@ msgstr ""
 msgid "&About"
 msgstr ""
 
-#: src/UiImplWx.cpp:1059
+#: src/UiImplWx.cpp:1060
 msgid "Help"
 msgstr ""
 
-#: src/UiImplWx.cpp:1081 src/UiImplWx.cpp:1094
+#: src/UiImplWx.cpp:1082 src/UiImplWx.cpp:1095
 msgid "OK"
 msgstr ""
 

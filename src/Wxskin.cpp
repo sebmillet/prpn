@@ -199,8 +199,14 @@ struct skin_t skin_hp28s = {
   "hp28s",
   MB_ENFORCE_MENU,
 
+#ifdef PROG_UNIXLIKE
+  316,
+  555,
+#endif
+#ifdef PROG_WINDOWS
   320,
   584,
+#endif
   NULL,
   hp28s, sizeof(hp28s), wxBITMAP_TYPE_PNG,
 
