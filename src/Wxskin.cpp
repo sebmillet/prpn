@@ -257,7 +257,7 @@ struct skin_t skin_hp28s = {
   {-1, -1, -1, 22},
 #endif
 #ifdef PROG_WINDOWS
-  {-1, -1, -1, 21},
+  {-1, -1, -1, 22},
 #endif
   HP28S_GRAY,
   {14, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, *wxBLACK, false},
