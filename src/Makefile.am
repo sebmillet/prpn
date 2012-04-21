@@ -17,17 +17,14 @@ bin_PROGRAMS=prpn prpnc
 prpn_SOURCES=${MAINSOURCES}
 prpnc_SOURCES=${MAINSOURCES}
 
-Wxskin.cpp: png/hp28s_unix.h png/hp28s_win.h
+Wxskin.cpp: png/hp28s.h
 
 # xd is not available by default. It converts a binary file into
 # a file that can be compiled as C code.
 # It can be found here (as of 17/04/2012):
 #   http://www.fourmilab.ch/xd/
-png/hp28s_unix.h: png/hp28s_unix.png
-	xd -dhp28s_unix png/hp28s_unix.png > $@
-
-png/hp28s_win.h: png/hp28s_win.png
-	xd -dhp28s_win png/hp28s_win.png > $@
+png/hp28s.h: png/hp28s.png
+	xd -dhp28s png/hp28s.png > $@
 
 AM_CPPFLAGS=-DPKG_DOCDIR="\"${docdir}\"" -DPKG_HTMLDIR="\"${htmldir}\""
 AM_CPPFLAGS+= -DPKG_PREFIX="\"${prefix}\"" -DPKG_DATADIR="\"${datadir}\""
@@ -56,8 +53,7 @@ prpn_SOURCES+=UiImplWx.cpp \
 	Wxskin.cpp Wxskin.h \
 	prpn.rc prpn.ico \
 	xpm \
-	png/hp28s_unix.h png/hp28s_unix.png \
-	png/hp28s_win.h png/hp28s_win.png
+	png/hp28s.h png/hp28s.png
 prpn_CXXFLAGS=@WX_CXXFLAGS@ -DFOREIGN_MAIN
 prpn_LDFLAGS=@WX_LIBS@
 

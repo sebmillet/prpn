@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: prpn 0.5.3\n"
 "Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
-"POT-Creation-Date: 2012-04-15 13:21+0200\n"
+"POT-Creation-Date: 2012-04-21 17:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -214,7 +214,7 @@ msgstr ""
 msgid "&Quit"
 msgstr ""
 
-#: src/Ui.cpp:462 src/UiImplWx.cpp:514
+#: src/Ui.cpp:462 src/UiImplWx.cpp:588
 msgid "__INTERFACE__"
 msgstr ""
 
@@ -234,11 +234,11 @@ msgstr ""
 msgid "&About"
 msgstr ""
 
-#: src/UiImplWx.cpp:974
+#: src/UiImplWx.cpp:1059
 msgid "Help"
 msgstr ""
 
-#: src/UiImplWx.cpp:996 src/UiImplWx.cpp:1009
+#: src/UiImplWx.cpp:1081 src/UiImplWx.cpp:1094
 msgid "OK"
 msgstr ""
 

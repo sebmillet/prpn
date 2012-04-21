@@ -328,6 +328,7 @@ void StatusWindow::OnPaint(wxPaintEvent&) {
 
 class MyFrame;
 class StatusWindow;
+class myBitmapButton;
 
 class MyApp: public wxApp {
   int what_am_i_to_do;
@@ -400,7 +401,8 @@ class MyFrame: public wxFrame {
 
   wxDialog *dlg;
 
-  vector<wxButton*> wx_menu_buttons;
+  vector<wxButton*> sizer_menu_buttons;
+  vector<myBitmapButton*> skin_menu_buttons;
   int skin_menu_button_1;
 
   StatusWindow *stwin;
@@ -421,7 +423,6 @@ public:
       int&, const BtnDescription*&, int&, const int&);
   void OnPaint(wxPaintEvent&);
   void OnSize(wxSizeEvent&);
-//    void OnQuit(wxCommandEvent&);
   void OnAbout(wxCommandEvent&);
   void OnButton(wxCommandEvent&);
   void OnMenu(wxCommandEvent&);
@@ -431,6 +432,7 @@ public:
   int get_nb_menu_buttons();
   void notify_ui_change();
   void textTypein_recalc_and_setsize();
+  void textTypein_SetFocus();
 
   DECLARE_EVENT_TABLE()
 };
@@ -459,6 +461,78 @@ enum {ID_TEXTTYPEIN = 0,
   ID_START_MENUS = 20000,
   ID_START_INTERFACE_CHOICE_MENUS = 30000
 };
+
+
+//
+// MYBITMAPBUTTON
+//
+
+class myBitmapButton : public wxWindow {
+  MyFrame *parent;
+  wxBitmap released;
+  wxBitmap pressed;
+  const char *main_cmd;
+  const char*alt_cmd;
+  bool is_down;
+public:
+  myBitmapButton(MyFrame*, wxWindowID, wxBitmap*, wxBitmap*, wxPoint, wxSize, const char*, const char*);
+  void OnPaint(wxPaintEvent&);
+  void OnMouseButtonDown(wxMouseEvent&);
+  void OnClick(wxMouseEvent&);
+  void mySetBitmapLabel(wxBitmap*);
+  void mySetBitmapSelected(wxBitmap*);
+
+  DECLARE_EVENT_TABLE()
+};
+
+BEGIN_EVENT_TABLE(myBitmapButton, wxWindow)
+  EVT_PAINT(myBitmapButton::OnPaint)
+  EVT_LEFT_DOWN(myBitmapButton::OnMouseButtonDown)
+  EVT_LEFT_UP(myBitmapButton::OnClick)
+END_EVENT_TABLE()
+
+myBitmapButton::myBitmapButton(MyFrame *p, wxWindowID id, wxBitmap *rel, wxBitmap *prs,
+  wxPoint pos, wxSize size, const char *mcmd, const char *acmd) : parent(p), released(*rel), pressed(*prs),
+  main_cmd(mcmd), alt_cmd(acmd), is_down(false),
+  wxWindow(p, id, pos, size, wxBORDER_NONE) {
+}
+
+void myBitmapButton::OnPaint(wxPaintEvent& ev) {
+  wxPaintDC dc(this);
+  PrepareDC(dc);
+  wxBitmap *bm = is_down ? &pressed : &released;
+  dc.DrawBitmap(*bm, 0, 0);
+  ev.Skip();
+}
+
+void myBitmapButton::OnClick(wxMouseEvent& ev) {
+  const char *sz;
+  int btn_index = ev.GetId() - ID_START_BUTTONS_SKIN;
+  sz = main_cmd;
+  if (ui_dsl.get_status_shift() && !const_char_is_empty(alt_cmd))
+    sz = alt_cmd;
+  ui_notify_button_pressed(sz);
+  parent->textTypein_SetFocus();
+  debug_write_v("Button clicked!!! (%i)", ev.GetId());
+  is_down = false;
+  Refresh();
+  ev.Skip();
+}
+
+void myBitmapButton::OnMouseButtonDown(wxMouseEvent& ev) {
+  debug_write_v("MOUSE BUTTON DOWN!!! (%i)", ev.GetId());
+  is_down = true;
+  Refresh();
+  ev.Skip();
+}
+
+void myBitmapButton::mySetBitmapLabel(wxBitmap* bm) {
+  released = *bm;
+}
+
+void myBitmapButton::mySetBitmapSelected(wxBitmap* bm) {
+  pressed = *bm;
+}
 
 static void build_menu_bar(const MenuDescription* const md, const int& nb, wxMenuBar*& menuBar, const int& ui_code) {
 
@@ -628,16 +702,17 @@ static void draw_button_text(wxBitmap *released, wxBitmap *pressed,
 
 }
 
-wxBitmapButton *build_bitmap_button(wxWindow *parent, const int& id, const wxBitmap& bm_released, const wxPoint& pos, const wxSize& size, const wxBitmap& bm_pressed, const char *t, const int& y_text_released, const int& y_text_pressed, const font_t& f_text) {
+myBitmapButton *build_bitmap_button(MyFrame *parent, wxWindowID id, const wxBitmap& bm_released,
+    const wxPoint& pos, const wxSize& size, const wxBitmap& bm_pressed, const char *t, const int& y_text_released, const int& y_text_pressed,
+    const font_t& f_text, const char*main_cmd, const char *alt_cmd)
+{
 
   wxBitmap copy_bm_released = bm_released;
   wxBitmap copy_bm_pressed = bm_pressed;
 
   draw_button_text(&copy_bm_released, &copy_bm_pressed, t, y_text_released, y_text_pressed, f_text);
 
-//  wxSize s2 = wxSize(size.GetWidth() + 12, size.GetHeight() + 12);
-  wxBitmapButton *b = new wxBitmapButton(parent, id, copy_bm_released, pos, size, wxBU_AUTODRAW);
-  b->SetBitmapSelected(copy_bm_pressed);
+  myBitmapButton *b = new myBitmapButton(parent, id, &copy_bm_released, &copy_bm_pressed, pos, size, main_cmd, alt_cmd);
   return b;
 }
 
@@ -759,10 +834,11 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
     shape(textTypein, x, y, w, h, skin->typein_bg_colour, skin->f_typein.colour);
   }
 
-  wx_menu_buttons.clear();
 
     // Buttons
   if (gui == GUI_SIZER) {
+
+    sizer_menu_buttons.clear();
 
     wxButton *b;
     BtnSmallLabel bsl;
@@ -799,7 +875,7 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
 
         int mbn = get_menu_button_number(btn_descriptions[i].main_cmd);
         if (mbn >= 1) {
-          wx_menu_buttons.push_back(b);
+          sizer_menu_buttons.push_back(b);
         }
 
         cur_line->vl.push_back(bsl);
@@ -821,27 +897,27 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
     }
   } else if (gui == GUI_SKIN) {
 
+    skin_menu_buttons.clear();
+
     skin_menu_button_1 = -1;
 
     int my_id;
     const skin_btn_t *bs;
-    wxBitmapButton *b;
+    myBitmapButton *b;
 
     for (int i = 0; i < skin->nb_btns; i++) {
       my_id = ID_START_BUTTONS_SKIN + i;
       bs = &(skin->btns[i]);
-      b = build_bitmap_button(this, my_id, *(bs->released), wxPoint(bs->rec.x, bs->rec.y),
+      b = build_bitmap_button(this, static_cast<wxWindowID>(my_id), *(bs->released), wxPoint(bs->rec.x, bs->rec.y),
             wxSize(bs->rec.w, bs->rec.h), *(bs->pressed), bs->text, skin->y_released + bs->y_shift, skin->y_pressed + bs->y_shift,
-            skin->btns_fonts[bs->font_index]);
+            skin->btns_fonts[bs->font_index], bs->main_cmd, bs->alt_cmd);
 
       int mbn = get_menu_button_number(bs->main_cmd);
       if (mbn >= 1) {
-        wx_menu_buttons.push_back(b);
+        skin_menu_buttons.push_back(b);
         if (skin_menu_button_1 < 0)
           skin_menu_button_1 = i;
       }
-
-      Connect(my_id, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MyFrame::OnButton));
     }
 
   }
@@ -891,8 +967,13 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
 }
 
 int MyFrame::get_nb_menu_buttons() {
-  debug_write_v("MyFrame::get_nb_menu_buttons(): return %lu", wx_menu_buttons.size());
-  return wx_menu_buttons.size();
+  if (gui == GUI_SIZER) {
+    debug_write_v("MyFrame::get_nb_menu_buttons(): return %lu", sizer_menu_buttons.size());
+    return sizer_menu_buttons.size();
+  } else if (gui == GUI_SKIN) {
+    debug_write_v("MyFrame::get_nb_menu_buttons(): return %lu", skin_menu_buttons.size());
+    return skin_menu_buttons.size();
+}
 }
 
 void MyFrame::notify_ui_change() {
@@ -910,6 +991,10 @@ void MyFrame::textTypein_recalc_and_setsize() {
   int new_h = bottom - y0 + 1;
 
   textTypein->SetSize(my_x0, y0, my_w0, new_h);
+}
+
+void MyFrame::textTypein_SetFocus() {
+  textTypein->SetFocus();
 }
 
 void MyFrame::stack_line_set_font(wxStaticText *t) {
@@ -1159,6 +1244,9 @@ void MyFrame::OnPaint(wxPaintEvent& ev) {
     PrepareDC(dc);
 
     dc.DrawBitmap(*(skin->frame_bg_image), 0, 0);
+    for (int i = 0; i < skin->nb_btns; i++) {
+      dc.DrawBitmap(*(skin->btns[i].released), skin->btns[i].rec.x, skin->btns[i].rec.y);
+    }
   }
 
   ev.Skip();
@@ -1332,7 +1420,7 @@ int UiImplWx::get_nb_menu_buttons() {
 void UiImplWx::set_menu_button(const int& n, const menu_button_t& mb) {
   if (f->gui == GUI_SIZER) {
     string s = mb.label.substr(0, SIZER_MENU_BUTTONS_MAX_NB_CHARS);
-    f->wx_menu_buttons[n]->SetLabel(string_to_wxString(s));
+    f->sizer_menu_buttons[n]->SetLabel(string_to_wxString(s));
   } else {
     string s = mb.label.substr(0, f->skin->menu_buttons_max_nb_chars);
     wxBitmap copy_bm_released = *(f->skin->btns[f->skin_menu_button_1].released);
@@ -1340,8 +1428,9 @@ void UiImplWx::set_menu_button(const int& n, const menu_button_t& mb) {
 
     draw_button_text(&copy_bm_released, &copy_bm_pressed, s.c_str(), f->skin->y_released, f->skin->y_pressed,
         f->skin->btns_fonts[f->skin->btns[f->skin_menu_button_1].font_index]);
-    dynamic_cast<wxBitmapButton*>(f->wx_menu_buttons[n])->SetBitmapLabel(copy_bm_released);
-    dynamic_cast<wxBitmapButton*>(f->wx_menu_buttons[n])->SetBitmapSelected(copy_bm_pressed);
+    f->skin_menu_buttons[n]->mySetBitmapLabel(&copy_bm_released);
+    f->skin_menu_buttons[n]->mySetBitmapSelected(&copy_bm_pressed);
+    dynamic_cast<wxWindow*>(f->skin_menu_buttons[n])->Refresh();
   }
 }
 

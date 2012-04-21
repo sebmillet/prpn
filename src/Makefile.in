@@ -40,8 +40,7 @@ bin_PROGRAMS = prpn$(EXEEXT) prpnc$(EXEEXT)
 @BUILD_CLIENTGUI_TRUE@	Wxskin.cpp Wxskin.h \
 @BUILD_CLIENTGUI_TRUE@	prpn.rc prpn.ico \
 @BUILD_CLIENTGUI_TRUE@	xpm \
-@BUILD_CLIENTGUI_TRUE@	png/hp28s_unix.h png/hp28s_unix.png \
-@BUILD_CLIENTGUI_TRUE@	png/hp28s_win.h png/hp28s_win.png
+@BUILD_CLIENTGUI_TRUE@	png/hp28s.h png/hp28s.png
 
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
@@ -81,8 +80,7 @@ am__prpn_SOURCES_DIST = Main.cpp Compat.cpp Common.h PGetOpt.cpp \
 	platform/os_generic.cpp platform/os_generic.h \
 	platform/os_unknown.h platform/os_unix.h platform/os_win.h \
 	gettext.h MyIntl.h UiImplWx.cpp Wxskin.cpp Wxskin.h prpn.rc \
-	prpn.ico xpm png/hp28s_unix.h png/hp28s_unix.png \
-	png/hp28s_win.h png/hp28s_win.png
+	prpn.ico xpm png/hp28s.h png/hp28s.png
 am__objects_1 = prpn-Main.$(OBJEXT) prpn-Compat.$(OBJEXT) \
 	prpn-PGetOpt.$(OBJEXT) prpn-Scalar.$(OBJEXT) \
 	prpn-Stack.$(OBJEXT) prpn-Variable.$(OBJEXT) \
@@ -823,17 +821,14 @@ uninstall-am: uninstall-binPROGRAMS
 	uninstall-am uninstall-binPROGRAMS
 
 
-Wxskin.cpp: png/hp28s_unix.h png/hp28s_win.h
+Wxskin.cpp: png/hp28s.h
 
 # xd is not available by default. It converts a binary file into
 # a file that can be compiled as C code.
 # It can be found here (as of 17/04/2012):
 #   http://www.fourmilab.ch/xd/
-png/hp28s_unix.h: png/hp28s_unix.png
-	xd -dhp28s_unix png/hp28s_unix.png > $@
-
-png/hp28s_win.h: png/hp28s_win.png
-	xd -dhp28s_win png/hp28s_win.png > $@
+png/hp28s.h: png/hp28s.png
+	xd -dhp28s png/hp28s.png > $@
 
 @BUILD_DOCS_TRUE@${CMDSEN}: Commands.h
 @BUILD_DOCS_TRUE@	echo "_HELP" | LC_ALL="C" ${builddir}/${EXENAME} -b > ${CMDSEN}

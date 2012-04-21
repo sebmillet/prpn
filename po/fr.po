@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: prpn 0.5.0\n"
 "Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
-"POT-Creation-Date: 2012-04-15 13:21+0200\n"
+"POT-Creation-Date: 2012-04-21 17:46+0200\n"
 "PO-Revision-Date: 2012-04-15 13:23+0100\n"
 "Last-Translator: Sébastien Millet <sebastien.millet1@club-internet.fr>\n"
 "Language-Team: French\n"
@@ -215,7 +215,7 @@ msgstr "&Liste des indicateurs binaires"
 msgid "&Quit"
 msgstr "&Quitter"
 
-#: src/Ui.cpp:462 src/UiImplWx.cpp:514
+#: src/Ui.cpp:462 src/UiImplWx.cpp:588
 msgid "__INTERFACE__"
 msgstr ""
 
@@ -235,11 +235,11 @@ msgstr "&Page de manuel"
 msgid "&About"
 msgstr "À propos"
 
-#: src/UiImplWx.cpp:974
+#: src/UiImplWx.cpp:1059
 msgid "Help"
 msgstr "Aide"
 
-#: src/UiImplWx.cpp:996 src/UiImplWx.cpp:1009
+#: src/UiImplWx.cpp:1081 src/UiImplWx.cpp:1094
 msgid "OK"
 msgstr "OK"
 

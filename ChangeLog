@@ -1,3 +1,11 @@
+2012-04-21 Sébastien Millet <sebastien.millet1@club-internet.fr>
+
+	* Release 0.5.4 built
+	* Implemented myBitmapButton as a replacement for wxBitmapButton, to avoid
+		border paint with Gtk2, leading to a distinct Unix/Windows skin. Now, there
+		is one and only one background image and control positions (well, almost...
+		read Wxskin.cpp), for both Unix and Windows.
+
 2012-04-15 Sébastien Millet <sebastien.millet1@club-internet.fr>
 
 	* Release 0.5.3 built
