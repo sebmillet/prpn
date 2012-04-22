@@ -511,15 +511,17 @@ void myBitmapButton::OnPaint(wxPaintEvent& ev) {
 }
 
 void myBitmapButton::OnClick(wxMouseEvent& ev) {
-  const char *sz;
-  sz = main_cmd;
-  if (ui_dsl.get_status_shift() && !const_char_is_empty(alt_cmd))
-    sz = alt_cmd;
-  ui_notify_button_pressed(sz);
-  parent->textTypein_SetFocus();
-  debug_write_v("Button clicked!!! (%i)", ev.GetId());
-  change_button_status(false);
-  parent->skin_change_all_buttons_status();
+  if (is_down) {
+    const char *sz;
+    sz = main_cmd;
+    if (ui_dsl.get_status_shift() && !const_char_is_empty(alt_cmd))
+      sz = alt_cmd;
+    ui_notify_button_pressed(sz);
+    parent->textTypein_SetFocus();
+    debug_write_v("Button clicked!!! (%i)", ev.GetId());
+    change_button_status(false);
+    parent->skin_change_all_buttons_status();
+  }
   ev.Skip();
 }
 
