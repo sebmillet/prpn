@@ -168,7 +168,7 @@ skin_btn_t skin_btn_hp28s[] = {
   {{32, 359, 35, 29}, gray_small_unsel_xpm, gray_small_sel_xpm, "'", "'", "UP", 0, 0, NULL, NULL},
   {{81, 359, 45, 29}, white_large_unsel_xpm, white_large_sel_xpm, "7", "7", "HOME", 1, 0, NULL, NULL},
   {{134, 359, 45, 29}, white_large_unsel_xpm, white_large_sel_xpm, "8", "8", "UNDO", 1, 0, NULL, NULL},
-  {{187, 359, 45, 29}, white_large_unsel_xpm, white_large_sel_xpm, "9", "9", "_NOOP", 1, 0, NULL, NULL},
+  {{187, 359, 45, 29}, white_large_unsel_xpm, white_large_sel_xpm, "9", "9", "_HELP_FLAGS", 1, 0, NULL, NULL},
   {{240, 359, 45, 29}, white_div_unsel_xpm, white_div_sel_xpm, "", "/", "INV", 6, -1, NULL, NULL},
 
     // 5th row

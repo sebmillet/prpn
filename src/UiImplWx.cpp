@@ -433,7 +433,6 @@ public:
   void notify_ui_change();
   void textTypein_recalc_and_setsize();
   void textTypein_SetFocus();
-  void skin_change_all_buttons_status();
 
   DECLARE_EVENT_TABLE()
 };
@@ -520,7 +519,6 @@ void myBitmapButton::OnClick(wxMouseEvent& ev) {
     parent->textTypein_SetFocus();
     debug_write_v("Button clicked!!! (%i)", ev.GetId());
     change_button_status(false);
-    parent->skin_change_all_buttons_status();
   }
   ev.Skip();
 }
@@ -1020,14 +1018,6 @@ void MyFrame::textTypein_SetFocus() {
   textTypein->SetFocus();
 }
 
-void MyFrame::skin_change_all_buttons_status() {
-  if (gui == GUI_SKIN) {
-    for (vector<myBitmapButton*>::iterator it = skin_menu_buttons.begin(); it != skin_menu_buttons.end(); it++) {
-      (*it)->change_button_status(false);
-    }
-  }
-}
-
 void MyFrame::stack_line_set_font(wxStaticText *t) {
   my_set_font(t, SIZER_STACK_FONTSIZE, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, SIZER_STACK_FONTWEIGHT, 0,
                 gui == GUI_SIZER ? NULL : &(skin->f_stack));
@@ -1225,15 +1215,6 @@ void MyFrame::OnPaint(wxPaintEvent& ev) {
     my_x0 = x;
     my_y0 = y;
     my_y1 = y2;
-//        my_ty = ty + my_h0 - 1;
-
-//        debug_write_i("A1: my_x0 = %i", my_x0);
-//        debug_write_i("A1: my_w0 = %i", my_w0);
-//        debug_write_i("A1: my_h0 = %i", my_h0);
-//        debug_write_i("A1: my_y0 = %i", my_y0);
-//        debug_write_i("A1: my_y1 = %i", my_y1);
-//        debug_write_i("A1: my_ty = %i", my_ty);
-
     wxStaticText *t1 = new wxStaticText(this, wxID_ANY, wxString(wxChar(' '), 1),
       wxPoint(0, 0), wxSize(wxDefaultSize), SIZER_STACK_BORDERSTYLE);
     stack_line_set_font(t1);
