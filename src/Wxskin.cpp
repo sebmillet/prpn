@@ -215,21 +215,11 @@ struct skin_t skin_hp28s = {
   23,
 
     // path
-//#ifdef PROG_UNIXLIKE
   {29, 58, 253, 16},
-//#endif
-//#ifdef PROG_WINDOWS
-//  {29, 61, 253, 16},
-//#endif
   HP28S_GRAY, {10, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, *wxBLACK, false},
 
     // status
-//#ifdef PROG_UNIXLIKE
   {29, 38, 253, 20},
-//#endif
-//#ifdef PROG_WINDOWS
-//  {29, 41, 253, 20},
-//#endif
   HP28S_GRAY, (*wxBLACK),
     // Status window bitmaps
   exec_norun_s1_xpm, exec_run_s1_xpm,
@@ -239,26 +229,15 @@ struct skin_t skin_hp28s = {
   NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
 
     // stack
-//#ifdef PROG_UNIXLIKE
   {29, 74, 253, 22},
   22,       // Stack step (= height of each element)
-//#endif
-//#ifdef PROG_WINDOWS
-//  {29, 77, 253, 21},
-//  21,       // Stack step (= height of each element)
-//#endif
   4,        // Number of items displayed in the stack
   HP28S_GRAY, (*wxBLACK), // Bg/fg color in normal mode
   (*wxBLACK), HP28S_GRAY, // Bg/fg color in inverted mode
   {14, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, *wxBLACK, false},
 
     // typein
-#ifdef PROG_UNIXLIKE
   {-1, -1, -1, 22},
-#endif
-#ifdef PROG_WINDOWS
-  {-1, -1, -1, 22},
-#endif
   HP28S_GRAY,
   {14, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, *wxBLACK, false},
 

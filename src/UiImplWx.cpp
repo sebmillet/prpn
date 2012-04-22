@@ -433,6 +433,7 @@ public:
   void notify_ui_change();
   void textTypein_recalc_and_setsize();
   void textTypein_SetFocus();
+  void skin_change_all_buttons_status();
 
   DECLARE_EVENT_TABLE()
 };
@@ -479,8 +480,11 @@ public:
   void OnPaint(wxPaintEvent&);
   void OnMouseButtonDown(wxMouseEvent&);
   void OnClick(wxMouseEvent&);
+  void OnLeaveWindow(wxMouseEvent&);
   void mySetBitmapLabel(wxBitmap*);
   void mySetBitmapSelected(wxBitmap*);
+  void change_button_status(const bool&);
+  const wxBitmap *get_current_wxBitmap() const;
 
   DECLARE_EVENT_TABLE()
 };
@@ -489,6 +493,7 @@ BEGIN_EVENT_TABLE(myBitmapButton, wxWindow)
   EVT_PAINT(myBitmapButton::OnPaint)
   EVT_LEFT_DOWN(myBitmapButton::OnMouseButtonDown)
   EVT_LEFT_UP(myBitmapButton::OnClick)
+  EVT_LEAVE_WINDOW(myBitmapButton::OnLeaveWindow)
 END_EVENT_TABLE()
 
 myBitmapButton::myBitmapButton(MyFrame *p, wxWindowID id, wxBitmap *rel, wxBitmap *prs,
@@ -500,7 +505,7 @@ myBitmapButton::myBitmapButton(MyFrame *p, wxWindowID id, wxBitmap *rel, wxBitma
 void myBitmapButton::OnPaint(wxPaintEvent& ev) {
   wxPaintDC dc(this);
   PrepareDC(dc);
-  wxBitmap *bm = is_down ? &pressed : &released;
+  const wxBitmap *bm = get_current_wxBitmap();
   dc.DrawBitmap(*bm, 0, 0);
   ev.Skip();
 }
@@ -513,15 +518,19 @@ void myBitmapButton::OnClick(wxMouseEvent& ev) {
   ui_notify_button_pressed(sz);
   parent->textTypein_SetFocus();
   debug_write_v("Button clicked!!! (%i)", ev.GetId());
-  is_down = false;
-  Refresh();
+  change_button_status(false);
+  parent->skin_change_all_buttons_status();
   ev.Skip();
 }
 
 void myBitmapButton::OnMouseButtonDown(wxMouseEvent& ev) {
   debug_write_v("MOUSE BUTTON DOWN!!! (%i)", ev.GetId());
-  is_down = true;
-  Refresh();
+  change_button_status(true);
+  ev.Skip();
+}
+
+void myBitmapButton::OnLeaveWindow(wxMouseEvent& ev) {
+  change_button_status(false);
   ev.Skip();
 }
 
@@ -531,6 +540,17 @@ void myBitmapButton::mySetBitmapLabel(wxBitmap* bm) {
 
 void myBitmapButton::mySetBitmapSelected(wxBitmap* bm) {
   pressed = *bm;
+}
+
+void myBitmapButton::change_button_status(const bool& pressed) {
+  if (is_down != pressed) {
+    is_down = pressed;
+    Refresh();
+  }
+}
+
+const wxBitmap* myBitmapButton::get_current_wxBitmap() const {
+  return is_down ? &pressed : &released;
 }
 
 static void build_menu_bar(const MenuDescription* const md, const int& nb, wxMenuBar*& menuBar, const int& ui_code) {
@@ -996,6 +1016,14 @@ void MyFrame::textTypein_recalc_and_setsize() {
 
 void MyFrame::textTypein_SetFocus() {
   textTypein->SetFocus();
+}
+
+void MyFrame::skin_change_all_buttons_status() {
+  if (gui == GUI_SKIN) {
+    for (vector<myBitmapButton*>::iterator it = skin_menu_buttons.begin(); it != skin_menu_buttons.end(); it++) {
+      (*it)->change_button_status(false);
+    }
+  }
 }
 
 void MyFrame::stack_line_set_font(wxStaticText *t) {
