@@ -58,8 +58,8 @@ struct sizer_color_codes_t {
 static bool restart_gui = false;
 static wxPoint frame_pos = wxPoint(wxDefaultPosition);
 
-  // We manage two ui codes, 0 for sizer, 1 for graphic, HP-28S style.
-const int MAX_UI_CODE = 1;
+  // We manage two ui codes, 0 for sizer, 1 for graphic, HP-28S style, 2 for HP-28S (tiny)
+const int MAX_UI_CODE = 2;
 #define MENU_LABEL_SWITCH_UI_SIZER  _N("&Basic (resizable)")
 #define MENU_HELP_SWITCH_UI_SIZER   _N("Use WX 'sizer' mechanism to build the interface, can fit any size")
 
@@ -615,7 +615,7 @@ static void build_menu_bar(const MenuDescription* const md, const int& nb, wxMen
             wxmi0->Check(ui_code == 0);
             wxmi0->Enable(ui_code != 0);
             for (int u = 0; u < sizeof(skins) / sizeof(*skins); u++) {
-              wxMenuItem *wxmi1 = menus[actual_menu]->AppendCheckItem(ID_START_INTERFACE_CHOICE_MENUS + 1,
+              wxMenuItem *wxmi1 = menus[actual_menu]->AppendCheckItem(ID_START_INTERFACE_CHOICE_MENUS + u + 1,
                   const_char_to_wxString(_(skins[u]->menu_label)), const_char_to_wxString(_(skins[u]->menu_help)));
               wxmi1->Check(ui_code == u + 1);
               wxmi1->Enable(ui_code != u + 1);
@@ -694,7 +694,7 @@ static void skin_read_typein_info(int& x, int& y, int& w, int& h, const skin_t *
   if (x == -1)
     x = s->r_stack.x;
   if (y == -1)
-    y = s->r_stack.y + s->stack_nb_lines * s->stack_y_step;
+    y = s->r_stack.y + s->stack_height * s->stack_y_step;
   if (w == -1)
     w = s->r_stack.w;
   if (h == -1)
@@ -777,7 +777,9 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
       u > sizeof(skins) / sizeof(*skins) - 1;
     }
     skin = skins[u];
+    debug_write_v("Loadging bitmap images...");
     skin->load_bitmaps();
+    debug_write_v("Finished loadging bitmap images...");
     if (skin->menubar == MB_DEFAULT)
       has_menu_bar = ui_has_menu_bar();
     else
@@ -1541,8 +1543,8 @@ void UiImplWx::refresh_stack_height() {
   } else if (f->gui == GUI_SKIN) {
     int x, y, w, h;
     skin_read_typein_info(x, y, w, h, f->skin);
-    int h2 = h * (f->skin->stack_nb_lines - my_get_max_stack() + 1);
-    int y2 = y - h * (f->skin->stack_nb_lines - my_get_max_stack());
+    int h2 = h * (f->skin->stack_height - my_get_max_stack() + 1);
+    int y2 = y - h * (f->skin->stack_height - my_get_max_stack());
     f->textTypein->SetSize(x, y2, w, h2);
   }
 

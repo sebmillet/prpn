@@ -52,10 +52,13 @@ skin_t::~skin_t() {
 const wxString const_char_to_wxString(const char *);
 
 void skin_t::load_bitmaps() {
+  debug_write_v("load_bitmap() called, for the skin \"%s\"", menu_label);
+  debug_write_v("Nb bytes in bitmap raw data = %lu", sizeof_raw_data_frame_bg_image);
   delete_bitmaps();
 
   wxImageHandler * pngLoader = new wxPNGHandler();
   wxImage::AddHandler(pngLoader);
+
 
 #ifdef HACK_BACKGROUND_IMAGE
   frame_bg_image = new wxBitmap(const_char_to_wxString(HACK_BACKGROUND_IMAGE), wxBITMAP_TYPE_BMP);

@@ -58,7 +58,7 @@ struct skin_t {
   int frame_h;
   wxBitmap *frame_bg_image;
   const unsigned char *raw_data_frame_bg_image;
-  size_t sizeof_raw_data_frame_bg_image;
+  const unsigned long int sizeof_raw_data_frame_bg_image;
   wxBitmapType frame_bg_image_type;
   int stack_height;
   int stack_width;
@@ -93,7 +93,6 @@ struct skin_t {
 
   rectangle_t r_stack;
   int stack_y_step;
-  int stack_nb_lines;
   wxColour stack_bg_colour;
   wxColour stack_fg_colour;
   wxColour stack_inv_bg_colour;

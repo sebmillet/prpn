@@ -37,10 +37,11 @@
 #include "xpm/white-div-unsel.xpm"
 #include "xpm/white-div-sel.xpm"
 
-extern unsigned char hp28sb;
-extern size_t nb_items_hp28sb;
+extern const unsigned char hp28sbg[];
+extern const unsigned long nb_items_hp28sbg;
 
 #define HP28S_GRAY  (wxColour(0xC8, 0xDA, 0xD0))
+//#define HP28S_GRAY  (wxColour(0xFF, 0x00, 0xFF))
 
 //
 // Fonts used in the buttons
@@ -103,7 +104,7 @@ static skin_btn_t skin_btn_hp28s[] = {
   {{240, 399, 45, 29}, white_large_unsel_xpm, white_large_sel_xpm, "x", "*", "^", 6, -2, NULL, NULL},
 
     // 6th row
-  {{32, 440, 35, 29}, gray_small_unsel_xpm, gray_small_sel_xpm, "EVAL", "EVAL", "_NOOP", 2, 0, NULL, NULL},
+  {{32, 440, 35, 29}, gray_small_unsel_xpm, gray_small_sel_xpm, "EVAL", "EVAL", "->", 2, 0, NULL, NULL},
   {{81, 440, 45, 29}, white_large_unsel_xpm, white_large_sel_xpm, "1", "1", "CONT", 1, 0, NULL, NULL},
   {{134, 440, 45, 29}, white_large_unsel_xpm, white_large_sel_xpm, "2", "2", "%", 1, 0, NULL, NULL},
   {{187, 440, 45, 29}, white_large_unsel_xpm, white_large_sel_xpm, "3", "3", "%CH", 1, 0, NULL, NULL},
@@ -136,7 +137,7 @@ struct skin_t skin_hp28s = {
   584,
 #endif
   NULL,
-  hp28sb, nb_items_hp28sb, wxBITMAP_TYPE_PNG,
+  hp28sbg, nb_items_hp28sbg, wxBITMAP_TYPE_PNG,
 
     // Stack area
   4,
@@ -159,7 +160,6 @@ struct skin_t skin_hp28s = {
     // stack
   {29, 74, 253, 22},
   22,       // Stack step (= height of each element)
-  4,        // Number of items displayed in the stack
   HP28S_GRAY, (*wxBLACK), // Bg/fg color in normal mode
   (*wxBLACK), HP28S_GRAY, // Bg/fg color in inverted mode
   {14, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, *wxBLACK, false},
