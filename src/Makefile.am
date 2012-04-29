@@ -17,14 +17,16 @@ bin_PROGRAMS=prpn prpnc
 prpn_SOURCES=${MAINSOURCES}
 prpnc_SOURCES=${MAINSOURCES}
 
-Wx/SkHp28s.cpp: Wx/SkHp28sb.h
+Wx/SkHp28s.cpp: Wx/SkHp28sb.cpp
+Wx/SkHp28s2.cpp: Wx/SkHp28sb.cpp
 
 # xd is not available by default. It converts a binary file into
 # a file that can be compiled as C code (as an array of unsigned chars.)
 # It can be found here (as of 17/04/2012):
 #   http://www.fourmilab.ch/xd/
-Wx/SkHp28sb.h: Wx/SkHp28sb.png
+Wx/SkHp28sb.cpp: Wx/SkHp28sb.png
 	xd -dhp28sb Wx/SkHp28sb.png > $@
+	echo "size_t nb_items_hp28sb = sizeof(hp28sb) / sizeof(*hp28sb);" >> $@
 
 AM_CPPFLAGS=-DPKG_DOCDIR="\"${docdir}\"" -DPKG_HTMLDIR="\"${htmldir}\""
 AM_CPPFLAGS+= -DPKG_PREFIX="\"${prefix}\"" -DPKG_DATADIR="\"${datadir}\""
@@ -49,11 +51,9 @@ endif
 
 if BUILD_CLIENTGUI
 
-prpn_SOURCES+=Wx/UiImplWx.cpp \
-	Wx/SkBase.cpp Wx/SkBase.h \
-  Wx/SkHp28s.cpp Wx/SkHp28sb.png Wx/SkHp28sb.h \
-	Wx/xpm \
-	prpn.rc prpn.ico
+prpn_SOURCES+=Wx/UiImplWx.cpp Wx/SkBase.cpp Wx/SkBase.h \
+  Wx/SkHp28s.cpp Wx/SkHp28sb.png Wx/SkHp28sb.cpp Wx/SkHp28s2.cpp \
+	Wx/xpm prpn.rc prpn.ico
 prpn_CXXFLAGS=@WX_CXXFLAGS@ -DFOREIGN_MAIN
 prpn_LDFLAGS=@WX_LIBS@
 

@@ -36,12 +36,9 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 bin_PROGRAMS = prpn$(EXEEXT) prpnc$(EXEEXT)
-@BUILD_CLIENTGUI_TRUE@am__append_1 = UiImplWx.cpp \
-@BUILD_CLIENTGUI_TRUE@	Wxskin.cpp Wxskin.h \
-@BUILD_CLIENTGUI_TRUE@	prpn.rc prpn.ico \
-@BUILD_CLIENTGUI_TRUE@	xpm \
-@BUILD_CLIENTGUI_TRUE@  Wxskins/hp28s.cpp \
-@BUILD_CLIENTGUI_TRUE@	png/hp28s.h png/hp28s.png
+@BUILD_CLIENTGUI_TRUE@am__append_1 = Wx/UiImplWx.cpp Wx/SkBase.cpp Wx/SkBase.h \
+@BUILD_CLIENTGUI_TRUE@  Wx/SkHp28s.cpp Wx/SkHp28sb.png Wx/SkHp28sb.cpp Wx/SkHp28s2.cpp \
+@BUILD_CLIENTGUI_TRUE@	Wx/xpm prpn.rc prpn.ico
 
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
@@ -80,8 +77,9 @@ am__prpn_SOURCES_DIST = Main.cpp Compat.cpp Common.h PGetOpt.cpp \
 	UiImplConsole.cpp MyString.cpp MyString.h \
 	platform/os_generic.cpp platform/os_generic.h \
 	platform/os_unknown.h platform/os_unix.h platform/os_win.h \
-	gettext.h MyIntl.h UiImplWx.cpp Wxskin.cpp Wxskin.h prpn.rc \
-	prpn.ico xpm Wxskins/hp28s.cpp png/hp28s.h png/hp28s.png
+	gettext.h MyIntl.h Wx/UiImplWx.cpp Wx/SkBase.cpp Wx/SkBase.h \
+	Wx/SkHp28s.cpp Wx/SkHp28sb.png Wx/SkHp28sb.cpp Wx/SkHp28s2.cpp \
+	Wx/xpm prpn.rc prpn.ico
 am__objects_1 = prpn-Main.$(OBJEXT) prpn-Compat.$(OBJEXT) \
 	prpn-PGetOpt.$(OBJEXT) prpn-Scalar.$(OBJEXT) \
 	prpn-Stack.$(OBJEXT) prpn-Variable.$(OBJEXT) \
@@ -89,8 +87,10 @@ am__objects_1 = prpn-Main.$(OBJEXT) prpn-Compat.$(OBJEXT) \
 	prpn-UiImplConsole.$(OBJEXT) prpn-MyString.$(OBJEXT) \
 	prpn-os_generic.$(OBJEXT)
 @BUILD_CLIENTGUI_TRUE@am__objects_2 = prpn-UiImplWx.$(OBJEXT) \
-@BUILD_CLIENTGUI_TRUE@	prpn-Wxskin.$(OBJEXT) \
-@BUILD_CLIENTGUI_TRUE@	prpn-hp28s.$(OBJEXT)
+@BUILD_CLIENTGUI_TRUE@	prpn-SkBase.$(OBJEXT) \
+@BUILD_CLIENTGUI_TRUE@	prpn-SkHp28s.$(OBJEXT) \
+@BUILD_CLIENTGUI_TRUE@	prpn-SkHp28sb.$(OBJEXT) \
+@BUILD_CLIENTGUI_TRUE@	prpn-SkHp28s2.$(OBJEXT)
 am_prpn_OBJECTS = $(am__objects_1) $(am__objects_2)
 prpn_OBJECTS = $(am_prpn_OBJECTS)
 prpn_LDADD = $(LDADD)
@@ -406,13 +406,15 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-PGetOpt.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-Parser.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-Scalar.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-SkBase.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-SkHp28s.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-SkHp28s2.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-SkHp28sb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-Stack.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-Ui.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-UiImplConsole.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-UiImplWx.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-Variable.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-Wxskin.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-hp28s.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-os_generic.Po@am__quote@
 
 .cpp.o:
@@ -583,47 +585,75 @@ prpn-os_generic.obj: platform/os_generic.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-os_generic.obj `if test -f 'platform/os_generic.cpp'; then $(CYGPATH_W) 'platform/os_generic.cpp'; else $(CYGPATH_W) '$(srcdir)/platform/os_generic.cpp'; fi`
 
-prpn-UiImplWx.o: UiImplWx.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -MT prpn-UiImplWx.o -MD -MP -MF $(DEPDIR)/prpn-UiImplWx.Tpo -c -o prpn-UiImplWx.o `test -f 'UiImplWx.cpp' || echo '$(srcdir)/'`UiImplWx.cpp
+prpn-UiImplWx.o: Wx/UiImplWx.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -MT prpn-UiImplWx.o -MD -MP -MF $(DEPDIR)/prpn-UiImplWx.Tpo -c -o prpn-UiImplWx.o `test -f 'Wx/UiImplWx.cpp' || echo '$(srcdir)/'`Wx/UiImplWx.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/prpn-UiImplWx.Tpo $(DEPDIR)/prpn-UiImplWx.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='UiImplWx.cpp' object='prpn-UiImplWx.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Wx/UiImplWx.cpp' object='prpn-UiImplWx.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-UiImplWx.o `test -f 'UiImplWx.cpp' || echo '$(srcdir)/'`UiImplWx.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-UiImplWx.o `test -f 'Wx/UiImplWx.cpp' || echo '$(srcdir)/'`Wx/UiImplWx.cpp
 
-prpn-UiImplWx.obj: UiImplWx.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -MT prpn-UiImplWx.obj -MD -MP -MF $(DEPDIR)/prpn-UiImplWx.Tpo -c -o prpn-UiImplWx.obj `if test -f 'UiImplWx.cpp'; then $(CYGPATH_W) 'UiImplWx.cpp'; else $(CYGPATH_W) '$(srcdir)/UiImplWx.cpp'; fi`
+prpn-UiImplWx.obj: Wx/UiImplWx.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -MT prpn-UiImplWx.obj -MD -MP -MF $(DEPDIR)/prpn-UiImplWx.Tpo -c -o prpn-UiImplWx.obj `if test -f 'Wx/UiImplWx.cpp'; then $(CYGPATH_W) 'Wx/UiImplWx.cpp'; else $(CYGPATH_W) '$(srcdir)/Wx/UiImplWx.cpp'; fi`
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/prpn-UiImplWx.Tpo $(DEPDIR)/prpn-UiImplWx.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='UiImplWx.cpp' object='prpn-UiImplWx.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Wx/UiImplWx.cpp' object='prpn-UiImplWx.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-UiImplWx.obj `if test -f 'UiImplWx.cpp'; then $(CYGPATH_W) 'UiImplWx.cpp'; else $(CYGPATH_W) '$(srcdir)/UiImplWx.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-UiImplWx.obj `if test -f 'Wx/UiImplWx.cpp'; then $(CYGPATH_W) 'Wx/UiImplWx.cpp'; else $(CYGPATH_W) '$(srcdir)/Wx/UiImplWx.cpp'; fi`
 
-prpn-Wxskin.o: Wxskin.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -MT prpn-Wxskin.o -MD -MP -MF $(DEPDIR)/prpn-Wxskin.Tpo -c -o prpn-Wxskin.o `test -f 'Wxskin.cpp' || echo '$(srcdir)/'`Wxskin.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/prpn-Wxskin.Tpo $(DEPDIR)/prpn-Wxskin.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Wxskin.cpp' object='prpn-Wxskin.o' libtool=no @AMDEPBACKSLASH@
+prpn-SkBase.o: Wx/SkBase.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -MT prpn-SkBase.o -MD -MP -MF $(DEPDIR)/prpn-SkBase.Tpo -c -o prpn-SkBase.o `test -f 'Wx/SkBase.cpp' || echo '$(srcdir)/'`Wx/SkBase.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/prpn-SkBase.Tpo $(DEPDIR)/prpn-SkBase.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Wx/SkBase.cpp' object='prpn-SkBase.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-Wxskin.o `test -f 'Wxskin.cpp' || echo '$(srcdir)/'`Wxskin.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-SkBase.o `test -f 'Wx/SkBase.cpp' || echo '$(srcdir)/'`Wx/SkBase.cpp
 
-prpn-Wxskin.obj: Wxskin.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -MT prpn-Wxskin.obj -MD -MP -MF $(DEPDIR)/prpn-Wxskin.Tpo -c -o prpn-Wxskin.obj `if test -f 'Wxskin.cpp'; then $(CYGPATH_W) 'Wxskin.cpp'; else $(CYGPATH_W) '$(srcdir)/Wxskin.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/prpn-Wxskin.Tpo $(DEPDIR)/prpn-Wxskin.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Wxskin.cpp' object='prpn-Wxskin.obj' libtool=no @AMDEPBACKSLASH@
+prpn-SkBase.obj: Wx/SkBase.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -MT prpn-SkBase.obj -MD -MP -MF $(DEPDIR)/prpn-SkBase.Tpo -c -o prpn-SkBase.obj `if test -f 'Wx/SkBase.cpp'; then $(CYGPATH_W) 'Wx/SkBase.cpp'; else $(CYGPATH_W) '$(srcdir)/Wx/SkBase.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/prpn-SkBase.Tpo $(DEPDIR)/prpn-SkBase.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Wx/SkBase.cpp' object='prpn-SkBase.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-Wxskin.obj `if test -f 'Wxskin.cpp'; then $(CYGPATH_W) 'Wxskin.cpp'; else $(CYGPATH_W) '$(srcdir)/Wxskin.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-SkBase.obj `if test -f 'Wx/SkBase.cpp'; then $(CYGPATH_W) 'Wx/SkBase.cpp'; else $(CYGPATH_W) '$(srcdir)/Wx/SkBase.cpp'; fi`
 
-prpn-hp28s.o: Wxskins/hp28s.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -MT prpn-hp28s.o -MD -MP -MF $(DEPDIR)/prpn-hp28s.Tpo -c -o prpn-hp28s.o `test -f 'Wxskins/hp28s.cpp' || echo '$(srcdir)/'`Wxskins/hp28s.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/prpn-hp28s.Tpo $(DEPDIR)/prpn-hp28s.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Wxskins/hp28s.cpp' object='prpn-hp28s.o' libtool=no @AMDEPBACKSLASH@
+prpn-SkHp28s.o: Wx/SkHp28s.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -MT prpn-SkHp28s.o -MD -MP -MF $(DEPDIR)/prpn-SkHp28s.Tpo -c -o prpn-SkHp28s.o `test -f 'Wx/SkHp28s.cpp' || echo '$(srcdir)/'`Wx/SkHp28s.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/prpn-SkHp28s.Tpo $(DEPDIR)/prpn-SkHp28s.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Wx/SkHp28s.cpp' object='prpn-SkHp28s.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-hp28s.o `test -f 'Wxskins/hp28s.cpp' || echo '$(srcdir)/'`Wxskins/hp28s.cpp
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-SkHp28s.o `test -f 'Wx/SkHp28s.cpp' || echo '$(srcdir)/'`Wx/SkHp28s.cpp
 
-prpn-hp28s.obj: Wxskins/hp28s.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -MT prpn-hp28s.obj -MD -MP -MF $(DEPDIR)/prpn-hp28s.Tpo -c -o prpn-hp28s.obj `if test -f 'Wxskins/hp28s.cpp'; then $(CYGPATH_W) 'Wxskins/hp28s.cpp'; else $(CYGPATH_W) '$(srcdir)/Wxskins/hp28s.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/prpn-hp28s.Tpo $(DEPDIR)/prpn-hp28s.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Wxskins/hp28s.cpp' object='prpn-hp28s.obj' libtool=no @AMDEPBACKSLASH@
+prpn-SkHp28s.obj: Wx/SkHp28s.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -MT prpn-SkHp28s.obj -MD -MP -MF $(DEPDIR)/prpn-SkHp28s.Tpo -c -o prpn-SkHp28s.obj `if test -f 'Wx/SkHp28s.cpp'; then $(CYGPATH_W) 'Wx/SkHp28s.cpp'; else $(CYGPATH_W) '$(srcdir)/Wx/SkHp28s.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/prpn-SkHp28s.Tpo $(DEPDIR)/prpn-SkHp28s.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Wx/SkHp28s.cpp' object='prpn-SkHp28s.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-hp28s.obj `if test -f 'Wxskins/hp28s.cpp'; then $(CYGPATH_W) 'Wxskins/hp28s.cpp'; else $(CYGPATH_W) '$(srcdir)/Wxskins/hp28s.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-SkHp28s.obj `if test -f 'Wx/SkHp28s.cpp'; then $(CYGPATH_W) 'Wx/SkHp28s.cpp'; else $(CYGPATH_W) '$(srcdir)/Wx/SkHp28s.cpp'; fi`
+
+prpn-SkHp28sb.o: Wx/SkHp28sb.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -MT prpn-SkHp28sb.o -MD -MP -MF $(DEPDIR)/prpn-SkHp28sb.Tpo -c -o prpn-SkHp28sb.o `test -f 'Wx/SkHp28sb.cpp' || echo '$(srcdir)/'`Wx/SkHp28sb.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/prpn-SkHp28sb.Tpo $(DEPDIR)/prpn-SkHp28sb.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Wx/SkHp28sb.cpp' object='prpn-SkHp28sb.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-SkHp28sb.o `test -f 'Wx/SkHp28sb.cpp' || echo '$(srcdir)/'`Wx/SkHp28sb.cpp
+
+prpn-SkHp28sb.obj: Wx/SkHp28sb.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -MT prpn-SkHp28sb.obj -MD -MP -MF $(DEPDIR)/prpn-SkHp28sb.Tpo -c -o prpn-SkHp28sb.obj `if test -f 'Wx/SkHp28sb.cpp'; then $(CYGPATH_W) 'Wx/SkHp28sb.cpp'; else $(CYGPATH_W) '$(srcdir)/Wx/SkHp28sb.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/prpn-SkHp28sb.Tpo $(DEPDIR)/prpn-SkHp28sb.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Wx/SkHp28sb.cpp' object='prpn-SkHp28sb.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-SkHp28sb.obj `if test -f 'Wx/SkHp28sb.cpp'; then $(CYGPATH_W) 'Wx/SkHp28sb.cpp'; else $(CYGPATH_W) '$(srcdir)/Wx/SkHp28sb.cpp'; fi`
+
+prpn-SkHp28s2.o: Wx/SkHp28s2.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -MT prpn-SkHp28s2.o -MD -MP -MF $(DEPDIR)/prpn-SkHp28s2.Tpo -c -o prpn-SkHp28s2.o `test -f 'Wx/SkHp28s2.cpp' || echo '$(srcdir)/'`Wx/SkHp28s2.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/prpn-SkHp28s2.Tpo $(DEPDIR)/prpn-SkHp28s2.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Wx/SkHp28s2.cpp' object='prpn-SkHp28s2.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-SkHp28s2.o `test -f 'Wx/SkHp28s2.cpp' || echo '$(srcdir)/'`Wx/SkHp28s2.cpp
+
+prpn-SkHp28s2.obj: Wx/SkHp28s2.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -MT prpn-SkHp28s2.obj -MD -MP -MF $(DEPDIR)/prpn-SkHp28s2.Tpo -c -o prpn-SkHp28s2.obj `if test -f 'Wx/SkHp28s2.cpp'; then $(CYGPATH_W) 'Wx/SkHp28s2.cpp'; else $(CYGPATH_W) '$(srcdir)/Wx/SkHp28s2.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/prpn-SkHp28s2.Tpo $(DEPDIR)/prpn-SkHp28s2.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Wx/SkHp28s2.cpp' object='prpn-SkHp28s2.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-SkHp28s2.obj `if test -f 'Wx/SkHp28s2.cpp'; then $(CYGPATH_W) 'Wx/SkHp28s2.cpp'; else $(CYGPATH_W) '$(srcdir)/Wx/SkHp28s2.cpp'; fi`
 
 os_generic.o: platform/os_generic.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT os_generic.o -MD -MP -MF $(DEPDIR)/os_generic.Tpo -c -o os_generic.o `test -f 'platform/os_generic.cpp' || echo '$(srcdir)/'`platform/os_generic.cpp
@@ -843,14 +873,16 @@ uninstall-am: uninstall-binPROGRAMS
 	uninstall-am uninstall-binPROGRAMS
 
 
-Wxskin.cpp: png/hp28s.h
+Wx/SkHp28s.cpp: Wx/SkHp28sb.cpp
+Wx/SkHp28s2.cpp: Wx/SkHp28sb.cpp
 
 # xd is not available by default. It converts a binary file into
 # a file that can be compiled as C code (as an array of unsigned chars.)
 # It can be found here (as of 17/04/2012):
 #   http://www.fourmilab.ch/xd/
-png/hp28s.h: png/hp28s.png
-	xd -dhp28s png/hp28s.png > $@
+Wx/SkHp28sb.cpp: Wx/SkHp28sb.png
+	xd -dhp28sb Wx/SkHp28sb.png > $@
+	echo "size_t nb_items_hp28sb = sizeof(hp28sb) / sizeof(*hp28sb);" >> SkHp28sb.cpp
 
 @BUILD_DOCS_TRUE@${CMDSEN}: Commands.h
 @BUILD_DOCS_TRUE@	echo "_HELP" | LC_ALL="C" ${builddir}/${EXENAME} -b > ${CMDSEN}

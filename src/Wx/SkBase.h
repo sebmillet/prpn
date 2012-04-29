@@ -51,7 +51,8 @@ struct skin_btn_t {
 };
 
 struct skin_t {
-  const char *name;
+  const char *menu_label;
+  const char *menu_help;
   menubar_t menubar;
   int frame_w;
   int frame_h;

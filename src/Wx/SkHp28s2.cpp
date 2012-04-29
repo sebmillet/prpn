@@ -1,5 +1,5 @@
-// Wx/SkHp28s.cpp
-// wxWidgets UI implementation HP28-S skin
+// Wx/SkHp28s2.cpp
+// wxWidgets UI implementation HP28-S skin, tiny version
 
 // RPN calculator
 
@@ -40,7 +40,8 @@
 extern unsigned char hp28sb;
 extern size_t nb_items_hp28sb;
 
-#define HP28S_GRAY  (wxColour(0xC8, 0xDA, 0xD0))
+//#define HP28S_GRAY  (wxColour(0xC8, 0xDA, 0xD0))
+#define HP28S_GRAY  (wxColour(0xFF, 0x00, 0xFF))
 
 //
 // Fonts used in the buttons
@@ -120,7 +121,7 @@ static skin_btn_t skin_btn_hp28s[] = {
 //
 // The skin
 //
-struct skin_t skin_hp28s = {
+struct skin_t skin_hp28s2 = {
 
     // Frame
   _N("HP 28S (23x4)"),
@@ -162,7 +163,7 @@ struct skin_t skin_hp28s = {
   4,        // Number of items displayed in the stack
   HP28S_GRAY, (*wxBLACK), // Bg/fg color in normal mode
   (*wxBLACK), HP28S_GRAY, // Bg/fg color in inverted mode
-  {14, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, *wxBLACK, false},
+  {10, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, *wxBLACK, false},
 
     // typein
   {-1, -1, -1, 22},

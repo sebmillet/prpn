@@ -42,6 +42,8 @@
 using namespace std;
 
 extern struct skin_t skin_hp28s;
+extern struct skin_t skin_hp28s2;
+skin_t *skins[] = {&skin_hp28s, &skin_hp28s2};
 
 typedef enum {GUI_SIZER, GUI_SKIN} gui_t;
 
@@ -58,10 +60,8 @@ static wxPoint frame_pos = wxPoint(wxDefaultPosition);
 
   // We manage two ui codes, 0 for sizer, 1 for graphic, HP-28S style.
 const int MAX_UI_CODE = 1;
-#define MENU_LABEL_SWITCH_UI_SIZER  _("&Basic (resizable)")
-#define MENU_HELP_SWITCH_UI_SIZER   _("Use WX 'sizer' mechanism to build the interface, can fit any size")
-#define MENU_LABEL_SWITCH_UI_HP28S  _("&HP-28S (23x4)")
-#define MENU_HELP_SWITCH_UI_HP28S   _("Use a fixed-size skin inspired of the HP-28S scientific calculator")
+#define MENU_LABEL_SWITCH_UI_SIZER  _N("&Basic (resizable)")
+#define MENU_HELP_SWITCH_UI_SIZER   _N("Use WX 'sizer' mechanism to build the interface, can fit any size")
 
 
 //
@@ -611,13 +611,15 @@ static void build_menu_bar(const MenuDescription* const md, const int& nb, wxMen
           menuBar->Append(menus[actual_menu], const_char_to_wxString(_(l.c_str())));
           if (interface_menu) {
             wxMenuItem *wxmi0 = menus[actual_menu]->AppendCheckItem(ID_START_INTERFACE_CHOICE_MENUS,
-                const_char_to_wxString(MENU_LABEL_SWITCH_UI_SIZER), const_char_to_wxString(MENU_HELP_SWITCH_UI_SIZER));
-            wxMenuItem *wxmi1 = menus[actual_menu]->AppendCheckItem(ID_START_INTERFACE_CHOICE_MENUS + 1,
-                const_char_to_wxString(MENU_LABEL_SWITCH_UI_HP28S), const_char_to_wxString(MENU_HELP_SWITCH_UI_HP28S));
+                const_char_to_wxString(_(MENU_LABEL_SWITCH_UI_SIZER)), const_char_to_wxString(_(MENU_HELP_SWITCH_UI_SIZER)));
             wxmi0->Check(ui_code == 0);
             wxmi0->Enable(ui_code != 0);
-            wxmi1->Check(ui_code == 1);
-            wxmi1->Enable(ui_code != 1);
+            for (int u = 0; u < sizeof(skins) / sizeof(*skins); u++) {
+              wxMenuItem *wxmi1 = menus[actual_menu]->AppendCheckItem(ID_START_INTERFACE_CHOICE_MENUS + 1,
+                  const_char_to_wxString(_(skins[u]->menu_label)), const_char_to_wxString(_(skins[u]->menu_help)));
+              wxmi1->Check(ui_code == u + 1);
+              wxmi1->Enable(ui_code != u + 1);
+            }
           }
         }
       }
@@ -770,7 +772,11 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
     skin = NULL;
     has_menu_bar = ui_has_menu_bar();
   } else {
-    skin = &skin_hp28s;
+    int u = ui_code - 1;
+    if (u >= sizeof(skins) / sizeof(*skins)) {
+      u > sizeof(skins) / sizeof(*skins) - 1;
+    }
+    skin = skins[u];
     skin->load_bitmaps();
     if (skin->menubar == MB_DEFAULT)
       has_menu_bar = ui_has_menu_bar();

@@ -9,8 +9,7 @@ EXTRA_DIST=ABOUT-NLS admin/config.rpath test_linux extracfg.h wininst images \
 	src/makefile.bcc src/makefile.gcc src/makefile.vc \
 	prpn.desktop prpn.png \
   bootstrap \
-	prpn.spec gen-win-makefiles.cmd \
-	src/png/hp28s.png
+	prpn.spec gen-win-makefiles.cmd
 
 dist-hook:
 	rm -rf `find $(distdir) -name .svn`
