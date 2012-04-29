@@ -25,7 +25,7 @@
 #include <sstream>
 #endif
 
-#include "SkinBase.h"
+#include "SkBase.h"
 
 #include "xpm/shiftuns.xpm"
 #include "xpm/shiftsel.xpm"

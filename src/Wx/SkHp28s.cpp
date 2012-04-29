@@ -1,5 +1,5 @@
 // Wx/SkHp28s.cpp
-// wxWidgets UI implementation HP28S
+// wxWidgets UI implementation HP28-S skin
 
 // RPN calculator
 
@@ -35,7 +35,7 @@
 #include "xpm/white-div-unsel.xpm"
 #include "xpm/white-div-sel.xpm"
 
-#include "SkHp28sB.h"
+#include "SkHp28sb.h"
 
 #define HP28S_GRAY  (wxColour(0xC8, 0xDA, 0xD0))
 

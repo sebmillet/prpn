@@ -12,7 +12,7 @@
 #include <wx/mstream.h>
 
 #include "platform/os_generic.h"
-#include "SkinBase.h"
+#include "SkBase.h"
 
 // Uncomment if you wish to test a background image file (found
 // in program working directory) instead of png/*.h-based data.

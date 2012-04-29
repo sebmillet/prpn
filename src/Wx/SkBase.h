@@ -1,10 +1,10 @@
 // Wx/SkBase.h
 // wxWidgets UI implementation of skins, like HP28S's
-// Include file used by skin files
+// Include file used by skin files.
 
 // RPN calculator
 
-// S?bastien Millet
+// Sébastien Millet
 // March, April 2012
 
 #ifndef WXSKIN_H
