@@ -1,0 +1,17 @@
+prpn (0.5.4-1) unstable; urgency=low
+
+  * Improves Linux-based interface so that it becomes identical to Windows'
+
+ -- Sébastien Millet <sebastien.millet1@club-internet.fr>  Tue, 21 Apr 2012 13:38:50 +0200
+
+prpn (0.5.3-1) unstable; urgency=low
+
+  * Provides HP28S skin display for the calculator
+
+ -- Sébastien Millet <sebastien.millet1@club-internet.fr>  Tue, 17 Apr 2012 23:30:38 +0200
+
+prpn (0.5.2-1) unstable; urgency=low
+
+  * Initial release
+
+ -- Sébastien Millet <sebastien.millet1@club-internet.fr>  Tue, 29 Mar 2011 20:18:28 +0200
