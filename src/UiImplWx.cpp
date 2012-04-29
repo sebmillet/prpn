@@ -58,10 +58,10 @@ static wxPoint frame_pos = wxPoint(wxDefaultPosition);
 
   // We manage two ui codes, 0 for sizer, 1 for graphic, HP-28S style.
 const int MAX_UI_CODE = 1;
-#define MENU_LABEL_SWITCH_UI_SIZER  "&Basic (resizable)"
-#define MENU_HELP_SWITCH_UI_SIZER   "Use WX 'sizer' mechanism to build the interface, can fit any size"
-#define MENU_LABEL_SWITCH_UI_HP28S  "&HP-28S"
-#define MENU_HELP_SWITCH_UI_HP28S   "Use a fixed-size skin inspired of the HP-28S scientific calculator"
+#define MENU_LABEL_SWITCH_UI_SIZER  _("&Basic (resizable)")
+#define MENU_HELP_SWITCH_UI_SIZER   _("Use WX 'sizer' mechanism to build the interface, can fit any size")
+#define MENU_LABEL_SWITCH_UI_HP28S  _("&HP-28S (23x4)")
+#define MENU_HELP_SWITCH_UI_HP28S   _("Use a fixed-size skin inspired of the HP-28S scientific calculator")
 
 
 //

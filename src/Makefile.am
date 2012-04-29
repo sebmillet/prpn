@@ -20,7 +20,7 @@ prpnc_SOURCES=${MAINSOURCES}
 Wxskin.cpp: png/hp28s.h
 
 # xd is not available by default. It converts a binary file into
-# a file that can be compiled as C code.
+# a file that can be compiled as C code (as an array of unsigned chars.)
 # It can be found here (as of 17/04/2012):
 #   http://www.fourmilab.ch/xd/
 png/hp28s.h: png/hp28s.png
@@ -53,6 +53,7 @@ prpn_SOURCES+=UiImplWx.cpp \
 	Wxskin.cpp Wxskin.h \
 	prpn.rc prpn.ico \
 	xpm \
+  Wxskins/hp28s.cpp \
 	png/hp28s.h png/hp28s.png
 prpn_CXXFLAGS=@WX_CXXFLAGS@ -DFOREIGN_MAIN
 prpn_LDFLAGS=@WX_LIBS@
