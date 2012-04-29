@@ -1,5 +1,6 @@
-// Wxskin.cpp
-// wxWidgets UI implementation of skins, like HP28S's
+// Wx/SkBase.cpp
+// wxWidgets UI implementation of skins, general purpose file
+// (= shared between skins)
 
 // RPN calculator
 
@@ -11,7 +12,7 @@
 #include <wx/mstream.h>
 
 #include "platform/os_generic.h"
-#include "Wxskin.h"
+#include "SkinBase.h"
 
 // Uncomment if you wish to test a background image file (found
 // in program working directory) instead of png/*.h-based data.

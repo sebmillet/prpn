@@ -1,5 +1,5 @@
-// UiImplWx.cpp
-// wxWidgets UI implementation
+// Wx/UiImplWx.cpp
+// wxWidgets UI implementation, master file
 
 // RPN calculator
 
@@ -25,7 +25,7 @@
 #include <sstream>
 #endif
 
-#include "Wxskin.h"
+#include "SkinBase.h"
 
 #include "xpm/shiftuns.xpm"
 #include "xpm/shiftsel.xpm"

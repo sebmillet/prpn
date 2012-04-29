@@ -1,5 +1,6 @@
-// Wxskin.h
+// Wx/SkBase.h
 // wxWidgets UI implementation of skins, like HP28S's
+// Include file used by skin files
 
 // RPN calculator
 
