@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: prpn 0.5.4\n"
 "Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
-"POT-Creation-Date: 2012-04-22 10:39+0200\n"
+"POT-Creation-Date: 2012-04-29 17:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -214,7 +214,7 @@ msgstr ""
 msgid "&Quit"
 msgstr ""
 
-#: src/Ui.cpp:462 src/UiImplWx.cpp:607
+#: src/Ui.cpp:462 src/Wx/UiImplWx.cpp:607
 msgid "__INTERFACE__"
 msgstr ""
 
@@ -232,14 +232,6 @@ msgstr ""
 
 #: src/Ui.cpp:673
 msgid "&About"
-msgstr ""
-
-#: src/UiImplWx.cpp:1080
-msgid "Help"
-msgstr ""
-
-#: src/UiImplWx.cpp:1102 src/UiImplWx.cpp:1115
-msgid "OK"
 msgstr ""
 
 #: src/Commands.h:20
@@ -1000,4 +992,40 @@ msgstr ""
 
 #: src/Commands.h:256
 msgid "Unset"
+msgstr ""
+
+#: src/Wx/SkHp28s.cpp:127
+msgid "HP 28S (regular, 23x4)"
+msgstr ""
+
+#: src/Wx/SkHp28s.cpp:128
+msgid ""
+"Use a fixed-size skin inspired of the HP 28S scientific calculator, size: 23 "
+"(width) x 4 (lines)"
+msgstr ""
+
+#: src/Wx/SkHp28s2.cpp:102
+msgid "HP 28S (tiny characters, 37x8)"
+msgstr ""
+
+#: src/Wx/SkHp28s2.cpp:103
+msgid ""
+"Use a fixed-size skin inspired of the HP 28S scientific calculator, size: 37 "
+"(width) x 8 (lines)"
+msgstr ""
+
+#: src/Wx/UiImplWx.cpp:63
+msgid "&Basic (resizable)"
+msgstr ""
+
+#: src/Wx/UiImplWx.cpp:64
+msgid "Use WX 'sizer' mechanism to build the interface, can fit any size"
+msgstr ""
+
+#: src/Wx/UiImplWx.cpp:1088
+msgid "Help"
+msgstr ""
+
+#: src/Wx/UiImplWx.cpp:1110 src/Wx/UiImplWx.cpp:1123
+msgid "OK"
 msgstr ""

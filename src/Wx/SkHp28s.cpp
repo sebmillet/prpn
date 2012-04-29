@@ -124,7 +124,7 @@ static skin_btn_t skin_btn_hp28s[] = {
 struct skin_t skin_hp28s = {
 
     // Frame
-  _N("HP 28S (23x4)"),
+  _N("HP 28S (regular, 23x4)"),
   _N("Use a fixed-size skin inspired of the HP 28S scientific calculator, size: 23 (width) x 4 (lines)"),
   MB_ENFORCE_MENU,
 

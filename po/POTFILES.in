@@ -8,7 +8,6 @@ src/Scalar.cpp
 src/Stack.cpp
 src/Ui.cpp
 src/UiImplConsole.cpp
-src/UiImplWx.cpp
 src/Variable.cpp
 src/Commands.h
 src/Common.h
@@ -24,3 +23,9 @@ src/platform/os_generic.h
 src/platform/os_unix.h
 src/platform/os_unknown.h
 src/platform/os_win.h
+src/Wx/SkBase.cpp
+src/Wx/SkBase.h
+src/Wx/SkHp28s.cpp
+src/Wx/SkHp28s2.cpp
+src/Wx/UiImplWx.cpp
+src/Wx/SkBase.cpp

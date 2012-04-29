@@ -37,7 +37,7 @@ build_triplet = @build@
 host_triplet = @host@
 bin_PROGRAMS = prpn$(EXEEXT) prpnc$(EXEEXT)
 @BUILD_CLIENTGUI_TRUE@am__append_1 = Wx/UiImplWx.cpp Wx/SkBase.cpp Wx/SkBase.h \
-@BUILD_CLIENTGUI_TRUE@  Wx/SkHp28s.cpp Wx/SkHp28sb.png Wx/SkHp28sb.cpp Wx/SkHp28s2.cpp \
+@BUILD_CLIENTGUI_TRUE@  Wx/SkHp28s.cpp Wx/SkHp28s2.cpp Wx/hp28sbg.png Wx/hp28sbg.cpp Wx/hp28sbg2.png Wx/hp28sbg2.cpp \
 @BUILD_CLIENTGUI_TRUE@	Wx/xpm prpn.rc prpn.ico
 
 subdir = src
@@ -78,8 +78,8 @@ am__prpn_SOURCES_DIST = Main.cpp Compat.cpp Common.h PGetOpt.cpp \
 	platform/os_generic.cpp platform/os_generic.h \
 	platform/os_unknown.h platform/os_unix.h platform/os_win.h \
 	gettext.h MyIntl.h Wx/UiImplWx.cpp Wx/SkBase.cpp Wx/SkBase.h \
-	Wx/SkHp28s.cpp Wx/SkHp28sb.png Wx/SkHp28sb.cpp Wx/SkHp28s2.cpp \
-	Wx/xpm prpn.rc prpn.ico
+	Wx/SkHp28s.cpp Wx/SkHp28s2.cpp Wx/hp28sbg.png Wx/hp28sbg.cpp \
+	Wx/hp28sbg2.png Wx/hp28sbg2.cpp Wx/xpm prpn.rc prpn.ico
 am__objects_1 = prpn-Main.$(OBJEXT) prpn-Compat.$(OBJEXT) \
 	prpn-PGetOpt.$(OBJEXT) prpn-Scalar.$(OBJEXT) \
 	prpn-Stack.$(OBJEXT) prpn-Variable.$(OBJEXT) \
@@ -89,8 +89,9 @@ am__objects_1 = prpn-Main.$(OBJEXT) prpn-Compat.$(OBJEXT) \
 @BUILD_CLIENTGUI_TRUE@am__objects_2 = prpn-UiImplWx.$(OBJEXT) \
 @BUILD_CLIENTGUI_TRUE@	prpn-SkBase.$(OBJEXT) \
 @BUILD_CLIENTGUI_TRUE@	prpn-SkHp28s.$(OBJEXT) \
-@BUILD_CLIENTGUI_TRUE@	prpn-SkHp28sb.$(OBJEXT) \
-@BUILD_CLIENTGUI_TRUE@	prpn-SkHp28s2.$(OBJEXT)
+@BUILD_CLIENTGUI_TRUE@	prpn-SkHp28s2.$(OBJEXT) \
+@BUILD_CLIENTGUI_TRUE@	prpn-hp28sbg.$(OBJEXT) \
+@BUILD_CLIENTGUI_TRUE@	prpn-hp28sbg2.$(OBJEXT)
 am_prpn_OBJECTS = $(am__objects_1) $(am__objects_2)
 prpn_OBJECTS = $(am_prpn_OBJECTS)
 prpn_LDADD = $(LDADD)
@@ -409,12 +410,13 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-SkBase.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-SkHp28s.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-SkHp28s2.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-SkHp28sb.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-Stack.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-Ui.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-UiImplConsole.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-UiImplWx.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-Variable.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-hp28sbg.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-hp28sbg2.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/prpn-os_generic.Po@am__quote@
 
 .cpp.o:
@@ -627,20 +629,6 @@ prpn-SkHp28s.obj: Wx/SkHp28s.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-SkHp28s.obj `if test -f 'Wx/SkHp28s.cpp'; then $(CYGPATH_W) 'Wx/SkHp28s.cpp'; else $(CYGPATH_W) '$(srcdir)/Wx/SkHp28s.cpp'; fi`
 
-prpn-SkHp28sb.o: Wx/SkHp28sb.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -MT prpn-SkHp28sb.o -MD -MP -MF $(DEPDIR)/prpn-SkHp28sb.Tpo -c -o prpn-SkHp28sb.o `test -f 'Wx/SkHp28sb.cpp' || echo '$(srcdir)/'`Wx/SkHp28sb.cpp
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/prpn-SkHp28sb.Tpo $(DEPDIR)/prpn-SkHp28sb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Wx/SkHp28sb.cpp' object='prpn-SkHp28sb.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-SkHp28sb.o `test -f 'Wx/SkHp28sb.cpp' || echo '$(srcdir)/'`Wx/SkHp28sb.cpp
-
-prpn-SkHp28sb.obj: Wx/SkHp28sb.cpp
-@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -MT prpn-SkHp28sb.obj -MD -MP -MF $(DEPDIR)/prpn-SkHp28sb.Tpo -c -o prpn-SkHp28sb.obj `if test -f 'Wx/SkHp28sb.cpp'; then $(CYGPATH_W) 'Wx/SkHp28sb.cpp'; else $(CYGPATH_W) '$(srcdir)/Wx/SkHp28sb.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/prpn-SkHp28sb.Tpo $(DEPDIR)/prpn-SkHp28sb.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Wx/SkHp28sb.cpp' object='prpn-SkHp28sb.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-SkHp28sb.obj `if test -f 'Wx/SkHp28sb.cpp'; then $(CYGPATH_W) 'Wx/SkHp28sb.cpp'; else $(CYGPATH_W) '$(srcdir)/Wx/SkHp28sb.cpp'; fi`
-
 prpn-SkHp28s2.o: Wx/SkHp28s2.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -MT prpn-SkHp28s2.o -MD -MP -MF $(DEPDIR)/prpn-SkHp28s2.Tpo -c -o prpn-SkHp28s2.o `test -f 'Wx/SkHp28s2.cpp' || echo '$(srcdir)/'`Wx/SkHp28s2.cpp
 @am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/prpn-SkHp28s2.Tpo $(DEPDIR)/prpn-SkHp28s2.Po
@@ -654,6 +642,34 @@ prpn-SkHp28s2.obj: Wx/SkHp28s2.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Wx/SkHp28s2.cpp' object='prpn-SkHp28s2.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-SkHp28s2.obj `if test -f 'Wx/SkHp28s2.cpp'; then $(CYGPATH_W) 'Wx/SkHp28s2.cpp'; else $(CYGPATH_W) '$(srcdir)/Wx/SkHp28s2.cpp'; fi`
+
+prpn-hp28sbg.o: Wx/hp28sbg.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -MT prpn-hp28sbg.o -MD -MP -MF $(DEPDIR)/prpn-hp28sbg.Tpo -c -o prpn-hp28sbg.o `test -f 'Wx/hp28sbg.cpp' || echo '$(srcdir)/'`Wx/hp28sbg.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/prpn-hp28sbg.Tpo $(DEPDIR)/prpn-hp28sbg.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Wx/hp28sbg.cpp' object='prpn-hp28sbg.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-hp28sbg.o `test -f 'Wx/hp28sbg.cpp' || echo '$(srcdir)/'`Wx/hp28sbg.cpp
+
+prpn-hp28sbg.obj: Wx/hp28sbg.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -MT prpn-hp28sbg.obj -MD -MP -MF $(DEPDIR)/prpn-hp28sbg.Tpo -c -o prpn-hp28sbg.obj `if test -f 'Wx/hp28sbg.cpp'; then $(CYGPATH_W) 'Wx/hp28sbg.cpp'; else $(CYGPATH_W) '$(srcdir)/Wx/hp28sbg.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/prpn-hp28sbg.Tpo $(DEPDIR)/prpn-hp28sbg.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Wx/hp28sbg.cpp' object='prpn-hp28sbg.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-hp28sbg.obj `if test -f 'Wx/hp28sbg.cpp'; then $(CYGPATH_W) 'Wx/hp28sbg.cpp'; else $(CYGPATH_W) '$(srcdir)/Wx/hp28sbg.cpp'; fi`
+
+prpn-hp28sbg2.o: Wx/hp28sbg2.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -MT prpn-hp28sbg2.o -MD -MP -MF $(DEPDIR)/prpn-hp28sbg2.Tpo -c -o prpn-hp28sbg2.o `test -f 'Wx/hp28sbg2.cpp' || echo '$(srcdir)/'`Wx/hp28sbg2.cpp
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/prpn-hp28sbg2.Tpo $(DEPDIR)/prpn-hp28sbg2.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Wx/hp28sbg2.cpp' object='prpn-hp28sbg2.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-hp28sbg2.o `test -f 'Wx/hp28sbg2.cpp' || echo '$(srcdir)/'`Wx/hp28sbg2.cpp
+
+prpn-hp28sbg2.obj: Wx/hp28sbg2.cpp
+@am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -MT prpn-hp28sbg2.obj -MD -MP -MF $(DEPDIR)/prpn-hp28sbg2.Tpo -c -o prpn-hp28sbg2.obj `if test -f 'Wx/hp28sbg2.cpp'; then $(CYGPATH_W) 'Wx/hp28sbg2.cpp'; else $(CYGPATH_W) '$(srcdir)/Wx/hp28sbg2.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/prpn-hp28sbg2.Tpo $(DEPDIR)/prpn-hp28sbg2.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='Wx/hp28sbg2.cpp' object='prpn-hp28sbg2.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(prpn_CXXFLAGS) $(CXXFLAGS) -c -o prpn-hp28sbg2.obj `if test -f 'Wx/hp28sbg2.cpp'; then $(CYGPATH_W) 'Wx/hp28sbg2.cpp'; else $(CYGPATH_W) '$(srcdir)/Wx/hp28sbg2.cpp'; fi`
 
 os_generic.o: platform/os_generic.cpp
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT os_generic.o -MD -MP -MF $(DEPDIR)/os_generic.Tpo -c -o os_generic.o `test -f 'platform/os_generic.cpp' || echo '$(srcdir)/'`platform/os_generic.cpp
@@ -873,16 +889,19 @@ uninstall-am: uninstall-binPROGRAMS
 	uninstall-am uninstall-binPROGRAMS
 
 
-Wx/SkHp28s.cpp: Wx/SkHp28sb.cpp
-Wx/SkHp28s2.cpp: Wx/SkHp28sb.cpp
+Wx/SkHp28s.cpp: Wx/hp28sbg.cpp
+Wx/SkHp28s2.cpp: Wx/hp28sbg2.cpp
 
 # xd is not available by default. It converts a binary file into
 # a file that can be compiled as C code (as an array of unsigned chars.)
 # It can be found here (as of 17/04/2012):
 #   http://www.fourmilab.ch/xd/
-Wx/SkHp28sb.cpp: Wx/SkHp28sb.png
-	xd -dhp28sb Wx/SkHp28sb.png > $@
-	echo "size_t nb_items_hp28sb = sizeof(hp28sb) / sizeof(*hp28sb);" >> SkHp28sb.cpp
+Wx/hp28sbg.cpp: Wx/hp28sbg.png
+	xd -dhp28sbg Wx/hp28sbg.png > $@
+	echo "unsigned long int nb_items_hp28sbg = sizeof(hp28sbg) / sizeof(*hp28sbg);" >> $@
+Wx/hp28sbg2.cpp: Wx/hp28sbg2.png
+	xd -dhp28sbg2 Wx/hp28sbg2.png > $@
+	echo "unsigned long int nb_items_hp28sbg2 = sizeof(hp28sbg2) / sizeof(*hp28sbg2);" >> $@
 
 @BUILD_DOCS_TRUE@${CMDSEN}: Commands.h
 @BUILD_DOCS_TRUE@	echo "_HELP" | LC_ALL="C" ${builddir}/${EXENAME} -b > ${CMDSEN}
