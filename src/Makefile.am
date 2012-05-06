@@ -19,6 +19,7 @@ prpnc_SOURCES=${MAINSOURCES}
 
 Wx/SkHp28s.cpp: Wx/hp28sbg.cpp
 Wx/SkHp28s2.cpp: Wx/hp28sbg2.cpp
+Wx/SkHp28s3.cpp: Wx/hp28sbg3.cpp
 
 # xd is not available by default. It converts a binary file into
 # a file that can be compiled as C code (as an array of unsigned chars.)
@@ -30,6 +31,9 @@ Wx/hp28sbg.cpp: Wx/hp28sbg.png
 Wx/hp28sbg2.cpp: Wx/hp28sbg2.png
 	xd -dhp28sbg2 Wx/hp28sbg2.png > $@
 	echo "unsigned long int nb_items_hp28sbg2 = sizeof(hp28sbg2) / sizeof(*hp28sbg2);" >> $@
+Wx/hp28sbg3.cpp: Wx/hp28sbg3.png
+	xd -dhp28sbg3 Wx/hp28sbg3.png > $@
+	echo "unsigned long int nb_items_hp28sbg3 = sizeof(hp28sbg3) / sizeof(*hp28sbg3);" >> $@
 
 AM_CPPFLAGS=-DPKG_DOCDIR="\"${docdir}\"" -DPKG_HTMLDIR="\"${htmldir}\""
 AM_CPPFLAGS+= -DPKG_PREFIX="\"${prefix}\"" -DPKG_DATADIR="\"${datadir}\""
@@ -55,7 +59,9 @@ endif
 if BUILD_CLIENTGUI
 
 prpn_SOURCES+=Wx/UiImplWx.cpp Wx/SkBase.cpp Wx/SkBase.h \
-  Wx/SkHp28s.cpp Wx/SkHp28s2.cpp Wx/hp28sbg.png Wx/hp28sbg.cpp Wx/hp28sbg2.png Wx/hp28sbg2.cpp \
+  Wx/SkHp28s.cpp Wx/hp28sbg.png Wx/hp28sbg.cpp \
+  Wx/SkHp28s2.cpp Wx/hp28sbg2.png Wx/hp28sbg2.cpp \
+  Wx/SkHp28s3.cpp Wx/hp28sbg3.png Wx/hp28sbg3.cpp \
 	Wx/xpm prpn.rc prpn.ico
 prpn_CXXFLAGS=@WX_CXXFLAGS@ -DFOREIGN_MAIN
 prpn_LDFLAGS=@WX_LIBS@

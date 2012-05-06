@@ -41,10 +41,6 @@
 
 using namespace std;
 
-extern struct skin_t skin_hp28s;
-extern struct skin_t skin_hp28s2;
-skin_t *skins[] = {&skin_hp28s, &skin_hp28s2};
-
 typedef enum {GUI_SIZER, GUI_SKIN} gui_t;
 
 static const char *next_instruction_prefix = "";
@@ -59,9 +55,17 @@ static bool restart_gui = false;
 static wxPoint frame_pos = wxPoint(wxDefaultPosition);
 
   // We manage two ui codes, 0 for sizer, 1 for graphic, HP-28S style, 2 for HP-28S (tiny)
-const int MAX_UI_CODE = 2;
+  // 3 for HP-28S (tiny, regular buttons.)
+extern struct skin_t skin_hp28s;
+extern struct skin_t skin_hp28s2;
+extern struct skin_t skin_hp28s3;
+skin_t *skins[] = {&skin_hp28s, &skin_hp28s2, &skin_hp28s3};
 #define MENU_LABEL_SWITCH_UI_SIZER  _N("&Basic (resizable)")
 #define MENU_HELP_SWITCH_UI_SIZER   _N("Use WX 'sizer' mechanism to build the interface, can fit any size")
+
+const int DEFAULT_WHEELDELTA_UNIT = 120;
+const int MAX_WHEEL_STEPS_IN_1_EVENT = 5;
+
 
 
 //
@@ -140,10 +144,7 @@ sizer_color_codes_t sizer_color_codes[2][SLCC_NB_CODES] = {{
 //
 
 static gui_t gui_type(const int& ui_code) {
-  if (ui_code == 0)
-    return GUI_SIZER;
-  else
-    return GUI_SKIN;
+  return ui_code == 0 ? GUI_SIZER : GUI_SKIN;
 }
 
 static const wxColor sizer_slcc_to_bg_wxColor(const slcc_t& sizer_color_code) {
@@ -213,112 +214,6 @@ static void my_set_font(wxWindow *ctrl, const int& pointSize, const wxFontFamily
     debug_write("pf != NULL");
     debug_write_i("size = %i", pf->pointSize);
   }
-}
-
-
-//
-// STATUSWINDOW
-//
-
-class StatusWindow: public wxScrolledWindow {
-  wxWindow *my_parent;
-  int horoffset_exec;
-  wxBitmap exec_norun;
-  wxBitmap exec_run;
-  int horoffset_arrow;
-  wxBitmap shiftsel;
-  wxBitmap shiftuns;
-  int horoffset_angle;
-  wxBitmap angle_deg;
-  wxBitmap angle_rad;
-  int horoffset_unit;
-  wxBitmap unit_bin;
-  wxBitmap unit_oct;
-  wxBitmap unit_dec;
-  wxBitmap unit_hex;
-  wxColour bg_color;
-public:
-  StatusWindow(wxWindow *, wxWindowID, const wxPoint&, const wxSize&, const wxColour&,
-      const wxBitmap&, const wxBitmap&, const wxBitmap&, const wxBitmap&,
-      const wxBitmap&, const wxBitmap&, const wxBitmap&, const wxBitmap&,
-      const wxBitmap&, const wxBitmap&);
-  void OnPaint(wxPaintEvent&);
-  void OnDblClick(wxMouseEvent&);
-
-  DECLARE_EVENT_TABLE()
-};
-
-BEGIN_EVENT_TABLE(StatusWindow, wxScrolledWindow)
-  EVT_PAINT(StatusWindow::OnPaint)
-  EVT_LEFT_DCLICK(StatusWindow::OnDblClick)
-END_EVENT_TABLE()
-
-StatusWindow::StatusWindow(wxWindow *parent, wxWindowID id, const wxPoint &pos, const wxSize &size, const wxColour& bgc,
-      const wxBitmap& a_exec_norun, const wxBitmap& a_exec_run,
-      const wxBitmap& a_shiftsel, const wxBitmap& a_shiftuns,
-      const wxBitmap& a_angle_deg, const wxBitmap& a_angle_rad,
-      const wxBitmap& a_unit_bin, const wxBitmap& a_unit_oct,
-      const wxBitmap& a_unit_dec, const wxBitmap& a_unit_hex)
-    : wxScrolledWindow(parent, id, pos, size, SIZER_STATUS_BORDER_STYLE),
-    my_parent(parent),
-    horoffset_exec(0),
-    exec_norun(a_exec_norun), exec_run(a_exec_run),
-    horoffset_arrow(0),
-    shiftsel(a_shiftsel), shiftuns(a_shiftuns),
-    horoffset_angle(0),
-    angle_deg(a_angle_deg), angle_rad(a_angle_rad),
-    horoffset_unit(0),
-    unit_bin(a_unit_bin), unit_oct(a_unit_oct), unit_dec(a_unit_dec), unit_hex(a_unit_hex), bg_color(bgc) {
-  SetBackgroundColour(bgc);
-  int w = exec_run.GetWidth();
-  int w2 = shiftsel.GetWidth();
-  int h = shiftsel.GetHeight();
-  int w3 = angle_deg.GetWidth();
-  int w4 = unit_bin.GetWidth();
-  horoffset_exec = SIZER_STATUS_WINDOW_ITEM_H_MARGIN;
-  horoffset_arrow = w + 2 * SIZER_STATUS_WINDOW_ITEM_H_MARGIN;
-  horoffset_angle = w + w2 + 3 * SIZER_STATUS_WINDOW_ITEM_H_MARGIN;
-  horoffset_unit = w + w2 + w3 + 4 * SIZER_STATUS_WINDOW_ITEM_H_MARGIN;
-  SetSize(wxSize(horoffset_unit + w4, h + 2 * SIZER_STATUS_WINDOW_ITEM_V_MARGIN));
-}
-
-void StatusWindow::OnPaint(wxPaintEvent&) {
-  wxPaintDC dc(this);
-  PrepareDC(dc);
-
-  dc.SetBackgroundMode(wxSOLID);
-  SetBackgroundColour(bg_color);
-
-  if (ui_is_a_program_halted())
-    dc.DrawBitmap(exec_run, horoffset_exec, SIZER_STATUS_WINDOW_ITEM_V_MARGIN);
-  else
-    dc.DrawBitmap(exec_norun, horoffset_exec, SIZER_STATUS_WINDOW_ITEM_V_MARGIN);
-  if (ui_dsl.get_status_shift())
-    dc.DrawBitmap(shiftsel, horoffset_arrow, SIZER_STATUS_WINDOW_ITEM_V_MARGIN);
-  else
-    dc.DrawBitmap(shiftuns, horoffset_arrow, SIZER_STATUS_WINDOW_ITEM_V_MARGIN);
-  if (F->get_angle_mode() == ANGLE_DEG)
-    dc.DrawBitmap(angle_deg, horoffset_angle, SIZER_STATUS_WINDOW_ITEM_V_MARGIN);
-  else if (F->get_angle_mode() == ANGLE_RAD)
-    dc.DrawBitmap(angle_rad, horoffset_angle, SIZER_STATUS_WINDOW_ITEM_V_MARGIN);
-  wxBitmap *u;
-  switch (ui_dsl.get_base()) {
-    case 2:
-      u = &unit_bin;
-      break;
-    case 8:
-      u = &unit_oct;
-      break;
-    case 10:
-      u = &unit_dec;
-      break;
-    case 16:
-      u = &unit_hex;
-      break;
-    default:
-      throw(CalcFatal(__FILE__, __LINE__, "StatusWindow::OnPaint(): ui_dsl.get_base() returned an unknown value"));
-  }
-  dc.DrawBitmap(*u, horoffset_unit, SIZER_STATUS_WINDOW_ITEM_V_MARGIN);
 }
 
 
@@ -428,6 +323,7 @@ public:
   void OnMenu(wxCommandEvent&);
   void OnChar(wxKeyEvent&);
   void OnDblClick(wxMouseEvent&);
+  void OnMouseWheel(wxMouseEvent&);
   void resize_frame_to_initial();
   int get_nb_menu_buttons();
   void notify_ui_change();
@@ -437,9 +333,121 @@ public:
   DECLARE_EVENT_TABLE()
 };
 
+
+//
+// STATUSWINDOW
+//
+
+class StatusWindow: public wxScrolledWindow {
+  MyFrame *my_parent;
+  int horoffset_exec;
+  wxBitmap exec_norun;
+  wxBitmap exec_run;
+  int horoffset_arrow;
+  wxBitmap shiftsel;
+  wxBitmap shiftuns;
+  int horoffset_angle;
+  wxBitmap angle_deg;
+  wxBitmap angle_rad;
+  int horoffset_unit;
+  wxBitmap unit_bin;
+  wxBitmap unit_oct;
+  wxBitmap unit_dec;
+  wxBitmap unit_hex;
+  wxColour bg_color;
+public:
+  StatusWindow(MyFrame*, wxWindowID, const wxPoint&, const wxSize&, const wxColour&,
+      const wxBitmap&, const wxBitmap&, const wxBitmap&, const wxBitmap&,
+      const wxBitmap&, const wxBitmap&, const wxBitmap&, const wxBitmap&,
+      const wxBitmap&, const wxBitmap&);
+  void OnPaint(wxPaintEvent&);
+  void OnDblClick(wxMouseEvent&);
+  void OnMouseWheel(wxMouseEvent&);
+
+  DECLARE_EVENT_TABLE()
+};
+
+BEGIN_EVENT_TABLE(StatusWindow, wxScrolledWindow)
+  EVT_PAINT(StatusWindow::OnPaint)
+  EVT_LEFT_DCLICK(StatusWindow::OnDblClick)
+  EVT_MOUSEWHEEL(StatusWindow::OnMouseWheel)
+END_EVENT_TABLE()
+
+StatusWindow::StatusWindow(MyFrame *parent, wxWindowID id, const wxPoint &pos, const wxSize &size, const wxColour& bgc,
+      const wxBitmap& a_exec_norun, const wxBitmap& a_exec_run,
+      const wxBitmap& a_shiftsel, const wxBitmap& a_shiftuns,
+      const wxBitmap& a_angle_deg, const wxBitmap& a_angle_rad,
+      const wxBitmap& a_unit_bin, const wxBitmap& a_unit_oct,
+      const wxBitmap& a_unit_dec, const wxBitmap& a_unit_hex)
+    : wxScrolledWindow(dynamic_cast<wxWindow*>(parent), id, pos, size, SIZER_STATUS_BORDER_STYLE),
+    my_parent(parent),
+    horoffset_exec(0),
+    exec_norun(a_exec_norun), exec_run(a_exec_run),
+    horoffset_arrow(0),
+    shiftsel(a_shiftsel), shiftuns(a_shiftuns),
+    horoffset_angle(0),
+    angle_deg(a_angle_deg), angle_rad(a_angle_rad),
+    horoffset_unit(0),
+    unit_bin(a_unit_bin), unit_oct(a_unit_oct), unit_dec(a_unit_dec), unit_hex(a_unit_hex), bg_color(bgc) {
+  SetBackgroundColour(bgc);
+  int w = exec_run.GetWidth();
+  int w2 = shiftsel.GetWidth();
+  int h = shiftsel.GetHeight();
+  int w3 = angle_deg.GetWidth();
+  int w4 = unit_bin.GetWidth();
+  horoffset_exec = SIZER_STATUS_WINDOW_ITEM_H_MARGIN;
+  horoffset_arrow = w + 2 * SIZER_STATUS_WINDOW_ITEM_H_MARGIN;
+  horoffset_angle = w + w2 + 3 * SIZER_STATUS_WINDOW_ITEM_H_MARGIN;
+  horoffset_unit = w + w2 + w3 + 4 * SIZER_STATUS_WINDOW_ITEM_H_MARGIN;
+  SetSize(wxSize(horoffset_unit + w4, h + 2 * SIZER_STATUS_WINDOW_ITEM_V_MARGIN));
+}
+
+void StatusWindow::OnPaint(wxPaintEvent&) {
+  wxPaintDC dc(this);
+  PrepareDC(dc);
+
+  dc.SetBackgroundMode(wxSOLID);
+  SetBackgroundColour(bg_color);
+
+  if (ui_is_a_program_halted())
+    dc.DrawBitmap(exec_run, horoffset_exec, SIZER_STATUS_WINDOW_ITEM_V_MARGIN);
+  else
+    dc.DrawBitmap(exec_norun, horoffset_exec, SIZER_STATUS_WINDOW_ITEM_V_MARGIN);
+  if (ui_dsl.get_status_shift())
+    dc.DrawBitmap(shiftsel, horoffset_arrow, SIZER_STATUS_WINDOW_ITEM_V_MARGIN);
+  else
+    dc.DrawBitmap(shiftuns, horoffset_arrow, SIZER_STATUS_WINDOW_ITEM_V_MARGIN);
+  if (F->get_angle_mode() == ANGLE_DEG)
+    dc.DrawBitmap(angle_deg, horoffset_angle, SIZER_STATUS_WINDOW_ITEM_V_MARGIN);
+  else if (F->get_angle_mode() == ANGLE_RAD)
+    dc.DrawBitmap(angle_rad, horoffset_angle, SIZER_STATUS_WINDOW_ITEM_V_MARGIN);
+  wxBitmap *u;
+  switch (ui_dsl.get_base()) {
+    case 2:
+      u = &unit_bin;
+      break;
+    case 8:
+      u = &unit_oct;
+      break;
+    case 10:
+      u = &unit_dec;
+      break;
+    case 16:
+      u = &unit_hex;
+      break;
+    default:
+      throw(CalcFatal(__FILE__, __LINE__, "StatusWindow::OnPaint(): ui_dsl.get_base() returned an unknown value"));
+  }
+  dc.DrawBitmap(*u, horoffset_unit, SIZER_STATUS_WINDOW_ITEM_V_MARGIN);
+}
+
 void StatusWindow::OnDblClick(wxMouseEvent& ev) {
   dynamic_cast<MyFrame *>(GetParent())->resize_frame_to_initial();
   ev.Skip();
+}
+
+void StatusWindow::OnMouseWheel(wxMouseEvent& ev) {
+  my_parent->OnMouseWheel(ev);
 }
 
 void MyFrame::OnDblClick(wxMouseEvent& ev) {
@@ -652,6 +660,7 @@ static void build_menu_bar(const MenuDescription* const md, const int& nb, wxMen
 BEGIN_EVENT_TABLE(MyFrame, wxFrame)
   EVT_PAINT(MyFrame::OnPaint)
   EVT_SIZE(MyFrame::OnSize)
+  EVT_MOUSEWHEEL(MyFrame::OnMouseWheel)
 END_EVENT_TABLE()
 
 IMPLEMENT_APP(MyApp)
@@ -752,12 +761,12 @@ static int get_menu_button_number(const char *cmd) {
 }
 
 MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
-  const MenuDescription*& md, int& nb_md, const BtnDescription*& bd, int& nb_bd, const int& ui_code)
+  const MenuDescription*& md, int& nb_md, const BtnDescription*& bd, int& nb_bd, const int& u)
     : wxFrame(NULL, -1, title, pos, size,
-        gui_type(ui_code) == GUI_SIZER ?  wxDEFAULT_FRAME_STYLE :
+        gui_type(u) == GUI_SIZER ?  wxDEFAULT_FRAME_STYLE :
                         (wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxSYSTEM_MENU | wxCAPTION | wxCLOSE_BOX)),
         menus_descriptions(md), nb_menus_descriptions(nb_md), btn_descriptions(bd), nb_btn_descriptions(nb_bd),
-        gui(gui_type(ui_code)), xy_set(false), my_x0(-1), my_w0(-1), my_h0(-1), my_y0(-1), my_y1(-1),
+        gui(gui_type(u)), xy_set(false), my_x0(-1), my_w0(-1), my_h0(-1), my_y0(-1), my_y1(-1),
         my_char_width(-1), my_initial_stack_lines(-1), my_initial_stack_width(-1),
         my_initial_client_width(-1), my_initial_client_height(-1),
         my_min_client_width(-1), my_min_client_height(-1),
@@ -768,15 +777,17 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
 
   bool has_menu_bar;
 
+  int ui_code = -1;
+
   if (gui == GUI_SIZER) {
     skin = NULL;
     has_menu_bar = ui_has_menu_bar();
   } else {
-    int u = ui_code - 1;
-    if (u >= sizeof(skins) / sizeof(*skins)) {
-      u > sizeof(skins) / sizeof(*skins) - 1;
-    }
-    skin = skins[u];
+    ui_code = u;
+    if (ui_code > sizeof(skins) / sizeof(*skins))
+      ui_code = sizeof(skins) / sizeof(*skins);
+    debug_write_v("u = %i, ui_code = %i", u, ui_code);
+    skin = skins[ui_code - 1];
     debug_write_v("Loadging bitmap images...");
     skin->load_bitmaps();
     debug_write_v("Finished loadging bitmap images...");
@@ -799,7 +810,7 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
     for (int i = 0; i < nb_menus_descriptions; i++) {
       Connect(ID_START_MENUS + i, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(MyFrame::OnMenu));
     }
-    for (int i = 0; i <= MAX_UI_CODE; i++) {
+    for (int i = 0; i <= sizeof(skins) / sizeof(*skins); i++) {
       Connect(ID_START_INTERFACE_CHOICE_MENUS + i, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(MyFrame::OnMenu));
     }
     SetMenuBar(menuBar);
@@ -935,10 +946,10 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
     for (int i = 0; i < skin->nb_btns; i++) {
       my_id = ID_START_BUTTONS_SKIN + i;
       bs = &(skin->btns[i]);
-      b = build_bitmap_button(this, static_cast<wxWindowID>(my_id), *(bs->released), wxPoint(bs->rec.x, bs->rec.y),
-            wxSize(bs->rec.w, bs->rec.h), *(bs->pressed), bs->text, skin->y_released + bs->y_shift, skin->y_pressed + bs->y_shift,
+      b = build_bitmap_button(this, static_cast<wxWindowID>(my_id), *(bs->released),
+            wxPoint(bs->rec.x + skin->btn_shift_x, bs->rec.y + skin->btn_shift_y), wxSize(bs->rec.w, bs->rec.h),
+            *(bs->pressed), bs->text, skin->y_released + bs->y_shift, skin->y_pressed + bs->y_shift,
             skin->btns_fonts[bs->font_index], bs->main_cmd, bs->alt_cmd);
-
       int mbn = get_menu_button_number(bs->main_cmd);
       if (mbn >= 1) {
         skin_menu_buttons.push_back(b);
@@ -1186,6 +1197,18 @@ void MyFrame::OnChar(wxKeyEvent& event) {
     case WXK_DOWN:
       uik = UIK_DOWN;
       break;
+    case WXK_PAGEUP:
+      uik = UIK_PAGEUP;
+      break;
+    case WXK_PAGEDOWN:
+      uik = UIK_PAGEDOWN;
+      break;
+    case WXK_HOME:
+      uik = UIK_HOME;
+      break;
+    case WXK_END:
+      uik = UIK_END;
+      break;
     case WXK_RETURN:
     case '\n':
       if ((gm & (wxMOD_ALT | wxMOD_CONTROL)) != 0 || wxk == '\n') {
@@ -1265,7 +1288,7 @@ void MyFrame::OnPaint(wxPaintEvent& ev) {
 
     dc.DrawBitmap(*(skin->frame_bg_image), 0, 0);
     for (int i = 0; i < skin->nb_btns; i++) {
-      dc.DrawBitmap(*(skin->btns[i].released), skin->btns[i].rec.x, skin->btns[i].rec.y);
+      dc.DrawBitmap(*(skin->btns[i].released), skin->btns[i].rec.x + skin->btn_shift_x, skin->btns[i].rec.y + skin->btn_shift_y);
     }
   }
 
@@ -1298,6 +1321,24 @@ void MyFrame::OnSize(wxSizeEvent& ev) {
     debug_write_v("ui_dsl.redefine_geometry(): target_stack_lines = %i, target_stack_width = %i", target_stack_lines, target_stack_width);
     ui_dsl.redefine_geometry(target_stack_lines, target_stack_width, false);
   }
+  ev.Skip();
+}
+
+void MyFrame::OnMouseWheel(wxMouseEvent& ev) {
+  int taille_pas = ev.m_wheelDelta;
+    // Avoid division by zero... :-)
+  if (taille_pas == 0)
+    taille_pas = DEFAULT_WHEELDELTA_UNIT;
+  int mesure_pas = ev.GetWheelRotation();
+  int nb_pas = mesure_pas / taille_pas;
+  if (nb_pas < -MAX_WHEEL_STEPS_IN_1_EVENT)
+    nb_pas = -MAX_WHEEL_STEPS_IN_1_EVENT;
+  if (nb_pas > MAX_WHEEL_STEPS_IN_1_EVENT)
+    nb_pas = MAX_WHEEL_STEPS_IN_1_EVENT;
+  debug_write_v("MyFrame::OnMouseWheel(): function called, ::m_wheelDelta = %i"
+      ", GetWheelDelta() = %i, GetWheelRotation() = %i, nb_pas = %i",
+      ev.m_wheelDelta, ev.GetWheelDelta(), ev.GetWheelRotation(), nb_pas);
+  ui_notify_key_pressed(UIK_WHEEL, nb_pas);
   ev.Skip();
 }
 

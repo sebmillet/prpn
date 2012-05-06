@@ -2,7 +2,7 @@ REM prep.cmd
 REM Prepare Windows installation
 REM Highly depends on particular environment of the developer...
 
-set VERSION=0.5.4
+set VERSION=0.5.5
 set SCP_EXE=C:\WINDOWS\pscp.exe
 set PACKAGE_LOC=sebastien@maison-nblin://home/sebastien/travail/cpp/seb/prpn/prpn-%VERSION%.tar.gz
 

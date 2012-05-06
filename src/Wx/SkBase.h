@@ -103,6 +103,8 @@ struct skin_t {
   font_t f_typein;
   int y_released;
   int y_pressed;
+  int btn_shift_x;
+  int btn_shift_y;
   skin_btn_t *btns;
   int nb_btns;
   int menu_buttons_max_nb_chars;

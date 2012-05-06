@@ -1,5 +1,5 @@
 Name:           prpn
-Version:        0.5.4
+Version:        0.5.5
 Release:        1
 Summary:        A Reverse Polish Notation calculator
 Group:          Applications/Engineering
@@ -47,6 +47,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog COPYING INSTALL NEWS README
 
 %changelog
+
+* Tue May  1 2012 Sébastien Millet <sebastien.millet1@club-internet.fr>
+- Update spec for prpn-0.5.5
 * Sat Apr 21 2012 Sébastien Millet <sebastien.millet1@club-internet.fr>
 - Update spec for prpn-0.5.4
 * Sun Apr 15 2012 Sébastien Millet <sebastien.millet1@club-internet.fr>

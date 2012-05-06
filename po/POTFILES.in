@@ -27,5 +27,6 @@ src/Wx/SkBase.cpp
 src/Wx/SkBase.h
 src/Wx/SkHp28s.cpp
 src/Wx/SkHp28s2.cpp
+src/Wx/SkHp28s3.cpp
 src/Wx/UiImplWx.cpp
 src/Wx/SkBase.cpp

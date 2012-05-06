@@ -1,10 +1,11 @@
-// Wx/SkHp28s.cpp
-// wxWidgets UI implementation HP28-S skin
+// Wx/SkHp28s3.cpp
+// wxWidgets UI implementation HP28-S skin, tiny version with a regular
+// button layer.
 
 // RPN calculator
 
 // Sébastien Millet
-// March, April 2012
+// March, May 2012
 
 #include "Ui.h"
 #include <wx/wx.h>
@@ -37,8 +38,8 @@
 #include "xpm/white-div-unsel.xpm"
 #include "xpm/white-div-sel.xpm"
 
-extern const unsigned char hp28sbg[];
-extern const unsigned long nb_items_hp28sbg;
+extern const unsigned char hp28sbg3[];
+extern const unsigned long nb_items_hp28sbg3;
 
 #define HP28S_GRAY  (wxColour(0xC8, 0xDA, 0xD0))
 //#define HP28S_GRAY  (wxColour(0xFF, 0x00, 0xFF))
@@ -46,7 +47,7 @@ extern const unsigned long nb_items_hp28sbg;
 //
 // Fonts used in the buttons
 //
-static const font_t skin_btn_hp28s_fonts[] = {
+static const font_t skin_btn_hp28s_fonts3[] = {
   {8, wxFONTFAMILY_SWISS,   wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD,     *wxWHITE, false},   // 0
   {9, wxFONTFAMILY_SWISS,   wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD,     *wxBLACK, false},   // 1
   {6, wxFONTFAMILY_SWISS,   wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD,     *wxWHITE, false},   // 2
@@ -65,7 +66,7 @@ static const font_t skin_btn_hp28s_fonts[] = {
 //
 // Button layer
 //
-static skin_btn_t skin_btn_hp28s[] = {
+static skin_btn_t skin_btn_hp28s3[] = {
     // 1st row
   {{32,  236, 35, 29}, white_small_unsel_xpm, white_small_sel_xpm, "", "_MENU1", "_MENU1", 5, 0, NULL, NULL},
   {{76,  236, 35, 29}, white_small_unsel_xpm, white_small_sel_xpm, "", "_MENU2", "_MENU2", 5, 0, NULL, NULL},
@@ -121,34 +122,35 @@ static skin_btn_t skin_btn_hp28s[] = {
 //
 // The skin
 //
-struct skin_t skin_hp28s = {
+struct skin_t skin_hp28s3 = {
 
     // Frame
-  _N("HP 28S (regular, 23x4)"),
-  _N("Use a fixed-size skin inspired of the HP 28S scientific calculator, size: 23 (width) x 4 (lines)"),
+  _N("HP 28S (tiny characters, regular buttons, 37x8)"),
+  _N("Use a fixed-size skin inspired of the HP 28S scientific calculator, size: 37 (width) x 8 (lines), regular buttons"),
   MB_ENFORCE_MENU,
 
 #ifdef PROG_UNIXLIKE
-  316,
-  555,
+//  316,
+  337,
+  550,
 #endif
 #ifdef PROG_WINDOWS
-  320,
-  584,
+  341,
+  579,
 #endif
   NULL,
-  hp28sbg, nb_items_hp28sbg, wxBITMAP_TYPE_PNG,
+  hp28sbg3, nb_items_hp28sbg3, wxBITMAP_TYPE_PNG,
 
     // Stack area
-  4,
-  23,
+  8,
+  37,
 
     // path
-  {29, 58, 253, 16},
-  HP28S_GRAY, {10, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, *wxBLACK, false},
+  {19, 41, 253, 12},
+  HP28S_GRAY, {8, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, *wxBLACK, false},
 
     // status
-  {29, 38, 253, 20},
+  {19, 21, 253, 20},
   HP28S_GRAY, (*wxBLACK),
     // Status window bitmaps
   exec_norun_s1_xpm, exec_run_s1_xpm,
@@ -158,24 +160,24 @@ struct skin_t skin_hp28s = {
   NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
 
     // stack
-  {29, 74, 253, 22},
-  22,       // Stack step (= height of each element)
+  {19, 53, 300, 16},
+  16,       // Stack step (= height of each element)
   HP28S_GRAY, (*wxBLACK), // Bg/fg color in normal mode
   (*wxBLACK), HP28S_GRAY, // Bg/fg color in inverted mode
-  {14, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, *wxBLACK, false},
+  {10, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, *wxBLACK, false},
 
     // typein
-  {-1, -1, -1, 22},
+  {-1, -1, -1, 17},
   HP28S_GRAY,
-  {14, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, *wxBLACK, false},
+  {10, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, *wxBLACK, false},
 
     // Buttons
   4, 5,
-  0, 0,
-  skin_btn_hp28s,
-  sizeof(skin_btn_hp28s) / sizeof(*skin_btn_hp28s),
+  10, -5,
+  skin_btn_hp28s3,
+  sizeof(skin_btn_hp28s3) / sizeof(*skin_btn_hp28s3),
   5,
-  skin_btn_hp28s_fonts,
-  sizeof(skin_btn_hp28s_fonts) / sizeof(skin_btn_hp28s_fonts)
+  skin_btn_hp28s_fonts3,
+  sizeof(skin_btn_hp28s_fonts3) / sizeof(skin_btn_hp28s_fonts3)
 };
 

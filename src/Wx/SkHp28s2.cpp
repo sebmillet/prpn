@@ -99,8 +99,8 @@ static skin_btn_t skin_btn_hp28s2[] = {
 struct skin_t skin_hp28s2 = {
 
     // Frame
-  _N("HP 28S (tiny characters, 37x8)"),
-  _N("Use a fixed-size skin inspired of the HP 28S scientific calculator, size: 37 (width) x 8 (lines)"),
+  _N("HP 28S (tiny characters, fewer buttons, 37x8)"),
+  _N("Use a fixed-size skin inspired of the HP 28S scientific calculator, size: 37 (width) x 8 (lines), few buttons"),
   MB_ENFORCE_MENU,
 
 #ifdef PROG_UNIXLIKE
@@ -147,6 +147,7 @@ struct skin_t skin_hp28s2 = {
 
     // Buttons
   4, 5,
+  0, 0,
   skin_btn_hp28s2,
   sizeof(skin_btn_hp28s2) / sizeof(*skin_btn_hp28s2),
   5,

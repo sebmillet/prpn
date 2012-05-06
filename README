@@ -73,6 +73,10 @@ Below is found information specific to this package.
 
 - Windows compilation
 
+    Use the script gen-win-makefiles.cmd to rebuild makefile.{bc,gcc,vc}
+    files depending on where Gnuwin32 libintl files (includes & libs) are.
+    Rebuilding is done by bakefile, see below.
+
     1) Borland C++
         At first prpn program used to be compiled using Borland C++ 5.5. It
         worked well until the program becomes bigger and caused a known bug in
@@ -131,7 +135,7 @@ Below is found information specific to this package.
     4) Makefiles generation
         As Windows doesn't provide the usual configure/make/make install
         mechanism (provided you are not using an environment like cygwin), the
-        solution used is WxWidgets default, bakefile. You can find it from
+        solution used is wxWidgets default, bakefile. You can find it from
             http://www.bakefile.org
 
     5) Note about the console version
@@ -155,23 +159,4 @@ Below is found information specific to this package.
             executable, even under Linux, compiled with no link at all to the
             WxWidgets library. Or, if I can manage to hack WxWidgets in order
             not to initialize Gtk, it'll be even cleaner.
-
-- Known builds done so far
-
-    Ubuntu 9.10 / gcc 4.3.3, 32 bits, WxWidgets 2.8.10
-
-    Ubuntu 10.4 beta / gcc 4.4.3, 64 bits, WxWidgets 2.8.10
-
-    Windows XP SP3 / mingw32-gcc 3.4.5 (mingw-vista special r3), 32 bits,
-    WxWidgets 2.8.10
-        WxWidgets and prpn compiled with BUILD=release WX_DEBUG=0
-        Used to package the binary included in Windows installer
-
-    Windows XP SP3 / bcc55 5.5.1 (Borland C++), 32 bits, WxWidgets 2.8.10
-        WxWidgets and prpn compiled with BUILD=release WX_DEBUG=0
-        * Borland doesn't work with NLS (gettext, setlocale(), ...) *
-
-    Windows XP SP3 / Microsoft Visual C++ 2010 Express (16.00.303019.01 for
-    80x86)
-        WxWidgets and prpn compiled with BUILD=release WX_DEBUG=0
 

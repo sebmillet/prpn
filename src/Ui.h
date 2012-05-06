@@ -48,7 +48,8 @@ extern bool html_help_found;
 enum {REFRESH_PATH_PRE, REFRESH_PATH_POST};
 
   // Standard known key codes
-enum {UIK_ANY = -30000, UIK_RETURN, UIK_NEWLINE, UIK_ESCAPE, UIK_UP, UIK_DOWN};
+enum {UIK_ANY = -30000, UIK_RETURN, UIK_NEWLINE, UIK_ESCAPE, UIK_UP, UIK_DOWN, UIK_WHEEL,
+        UIK_PAGEUP, UIK_PAGEDOWN, UIK_HOME, UIK_END};
 
 
 //
@@ -160,7 +161,7 @@ void ui_refresh_display(const int& = -1);
 void ui_flush_input(const std::string&, const std::string&);
 const std::string ui_get_ts_display_line(const DisplayStackLayout&, const int&, int&, int&, int&);
 
-bool ui_notify_key_pressed(const int&);
+bool ui_notify_key_pressed(const int&, const int& nb_pas = 0);
 void ui_reset_is_displaying_error();
 
 void ui_notify_button_pressed(const char *);

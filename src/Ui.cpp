@@ -1503,7 +1503,7 @@ void ui_notify_button_pressed(const char *c) {
     ui_refresh_display();
 }
 
-bool ui_notify_key_pressed(const int& k) {
+bool ui_notify_key_pressed(const int& k, const int& nb_pas) {
   bool event_stop = false;
 
   //debug_write_i("A1: ui_notify_key_pressed(): k = %i", static_cast<int>(k));
@@ -1511,12 +1511,34 @@ bool ui_notify_key_pressed(const int& k) {
   ui_clear_message_flag();
   work_out_typein_status();
   int delta = 0;
-  if (typein_status == TYPEIN_EMPTY && (k == UIK_UP || k == UIK_DOWN)) {
-    if (k == UIK_UP && ui_shift.actual > ui_shift.min) {
+  if (typein_status == TYPEIN_EMPTY &&
+      (k == UIK_UP || k == UIK_DOWN || k == UIK_WHEEL || k == UIK_PAGEUP || k == UIK_PAGEDOWN ||
+       k == UIK_HOME || k == UIK_END)) {
+    if (k == UIK_UP) {
       delta = -1;
-    } else if (k == UIK_DOWN && ui_shift.actual < ui_shift.max) {
+    } else if (k == UIK_DOWN) {
       delta = 1;
+    } else if (k == UIK_WHEEL) {
+      delta = -nb_pas;
+    } else if (k == UIK_PAGEUP) {
+      delta = -ui_dsl.get_max_stack() + 1;
+      if (delta >= 0)
+        delta = -1;
+    } else if (k == UIK_PAGEDOWN) {
+      delta = ui_dsl.get_max_stack() - 1;
+      if (delta <= 0)
+        delta = 1;
+    } else if (k == UIK_HOME) {
+      delta =  ui_shift.min - ui_shift.actual;
+    } else if (k == UIK_END) {
+      delta =  ui_shift.max - ui_shift.actual;
     }
+    int target = ui_shift.actual + delta;
+    if (target < ui_shift.min)
+      target = ui_shift.min;
+    if (target > ui_shift.max)
+      target = ui_shift.max;
+    delta = target - ui_shift.actual;
     event_stop = true;
   }
   ui_reset_is_displaying_error();
