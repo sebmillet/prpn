@@ -106,7 +106,7 @@ struct skin_t skin_hp28s2 = {
 #endif
 #ifdef PROG_WINDOWS
   341,
-  379,
+  403,
 #endif
   NULL,
   hp28sbg2, nb_items_hp28sbg2, wxBITMAP_TYPE_PNG,
