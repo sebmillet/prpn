@@ -42,8 +42,7 @@
 		<echo>* WxWidgets must be compiled with the following options *</echo>
 		<echo>*   BUILD=release WX_DEBUG=0                            *</echo>
 		<echo>* ***************************************************** *</echo>
-		<if cond="COMPILER!='bcc'"><set var ="MY_NLS">$(WITH_NLS)</set></if>
-		<if cond="COMPILER=='bcc'"><set var ="MY_NLS">0</set></if>
+		<set var ="MY_NLS">$(WITH_NLS)</set>
 		<define>ENABLE_NLS=$(MY_NLS)</define>
 		<if cond="COMPILER=='bcc'">
 			<echo>WX => bcc in use => will remove a few Borland C++ warnings</echo>

@@ -19,14 +19,11 @@
 		<values-description>Release,Debug</values-description>
 		<default-value>0</default-value>
 	</option>
-
 	<set var="DEBUG_FLAG">on</set>
 	<set var="OPTIMIZE_FLAG">off</set>
-
 	<exe id="prpn" template="wx">
 		<app-type>gui</app-type>
-		<if cond="COMPILER!='bcc'"><set var ="MY_NLS">$(WITH_NLS)</set></if>
-		<if cond="COMPILER=='bcc'"><set var ="MY_NLS">0</set></if>
+		<set var ="MY_NLS">$(WITH_NLS)</set>
 		<define>ENABLE_NLS=$(MY_NLS)</define>
 		<if cond="COMPILER=='bcc'">
 			<echo>WX => bcc in use => will remove a few Borland C++ warnings</echo>
@@ -39,13 +36,15 @@
 		<headers>Common.h Scalar.h Stack.h Commands.h Variable.h Parser.h PGetOpt.h Ui.h
 			MyString.h
 			platform/os_generic.h platform/os_win.h platform/os_unix.h
-			gettext.h MyIntl.h Wxskin.h png/hp28s_unix.h png/hp28s_win.h
+			gettext.h MyIntl.h Wx/SkBase.h
 		</headers>
 		<sources>Main.cpp Compat.cpp PGetOpt.cpp Scalar.cpp Stack.cpp Variable.cpp Parser.cpp Ui.cpp
 			MyString.cpp
 			platform/os_generic.cpp
 			UiImplConsole.cpp
-			UiImplWx.cpp Wxskin.cpp
+			Wx/SkBase.cpp Wx/UiImplWx.cpp
+			Wx/SkHp28s.cpp Wx/SkHp28s2.cpp Wx/SkHp28s3.cpp
+			Wx/hp28sbg.cpp Wx/hp28sbg2.cpp wx/hp28sbg3.cpp
 		</sources>
 		<warnings>max</warnings>
 		<debug-info>$(DEBUG_FLAG)</debug-info>

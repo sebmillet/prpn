@@ -33,8 +33,8 @@
 #include "xpm/enter-unsel.xpm"
 #include "xpm/enter-sel.xpm"
 
-extern const unsigned char hp28sbg2[];
-extern const unsigned long nb_items_hp28sbg2;
+extern unsigned char hp28sbg2[];
+extern unsigned long nb_items_hp28sbg2;
 
 #define HP28S_GRAY  (wxColour(0xC8, 0xDA, 0xD0))
 //#define HP28S_GRAY  (wxColour(0xFF, 0x00, 0xFF))

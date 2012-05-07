@@ -38,8 +38,8 @@
 #include "xpm/white-div-unsel.xpm"
 #include "xpm/white-div-sel.xpm"
 
-extern const unsigned char hp28sbg3[];
-extern const unsigned long nb_items_hp28sbg3;
+extern unsigned char hp28sbg3[];
+extern unsigned long nb_items_hp28sbg3;
 
 #define HP28S_GRAY  (wxColour(0xC8, 0xDA, 0xD0))
 //#define HP28S_GRAY  (wxColour(0xFF, 0x00, 0xFF))

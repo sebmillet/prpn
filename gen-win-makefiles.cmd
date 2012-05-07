@@ -15,15 +15,12 @@
 @pause
 
 @set MYBKL=prpn.bkl
-bakefile -f borland %MYBKL% -I %WXWIN%\build\bakefiles\wxpresets -DMYINCLUDE=%DIR_INCLUDE_LIBINTL% -DMYLIB=%DIR_LIB_LIBINTL%
 bakefile -f msvc %MYBKL% -I %WXWIN%\build\bakefiles\wxpresets -DMYINCLUDE=%DIR_INCLUDE_LIBINTL% -DMYLIB=%DIR_LIB_LIBINTL%
 bakefile -f mingw %MYBKL% -I %WXWIN%\build\bakefiles\wxpresets -DMYINCLUDE=%DIR_INCLUDE_LIBINTL% -DMYLIB=%DIR_LIB_LIBINTL%
 
 cd src
 
 @set MYBKL=dev.bkl
-bakefile -f borland %MYBKL% -I %WXWIN%\build\bakefiles\wxpresets -DMYINCLUDE=%DIR_INCLUDE_LIBINTL% -DMYLIB=%DIR_LIB_LIBINTL%
-bakefile -f msvc %MYBKL% -I %WXWIN%\build\bakefiles\wxpresets -DMYINCLUDE=%DIR_INCLUDE_LIBINTL% -DMYLIB=%DIR_LIB_LIBINTL%
 bakefile -f mingw %MYBKL% -I %WXWIN%\build\bakefiles\wxpresets -DMYINCLUDE=%DIR_INCLUDE_LIBINTL% -DMYLIB=%DIR_LIB_LIBINTL%
 
 cd ..

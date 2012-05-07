@@ -15,7 +15,7 @@ Contents:
 
 I.    WHAT IS PRPN?
 
-It is an RPN calculator based on WxWidgets for the GUI, that provides the
+It is an RPN calculator based on wxWidgets for the GUI, that provides the
 following objects: Reals, Complex, Vectors, Matrices, Binaries, Lists,
 Expressions, Strings and Programs.
 Expressions are minimalistic right now, they are not usable as such. On the
@@ -28,9 +28,9 @@ note in section IV about Windows version.)
 II.   WHY PRPN?
 
 I like to use my genuine HP-28S, and I didn't find any program close to the
-power it brings with a similar simple interface. I managed to program it. Big
-deal! About half the work is done as of August 2010, the big remaining piece to
-program is expressions management.
+power it brings with a similar simple interface. pRPN provides it.
+At the moment the engine manages all HP objects except expressions. The
+graphical interface is complete with different skins applicable.
 
 
 
@@ -53,9 +53,9 @@ Below is found information specific to this package.
     The configure script provides the following options in addition to the
     defaults.
     --disable-gui
-        Compile without WxWidgets GUI => build a console-only executable
+        Compile without wxWidgets GUI => build a console-only executable
     --enable-debug
-        Activate pRPN debug information (has nothing to do with WxWidgets debug
+        Activate pRPN debug information (has nothing to do with wxWidgets debug
         system)
     --disable-nls
         Deactivate internationalization,
@@ -63,100 +63,87 @@ Below is found information specific to this package.
         This option causes documentation to be rebuilt if necessary
 
     Note
-        Bakefile files (.bkl extension) are used for Windows. Under Linux, the
-        standard automake/autoconf couple is used, without any bakefile piece.
-        Bakefile provides a half-a-way solution to get mixed with autotools
-        (bakefilize, that replaces automake but keep using autoconf), that
-        isn't in use here.
-        Using bakefile generated makefiles under Linux is presumed to work
-        fine but has not been tested for a while.
+      Bakefile files (.bkl extension) are used for Windows. Under Linux, the
+      standard automake/autoconf couple is used, without any bakefile piece.
+      Bakefile provides a half-a-way solution to get mixed with autotools
+      (bakefilize, that replaces automake but keep using autoconf), that isn't
+      in use here.
+      Using bakefile generated makefiles under Linux is presumed to work fine
+      but has not been tested for a while.
 
 - Windows compilation
 
-    Use the script gen-win-makefiles.cmd to rebuild makefile.{bc,gcc,vc}
-    files depending on where Gnuwin32 libintl files (includes & libs) are.
-    Rebuilding is done by bakefile, see below.
+    Use the script gen-win-makefiles.cmd to rebuild makefile.gcc (Mingw
+    compiler) and makefile.vc (Microsoft Visual C++) files.
+    The script depends on where Gnuwin32 libintl files (includes & libs) are,
+    and also Wx library.
+    Rebuilding is done by bakefile, see point 3 below.
 
-    1) Borland C++
-        At first prpn program used to be compiled using Borland C++ 5.5. It
-        worked well until the program becomes bigger and caused a known bug in
-        Borland to block compilation. The bug is in the linker and occurs when
-        the target is too big. A workaround to this is to compile WxWidgets
-        library without debug. To be more precise:
-            By default, to compile WxWidgets in Windows using Borland C++ 5.5,
-            you execute the command:
-                cd %WXWIN%\build\msw
-                %BORLAND_BIN%\make -f makefile.bcc
-            To build the library without debug support, you have to execute:
-                cd %WXWIN%\build
-                %BORLAND_BIN%\make -f makefile.bcc BUILD=release WX_DEBUG=0
-            If you forget the <<BUILD=release>> sequence above, WxWidgets
-            compilation will be successful BUT linkage of prpn will produce a
-            cryptic error.
-
-        * IMPORTANT *
-            Borland C++ doesn't work with libintl nor libiconv. Therefore it
-            can't be used any longer to compile the definitive (and packaged)
-            binary.
-
-        Borland C++ 5.5 can be downloaded for free, from
-            http://edn.embarcadero.com/article/20633
-
-    2) Mingw
-        Mingw32 has also been used successfully, however, the resulting
-        executable size is very big. Compilation of pRPN 0.5.0 (released early
-        June) was 30MB wide, whereas BCC55 compilation produced a 3MB wide
-        executable. Removing DEBUG code improves the situation.
-        Remind: to compile pRPN with Mingw, you've got to compile WxWidgets
+    1) Mingw
+        Mingw32 works fine.
+        Remind: to compile pRPN with Mingw, you've got to compile wxWidgets
         with it as well, executing:
-            cd %WXWIN%\build\msw
-            %MINGW32_BIN%\mingw32-make -f makefile.gcc
+          cd %WXWIN%\build\msw
+          %MINGW32_BIN%\mingw32-make -f makefile.gcc
 
         Mingw is used to compile the packaged, final, binary (included in
         Windows installer.) It uses the options BUILD=release WX_DEBUG=0 to
         optimize the code.
 
         Mingw32 is licensed under GPL mostly, its homepage is found here
-            http://www.mingw.org
+          http://www.mingw.org
 
-    3) Microsoft Visual C++ 2010 Express
-        Compiles well. To first compile WxWidgets with msvc, you've got to
+    2) Microsoft Visual C++ 2010 Express
+        Compiles well. To first compile wxWidgets with msvc, you've got to
         open a msvc custom shell window (similar to cmd.exe window but tuned
         to match msvc command-line tools requirements), and execute
-            cd %WXWIN%\build\msw
-            %MINGW32_BIN%\nmake -f makefile.vc
+          cd %WXWIN%\build\msw
+          %MINGW32_BIN%\nmake -f makefile.vc
 
         * IMPORTANT *
-        msvc has been seen NOT run successfully while enabling debugging.
+        msvc does not compile prpn when debug is on.
 
         Microsoft Visual C++ 2010 Express can be downloaded for free, from
-            http://msdn.microsoft.com/fr-fr/express/aa975050.aspx
+          http://msdn.microsoft.com/fr-fr/express/aa975050.aspx
 
-    4) Makefiles generation
+    3) Makefiles generation
         As Windows doesn't provide the usual configure/make/make install
         mechanism (provided you are not using an environment like cygwin), the
         solution used is wxWidgets default, bakefile. You can find it from
-            http://www.bakefile.org
+          http://www.bakefile.org
+        The batch file
+          gen-win-makefiles.cmd
+        automates msvc and mingw makefiles generation. Before running it you
+        have to check where libintl is (headers & libs) and update the batch
+        accordingly, and the same for Wx library.
+
+    4) Note about Borland C++
+        At first prpn used to be compiled using Borland C++ 5.5. It worked
+        well but over time was found to have limitations:
+          - Libintl does not compile with bcc => needed to deactivate it
+          - With debug options activated on Wx library, a bug caused the
+            linker to fail while creating the executable => needed to avoid
+            using debug
+          - Macros don't manage '...' argument (variable number of arguments)
+
+        Now, the program does not compile with bcc any longer.
+
+        Borland C++ 5.5 can be downloaded for free, from
+          http://edn.embarcadero.com/article/20633
 
     5) Note about the console version
-        Under Linux, a single executable is produced, that enables both GUI
-        version (default) and the console version when launched with the -c
-        option in the command line.
-        Under Windows, things are different. By default, WxWidgets disconnects
-        itself from the controlling terminal, making it impossible to interact
-        with the console. Note this point is unclear to me, maybe it is more
-        of a Windows default behavior than WxWidgets... Any way.
-        To workaround this characteristic, Windows build produces two
-        executables, prpn.exe (GUI) and prpnc.exe (console.)
+        Under Windows, by default, wxWidgets disconnects itself from the
+        controlling terminal, making it impossible to interact with the
+        console. Therefore the '-c' option with prpn is useless, you must
+        execute prpnc.
 
-        Last minute update
-            It has been seen that even while providing the -c option under
-            Linux, prpn still initializes Gtk stuff and fails to start if Gtk
-            initialization fails. In particular, executing the following
-                DISPLAY="" prpn -c
-            won't work.
-            Therefore a future version of prpn will likely add a prpnc
-            executable, even under Linux, compiled with no link at all to the
-            WxWidgets library. Or, if I can manage to hack WxWidgets in order
-            not to initialize Gtk, it'll be even cleaner.
+        Under Linux both 'prpn -c' and prpnc work fine, but still, prpnc has
+        an advantage.
+        When providing the -c option under Linux, prpn initializes Gtk any way
+        and fails to start if Gtk initialization fails. In particular,
+        executing the following
+          DISPLAY="" prpn -c
+        won't work.
+        prpnc works fine even if no graphical resource at all is available on
+        the terminal.
 
