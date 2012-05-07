@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: prpn 0.5.0\n"
 "Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
-"POT-Creation-Date: 2012-05-01 16:57+0200\n"
+"POT-Creation-Date: 2012-05-07 08:19+0200\n"
 "PO-Revision-Date: 2012-05-01 16:58+0100\n"
 "Last-Translator: Sébastien Millet <sebastien.millet1@club-internet.fr>\n"
 "Language-Team: French\n"
@@ -139,8 +139,7 @@ msgstr "Base numérique pour les entiers binaires"
 msgid "Level 1 display"
 msgstr "Affichage du premier niveau"
 
-#: src/Stack.cpp:226
-#: src/Stack.cpp:227
+#: src/Stack.cpp:226 src/Stack.cpp:227
 msgid "Reserved"
 msgstr "Réservé"
 
@@ -200,40 +199,39 @@ msgstr "Infinite Result (résultat infini) traité en exception"
 msgid "[TRANSLATE_SPECIAL_AUTHOR]"
 msgstr "Sébastien Millet 2012"
 
-#: src/Ui.cpp:456
+#: src/Ui.cpp:457
 msgid "&File"
 msgstr "&Fichier"
 
-#: src/Ui.cpp:457
+#: src/Ui.cpp:458
 msgid "&Edit"
 msgstr "&Édition"
 
-#: src/Ui.cpp:458
+#: src/Ui.cpp:459
 msgid "&Flags list"
 msgstr "&Liste des indicateurs binaires"
 
-#: src/Ui.cpp:460
+#: src/Ui.cpp:461
 msgid "&Quit"
 msgstr "&Quitter"
 
-#: src/Ui.cpp:462
-#: src/Wx/UiImplWx.cpp:619
+#: src/Ui.cpp:463 src/Wx/UiImplWx.cpp:615
 msgid "__INTERFACE__"
 msgstr "Interface"
 
-#: src/Ui.cpp:464
+#: src/Ui.cpp:465
 msgid "&Commands"
 msgstr "&Commandes"
 
-#: src/Ui.cpp:670
+#: src/Ui.cpp:671
 msgid "&Help"
 msgstr "&Aide"
 
-#: src/Ui.cpp:671
+#: src/Ui.cpp:672
 msgid "&Manual page"
 msgstr "&Page de manuel"
 
-#: src/Ui.cpp:673
+#: src/Ui.cpp:674
 msgid "&About"
 msgstr "À propos"
 
@@ -507,11 +505,13 @@ msgstr "Argument d'un nombre complexe"
 
 #: src/Commands.h:90
 msgid "Rectangular to polar coordinates"
-msgstr "Conversion des coordonnées d'un nombre complexe de rectangulaire à polaire"
+msgstr ""
+"Conversion des coordonnées d'un nombre complexe de rectangulaire à polaire"
 
 #: src/Commands.h:91
 msgid "Polar to rectangular coordinates"
-msgstr "Conversion des coordonnées d'un nombre complexe de polaire à rectangulaire"
+msgstr ""
+"Conversion des coordonnées d'un nombre complexe de polaire à rectangulaire"
 
 #: src/Commands.h:93
 msgid "Is identical"
@@ -843,7 +843,9 @@ msgstr "Lis le fichier et met son contenu dans la pile"
 
 #: src/Commands.h:183
 msgid "Write the second item into the file named by the first item"
-msgstr "Écris le second élément de la pile dans le fichier nommé par le premier élément"
+msgstr ""
+"Écris le second élément de la pile dans le fichier nommé par le premier "
+"élément"
 
 #: src/Commands.h:184
 msgid "Internal: tune real 'standard' display management"
@@ -1002,39 +1004,52 @@ msgid "HP 28S (regular, 23x4)"
 msgstr "HP 28S (standard, 23x4)"
 
 #: src/Wx/SkHp28s.cpp:128
-msgid "Use a fixed-size skin inspired of the HP 28S scientific calculator, size: 23 (width) x 4 (lines)"
-msgstr "Utilise une interface inspirée des calculatrices HP 28S, taille : 23 (largeur) x 4 (lignes)"
+msgid ""
+"Use a fixed-size skin inspired of the HP 28S scientific calculator, size: 23 "
+"(width) x 4 (lines)"
+msgstr ""
+"Utilise une interface inspirée des calculatrices HP 28S, taille : 23 "
+"(largeur) x 4 (lignes)"
 
-#: src/Wx/SkHp28s2.cpp:102
+#: src/Wx/SkHp28s2.cpp:98
 msgid "HP 28S (tiny characters, fewer buttons, 37x8)"
 msgstr "HP 28S (petits caractères, moins de boutons, 37x8)"
 
-#: src/Wx/SkHp28s2.cpp:103
-msgid "Use a fixed-size skin inspired of the HP 28S scientific calculator, size: 37 (width) x 8 (lines), few buttons"
-msgstr "Utilise une interface inspirée des calculatrices HP 28S, taille : 37 (largeur) x 8 (lignes), peu de boutons"
+#: src/Wx/SkHp28s2.cpp:99
+msgid ""
+"Use a fixed-size skin inspired of the HP 28S scientific calculator, size: 37 "
+"(width) x 8 (lines), few buttons"
+msgstr ""
+"Utilise une interface inspirée des calculatrices HP 28S, taille : 37 "
+"(largeur) x 8 (lignes), peu de boutons"
 
 #: src/Wx/SkHp28s3.cpp:128
 msgid "HP 28S (tiny characters, regular buttons, 37x8)"
 msgstr "HP 28S (petits caractères, boutons standards, 37x8)"
 
 #: src/Wx/SkHp28s3.cpp:129
-msgid "Use a fixed-size skin inspired of the HP 28S scientific calculator, size: 37 (width) x 8 (lines), regular buttons"
-msgstr "Utilise une interface inspirée des calculatrices HP 28S, taille : 37 (largeur) x 8 (lignes), boutons standards"
+msgid ""
+"Use a fixed-size skin inspired of the HP 28S scientific calculator, size: 37 "
+"(width) x 8 (lines), regular buttons"
+msgstr ""
+"Utilise une interface inspirée des calculatrices HP 28S, taille : 37 "
+"(largeur) x 8 (lignes), boutons standards"
 
-#: src/Wx/UiImplWx.cpp:64
+#: src/Wx/UiImplWx.cpp:63
 msgid "&Basic (resizable)"
 msgstr "&Basique (peut être redimensionné)"
 
-#: src/Wx/UiImplWx.cpp:65
+#: src/Wx/UiImplWx.cpp:64
 msgid "Use WX 'sizer' mechanism to build the interface, can fit any size"
-msgstr "Utilise le mécanisme \"sizer\" de WX pour construire l'interface, s'adapte à n'importe quelle taille"
+msgstr ""
+"Utilise le mécanisme \"sizer\" de WX pour construire l'interface, s'adapte à "
+"n'importe quelle taille"
 
-#: src/Wx/UiImplWx.cpp:1101
+#: src/Wx/UiImplWx.cpp:1100
 msgid "Help"
 msgstr "Aide"
 
-#: src/Wx/UiImplWx.cpp:1123
-#: src/Wx/UiImplWx.cpp:1136
+#: src/Wx/UiImplWx.cpp:1122 src/Wx/UiImplWx.cpp:1135
 msgid "OK"
 msgstr "OK"
 
