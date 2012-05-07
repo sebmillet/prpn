@@ -6,12 +6,12 @@
 // Sébastien Millet
 // March, April 2012
 
-#include "Ui.h"
+#include "../Ui.h"
 #include <wx/wx.h>
 
-#include "MyIntl.h"
+#include "../MyIntl.h"
 
-#include "platform/os_generic.h"
+#include "../platform/os_generic.h"
 #include "SkBase.h"
 
 #include "xpm/shiftuns_s1.xpm"
@@ -115,7 +115,7 @@ static skin_btn_t skin_btn_hp28s[] = {
   {{81, 481, 45, 29}, white_large_unsel_xpm, white_large_sel_xpm, "0", "0", "CLEAR", 1, 0, NULL, NULL},
   {{134, 481, 45, 29}, white_large_unsel_xpm, white_large_sel_xpm, ".", ".", "3.14159265359", 7, -6, NULL, NULL},
   {{187, 481, 45, 29}, white_large_unsel_xpm, white_large_sel_xpm, ",", ",", "_NOOP", 7, -7, NULL, NULL},
-  {{240, 481, 45, 29}, white_large_unsel_xpm, white_large_sel_xpm, "+", "+", "SQ", 6, -1, NULL, NULL},
+  {{240, 481, 45, 29}, white_large_unsel_xpm, white_large_sel_xpm, "+", "+", "SQ", 6, -1, NULL, NULL}
 };
 
 //

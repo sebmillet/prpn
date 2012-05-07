@@ -6,12 +6,12 @@
 // Sébastien Millet
 // March, April 2012
 
-#include "Ui.h"
+#include "../Ui.h"
 #include <wx/wx.h>
 
-#include "MyIntl.h"
+#include "../MyIntl.h"
 
-#include "platform/os_generic.h"
+#include "../platform/os_generic.h"
 #include "SkBase.h"
 
 #include "xpm/shiftuns_s1.xpm"
@@ -32,10 +32,6 @@
 #include "xpm/red-small-sel.xpm"
 #include "xpm/enter-unsel.xpm"
 #include "xpm/enter-sel.xpm"
-#include "xpm/white-large-unsel.xpm"
-#include "xpm/white-large-sel.xpm"
-#include "xpm/white-div-unsel.xpm"
-#include "xpm/white-div-sel.xpm"
 
 extern const unsigned char hp28sbg2[];
 extern const unsigned long nb_items_hp28sbg2;
@@ -141,7 +137,7 @@ struct skin_t skin_hp28s2 = {
   {10, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, *wxBLACK, false},
 
     // typein
-  {-1, -1, -1, 17},
+  {-1, -1, -1, 16},
   HP28S_GRAY,
   {10, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, *wxBLACK, false},
 

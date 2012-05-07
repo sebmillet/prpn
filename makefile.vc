@@ -80,8 +80,14 @@ PRPN_OBJECTS =  \
 	build\prpn_MyString.obj \
 	build\prpn_os_generic.obj \
 	build\prpn_UiImplConsole.obj \
+	build\prpn_SkBase.obj \
 	build\prpn_UiImplWx.obj \
-	build\prpn_Wxskin.obj
+	build\prpn_SkHp28s.obj \
+	build\prpn_SkHp28s2.obj \
+	build\prpn_SkHp28s3.obj \
+	build\prpn_hp28sbg.obj \
+	build\prpn_hp28sbg2.obj \
+	build\prpn_hp28sbg3.obj
 PRPN_RESOURCES =  \
 	build\prpn_prpn.res
 PRPNC_CXXFLAGS = /MD$(__DEBUG_FLAG_1) /DWIN32 /D_CONSOLE \
@@ -284,11 +290,29 @@ build\prpn_os_generic.obj: src\platform\os_generic.cpp
 build\prpn_UiImplConsole.obj: src\UiImplConsole.cpp
 	$(CXX) /c /nologo /TP /Fo$@ $(PRPN_CXXFLAGS) src\UiImplConsole.cpp
 
-build\prpn_UiImplWx.obj: src\UiImplWx.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(PRPN_CXXFLAGS) src\UiImplWx.cpp
+build\prpn_SkBase.obj: src\Wx\SkBase.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPN_CXXFLAGS) src\Wx\SkBase.cpp
 
-build\prpn_Wxskin.obj: src\Wxskin.cpp
-	$(CXX) /c /nologo /TP /Fo$@ $(PRPN_CXXFLAGS) src\Wxskin.cpp
+build\prpn_UiImplWx.obj: src\Wx\UiImplWx.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPN_CXXFLAGS) src\Wx\UiImplWx.cpp
+
+build\prpn_SkHp28s.obj: src\Wx\SkHp28s.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPN_CXXFLAGS) src\Wx\SkHp28s.cpp
+
+build\prpn_SkHp28s2.obj: src\Wx\SkHp28s2.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPN_CXXFLAGS) src\Wx\SkHp28s2.cpp
+
+build\prpn_SkHp28s3.obj: src\Wx\SkHp28s3.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPN_CXXFLAGS) src\Wx\SkHp28s3.cpp
+
+build\prpn_hp28sbg.obj: src\Wx\hp28sbg.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPN_CXXFLAGS) src\Wx\hp28sbg.cpp
+
+build\prpn_hp28sbg2.obj: src\Wx\hp28sbg2.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPN_CXXFLAGS) src\Wx\hp28sbg2.cpp
+
+build\prpn_hp28sbg3.obj: src\wx\hp28sbg3.cpp
+	$(CXX) /c /nologo /TP /Fo$@ $(PRPN_CXXFLAGS) src\wx\hp28sbg3.cpp
 
 build\prpn_prpn.res: src\prpn.rc
 	rc /fo$@  /d WIN32 $(__WXUNICODE_DEFINE_p_1) $(__WXDEBUG_DEFINE_p_1) /d __WXMSW__ /i $(WX_DIR)$(__WXLIBPATH_FILENAMES)\msw$(WXLIBPOSTFIX) /i $(WX_DIR)\include /d _WINDOWS /d ENABLE_NLS=$(WITH_NLS) $(____DEBUG_FLAG_7_p_1) /d FOREIGN_MAIN /i "C:\Progra~1\GnuWin32\include" src\prpn.rc

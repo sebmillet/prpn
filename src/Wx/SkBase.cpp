@@ -7,11 +7,11 @@
 // Sébastien Millet
 // March, April 2012
 
-#include "Ui.h"
+#include "../Ui.h"
 #include <wx/wx.h>
 #include <wx/mstream.h>
 
-#include "platform/os_generic.h"
+#include "../platform/os_generic.h"
 #include "SkBase.h"
 
 // Uncomment if you wish to test a background image file (found

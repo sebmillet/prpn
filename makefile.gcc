@@ -72,8 +72,14 @@ PRPN_OBJECTS =  \
 	build\prpn_MyString.o \
 	build\prpn_os_generic.o \
 	build\prpn_UiImplConsole.o \
+	build\prpn_SkBase.o \
 	build\prpn_UiImplWx.o \
-	build\prpn_Wxskin.o \
+	build\prpn_SkHp28s.o \
+	build\prpn_SkHp28s2.o \
+	build\prpn_SkHp28s3.o \
+	build\prpn_hp28sbg.o \
+	build\prpn_hp28sbg2.o \
+	build\prpn_hp28sbg3.o \
 	build\prpn_prpn_rc.o
 PRPNC_CXXFLAGS = -DENABLE_NLS=$(WITH_NLS) -W -Wall $(__DEBUG_FLAG) \
 	$(__OPTIMIZE_FLAG) -I"C:\Progra~1\GnuWin32\include" $(CPPFLAGS) $(CXXFLAGS)
@@ -244,10 +250,28 @@ build\prpn_os_generic.o: src/platform/os_generic.cpp
 build\prpn_UiImplConsole.o: src/UiImplConsole.cpp
 	$(CXX) -c -o $@ $(PRPN_CXXFLAGS) $(CPPDEPS) $<
 
-build\prpn_UiImplWx.o: src/UiImplWx.cpp
+build\prpn_SkBase.o: src/Wx/SkBase.cpp
 	$(CXX) -c -o $@ $(PRPN_CXXFLAGS) $(CPPDEPS) $<
 
-build\prpn_Wxskin.o: src/Wxskin.cpp
+build\prpn_UiImplWx.o: src/Wx/UiImplWx.cpp
+	$(CXX) -c -o $@ $(PRPN_CXXFLAGS) $(CPPDEPS) $<
+
+build\prpn_SkHp28s.o: src/Wx/SkHp28s.cpp
+	$(CXX) -c -o $@ $(PRPN_CXXFLAGS) $(CPPDEPS) $<
+
+build\prpn_SkHp28s2.o: src/Wx/SkHp28s2.cpp
+	$(CXX) -c -o $@ $(PRPN_CXXFLAGS) $(CPPDEPS) $<
+
+build\prpn_SkHp28s3.o: src/Wx/SkHp28s3.cpp
+	$(CXX) -c -o $@ $(PRPN_CXXFLAGS) $(CPPDEPS) $<
+
+build\prpn_hp28sbg.o: src/Wx/hp28sbg.cpp
+	$(CXX) -c -o $@ $(PRPN_CXXFLAGS) $(CPPDEPS) $<
+
+build\prpn_hp28sbg2.o: src/Wx/hp28sbg2.cpp
+	$(CXX) -c -o $@ $(PRPN_CXXFLAGS) $(CPPDEPS) $<
+
+build\prpn_hp28sbg3.o: src/wx/hp28sbg3.cpp
 	$(CXX) -c -o $@ $(PRPN_CXXFLAGS) $(CPPDEPS) $<
 
 build\prpn_prpn_rc.o: src/prpn.rc

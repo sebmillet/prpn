@@ -439,6 +439,7 @@ void ui_string_trim(string& s, const size_t& width, const DisplayStackLayout *ds
 void ui_uiset(const int& n) {
   ui_code = n;
   ui_code_sequence++;
+  ui_dsl.redefine_geometry(-1, -1, true);
   if (ui_impl != NULL)
     ui_impl->notify_ui_change();
 }
@@ -1612,7 +1613,12 @@ int DisplayStackLayout::get_width() const { return width; }
 int DisplayStackLayout::get_height() const { return height; }
 int DisplayStackLayout::get_min_stack() const { return min_stack; }
 int DisplayStackLayout::get_max_stack() const { return max_stack; }
+
 void DisplayStackLayout::redefine_geometry(int new_max_stack, int new_width, bool no_callback_to_ui) {
+  if (new_max_stack == -1)
+    new_max_stack = (opt_height == -1 ? default_disp_height : opt_height);
+  if (new_width == -1)
+    new_width = (opt_width == -1 ? default_disp_width : opt_width);
   if (new_max_stack < HARD_GUI_MIN_HEIGHT - 1)
     new_max_stack = HARD_GUI_MIN_HEIGHT - 1;
   if (height != new_max_stack + 1 || max_stack != new_max_stack || new_width != width) {

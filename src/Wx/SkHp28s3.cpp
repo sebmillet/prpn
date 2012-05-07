@@ -7,12 +7,12 @@
 // Sébastien Millet
 // March, May 2012
 
-#include "Ui.h"
+#include "../Ui.h"
 #include <wx/wx.h>
 
-#include "MyIntl.h"
+#include "../MyIntl.h"
 
-#include "platform/os_generic.h"
+#include "../platform/os_generic.h"
 #include "SkBase.h"
 
 #include "xpm/shiftuns_s1.xpm"
@@ -167,7 +167,7 @@ struct skin_t skin_hp28s3 = {
   {10, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, *wxBLACK, false},
 
     // typein
-  {-1, -1, -1, 17},
+  {-1, -1, -1, 16},
   HP28S_GRAY,
   {10, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, *wxBLACK, false},
 

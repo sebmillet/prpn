@@ -6,17 +6,17 @@
 // Sébastien Millet
 // August 2009 - March 2010
 
-#include "Ui.h"
+#include "../Ui.h"
 #include <wx/wx.h>
 
-#include "platform/os_generic.h"
+#include "../platform/os_generic.h"
 
   // To display HTML pages
 #include "wx/wxhtml.h"
 #include "wx/statline.h"
 #include "wx/clipbrd.h"
 
-#include "MyIntl.h"
+#include "../MyIntl.h"
 
 #include <vector>
 
@@ -622,7 +622,7 @@ static void build_menu_bar(const MenuDescription* const md, const int& nb, wxMen
                 const_char_to_wxString(_(MENU_LABEL_SWITCH_UI_SIZER)), const_char_to_wxString(_(MENU_HELP_SWITCH_UI_SIZER)));
             wxmi0->Check(ui_code == 0);
             wxmi0->Enable(ui_code != 0);
-            for (int u = 0; u < sizeof(skins) / sizeof(*skins); u++) {
+            for (int u = 0; static_cast<unsigned int>(u) < sizeof(skins) / sizeof(*skins); u++) {
               wxMenuItem *wxmi1 = menus[actual_menu]->AppendCheckItem(ID_START_INTERFACE_CHOICE_MENUS + u + 1,
                   const_char_to_wxString(_(skins[u]->menu_label)), const_char_to_wxString(_(skins[u]->menu_help)));
               wxmi1->Check(ui_code == u + 1);
@@ -784,7 +784,7 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
     has_menu_bar = ui_has_menu_bar();
   } else {
     ui_code = u;
-    if (ui_code > sizeof(skins) / sizeof(*skins))
+    if (static_cast<unsigned int>(ui_code) > sizeof(skins) / sizeof(*skins))
       ui_code = sizeof(skins) / sizeof(*skins);
     debug_write_v("u = %i, ui_code = %i", u, ui_code);
     skin = skins[ui_code - 1];
@@ -810,7 +810,7 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
     for (int i = 0; i < nb_menus_descriptions; i++) {
       Connect(ID_START_MENUS + i, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(MyFrame::OnMenu));
     }
-    for (int i = 0; i <= sizeof(skins) / sizeof(*skins); i++) {
+    for (int i = 0; static_cast<unsigned int>(i) <= sizeof(skins) / sizeof(*skins); i++) {
       Connect(ID_START_INTERFACE_CHOICE_MENUS + i, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(MyFrame::OnMenu));
     }
     SetMenuBar(menuBar);
@@ -961,6 +961,7 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
   }
 
   textTypein->Connect(ID_TEXTTYPEIN, wxEVT_CHAR, wxKeyEventHandler(MyFrame::OnChar));
+  textTypein->Connect(ID_TEXTTYPEIN, wxEVT_MOUSEWHEEL, wxMouseEventHandler(MyFrame::OnMouseWheel));
 
     // To get a button area of the correct size (that just fits the upper area displaying the stack),
     // we first (STEP 1) add the wxBoxSizers to the topSizer, with only one button inside. Then,

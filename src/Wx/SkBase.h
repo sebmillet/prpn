@@ -10,7 +10,7 @@
 #ifndef WXSKIN_H
 #define WXSKIN_H
 
-#include "Common.h"
+#include "../Common.h"
 
 #include <wx/wx.h>
 
