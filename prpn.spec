@@ -5,7 +5,7 @@ Summary:        A Reverse Polish Notation calculator
 Group:          Applications/Engineering
 License:        GPLv3+
 URL:            http://prpn.origo.ethz.ch
-Source0:        http://sebastien.millet1.perso.sfr.fr/prpn/packages/prpn-0.5.4.tar.gz
+Source0:        http://sebastien.millet1.perso.sfr.fr/prpn/packages/prpn-0.5.5.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  wxGTK-devel >= 2.8, gettext, desktop-file-utils
 Requires:       wxGTK >= 2.8
@@ -48,7 +48,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %changelog
 
-* Tue May  1 2012 Sébastien Millet <sebastien.millet1@club-internet.fr>
+* Tue May  7 2012 Sébastien Millet <sebastien.millet1@club-internet.fr>
 - Update spec for prpn-0.5.5
 * Sat Apr 21 2012 Sébastien Millet <sebastien.millet1@club-internet.fr>
 - Update spec for prpn-0.5.4

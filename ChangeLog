@@ -1,7 +1,8 @@
-2012-05-01 Sébastien Millet <sebastien.millet1@club-internet.fr>
+2012-05-07 Sébastien Millet <sebastien.millet1@club-internet.fr>
 
 	* Release 0.5.5 built
 	* Added a second HP28S-like skin with smaller characters and a bigger screen
+	* Added a third skin similar to the second one but with regular buttons
 	* Implemented wheel management and home/end/page-up/page-down keys, to
 	  scroll in the stack
 

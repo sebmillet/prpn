@@ -1,3 +1,9 @@
+prpn (0.5.5-1) unstable; urgency=low
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- Sébastien Millet <sebastien.millet1@club-internet.fr>  Mon, 07 May 2012 09:58:54 +0200
+
 prpn (0.5.4-1) unstable; urgency=low
 
   * Improves Linux-based interface so that it becomes identical to Windows'
