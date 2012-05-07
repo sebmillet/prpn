@@ -5,8 +5,8 @@ dist_doc_DATA=README
 
 EXTRA_DIST=ABOUT-NLS admin/config.rpath test_linux extracfg.h wininst images \
 	prpn.bkl src/dev.bkl \
-	makefile.bcc makefile.gcc makefile.vc \
-	src/makefile.bcc src/makefile.gcc src/makefile.vc \
+	makefile.gcc makefile.vc \
+	src/makefile.gcc \
 	prpn.desktop prpn.png \
   bootstrap \
 	prpn.spec gen-win-makefiles.cmd
