@@ -29,6 +29,11 @@
 // Programme de test :
 // 	 *OK* Intitulé de l'erreur si pas assez d'argument lors de l'exécution de << -> ... << >> >>
 
+// Uncomment if you wish to activate debugging but cannot
+// get to these defines in the compiler options...
+//#define DEBUG
+//#define DEBUG_FILE
+
 #ifndef COMMON_H
 #define COMMON_H
 

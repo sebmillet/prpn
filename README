@@ -48,6 +48,7 @@ instructions to compile and install the program, using the usual
 This INSTALL file is the one provided by default by autotools.
 Below is found information specific to this package.
 
+
 - Linux compilation
 
     The configure script provides the following options in addition to the
@@ -65,60 +66,99 @@ Below is found information specific to this package.
     Note
       Bakefile files (.bkl extension) are used for Windows. Under Linux, the
       standard automake/autoconf couple is used, without any bakefile piece.
-      Bakefile provides a half-a-way solution to get mixed with autotools
+      Bakefile provides a halfway solution to get mixed with autotools
       (bakefilize, that replaces automake but keep using autoconf), that isn't
       in use here.
       Using bakefile generated makefiles under Linux is presumed to work fine
       but has not been tested for a while.
 
+
 - Windows compilation
 
-    Use the script gen-win-makefiles.cmd to rebuild makefile.gcc (Mingw
-    compiler) and makefile.vc (Microsoft Visual C++) files.
-    The script depends on where Gnuwin32 libintl files (includes & libs) are,
-    and also Wx library.
-    Rebuilding is done by bakefile, see point 3 below.
+    pRPN compiles with MinGW or Microsoft Visual C++ (msvc)
+    It does not compile with Borland C++, see (4) below
+    Before compiling pRPN you have to compile wxWidgets library
+    Both graphical and console programs are produced by the build, see (5)
 
-    1) Mingw
-        Mingw32 works fine.
-        Remind: to compile pRPN with Mingw, you've got to compile wxWidgets
-        with it as well, executing:
-          cd %WXWIN%\build\msw
-          %MINGW32_BIN%\mingw32-make -f makefile.gcc
+    * Instructions in brief *
 
-        Mingw is used to compile the packaged, final, binary (included in
-        Windows installer.) It uses the options BUILD=release WX_DEBUG=0 to
-        optimize the code.
+      a) Install your compiler, either MinGW or msvc.
+           URL for MinGW: http://www.mingw.org/wiki/InstallationHOWTOforMinGW
+      b) Install bakefile, URL: http://www.bakefile.org/download.html
+      c) Install WX library source, URL: http://www.wxwidgets.org/downloads
+      d) Edit gen-win-makefiles.cmd according to your environment, re (1)
+      e) Compile wxWidgets library, re (2)
+      f) Run gen-win-makefiles.cmd to refresh makefile.vc and makefile.gcc
+      g) Compile pRPN, re(3)
 
-        Mingw32 is licensed under GPL mostly, its homepage is found here
-          http://www.mingw.org
+    (1) Edit gen-win-makefiles.cmd according to your environment
 
-    2) Microsoft Visual C++ 2010 Express
-        Compiles well. To first compile wxWidgets with msvc, you've got to
-        open a msvc custom shell window (similar to cmd.exe window but tuned
-        to match msvc command-line tools requirements), and execute
-          cd %WXWIN%\build\msw
-          %MINGW32_BIN%\nmake -f makefile.vc
+        The batch file gen-win-makefiles.cmd automates makefile.vc (msvc) and
+        makefile.gcc (mingw) generation with bakefile.
 
-        * IMPORTANT *
-        msvc does not compile prpn when debug is on.
+        - By default the makefile.vc and makefile.gcc files assume libintl is
+          found inside C:\MinGW, meaning, the include is in
+            C:\MinGW\include
+          and the lib file is in
+            C:\MinGW\lib
+        - Also the wxWidgets library is assumed to be in C:\WX and the
+          environment variable WXWIN updated accordingly:
+            WXWIN=C:\WX
 
-        Microsoft Visual C++ 2010 Express can be downloaded for free, from
-          http://msdn.microsoft.com/fr-fr/express/aa975050.aspx
+        If ever the situation is different, say, libintl library is in
+        "C:\My Rep" and WX is in "C:\My Wx", you have to do the following:
+            1- Update lines 8 and 9 of gen-win-makefiles.cmd as follows:
+                 @set DIR_INCLUDE_LIBINTL="C:\My Rep\include"
+                 @set DIR_LIB_LIBINTL="C:\My Rep\lib"
+            2- After installing WX library in "C:\My Wx", set the environment
+               variable WXWIN to the value "C:\My Wx":
+                 set WXWIN="C:\My Wx"
+               (it is recommended to update at system level for permanent
+               availability of WXWIN variable.)
 
-    3) Makefiles generation
-        As Windows doesn't provide the usual configure/make/make install
-        mechanism (provided you are not using an environment like cygwin), the
-        solution used is wxWidgets default, bakefile. You can find it from
-          http://www.bakefile.org
-        The batch file
-          gen-win-makefiles.cmd
-        automates msvc and mingw makefiles generation. Before running it you
-        have to check where libintl is (headers & libs) and update the batch
-        accordingly, and the same for Wx library.
+    (2) Compile wxWidgets library
 
-    4) Note about Borland C++
-        At first prpn used to be compiled using Borland C++ 5.5. It worked
+       * Mingw *
+         Execute:
+           cd %WXWIN%\build\msw
+           %MINGW32_BIN%\mingw32-make -f makefile.gcc BUILD=release WX_DEBUG=0
+
+           (where %MINGW32_BIN% is the directory of MinGW)
+
+         Mingw is used to compile the packaged, final, binary (included in
+         Windows installer.) It uses the options BUILD=release WX_DEBUG=0 to
+         optimize the code.
+
+         Mingw is licensed under GPL mostly, its homepage is found here
+           http://www.mingw.org
+
+       * Microsoft Visual C++ 2010 Express *
+         Open the msvc custom shell window and execute
+           cd %WXWIN%\build\msw
+           nmake -f makefile.vc BUILD=release WX_DEBUG=0
+
+         IMPORTANT
+           msvc does not compile prpn when debug is on.
+
+         Microsoft Visual C++ 2010 Express can be downloaded for free, from
+           http://msdn.microsoft.com/fr-fr/express/aa975050.aspx
+
+    (3) Compile pRPN
+
+       * Mingw *
+         Execute:
+           %MINGW32_BIN%\mingw32-make -f makefile.gcc
+
+           (where %MINGW32_BIN% is the directory of MinGW)
+
+       * msvc *
+         Execute:
+           nmake -f makefile.vc
+
+       The executables are found in the build folers.
+
+    (4) Note about Borland C++
+        At first pRPN used to be compiled using Borland C++ 5.5. It worked
         well but over time was found to have limitations:
           - Libintl does not compile with bcc => needed to deactivate it
           - With debug options activated on Wx library, a bug caused the
@@ -131,7 +171,7 @@ Below is found information specific to this package.
         Borland C++ 5.5 can be downloaded for free, from
           http://edn.embarcadero.com/article/20633
 
-    5) Note about the console version
+    (5) Note about the console version
         Under Windows, by default, wxWidgets disconnects itself from the
         controlling terminal, making it impossible to interact with the
         console. Therefore the '-c' option with prpn is useless, you must

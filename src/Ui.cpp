@@ -1270,11 +1270,13 @@ static void refresh_stack(const int& enforced_nb_stack_elems_to_display, const b
 }
 
 void ui_refresh_display(const int& enforced_nb_stack_elems_to_display) {
+  debug_write_v("ui_refresh_display() begin");
   refresh_status();
   refresh_path(REFRESH_PATH_PRE);
   refresh_stack(enforced_nb_stack_elems_to_display, false);
   refresh_path(REFRESH_PATH_POST);
   refresh_menu_buttons();
+  debug_write_v("ui_refresh_display() end");
 }
 
 void ui_set_error(const std::string& l1, const std::string& l2) {

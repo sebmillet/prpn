@@ -208,11 +208,11 @@ static void my_set_font(wxWindow *ctrl, const int& pointSize, const wxFontFamily
                   const wxFontWeight& weight, const bool& underline, font_t const *pf) {
   if (pf == NULL) {
     ctrl->SetFont(wxFont(pointSize, family, style, weight, underline));
-    debug_write("pf == NULL");
+    debug_write("  pf == NULL");
   } else {
     ctrl->SetFont(wxFont(pf->pointSize, pf->family, pf->style, pf->weight, pf->underline));
-    debug_write("pf != NULL");
-    debug_write_i("size = %i", pf->pointSize);
+    debug_write("  pf != NULL");
+    debug_write_i("  size = %i", pf->pointSize);
   }
 }
 
@@ -708,6 +708,16 @@ static void skin_read_typein_info(int& x, int& y, int& w, int& h, const skin_t *
     w = s->r_stack.w;
   if (h == -1)
     h = s->r_stack.h;
+  debug_write_v("skin_read_typein_info()");
+  debug_write_v("  s->r_typein.x = %i", s->r_typein.x);
+  debug_write_v("  s->r_typein.y = %i", s->r_typein.y);
+  debug_write_v("  s->r_typein.w = %i", s->r_typein.w);
+  debug_write_v("  s->r_typein.h = %i", s->r_typein.h);
+  debug_write_v("  s->r_stack.x = %i", s->r_stack.x);
+  debug_write_v("  s->r_stack.y + s->stack_height * s->stack_y_step = %i",
+    s->r_stack.y + s->stack_height * s->stack_y_step);
+  debug_write_v("  s->r_stack.w = %i", s->r_stack.w);
+  debug_write_v("  s->r_stack.h = %i", s->r_stack.h);
 }
 
 static void shape(wxWindow *ctrl, const int& x, const int& y, const int& w, const int& h,
@@ -772,6 +782,10 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
         my_min_client_width(-1), my_min_client_height(-1),
         dlg(NULL),
         path_width(-1), last_read_width(-1) {
+
+  debug_write_v("MyFrame::MyFrame() begin");
+  debug_write_v("gui = %s", (gui == GUI_SIZER ? "sizer" : "skin"));
+  debug_write_v("ui_code = %i", u);
 
   SetIcon(wxIcon(prpn_xpm));
 
@@ -1003,6 +1017,8 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
     SetMinSize(wxSize(10, 10));
 
   textTypein->SetFocus();
+
+  debug_write_v("MyFrame::MyFrame() end");
 }
 
 int MyFrame::get_nb_menu_buttons() {
@@ -1018,20 +1034,31 @@ int MyFrame::get_nb_menu_buttons() {
 }
 
 void MyFrame::notify_ui_change() {
+  debug_write_v("MyFrame::notify_ui_change()");
+
   restart_gui = true;
   frame_pos = GetPosition();
   Close(TRUE);
 }
 
 void MyFrame::textTypein_recalc_and_setsize() {
+  debug_write_v("textTypein_recalc_and_setsize() begin");
+
   int x, y, w, h;
   int y0 = my_y0 + my_get_max_stack() * (my_y1 - my_y0);
+
+  debug_write_v("textTypein: x = %i, y = %i, w = %i, h = %i", x, y, w, h);
+
   textTypein->GetPosition(&x, &y);
   textTypein->GetSize(&w, &h);
   int bottom = y + h - 1;
   int new_h = bottom - y0 + 1;
 
+  debug_write_v("textTypein: x = %i, y = %i, w = %i, h = %i", my_x0, y0, my_w0, new_h);
+
   textTypein->SetSize(my_x0, y0, my_w0, new_h);
+
+  debug_write_v("textTypein_recalc_and_setsize() end");
 }
 
 void MyFrame::textTypein_SetFocus() {
@@ -1046,10 +1073,12 @@ void MyFrame::stack_line_set_font(wxStaticText *t) {
 #define STACK_INDEX_0 2
 void MyFrame::build_dispStack() {
 
+  debug_write_v("build_dispStack() begin");
+
   Freeze();
 
   int n = my_get_max_stack();
-  debug_write_i("build_dispStack(): n = %i", n);
+  debug_write_v("  n = %i", n);
 
   stack_1line l1;
 
@@ -1070,9 +1099,17 @@ void MyFrame::build_dispStack() {
       int y0 = my_y0 + i * (my_y1 - my_y0);
       wxp = wxPoint(my_x0, y0);
       wxs = wxSize(my_w0, my_h0);
+
+      debug_write_v("  xy_set is true, i = %i, wxp.x = %i, wxp.y = %i, wxs.w = %i, wxs.h = %i",
+        i, wxp.x, wxp.y, wxs.GetWidth(), wxs.GetHeight());
+
     } else {
       wxp = wxPoint(wxDefaultPosition);
       wxs = wxSize(wxDefaultSize);
+
+      debug_write_v("  xy_set is false, i = %i, wxp.x = %i, wxp.y = %i, wxs.w = %i, wxs.h = %i",
+        i, wxp.x, wxp.y, wxs.GetWidth(), wxs.GetHeight());
+
     }
     l1.w = new wxWindow(this, wxID_ANY, wxp, wxs, SIZER_STACK_BORDERSTYLE);
     l1.t = new wxStaticText(l1.w, wxID_ANY, wxString(wxChar(' '), ui_dsl.get_width()),
@@ -1091,6 +1128,7 @@ void MyFrame::build_dispStack() {
 
   Thaw();
 
+  debug_write_v("build_dispStack() end");
 }
 
 void MyFrame::display_help(const int& dh) {
@@ -1187,7 +1225,7 @@ void MyFrame::OnMenu(wxCommandEvent& ev) {
 void MyFrame::OnChar(wxKeyEvent& event) {
   int wxk = event.GetKeyCode();
 
-  //debug_write_i("X1: key pressed = %i", wxk);
+  debug_write_v("X1: key pressed = %i", wxk);
 
   int gm = event.GetModifiers();
   int uik;
@@ -1235,6 +1273,9 @@ void MyFrame::OnChar(wxKeyEvent& event) {
 }
 
 void MyFrame::OnPaint(wxPaintEvent& ev) {
+
+  debug_write_v("MyFrame::OnPaint() begin");
+
   if (!xy_set) {
     my_frame_initial_size = GetClientSize();
     int x, y, w, h, x2, y2;
@@ -1273,13 +1314,16 @@ void MyFrame::OnPaint(wxPaintEvent& ev) {
     my_min_client_width = fw + (10 - my_initial_stack_width) * my_char_width;
     my_min_client_height = fh + (HARD_GUI_MIN_HEIGHT - 1 - my_initial_stack_lines) * (my_y1 - my_y0);
 
-        int yy = my_y0 + (my_get_max_stack() + 1) * (my_y1 - my_y0);
-        int hh = fh - yy;
+    int yy = my_y0 + (my_get_max_stack() + 1) * (my_y1 - my_y0);
+    int hh = fh - yy;
 
     debug_write_i("PAINT::minimal client width = %i", my_min_client_width);
     debug_write_i("PAINT::minimal client height = %i", my_min_client_height);
     SetMinSize(wxSize(my_min_client_width, my_min_client_height - hh / 2));
-  
+
+    debug_write_v("  my_x0 = %i, my_w0 = %i, my_h0 = %i, my_y0 = %i, my_y1 = %i, "
+      "my_char_width = %i", my_x0, my_w0, my_h0, my_y0, my_y1, my_char_width);
+
     xy_set = true;
   }
 
@@ -1294,9 +1338,14 @@ void MyFrame::OnPaint(wxPaintEvent& ev) {
   }
 
   ev.Skip();
+
+  debug_write_v("MyFrame::OnPaint() end");
+
 }
 
 void MyFrame::OnSize(wxSizeEvent& ev) {
+  debug_write_v("MyFrame::OnSize() begin");
+
   if (gui == GUI_SKIN)
     return;
 
@@ -1323,6 +1372,8 @@ void MyFrame::OnSize(wxSizeEvent& ev) {
     ui_dsl.redefine_geometry(target_stack_lines, target_stack_width, false);
   }
   ev.Skip();
+
+  debug_write_v("MyFrame::OnSize() end");
 }
 
 void MyFrame::OnMouseWheel(wxMouseEvent& ev) {
@@ -1539,7 +1590,7 @@ void UiImplWx::neg() {
     first_loop = false;
   }
 
-  debug_write_i("char = %i", static_cast<int>(c));
+  debug_write_v("char = %i", static_cast<int>(c));
 
   bool replace = false;
   string insert_string;
@@ -1565,8 +1616,10 @@ void UiImplWx::neg() {
   }
   if (idx < 0)
     idx = 0;
-  //debug_write_i("idx = %i", static_cast<int>(idx));
-  //debug_write_i("Character at the position of the cursor toward left = %i", static_cast<int>(c));
+
+  debug_write_v("idx = %i", static_cast<int>(idx));
+  debug_write_v("Character at the position of the cursor toward left = %i", static_cast<int>(c));
+
   if (replace)
     f->textTypein->Remove(idx, idx + 1);
   f->textTypein->SetInsertionPoint(idx);
@@ -1575,6 +1628,8 @@ void UiImplWx::neg() {
 }
 
 void UiImplWx::refresh_stack_height() {
+  debug_write_v("refresh_stack_height() begin");
+
   f->Freeze();
 
   f->build_dispStack();
@@ -1591,6 +1646,8 @@ void UiImplWx::refresh_stack_height() {
   }
 
   f->Thaw();
+
+  debug_write_v("refresh_stack_height() end");
 }
 
 void UiImplWx::quit() {
@@ -1662,6 +1719,9 @@ int MyApp::OnRun() {
 }
 
 void MyApp::build_top_frame() {
+
+  debug_write_v("MyApp::build_top_frame() begin");
+
   const MenuDescription *menus_descriptions;
   int nb_menus_descriptions;
   ui_get_menus_descriptions(menus_descriptions, nb_menus_descriptions);
@@ -1674,6 +1734,9 @@ void MyApp::build_top_frame() {
 
   frame->Show(true);
   SetTopWindow(frame);
+
+  debug_write_v("MyApp::build_top_frame() end");
+
 }
 
 bool MyApp::OnInit() {

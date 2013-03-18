@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <shlobj.h>
 #include <winreg.h>
+#include <stdio.h>
 
   // FIXME - BCC55 include files don't know this constant...
 #ifndef INVALID_FILE_ATTRIBUTES
