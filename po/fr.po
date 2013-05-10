@@ -1,6 +1,6 @@
 # French translations for pRPN package
 # Traductions françaises du paquet pRPN.
-# Copyright (C) 2010 Sébastien Millet
+# Copyright (C) 2010, 2013 Sébastien Millet
 # This file is distributed under the same license as the pRPN package.
 # Sébastien Millet <sebastien.millet1@club-internet.fr>, 2010.
 #
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: prpn 0.5.0\n"
 "Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
-"POT-Creation-Date: 2012-05-07 08:19+0200\n"
+"POT-Creation-Date: 2013-03-18 23:40+0100\n"
 "PO-Revision-Date: 2012-05-01 16:58+0100\n"
 "Last-Translator: Sébastien Millet <sebastien.millet1@club-internet.fr>\n"
 "Language-Team: French\n"
@@ -1045,11 +1045,11 @@ msgstr ""
 "Utilise le mécanisme \"sizer\" de WX pour construire l'interface, s'adapte à "
 "n'importe quelle taille"
 
-#: src/Wx/UiImplWx.cpp:1100
+#: src/Wx/UiImplWx.cpp:1138
 msgid "Help"
 msgstr "Aide"
 
-#: src/Wx/UiImplWx.cpp:1122 src/Wx/UiImplWx.cpp:1135
+#: src/Wx/UiImplWx.cpp:1160 src/Wx/UiImplWx.cpp:1173
 msgid "OK"
 msgstr "OK"
 

@@ -6,7 +6,7 @@
 // Sébastien Millet
 // August 2009 - April 2010
 
-#include "Common.h"
+#include "../Common.h"
 #include <cstdlib>
 #include <sys/stat.h>
 #include <cstdio>

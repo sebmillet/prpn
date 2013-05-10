@@ -123,7 +123,7 @@ void help() {
 
 void version() {
 	std::cerr << PACKAGE_STRING DEBUG_VERSION_STRING << std::endl;
-	std::cerr << "Copyright (C) 2010 Sébastien Millet" << std::endl;
+	std::cerr << "Copyright (C) 2010, 2013 Sébastien Millet" << std::endl;
 	std::cerr << "This program is free software; you may redistribute it under the terms of" << std::endl;
 	std::cerr << "the GNU General Public License version 3 or (at your option) any later version." << std::endl;
 	std::cerr << "This program has absolutely no warranty." << std::endl;

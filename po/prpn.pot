@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: prpn 0.5.5\n"
 "Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
-"POT-Creation-Date: 2012-05-07 08:19+0200\n"
+"POT-Creation-Date: 2013-03-18 23:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1032,10 +1032,10 @@ msgstr ""
 msgid "Use WX 'sizer' mechanism to build the interface, can fit any size"
 msgstr ""
 
-#: src/Wx/UiImplWx.cpp:1100
+#: src/Wx/UiImplWx.cpp:1138
 msgid "Help"
 msgstr ""
 
-#: src/Wx/UiImplWx.cpp:1122 src/Wx/UiImplWx.cpp:1135
+#: src/Wx/UiImplWx.cpp:1160 src/Wx/UiImplWx.cpp:1173
 msgid "OK"
 msgstr ""
