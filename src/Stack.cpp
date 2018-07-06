@@ -1583,7 +1583,7 @@ static st_err_t bc_about(TransStack&, SIO*, string&) {
   const char *A = _N("[TRANSLATE_SPECIAL_AUTHOR]");
   string author = _(A);
   if (author == A)
-    author = "Sébastien Millet 2012";
+    author = "Sébastien Millet 2018";
   ui_set_error(PACKAGE_STRING DEBUG_VERSION_STRING, author);
   return ST_ERR_OK;
 }

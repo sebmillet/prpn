@@ -1,4 +1,4 @@
-pRPN(1) 							       pRPN(1)
+pRPN(1) 		    General Commands Manual		       pRPN(1)
 
 
 
@@ -93,71 +93,71 @@ COMMANDES
        entre parenthèses. Ces arguments sont pris dans la pile.
 
        _HELP (0)
-	      Affiche un écran d'aide
+	      Display a help screen
 
        _HELP_FLAGS (0)
-	      Affiche la liste des indicateurs binaires
+	      Display the list of flags
 
        _EXIT (0)
-	      Quitte le programme
+	      Quit program
 
        _ABOUT (0)
-	      Informations sur ce programme
+	      Display information about this program
 
-       + (2)  Addition : x + y
+       + (2)  Addition: x + y
 
-       - (2)  Soustraction : x - y
+       - (2)  Subtraction: x - y
 
-       * (2)  Multiplication : x * y
+       * (2)  Multiplication: x * y
 
-       / (2)  Division : x / y
+       / (2)  Division: x / y
 
-       ^ (2)  Puissance : x ^ y
+       ^ (2)  Power: x ^ y
 
-       % (2)  Pourcentage : (x * y) / 100
+       % (2)  Percentage: (x * y) / 100
 
        %CH (2)
-	      Pourcentage de changement : 100 * (y - x) / x
+	      Percentage change: 100 * (y - x) / x
 
-       %T (2) Pourcentage du total : 100 * y / x
+       %T (2) Percentage of total: 100 * y / x
 
        MOD (2)
-	      Modulo : x - y * FLOOR(x / y)
+	      Modulus: x - y * FLOOR(x / y)
 
        MIN (2)
-	      Minimum de deux réels
+	      Minimum of two reals
 
        MAX (2)
-	      Maximum de deux réels
+	      Maximum of two reals
 
        COS (1)
-	      Cosinus
+	      Cosine
 
        SIN (1)
-	      Sinus
+	      Sine
 
        TAN (1)
-	      Tangente
+	      Tangent
 
        ACOS (1)
-	      Arc-cosinus
+	      Arccos
 
        ASIN (1)
-	      Arc-sinus
+	      Arcsin
 
        ATAN (1)
-	      Arc-tangente
+	      Arctan
 
-       LN (1) Logarithme (base e)
+       LN (1) Logarihtm (e base)
 
        EXP (1)
-	      Exponentiel
+	      Exponential
 
        LOG (1)
-	      Logarithme (base 10)
+	      Logarithm (10 base)
 
        ALOG (1)
-	      Exponentiel en base 10 (10^x)
+	      10 base exponential (10^x)
 
        LNP1 (1)
 	      LN(1+x)
@@ -166,395 +166,386 @@ COMMANDES
 	      EXP(x)-1
 
        COSH (1)
-	      Cosinus hyperbolique
+	      Hyperbolic cosine
 
        SINH (1)
-	      Sinus hyperbolique
+	      Hyperbolic sine
 
        TANH (1)
-	      Tangente hyperbolique
+	      Hyperbolic tangent
 
        ACOSH (1)
-	      Arc-cosinus hyperbolique
+	      Arc-hyperbolic cosine
 
        ASINH (1)
-	      Arc-sinus hyperbolique
+	      Arc-hyperbolic sine
 
        ATANH (1)
-	      Arc-tangente hyperbolique
+	      Arc-hyperbolic tangent
 
        NEG (1)
-	      Opposé
+	      Opposite
 
-       IP (1) Partie entière
+       IP (1) Integer part
 
-       FP (1) Partie décimale
+       FP (1) Fractional part
 
        FLOOR (1)
-	      Plus grand entier inférieur ou égal à x
+	      Greatest integer lower than or equal to x
 
        CEIL (1)
-	      Plus petit entier supérieur ou égal à x
+	      Lowest integer greater than or equal to x
 
        ABS (1)
-	      Valeur absolue de x
+	      Absolute of x
 
        SIGN (1)
-	      Signe de x : peut être -1, 0 ou 1
+	      Sign of x: can be -1, 0 or 1
 
        MANT (1)
-	      Mantisse de x
+	      Mantisse of x
 
        XPON (1)
-	      Exponentielle de x
+	      Exponent of x
 
        INV (1)
 	      1/x
 
-       SQ (1) Carré
+       SQ (1) Square
 
        SQR (1)
-	      Racine carrée
+	      Square root
 
        RDZ (1)
-	      Initialise la suite des  valeurs	aléatoires,  0	pour  utiliser
-	      l'horloge
+	      Initializes random values series, 0 to start from a timer value
 
        RAND (0)
-	      Produis une valeur aléatoire x, 0 <= x < 1
+	      Get a random value x, 0 <= x < 1
 
        MINR (0)
-	      Plus  petit  réel supérieur à zéro représentable par la calcula‐
-	      trice
+	      Smallest real greater than zero the calcultor can represent
 
        MAXR (0)
-	      Plus grand réel représentable par la calculatrice
+	      Biggest real the calcultor can represent
 
        ->HMS (1)
-	      Convertis un décimal en nombre HMS (h.MMSSss)
+	      Convert a decimal to HMS (h.MMSSss)
 
        HMS-> (1)
-	      Convertis un nombre HMS (h.MMSSss) en décimal
+	      Convert a HMS (h.MMSSss) to a decimal
 
        HMS+ (2)
-	      Additionne deux nombres HMS (h.MMSSss)
+	      Add two HMS (h.MMSSss)
 
        HMS- (2)
-	      Soustrais deux nombres HMS (h.MMSSss)
+	      Subtract two HMS (h.MMSSss)
 
        D->R (1)
-	      Convertis des degrés en radians (*PI/180)
+	      Convert from degrees to radians
 
        R->D (1)
-	      Convertis des radians en degrés (*180/PI)
+	      Convert from radians to degrees
 
        RAD (0)
-	      Utilise le radian pour les mesures angulaires
+	      Set angular mode to radians
 
        DEG (0)
-	      Utilise le degré pour les mesures angulaires
+	      Set angular mode to degrees
 
        +ML (0)
-	      Affiche le premier élément sur plusieurs lignes
+	      Display first item on multilpe lines
 
        -ML (0)
-	      Affiche le premier élément sur une seule ligne
+	      Display first item on a single line
 
        RDXP (0)
-	      Utilise la caractère '.' comme séparateur décimal
+	      Set the decimal separator to '.'
 
        RDXC (0)
-	      Utilise la caractère ',' comme séparateur décimal
+	      Set the decimal separator to ','
 
        R->C (2)
-	      Réel à complexe
+	      Real to complex
 
        C->R (1)
-	      Complexe à réel
+	      Complex to real
 
-       RE (1) Partie réelle d'un nombre complexe ou d'un tableau
+       RE (1) Get real part of a complex number or array
 
-       IM (1) Partie imaginaire d'un nombre complexe ou d'un tableau
+       IM (1) Get imaginary part of a complex number or array
 
        CONJ (1)
-	      Conjugué d'un nombre complexe ou d'un tableau
+	      Get conjugate of a complex number or array
 
        ARG (1)
-	      Argument d'un nombre complexe
+	      Get argument of a complex number
 
        R->P (1)
-	      Conversion des coordonnées d'un nombre complexe de rectangulaire
-	      à polaire
+	      Rectangular to polar coordinates
 
        P->R (1)
-	      Conversion  des  coordonnées  d'un  nombre complexe de polaire à
-	      rectangulaire
+	      Polar to rectangular coordinates
 
        SAME (2)
-	      Est identique
+	      Is identical
 
-       == (2) Est égal à
+       == (2) Equal to
 
-       <> (2) Est différent de
+       <> (2) Different from
 
-       < (2)  Est plus petit que
+       < (2)  Lower than
 
-       <= (2) Est plus petit que, ou égal à
+       <= (2) Lower than or equal to
 
-       > (2)  Est plus grand que
+       > (2)  Greater than
 
-       >= (2) Est plus grand que, ou égal à
+       >= (2) Greater than or equal to
 
        AND (2)
-	      Et logique
+	      Logical and
 
-       OR (2) Ou logique
+       OR (2) Logical or
 
        XOR (2)
-	      Xor logique (exclusion)
+	      Logical xor
 
        NOT (1)
-	      Non logique
+	      Logical not
 
        DUP (1)
-	      Copie le premier élément
+	      Copy the first item
 
        SWAP (2)
-	      Échange les deux premiers éléments
+	      Exchange the first two items
 
        DROP (1)
-	      Supprime le premier élément
+	      Delete the first item
 
        CLEAR (0)
-	      Efface la pile
+	      Clear the stack
 
        OVER (2)
-	      Copie le second élément
+	      Copy the second item
 
        DUP2 (2)
-	      Copie les deux premiers éléments
+	      Copy the first two items
 
        DROP2 (2)
-	      Supprime les deux premiers éléments
+	      Delete the first two items
 
        ROT (3)
-	      Déplace le troisième élément en première position
+	      Move the third item to the first position
 
        ROLLD (1)
-	      Déplace le premier élément en Nième position
+	      Move the first item to the Nth position
 
        ROLL (1)
-	      Déplace le Ne élément en première position
+	      Move the Nth item to the first position
 
        PICK (1)
-	      Copie le Ne élément
+	      Copy the Nth item
 
        DUPN (1)
-	      Copie les N premiers éléments
+	      Copy the n first items
 
        DROPN (1)
-	      Supprime les N premiers éléments
+	      Delete the n first items
 
        DEPTH (0)
-	      Renvoie le nombre d'éléments dans la pile
+	      Get the number of items
 
-       SF (1) Active l'indicateur binaire
+       SF (1) Set flag
 
-       CF (1) Désactive l'indicateur binaire
+       CF (1) Clear flag
 
        FS? (1)
-	      Renvoie 1 si l'indicateur binaire est activé, 0 sinon
+	      Return 1 if flag is set, 0 otherwise
 
        FC? (1)
-	      Renvoie 0 si l'indicateur binaire est activé, 1 sinon
+	      Return 0 if flag is set, 1 otherwise
 
        FS?C (1)
-	      Exécute FS? et désactive l'indicateur binaire
+	      Do FS? then clear flag
 
        FC?C (1)
-	      Exécute FC? et désactive l'indicateur binaire
+	      Do FC? then clear flag
 
        ->STR (1)
-	      Convertis un élément en chaîne de caractères
+	      Convert to string
 
        STR-> (0)
-	      Convertis une chaîne de caractère en éléments
+	      Convert from string
 
        SUB (3)
-	      Extrais le contenu d'une chaîne de caractères ou d'une liste
+	      Extract content from a string or a list
 
        ->LIST (1)
-	      Mets les éléments dans une liste
+	      Items to list
 
        LIST-> (1)
-	      Convertis la liste en ses éléments
+	      Extract items from list
 
        GET (2)
-	      Extrais un élément d'une liste ou d'un tableau
+	      Get an item from a list or array
 
        GETI (2)
-	      Extrais un élément d'une liste ou d'un tableau par incréments
+	      Get an item from a list or array by increments
 
        PUT (3)
-	      Remplace un élément dans une liste ou un tableau
+	      Put an item into a list or array
 
        PUTI (3)
-	      Remplace un élément dans une liste ou un tableau par incréments
+	      Put an item into a list or array by increments
 
        SIZE (1)
-	      Dimension d'une liste ou d'un tableau
+	      Dimension of a list or array
 
        ARRY-> (1)
-	      Remplace un tableau par ses éléments
+	      Replace an array by all its elements
 
        ->ARRY (1)
-	      Crée un tableau avec les éléments de la pile
+	      Create an array from a list of elements
 
        CON (2)
-	      Crée un tableau constant
+	      Create a constant array
 
        TRN (1)
-	      Transpose une matrice
+	      Transpose a matrix-type array
 
        RDM (2)
-	      Modifie les dimensions d'un tableau
+	      Modify the dimension of an array
 
        IDN (1)
-	      Crée une matrice identité
+	      Create an identity matrix
 
        CROSS (2)
-	      Produit vectoriel
+	      Cross product (vectorial product)
 
        DOT (2)
-	      Produit scalaire
+	      Dot product (scalar product)
 
        EVAL (0)
-	      Évalue l'élément
+	      Evaluate item
 
        STO (2)
-	      Enregistre la valeur dans la variable
+	      Store value in variable name
 
        RCL (1)
-	      Récupère la valeur de la variable
+	      Recall value from variable name
 
        PURGE (1)
-	      Supprime la variable
+	      Remove a variable
 
        VARS (0)
-	      Renvoie la liste des variables dans le répertoire courant
+	      Get the list of variables in current directory
 
        PATH (0)
-	      Renvoie le répertoire en cours sous forme de liste
+	      Get the list from root to current directory
 
        CRDIR (1)
-	      Crée un répertoire
+	      Create a directory
 
        HOME (0)
-	      Définis le répertoire racine comme répertoire courant
+	      Set root directory as the current one
 
-       UP (0) Définis le répertoire parent comme répertoire courant
+       UP (0) Make the parent directory the current one
 
        BIN (0)
-	      Utilise le mode binaire pour les entiers binaires
+	      Use binary mode for binary integers
 
        OCT (0)
-	      Utilise le mode octal pour les entiers binaires
+	      Use octal mode for binary integers
 
        DEC (0)
-	      Utilise le mode décimal pour les entiers binaires
+	      Use decimal mode for binary integers
 
        HEX (0)
-	      Utilise le mode hexadécimal pour les entiers binaires
+	      Use hexadecimal mode for binary integers
 
        STWS (1)
-	      Définis le nombre de bits des entiers binaires (de 1 à 64)
+	      Define the number of bits in binary integers (1 to 64)
 
        RCWS (0)
-	      Renvoie le nombre de bits des entiers binaires
+	      Get the number of bits in binary integers
 
        B->R (1)
-	      Convertis un entier binaire en réel
+	      Convert a binary integer into a real
 
        R->B (1)
-	      Convertis un réel en entier binaire
+	      Convert a real into a binary integer
 
        RCLF (0)
-	      Enregistre  l'état  des  indicateurs  binaires  dans  un	entier
-	      binaire
+	      Save flag states in a binary integer
 
        STOF (1)
-	      Récupère	l'état	des  indicateurs  binaires  depuis  un	entier
-	      binaire
+	      Read flag states from a binary integer
 
        WAIT (1)
-	      Pause d'une durée définie en secondes
+	      Wait a number of seconds
 
        HALT (0)
-	      Suspends l'exécution du programme
+	      Halt program execution
 
        SST (0)
-	      Exécute une instruction dans le programme
+	      Execute one step in the program
 
        ABORT (0)
-	      Arrête l'exécution du programme courant
+	      Abort current program execution
 
        KILL (0)
-	      Arrête l'exécution de tous les programmes
+	      Abort all programs execution
 
        CONT (0)
-	      Reprends l'exécution du programme
+	      Resume program execution
 
        STD (0)
-	      Règle l'affichage des réels à 'standard'
+	      Set reals display to 'standard'
 
        SCI (1)
-	      Règle l'affichage des réels à 'scientifique'
+	      Set reals display to 'scientific'
 
        FIX (1)
-	      Règle l'affichage des réels à 'nombre de décimales fixe'
+	      Set reals display to 'fixed number of decimals'
 
        ENG (1)
-	      Règle l'affichage des réels à 'ingénieur'
+	      Set reals display to 'engineering'
 
        CLLCD (0)
-	      Efface l'écran
+	      Clear the screen
 
        CLMF (0)
-	      Désarme l'indicateur d'affichage =>  dégèle  l'affichage	de  la
-	      pile
+	      Clear the message flag => unfreeze stack display
 
        DISP (2)
-	      Affiche une chaîne de caractères sur une ligne de l'écran
+	      Display an item on a line of the screen
 
        _READ (1)
-	      Lis le fichier et met son contenu dans la pile
+	      Read file and puts its content in the stack
 
        _WRITE (2)
-	      Écris  le second élément de la pile dans le fichier nommé par le
-	      premier élément
+	      Write the second item into the file named by the first item
 
        _HACK-REAL-MGMT (1)
-	      Interne : règle la gestion de  l'affichage  des  réels  en  mode
-	      'standard'
+	      Internal: tune real 'standard' display management
 
        _HACK-REAL-DOT (1)
-	      Interne  :  détermine  s'il  faut afficher un point à la fin des
-	      réels
+	      Internal: set whether or not to keep a  trailing	dot  in  reals
+	      display
 
        UNDO (0)
-	      Annule la dernière commande, 50 niveaux par défaut
+	      Undo last command, 50 levels by default
 
        _UNDO_LEVELS (1)
-	      Définis le nombre de niveaux d'annulation
+	      Define number of undo levels
 
        _UNDO_LEVELS? (0)
-	      Renvoie le nombre de niveaux d'annulations
+	      Get number of undo levels
 
        _UISET (1)
-	      Définis le type d'interface utilisateur
+	      Define the type of user interface
 
 RÉSOLUTION DE SYSTÈMES D'ÉQUATIONS LINÉAIRES
-       Vous pouvez résoudre un système d'équations linéaires  en  divisant  un
+       Vous  pouvez  résoudre  un système d'équations linéaires en divisant un
        vecteur par une matrice.
 	      Exemple Vous voudriez résoudre le système
 		2x - y + z = 13
@@ -564,7 +555,7 @@ RÉSOLUTION DE SYSTÈMES D'ÉQUATIONS LINÉAIRES
 		[13 3 4]
 	      Ensuite saisissez la matrice
 		[[2 -1 1][1 5 3][-2 0 4]]
-	      Faites  une  division en cliquant sur le bouton '/'. Le résultat
+	      Faites une division en cliquant sur le bouton '/'.  Le  résultat
 	      est là :
 		[4 -2 3]
 	      Ce qui se lit "la solution est x = 4, y = -2 et z = 3"
@@ -572,15 +563,15 @@ RÉSOLUTION DE SYSTÈMES D'ÉQUATIONS LINÉAIRES
 INSTRUCTIONS DE CONTRÔLE DES PROGRAMMES
        Note au sujet des booléens
 	      Un test (IF, WHILE ou UNTIL, cf. ci-après) prend une valeur dans
-	      la  pile.  Cette valeur doit être de type réel. Toute valeur non
+	      la pile.	Cette valeur doit être de type réel. Toute valeur  non
 	      nulle est traitée comme VRAI, une valeur nulle comme FAUX.
-	      Ci-dessous, le terme "en bas de la pile" se rapporte  à  l'objet
+	      Ci-dessous,  le  terme "en bas de la pile" se rapporte à l'objet
 	      situé au niveau 1 de la pile.
 
        Séquence IF/THEN/ELSE/END
 	      Exécute les instructions entre IF et THEN.
 	      Ensuite, prends l'élément en bas de la pile, s'il est vrai (voir
-	      ci-dessus), exécute les instructions entre THEN et ELSE (ou  END
+	      ci-dessus),  exécute les instructions entre THEN et ELSE (ou END
 	      s'il n'y a pas de ELSE), sinon exécute les instructions du ELSE.
 	      ELSE est facultatif.
 
@@ -600,40 +591,40 @@ INSTRUCTIONS DE CONTRÔLE DES PROGRAMMES
        Séquence WHILE/REPEAT/END
 	      Exécute les instructions entre WHILE et REPEAT.
 	      Ensuite, prends l'élément en bas de la pile, s'il est vrai (voir
-	      ci-dessus), exécute les instructions  du	REPEAT	et  recommence
+	      ci-dessus),  exécute  les  instructions  du REPEAT et recommence
 	      depuis le début du WHILE.
 
        Exemple
-	      Calcule  le  plus  petit	N pour lequel somme(i^2 avec i prenant
+	      Calcule le plus petit N pour lequel  somme(i^2  avec  i  prenant
 	      toutes les valeurs entières dans l'intervalle 1..N) >= 100
 	      << 0 0 -> n << WHILE DUP 100 < REPEAT n SQ + n 1 + 'n' STO END n
 	      >> >>
 
        Séquence DO/UNTIL/END
-	      Exécute  les  instructions entre DO et UNTIL puis entre UNTIL et
+	      Exécute les instructions entre DO et UNTIL puis entre  UNTIL  et
 	      END.
 	      Ensuite, prends l'élément en bas de la pile, s'il est vrai (voir
 	      ci-dessus), recommence depuis le début du DO.
 
        Exemple
-	      Calcule  le  plus  petit	N pour lequel somme(1/i avec i prenant
+	      Calcule le plus petit N pour lequel  somme(1/i  avec  i  prenant
 	      toutes les valeurs entières dans l'intervalle 1..N) >= 3
-	      << 0 0 -> n << DO n 1 + 'n' STO n INV + UNTIL DUP 7 >= END n  >>
+	      <<  0 0 -> n << DO n 1 + 'n' STO n INV + UNTIL DUP 7 >= END n >>
 	      >>
 
        Séquence FOR|START/NEXT|STEP
-	      FOR  ou  START  démarre une boucle en prenant deux arguments, le
+	      FOR ou START démarre une boucle en prenant  deux	arguments,  le
 	      premier (deuxième niveau de la pile) étant la valeur du compteur
-	      au  départ,  le  deuxième  (premier  niveau de la pile) étant la
-	      valeur  cible  du  compteur,  au-delà  de  laquelle  la	boucle
+	      au départ, le deuxième (premier niveau  de  la  pile)  étant  la
+	      valeur   cible  du  compteur,  au-delà  de  laquelle  la	boucle
 	      s'arrête.
-	      START  est  une  boucle  anonyme.  FOR prend un nom et l'utilise
+	      START est une boucle anonyme. FOR  prend	un  nom  et  l'utilise
 	      comme variable locale pour le compteur.
-	      NEXT incrémente le compteur d'une unité si la valeur  cible  est
-	      supérieure  à  la  valeur  de  départ, le décrémente d'une unité
+	      NEXT  incrémente	le compteur d'une unité si la valeur cible est
+	      supérieure à la valeur de  départ,  le  décrémente  d'une  unité
 	      sinon.
-	      STEP prend la valeur en bas de la pile et l'ajoute au  compteur.
-	      NEXT  peut  être	utilisé indifféremment avec FOR et START, même
+	      STEP  prend la valeur en bas de la pile et l'ajoute au compteur.
+	      NEXT peut être utilisé indifféremment avec FOR  et  START,  même
 	      chose pour STEP.
 
        Exemple 1
@@ -641,18 +632,18 @@ INSTRUCTIONS DE CONTRÔLE DES PROGRAMMES
 	      << 0 1 10 FOR i i SQ + NEXT >>
 
        Exemple 2
-	      Calcule somme(2^i avec i prenant	toutes	les  valeurs  entières
-	      dans  l'intervalle  1..N),  N  étant  la première valeur dans la
+	      Calcule  somme(2^i  avec	i  prenant toutes les valeurs entières
+	      dans l'intervalle 1..N), N étant	la  première  valeur  dans  la
 	      pile.
 	      << 0 1 1 4 ROLL START DUP ROT + SWAP 2 * NEXT DROP >> EVAL
 
        Exemple 3
-	      Calcule somme(i avec i prenant toutes les valeurs impaires  dans
+	      Calcule  somme(i avec i prenant toutes les valeurs impaires dans
 	      l'intervalle 1..N), N étant la première valeur dans la pile.
 	      << 0 1 ROT FOR i i + 2 STEP >>
 
        Documentation RPL
-	      RPL  est	le langage de programmation des calculatrices HP fonc‐
+	      RPL est le langage de programmation des calculatrices  HP  fonc‐
 	      tionnant en notation polonaise inverse.
 	      http://en.wikipedia.org/wiki/RPL_%28programming_language%29
 
@@ -661,7 +652,7 @@ TRUCS
 	      Appuyer sur les touches <Ctrl-Entrée>.
 
        Redimensionner la fenêtre à sa taille originale
-	      Double-cliquer sur la partie "statut"  de  la  fenêtre,  où  les
+	      Double-cliquer  sur  la  partie  "statut"  de la fenêtre, où les
 	      modes angulaire et binaire sont affichés.
 
 FICHIERS D'INITIALISATION
@@ -673,8 +664,8 @@ FICHIERS D'INITIALISATION
 
 AUTEUR
        Écrit par Sébastien Millet <sebastien.millet1@club-internet.fr>.
-       Autorisation  est  donnée de copier, distribuer et/ou modifier ce docu‐
-       ment selon les termes de la licence "GNU General  Public  License".  La
+       Autorisation est donnée de copier, distribuer et/ou modifier  ce  docu‐
+       ment  selon  les  termes de la licence "GNU General Public License". La
        version 3 est publiée par la Free Software Foundation.
 
 BUGS
@@ -683,36 +674,36 @@ BUGS
        Ces fonctions sont supposées apporter plus de précision au voisinage de
        x = 0. Rappel :
 	      LNP1(x) = LN(X + 1) et EXPM(x) = EXP(x) - 1
-	      A l'heure  actuelle,  ces  fonctions  n'apportent  pas  plus  de
+	      A  l'heure  actuelle,  ces  fonctions  n'apportent  pas  plus de
 	      précision, elles appellent simplement LN() et EXP().
 
        Différence entre prpn et prpnc
 
        Linux  prpn peut être exécuté avec l'option -c. Dans ce cas le résultat
-	      est presque équivalent à prpnc. "Presque"  seulement.  prpn  est
+	      est  presque  équivalent	à prpnc. "Presque" seulement. prpn est
 	      compilé avec la librairie WxWidgets et initialise des ressources
-	      graphiques au démarrage. Si les ressources  graphiques  ne  sont
-	      pas  trouvées, le programme ne démarre pas. Par exemple, si vous
+	      graphiques  au  démarrage.  Si les ressources graphiques ne sont
+	      pas trouvées, le programme ne démarre pas. Par exemple, si  vous
 	      exécutez la commande suivante
 		   DISPLAY="" prpn -c
 	      Vous obtenez ce résultat
 		   Error: Unable to initialize gtk, is DISPLAY set properly?
 	      prpnc résout ce problème, car il n'est *pas* compilé avec WxWid‐
-	      gets  et peut fonctionner dans un terminal ne disposant d'aucune
+	      gets et peut fonctionner dans un terminal ne disposant  d'aucune
 	      ressource graphique. Un moyen élégant de régler cette difficulté
-	      serait   d'empêcher   WxWidgets	d'initialiser  les  ressources
-	      graphiques lorsque l'option -c est présente. Si vous  connaissez
-	      un  moyen  robuste  de  le  faire (portable quels que soient les
-	      systèmes et les  versions...),  l'auteur	de  ce	programme  est
+	      serait  d'empêcher  WxWidgets   d'initialiser   les   ressources
+	      graphiques  lorsque l'option -c est présente. Si vous connaissez
+	      un moyen robuste de le faire  (portable  quels  que  soient  les
+	      systèmes	et  les  versions...),	l'auteur  de  ce programme est
 	      intéressé !
 
        Windows
-	      prpn.exe	ne peut *pas* être exécuté avec l'option -c. Sous Win‐
-	      dows, WxWidgets déconnecte  le  processus  de  son  terminal  de
-	      contrôle.  La  solution  est la même que sous Linux, sauf qu'ici
-	      c'est obligatoire  :  vous  devez  utiliser  prpnc.exe  si  vous
+	      prpn.exe ne peut *pas* être exécuté avec l'option -c. Sous  Win‐
+	      dows,  WxWidgets	déconnecte  le	processus  de  son terminal de
+	      contrôle. La solution est la même que sous  Linux,  sauf	qu'ici
+	      c'est  obligatoire  :  vous  devez  utiliser  prpnc.exe  si vous
 	      souhaitez utiliser la version en ligne de commande.
 
 
 
-7 mai 2012			 version 0.5.5			       pRPN(1)
+6 juillet 2018			 version 0.5.6			       pRPN(1)

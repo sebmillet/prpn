@@ -154,6 +154,16 @@ static const wxColor sizer_slcc_to_fg_wxColor(const slcc_t& sizer_color_code) {
   return sizer_color_codes[sizer_actual_color_code_set][sizer_color_code].fg;
 }
 
+const string get_wxlocale_canonicalname() {
+  wxLocale* wxl = new wxLocale;
+  wxl->Init();
+  wxString loc_canonical_name = wxl->GetCanonicalName();
+  wxString loc_system_encoding_name = wxl->GetSystemEncodingName();
+  string ret = string(loc_canonical_name.mb_str(wxConvLocal)) + "." +
+    string(loc_system_encoding_name.mb_str(wxConvLocal));
+  return ret;
+}
+
 const wxString const_char_to_wxString(const char *sz) {
   if (E->get_actual_encoding() == MYENCODING_UTF8)
     return wxString::FromUTF8(sz);

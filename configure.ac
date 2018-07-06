@@ -1,11 +1,11 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-# Sébastien Millet, April 2012
+# Sébastien Millet, April 2012, July 2018
 
 AC_PREREQ([2.65])
 
-AC_INIT([pRPN], [0.5.5], [sebastien.millet1@club-internet.fr])
+AC_INIT([pRPN], [0.5.6], [milletseb@laposte.net])
 
 AC_CONFIG_SRCDIR([src/Common.h])
 AC_CONFIG_AUX_DIR([admin])
@@ -15,7 +15,7 @@ AC_CANONICAL_HOST
 
 AC_USE_SYSTEM_EXTENSIONS
 
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([subdir-objects])
 AM_GNU_GETTEXT
 
 AM_MAINTAINER_MODE
@@ -56,7 +56,7 @@ dnl ==================WxWidgets Options =============================
 if test "${enable_gui}" = yes ; then
 
 AM_OPTIONS_WXCONFIG
-AM_PATH_WXCONFIG(2.8.0, wxWin=1)
+AM_PATH_WXCONFIG(3.0.0, wxWin=1)
 
 if ( test "$wxWin" != 1 ); then
    AC_MSG_ERROR([

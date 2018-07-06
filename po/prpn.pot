@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Sébastien Millet
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the prpn package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: prpn 0.5.5\n"
+"Project-Id-Version: prpn 0.5.6\n"
 "Report-Msgid-Bugs-To: sebastien.millet1@club-internet.fr\n"
-"POT-Creation-Date: 2013-03-18 23:40+0100\n"
+"POT-Creation-Date: 2018-07-06 21:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -214,7 +214,7 @@ msgstr ""
 msgid "&Quit"
 msgstr ""
 
-#: src/Ui.cpp:463 src/Wx/UiImplWx.cpp:615
+#: src/Ui.cpp:463 src/Wx/UiImplWx.cpp:625
 msgid "__INTERFACE__"
 msgstr ""
 
@@ -1032,10 +1032,10 @@ msgstr ""
 msgid "Use WX 'sizer' mechanism to build the interface, can fit any size"
 msgstr ""
 
-#: src/Wx/UiImplWx.cpp:1138
+#: src/Wx/UiImplWx.cpp:1148
 msgid "Help"
 msgstr ""
 
-#: src/Wx/UiImplWx.cpp:1160 src/Wx/UiImplWx.cpp:1173
+#: src/Wx/UiImplWx.cpp:1170 src/Wx/UiImplWx.cpp:1183
 msgid "OK"
 msgstr ""

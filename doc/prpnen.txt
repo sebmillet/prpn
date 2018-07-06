@@ -1,4 +1,4 @@
-pRPN(1) 							       pRPN(1)
+pRPN(1) 		    General Commands Manual		       pRPN(1)
 
 
 
@@ -695,4 +695,4 @@ BUGS
 
 
 
-May 7th, 2012			 version 0.5.5			       pRPN(1)
+July 6th, 2018			 version 0.5.6			       pRPN(1)

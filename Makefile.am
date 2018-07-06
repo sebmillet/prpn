@@ -13,6 +13,7 @@ EXTRA_DIST=ABOUT-NLS admin/config.rpath test_linux extracfg.h wininst images \
 
 dist-hook:
 	rm -rf `find $(distdir) -name .svn`
+	rm -rf `find $(distdir) -name .git`
 
 appsdir = $(datadir)/applications
 apps_DATA = prpn.desktop

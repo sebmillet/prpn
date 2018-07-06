@@ -1,190 +1,184 @@
-1: { 36.5714285714 281
-   37 43.1666666667 43
-Commande (nombre d'arguments) : description
+2:                     
+1: 
+Command (number of arguments): description
 
-_HELP          (0): Affiche un écran d'aide
-_HELP_FLAGS    (0): Affiche la liste des indicateurs binaires
-_EXIT          (0): Quitte le programme
-_ABOUT         (0): Informations sur ce programme
-+              (2): Addition : x + y
--              (2): Soustraction : x - y
-*              (2): Multiplication : x * y
-/              (2): Division : x / y
-^              (2): Puissance : x ^ y
-%              (2): Pourcentage : (x * y) / 100
-%CH            (2): Pourcentage de changement : 100 * (y - x) / x
-%T             (2): Pourcentage du total : 100 * y / x
-MOD            (2): Modulo : x - y * FLOOR(x / y)
-MIN            (2): Minimum de deux réels
-MAX            (2): Maximum de deux réels
-COS            (1): Cosinus
-SIN            (1): Sinus
-TAN            (1): Tangente
-ACOS           (1): Arc-cosinus
-ASIN           (1): Arc-sinus
-ATAN           (1): Arc-tangente
-LN             (1): Logarithme (base e)
-EXP            (1): Exponentiel
-LOG            (1): Logarithme (base 10)
-ALOG           (1): Exponentiel en base 10 (10^x)
+_HELP          (0): Display a help screen
+_HELP_FLAGS    (0): Display the list of flags
+_EXIT          (0): Quit program
+_ABOUT         (0): Display information about this program
++              (2): Addition: x + y
+-              (2): Subtraction: x - y
+*              (2): Multiplication: x * y
+/              (2): Division: x / y
+^              (2): Power: x ^ y
+%              (2): Percentage: (x * y) / 100
+%CH            (2): Percentage change: 100 * (y - x) / x
+%T             (2): Percentage of total: 100 * y / x
+MOD            (2): Modulus: x - y * FLOOR(x / y)
+MIN            (2): Minimum of two reals
+MAX            (2): Maximum of two reals
+COS            (1): Cosine
+SIN            (1): Sine
+TAN            (1): Tangent
+ACOS           (1): Arccos
+ASIN           (1): Arcsin
+ATAN           (1): Arctan
+LN             (1): Logarihtm (e base)
+EXP            (1): Exponential
+LOG            (1): Logarithm (10 base)
+ALOG           (1): 10 base exponential (10^x)
 LNP1           (1): LN(1+x)
 EXPM           (1): EXP(x)-1
-COSH           (1): Cosinus hyperbolique
-SINH           (1): Sinus hyperbolique
-TANH           (1): Tangente hyperbolique
-ACOSH          (1): Arc-cosinus hyperbolique
-ASINH          (1): Arc-sinus hyperbolique
-ATANH          (1): Arc-tangente hyperbolique
-NEG            (1): Opposé
-IP             (1): Partie entière
-FP             (1): Partie décimale
-FLOOR          (1): Plus grand entier inférieur ou égal à x
-CEIL           (1): Plus petit entier supérieur ou égal à x
-ABS            (1): Valeur absolue de x
-SIGN           (1): Signe de x : peut être -1, 0 ou 1
-MANT           (1): Mantisse de x
-XPON           (1): Exponentielle de x
+COSH           (1): Hyperbolic cosine
+SINH           (1): Hyperbolic sine
+TANH           (1): Hyperbolic tangent
+ACOSH          (1): Arc-hyperbolic cosine
+ASINH          (1): Arc-hyperbolic sine
+ATANH          (1): Arc-hyperbolic tangent
+NEG            (1): Opposite
+IP             (1): Integer part
+FP             (1): Fractional part
+FLOOR          (1): Greatest integer lower than or equal to x
+CEIL           (1): Lowest integer greater than or equal to x
+ABS            (1): Absolute of x
+SIGN           (1): Sign of x: can be -1, 0 or 1
+MANT           (1): Mantisse of x
+XPON           (1): Exponent of x
 INV            (1): 1/x
-SQ             (1): Carré
-SQR            (1): Racine carrée
-RDZ            (1): Initialise la suite des valeurs aléatoires, 0 pour utiliser l'horloge
-RAND           (0): Produis une valeur aléatoire x, 0 <= x < 1
-MINR           (0): Plus petit réel supérieur à zéro représentable par la calculatrice
-MAXR           (0): Plus grand réel représentable par la calculatrice
-->HMS          (1): Convertis un décimal en nombre HMS (h.MMSSss)
-HMS->          (1): Convertis un nombre HMS (h.MMSSss) en décimal
-HMS+           (2): Additionne deux nombres HMS (h.MMSSss)
-HMS-           (2): Soustrais deux nombres HMS (h.MMSSss)
-D->R           (1): Convertis des degrés en radians (*PI/180)
-R->D           (1): Convertis des radians en degrés (*180/PI)
-RAD            (0): Utilise le radian pour les mesures angulaires
-DEG            (0): Utilise le degré pour les mesures angulaires
-+ML            (0): Affiche le premier élément sur plusieurs lignes
--ML            (0): Affiche le premier élément sur une seule ligne
-RDXP           (0): Utilise la caractère '.' comme séparateur décimal
-RDXC           (0): Utilise la caractère ',' comme séparateur décimal
-R->C           (2): Réel à complexe
-C->R           (1): Complexe à réel
-RE             (1): Partie réelle d'un nombre complexe ou d'un tableau
-IM             (1): Partie imaginaire d'un nombre complexe ou d'un tableau
-CONJ           (1): Conjugué d'un nombre complexe ou d'un tableau
-ARG            (1): Argument d'un nombre complexe
-R->P           (1): Conversion des coordonnées d'un nombre complexe de rectangulaire à polaire
-P->R           (1): Conversion des coordonnées d'un nombre complexe de polaire à rectangulaire
-SAME           (2): Est identique
-==             (2): Est égal à
-<>             (2): Est différent de
-<              (2): Est plus petit que
-<=             (2): Est plus petit que, ou égal à
->              (2): Est plus grand que
->=             (2): Est plus grand que, ou égal à
-AND            (2): Et logique
-OR             (2): Ou logique
-XOR            (2): Xor logique (exclusion)
-NOT            (1): Non logique
-DUP            (1): Copie le premier élément
-SWAP           (2): Échange les deux premiers éléments
-DROP           (1): Supprime le premier élément
-CLEAR          (0): Efface la pile
-OVER           (2): Copie le second élément
-DUP2           (2): Copie les deux premiers éléments
-DROP2          (2): Supprime les deux premiers éléments
-ROT            (3): Déplace le troisième élément en première position
-ROLLD          (1): Déplace le premier élément en Nième position
-ROLL           (1): Déplace le Ne élément en première position
-PICK           (1): Copie le Ne élément
-DUPN           (1): Copie les N premiers éléments
-DROPN          (1): Supprime les N premiers éléments
-DEPTH          (0): Renvoie le nombre d'éléments dans la pile
-SF             (1): Active l'indicateur binaire
-CF             (1): Désactive l'indicateur binaire
-FS?            (1): Renvoie 1 si l'indicateur binaire est activé, 0 sinon
-FC?            (1): Renvoie 0 si l'indicateur binaire est activé, 1 sinon
-FS?C           (1): Exécute FS? et désactive l'indicateur binaire
-FC?C           (1): Exécute FC? et désactive l'indicateur binaire
-->STR          (1): Convertis un élément en chaîne de caractères
-STR->          (0): Convertis une chaîne de caractère en éléments
-SUB            (3): Extrais le contenu d'une chaîne de caractères ou d'une liste
-->LIST         (1): Mets les éléments dans une liste
-LIST->         (1): Convertis la liste en ses éléments
-GET            (2): Extrais un élément d'une liste ou d'un tableau
-GETI           (2): Extrais un élément d'une liste ou d'un tableau par incréments
-PUT            (3): Remplace un élément dans une liste ou un tableau
-PUTI           (3): Remplace un élément dans une liste ou un tableau par incréments
-SIZE           (1): Dimension d'une liste ou d'un tableau
-ARRY->         (1): Remplace un tableau par ses éléments
-->ARRY         (1): Crée un tableau avec les éléments de la pile
-CON            (2): Crée un tableau constant
-TRN            (1): Transpose une matrice
-RDM            (2): Modifie les dimensions d'un tableau
-IDN            (1): Crée une matrice identité
-CROSS          (2): Produit vectoriel
-DOT            (2): Produit scalaire
-EVAL           (0): Évalue l'élément
-STO            (2): Enregistre la valeur dans la variable
-RCL            (1): Récupère la valeur de la variable
-PURGE          (1): Supprime la variable
-VARS           (0): Renvoie la liste des variables dans le répertoire courant
-PATH           (0): Renvoie le répertoire en cours sous forme de liste
-CRDIR          (1): Crée un répertoire
-HOME           (0): Définis le répertoire racine comme répertoire courant
-UP             (0): Définis le répertoire parent comme répertoire courant
-BIN            (0): Utilise le mode binaire pour les entiers binaires
-OCT            (0): Utilise le mode octal pour les entiers binaires
-DEC            (0): Utilise le mode décimal pour les entiers binaires
-HEX            (0): Utilise le mode hexadécimal pour les entiers binaires
-STWS           (1): Définis le nombre de bits des entiers binaires (de 1 à 64)
-RCWS           (0): Renvoie le nombre de bits des entiers binaires
-B->R           (1): Convertis un entier binaire en réel
-R->B           (1): Convertis un réel en entier binaire
-RCLF           (0): Enregistre l'état des indicateurs binaires dans un entier binaire
-STOF           (1): Récupère l'état des indicateurs binaires depuis un entier binaire
-WAIT           (1): Pause d'une durée définie en secondes
-HALT           (0): Suspends l'exécution du programme
-SST            (0): Exécute une instruction dans le programme
-ABORT          (0): Arrête l'exécution du programme courant
-KILL           (0): Arrête l'exécution de tous les programmes
-CONT           (0): Reprends l'exécution du programme
-STD            (0): Règle l'affichage des réels à 'standard'
-SCI            (1): Règle l'affichage des réels à 'scientifique'
-FIX            (1): Règle l'affichage des réels à 'nombre de décimales fixe'
-ENG            (1): Règle l'affichage des réels à 'ingénieur'
-CLLCD          (0): Efface l'écran
-CLMF           (0): Désarme l'indicateur d'affichage => dégèle l'affichage de la pile
-DISP           (2): Affiche une chaîne de caractères sur une ligne de l'écran
-_READ          (1): Lis le fichier et met son contenu dans la pile
-_WRITE         (2): Écris le second élément de la pile dans le fichier nommé par le premier élément
-_HACK-REAL-MGMT (1): Interne : règle la gestion de l'affichage des réels en mode 'standard'
-_HACK-REAL-DOT (1): Interne : détermine s'il faut afficher un point à la fin des réels
-UNDO           (0): Annule la dernière commande, 50 niveaux par défaut
-_UNDO_LEVELS   (1): Définis le nombre de niveaux d'annulation
-_UNDO_LEVELS?  (0): Renvoie le nombre de niveaux d'annulations
-_UISET         (1): Définis le type d'interface utilisateur
+SQ             (1): Square
+SQR            (1): Square root
+RDZ            (1): Initializes random values series, 0 to start from a timer value
+RAND           (0): Get a random value x, 0 <= x < 1
+MINR           (0): Smallest real greater than zero the calcultor can represent
+MAXR           (0): Biggest real the calcultor can represent
+->HMS          (1): Convert a decimal to HMS (h.MMSSss)
+HMS->          (1): Convert a HMS (h.MMSSss) to a decimal
+HMS+           (2): Add two HMS (h.MMSSss)
+HMS-           (2): Subtract two HMS (h.MMSSss)
+D->R           (1): Convert from degrees to radians
+R->D           (1): Convert from radians to degrees
+RAD            (0): Set angular mode to radians
+DEG            (0): Set angular mode to degrees
++ML            (0): Display first item on multilpe lines
+-ML            (0): Display first item on a single line
+RDXP           (0): Set the decimal separator to '.'
+RDXC           (0): Set the decimal separator to ','
+R->C           (2): Real to complex
+C->R           (1): Complex to real
+RE             (1): Get real part of a complex number or array
+IM             (1): Get imaginary part of a complex number or array
+CONJ           (1): Get conjugate of a complex number or array
+ARG            (1): Get argument of a complex number
+R->P           (1): Rectangular to polar coordinates
+P->R           (1): Polar to rectangular coordinates
+SAME           (2): Is identical
+==             (2): Equal to
+<>             (2): Different from
+<              (2): Lower than
+<=             (2): Lower than or equal to
+>              (2): Greater than
+>=             (2): Greater than or equal to
+AND            (2): Logical and
+OR             (2): Logical or
+XOR            (2): Logical xor
+NOT            (1): Logical not
+DUP            (1): Copy the first item
+SWAP           (2): Exchange the first two items
+DROP           (1): Delete the first item
+CLEAR          (0): Clear the stack
+OVER           (2): Copy the second item
+DUP2           (2): Copy the first two items
+DROP2          (2): Delete the first two items
+ROT            (3): Move the third item to the first position
+ROLLD          (1): Move the first item to the Nth position
+ROLL           (1): Move the Nth item to the first position
+PICK           (1): Copy the Nth item
+DUPN           (1): Copy the n first items
+DROPN          (1): Delete the n first items
+DEPTH          (0): Get the number of items
+SF             (1): Set flag
+CF             (1): Clear flag
+FS?            (1): Return 1 if flag is set, 0 otherwise
+FC?            (1): Return 0 if flag is set, 1 otherwise
+FS?C           (1): Do FS? then clear flag
+FC?C           (1): Do FC? then clear flag
+->STR          (1): Convert to string
+STR->          (0): Convert from string
+SUB            (3): Extract content from a string or a list
+->LIST         (1): Items to list
+LIST->         (1): Extract items from list
+GET            (2): Get an item from a list or array
+GETI           (2): Get an item from a list or array by increments
+PUT            (3): Put an item into a list or array
+PUTI           (3): Put an item into a list or array by increments
+SIZE           (1): Dimension of a list or array
+ARRY->         (1): Replace an array by all its elements
+->ARRY         (1): Create an array from a list of elements
+CON            (2): Create a constant array
+TRN            (1): Transpose a matrix-type array
+RDM            (2): Modify the dimension of an array
+IDN            (1): Create an identity matrix
+CROSS          (2): Cross product (vectorial product)
+DOT            (2): Dot product (scalar product)
+EVAL           (0): Evaluate item
+STO            (2): Store value in variable name
+RCL            (1): Recall value from variable name
+PURGE          (1): Remove a variable
+VARS           (0): Get the list of variables in current directory
+PATH           (0): Get the list from root to current directory
+CRDIR          (1): Create a directory
+HOME           (0): Set root directory as the current one
+UP             (0): Make the parent directory the current one
+BIN            (0): Use binary mode for binary integers
+OCT            (0): Use octal mode for binary integers
+DEC            (0): Use decimal mode for binary integers
+HEX            (0): Use hexadecimal mode for binary integers
+STWS           (1): Define the number of bits in binary integers (1 to 64)
+RCWS           (0): Get the number of bits in binary integers
+B->R           (1): Convert a binary integer into a real
+R->B           (1): Convert a real into a binary integer
+RCLF           (0): Save flag states in a binary integer
+STOF           (1): Read flag states from a binary integer
+WAIT           (1): Wait a number of seconds
+HALT           (0): Halt program execution
+SST            (0): Execute one step in the program
+ABORT          (0): Abort current program execution
+KILL           (0): Abort all programs execution
+CONT           (0): Resume program execution
+STD            (0): Set reals display to 'standard'
+SCI            (1): Set reals display to 'scientific'
+FIX            (1): Set reals display to 'fixed number of decimals'
+ENG            (1): Set reals display to 'engineering'
+CLLCD          (0): Clear the screen
+CLMF           (0): Clear the message flag => unfreeze stack display
+DISP           (2): Display an item on a line of the screen
+_READ          (1): Read file and puts its content in the stack
+_WRITE         (2): Write the second item into the file named by the first item
+_HACK-REAL-MGMT (1): Internal: tune real 'standard' display management
+_HACK-REAL-DOT (1): Internal: set whether or not to keep a trailing dot in reals display
+UNDO           (0): Undo last command, 50 levels by default
+_UNDO_LEVELS   (1): Define number of undo levels
+_UNDO_LEVELS?  (0): Get number of undo levels
+_UISET         (1): Define the type of user interface
 
-Type d'objet             Symbole        Exemple
+Object type              Symbol         Example
 ------------------------ -------------- -------------------------
 
-Donnée
-Nombre réel              1.23456e-25    
-Nombre Complexe          ( )            (123.45, 678.90)
-Entier Binaire           #              # 123AB
-Chaîne de Caractères     " "            "RÉSULTAT"
-Vecteur                  [ ]            [1.23 4.56 7.89]
-Matrice                  [[ ]]          [[1.23 4.56] [6.54 3.21]]
-Liste                    { }            {1.23 "ABC" # 45d}
+Data
+Real Number              1.23456e-25    
+Complex Number           ( )            (123.45, 678.90)
+Binary Integer           #              # 123AB
+String                   " "            "RESULT"
+Vector                   [ ]            [1.23 4.56 7.89]
+Matrix                   [[ ]]          [[1.23 4.56] [6.54 3.21]]
+List                     { }            {1.23 "ABC" # 45d}
 
-Noms
-Nom                      ' '            'CALC'
+Names
+Name                     ' '            'CALC'
 
-Programmes
-Programme                << >>          << DUP + SWAP >>
-Algébrique               ' '            'X+2*Y=Z'
+Procedures
+Program                  << >>          << DUP + SWAP >>
+Algebraic                ' '            'X+2*Y=Z'
 
-1: { 36.5714285714 281
-   37 43.1666666667 43
-1: { 36.5714285714 281
-   37 43.1666666667 43
-   (6.66666666667E10...
-   [[ (0,1) (.1,0) ]
-    [ (-5,.5) (-1,1) ]]
-   }
+2:                     
+1: 

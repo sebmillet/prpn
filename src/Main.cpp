@@ -172,7 +172,7 @@ static const string get_country_code_from_locale(const string& l) {
 	return r;
 }
 
-  // Define actual_country_code and 
+  // Define actual_country_code
   //
   // * IMPORTANT *
   //   osd must be instanciated before calling work_out_locale()
@@ -186,7 +186,15 @@ static void work_out_locale() {
 
 // Initialize gettext part
 #if ENABLE_NLS
-	char *sz = setlocale(LC_ALL, "");
+
+#ifdef PRPN_WX_GUI
+    const string get_wxlocale_canonicalname();
+	const string wxs = get_wxlocale_canonicalname();
+	const char *sz = wxs.c_str();
+#else
+	const char *sz = setlocale(LC_ALL, "");
+#endif
+
 	if (sz != NULL)
 		actual_locale = sz;
 
