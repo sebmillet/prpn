@@ -1,11 +1,11 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-# Sébastien Millet, April 2012, July 2018
+# Sébastien Millet, April 2012, July 2018, October 2020
 
 AC_PREREQ([2.65])
 
-AC_INIT([pRPN], [0.5.6], [milletseb@laposte.net])
+AC_INIT([pRPN], [0.6.0], [milletseb@laposte.net])
 
 AC_CONFIG_SRCDIR([src/Common.h])
 AC_CONFIG_AUX_DIR([admin])

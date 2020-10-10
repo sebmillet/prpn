@@ -1,4 +1,4 @@
-pRPN(1) 		    General Commands Manual		       pRPN(1)
+pRPN(1)			    General Commands Manual		       pRPN(1)
 
 
 
@@ -63,7 +63,7 @@ TYPES D'OBJETS
 	      ( )  (123.45, 678.90)
 
        Entier binaire
-	      #    # 123AB
+	      #	   # 123AB
 
        Chaîne de caractères
 	      " "  "RESULT"
@@ -78,7 +78,7 @@ TYPES D'OBJETS
 
        Noms
 
-       Nom    ´ ´  ´CALC´
+       Nom    ' '  'CALC'
 
        Procédures
 
@@ -86,11 +86,11 @@ TYPES D'OBJETS
 	      << >>	<< DUP + SWAP >>
 
        Algébrique
-	      ´ ´  ´X+2*Y=Z´
+	      ' '  'X+2*Y=Z'
 
 COMMANDES
-       Les  commandes  sont  suivies  du nombre d'arguments qu'elles prennent,
-       entre parenthèses. Ces arguments sont pris dans la pile.
+       Les commandes sont suivies du nombre d'arguments qu'elles prennent, en‐
+       tre parenthèses. Ces arguments sont pris dans la pile.
 
        _HELP (0)
 	      Display a help screen
@@ -529,7 +529,7 @@ COMMANDES
 	      Internal: tune real 'standard' display management
 
        _HACK-REAL-DOT (1)
-	      Internal: set whether or not to keep a  trailing	dot  in  reals
+	      Internal: set whether or not to keep a  trailing	dot  in	 reals
 	      display
 
        UNDO (0)
@@ -591,7 +591,7 @@ INSTRUCTIONS DE CONTRÔLE DES PROGRAMMES
        Séquence WHILE/REPEAT/END
 	      Exécute les instructions entre WHILE et REPEAT.
 	      Ensuite, prends l'élément en bas de la pile, s'il est vrai (voir
-	      ci-dessus),  exécute  les  instructions  du REPEAT et recommence
+	      ci-dessus),  exécute  les	 instructions  du REPEAT et recommence
 	      depuis le début du WHILE.
 
        Exemple
@@ -618,10 +618,10 @@ INSTRUCTIONS DE CONTRÔLE DES PROGRAMMES
 	      au départ, le deuxième (premier niveau  de  la  pile)  étant  la
 	      valeur   cible  du  compteur,  au-delà  de  laquelle  la	boucle
 	      s'arrête.
-	      START est une boucle anonyme. FOR  prend	un  nom  et  l'utilise
+	      START est une boucle anonyme. FOR	 prend	un  nom	 et  l'utilise
 	      comme variable locale pour le compteur.
 	      NEXT  incrémente	le compteur d'une unité si la valeur cible est
-	      supérieure à la valeur de  départ,  le  décrémente  d'une  unité
+	      supérieure à la valeur de	 départ,  le  décrémente  d'une	 unité
 	      sinon.
 	      STEP  prend la valeur en bas de la pile et l'ajoute au compteur.
 	      NEXT peut être utilisé indifféremment avec FOR  et  START,  même
@@ -643,7 +643,7 @@ INSTRUCTIONS DE CONTRÔLE DES PROGRAMMES
 	      << 0 1 ROT FOR i i + 2 STEP >>
 
        Documentation RPL
-	      RPL est le langage de programmation des calculatrices  HP  fonc‐
+	      RPL est le langage de programmation des calculatrices  HP	 fonc‐
 	      tionnant en notation polonaise inverse.
 	      http://en.wikipedia.org/wiki/RPL_%28programming_language%29
 
@@ -652,7 +652,7 @@ TRUCS
 	      Appuyer sur les touches <Ctrl-Entrée>.
 
        Redimensionner la fenêtre à sa taille originale
-	      Double-cliquer  sur  la  partie  "statut"  de la fenêtre, où les
+	      Double-cliquer  sur  la  partie  "statut"	 de la fenêtre, où les
 	      modes angulaire et binaire sont affichés.
 
 FICHIERS D'INITIALISATION
@@ -664,8 +664,8 @@ FICHIERS D'INITIALISATION
 
 AUTEUR
        Écrit par Sébastien Millet <sebastien.millet1@club-internet.fr>.
-       Autorisation est donnée de copier, distribuer et/ou modifier  ce  docu‐
-       ment  selon  les  termes de la licence "GNU General Public License". La
+       Autorisation est donnée de copier, distribuer et/ou modifier  ce	 docu‐
+       ment  selon  les	 termes de la licence "GNU General Public License". La
        version 3 est publiée par la Free Software Foundation.
 
 BUGS
@@ -674,8 +674,8 @@ BUGS
        Ces fonctions sont supposées apporter plus de précision au voisinage de
        x = 0. Rappel :
 	      LNP1(x) = LN(X + 1) et EXPM(x) = EXP(x) - 1
-	      A  l'heure  actuelle,  ces  fonctions  n'apportent  pas  plus de
-	      précision, elles appellent simplement LN() et EXP().
+	      A l'heure actuelle, ces fonctions n'apportent pas plus de préci‐
+	      sion, elles appellent simplement LN() et EXP().
 
        Différence entre prpn et prpnc
 
@@ -694,7 +694,7 @@ BUGS
 	      serait  d'empêcher  WxWidgets   d'initialiser   les   ressources
 	      graphiques  lorsque l'option -c est présente. Si vous connaissez
 	      un moyen robuste de le faire  (portable  quels  que  soient  les
-	      systèmes	et  les  versions...),	l'auteur  de  ce programme est
+	      systèmes	et  les	 versions...),	l'auteur  de  ce programme est
 	      intéressé !
 
        Windows
@@ -706,4 +706,4 @@ BUGS
 
 
 
-6 juillet 2018			 version 0.5.6			       pRPN(1)
+10 octobre 2020			 version 0.6.0			       pRPN(1)

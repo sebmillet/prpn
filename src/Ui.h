@@ -120,7 +120,7 @@ class DisplayStackLayout {
   bool status_shift;
 public:
   DisplayStackLayout(const int&, const int&);
-  DisplayStackLayout(const DisplayStackLayout&);
+//  DisplayStackLayout(const DisplayStackLayout&);
   void set_min_stack_height(const int&);
   int get_width() const;
   int get_height() const;

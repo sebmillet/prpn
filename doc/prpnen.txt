@@ -1,4 +1,4 @@
-pRPN(1) 		    General Commands Manual		       pRPN(1)
+pRPN(1)			    General Commands Manual		       pRPN(1)
 
 
 
@@ -10,7 +10,7 @@ SYNOPSIS
        prpn [options]
        prpnc [options]
 
-       prpn  is  the main, GUI, executable. prpnc is the command line version.
+       prpn  is	 the main, GUI, executable. prpnc is the command line version.
        prpnc is equivalent to prpn -c.
 
 
@@ -30,7 +30,7 @@ OPTIONS
 	      console mode.
 
        -w, --width width
-	      Set width to width, measured in number of  characters.  Defaults
+	      Set width to width, measured in number of	 characters.  Defaults
 	      to 23.
 
        -h, --height height
@@ -63,7 +63,7 @@ OBJECT TYPES
 	      ( )  (123.45, 678.90)
 
        Binary Integer
-	      #    # 123AB
+	      #	   # 123AB
 
        String " "  "RESULT"
 
@@ -75,7 +75,7 @@ OBJECT TYPES
 
        Names
 
-       Name   ´ ´  ´CALC´
+       Name   ' '  'CALC'
 
        Procedures
 
@@ -83,10 +83,10 @@ OBJECT TYPES
 	      << >>	<< DUP + SWAP >>
 
        Algebraic
-	      ´ ´  ´X+2*Y=Z´
+	      ' '  'X+2*Y=Z'
 
 COMMANDS
-       Commands  are  followed by the number of arguments they take, in paren‐
+       Commands	 are  followed by the number of arguments they take, in paren‐
        thesis. These arguments are taken from the stack.
 
        _HELP (0)
@@ -526,7 +526,7 @@ COMMANDS
 	      Internal: tune real 'standard' display management
 
        _HACK-REAL-DOT (1)
-	      Internal: set whether or not to keep a  trailing	dot  in  reals
+	      Internal: set whether or not to keep a  trailing	dot  in	 reals
 	      display
 
        UNDO (0)
@@ -558,8 +558,8 @@ LINEAR EQUATIONS SYSTEMS RESOLUTION
 
 PROGRAM CONTROL INSTRUCTIONS
        Note about booleans
-	      A test (IF, WHILE or UNTIL, see below) takes  one  item  in  the
-	      stack.  The  item  must  be  of type real. Any non-null value is
+	      A test (IF, WHILE or UNTIL, see below) takes  one	 item  in  the
+	      stack.  The  item	 must  be  of type real. Any non-null value is
 	      treated as TRUE, a null value is FALSE.
 	      Below, the term "bottom item of the stack" refers to the	actual
 	      object at level 1 of the stack.
@@ -586,25 +586,25 @@ PROGRAM CONTROL INSTRUCTIONS
 
        WHILE/REPEAT/END sequence
 	      Execute the instructions between WHILE and REPEAT.
-	      Then  take  the  bottom  item  of  the stack, if it is true (see
+	      Then  take  the  bottom  item  of	 the stack, if it is true (see
 	      above), execute the instructions after REPEAT, then restart  the
 	      sequence from the beginning of the WHILE.
 
        Example
-	      Calculate  the  smallest	N  for which sum(i^2 with i taking all
-	      integer values in the range 1..N) >= 100
+	      Calculate the smallest N for which sum(i^2 with i taking all in‐
+	      teger values in the range 1..N) >= 100
 	      << 0 0 -> n << WHILE DUP 100 < REPEAT n SQ + n 1 + 'n' STO END n
 	      >> >>
 
        DO/UNTIL/END sequence
-	      Execute  the  instructions  between  DO and UNTIL, then, between
-	      UNTIL and END.
+	      Execute the instructions between DO and UNTIL, then, between UN‐
+	      TIL and END.
 	      Then, take the bottom item of the stack,	if  it	is  true  (see
 	      above), restart the sequence from the beginning of the DO.
 
        Example
-	      Calculate  the  smallest	N  for which sum(1/i with i taking all
-	      integer values in the range 1..N) >= 3
+	      Calculate the smallest N for which sum(1/i with i taking all in‐
+	      teger values in the range 1..N) >= 3
 	      << 0 0 -> n << DO n 1 + 'n' STO n INV + UNTIL DUP 7 >= END n  >>
 	      >>
 
@@ -615,7 +615,7 @@ PROGRAM CONTROL INSTRUCTIONS
 	      get counter value, beyond which to stop the loop.
 	      START is an anonymous loop, FOR takes one name and uses it as  a
 	      local variable for the loop counter.
-	      NEXT  adds  1  to  the counter if the target is greater than the
+	      NEXT  adds  1  to	 the counter if the target is greater than the
 	      start, subtracts 1 otherwise.
 	      STEP takes one argument in the stack and adds it to the counter.
 	      NEXT can be used with either FOR or START, same with STEP.
@@ -625,12 +625,12 @@ PROGRAM CONTROL INSTRUCTIONS
 	      << 0 1 10 FOR i i SQ + NEXT >>
 
        Example 2
-	      Calculate  sum(2^i with i taking all integer values in the range
+	      Calculate	 sum(2^i with i taking all integer values in the range
 	      1..N), N being the first value in the stack
 	      << 0 1 1 4 ROLL START DUP ROT + SWAP 2 * NEXT DROP >> EVAL
 
        Example 3
-	      Calculate sum(i with i taking all  odd  integer  values  in  the
+	      Calculate sum(i with i taking all	 odd  integer  values  in  the
 	      range 1..N), N being the first value in the stack
 	      << 0 1 ROT FOR i i + 2 STEP >>
 
@@ -662,16 +662,16 @@ AUTHOR
 BUGS
        LNP1 and EXPM
 
-       These functions are supposed to	bring  extra  accuracy	near  x  =  0.
-       Reminder:
+       These functions are supposed to bring extra accuracy near x  =  0.  Re‐
+       minder:
 	      LNP1(x) = LN(X + 1) and EXPM(x) = EXP(x) - 1
 	      For  now, these functions do NOT bring extra accuracy, they just
 	      call underlying LN() and EXP() functions.
 
        Difference between prpn and prpnc
 
-       Linux  prpn can be run with -c option. In that case it is almost  iden‐
-	      tical  to  prpnc. "Almost" only. prpn is compiled with WxWidgets
+       Linux  prpn can be run with -c option. In that case it is almost	 iden‐
+	      tical  to	 prpnc. "Almost" only. prpn is compiled with WxWidgets
 	      library and performs GUI-specific initializations upon  startup.
 	      If graphical resources aren't found, it won't execute. For exam‐
 	      ple, if you run the following command
@@ -679,10 +679,10 @@ BUGS
 	      You get this result
 		   Error: Unable to initialize gtk, is DISPLAY set properly?
 	      prpnc solves this situation, as it  is  *not*  compiled  against
-	      WxWidgets  and  can  run	in a simple terminal with no graphical
-	      resources at all. Note a clean way to improve all this would  be
-	      to  prevent  WxWidgets  from initializing the GUI whenever -c is
-	      provided. If you know how to do that in a robust	way  (portable
+	      WxWidgets and can run in a simple terminal with no graphical re‐
+	      sources at all. Note a clean way to improve all this would be to
+	      prevent  WxWidgets from initializing the GUI whenever -c is pro‐
+	      vided. If you know how to do that	 in  a	robust	way  (portable
 	      across  systems and versions...), this program' author is inter‐
 	      ested!
 
@@ -695,4 +695,4 @@ BUGS
 
 
 
-July 6th, 2018			 version 0.5.6			       pRPN(1)
+October 10h, 2020		 version 0.6.0			       pRPN(1)

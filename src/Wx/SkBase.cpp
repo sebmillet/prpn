@@ -8,8 +8,15 @@
 // March, April 2012
 
 #include "../Ui.h"
+
+// save diagnostic state
+#pragma GCC diagnostic push
+// turn off the specific warning. Can also use "-Wall"
+#pragma GCC diagnostic ignored "-Wdeprecated-copy"
 #include <wx/wx.h>
 #include <wx/mstream.h>
+// turn the warnings back on
+#pragma GCC diagnostic pop
 
 #include "../platform/os_generic.h"
 #include "SkBase.h"

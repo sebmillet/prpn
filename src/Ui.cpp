@@ -27,6 +27,8 @@ using namespace std;
 
 #define PREFIX_NEXT_INSTRUCTION ">>> "
 
+#define DEFAULT_UI_CODE 1
+
 bool ui_has_menu_bar() { return true; }
 
 static void set_refresh_status_flag();
@@ -317,8 +319,8 @@ static TransStack *ts = 0;
 
 static typein_t typein_status = TYPEIN_EMPTY;
 
-const int default_disp_width = 23;
-const int default_disp_height = 5;
+const int default_disp_width = 30;
+const int default_disp_height = 6;
 DisplayStackLayout ui_dsl(-1, -1);
 static void ui_set_status_shift(const bool& b) {
   if (b == ui_dsl.get_status_shift())
@@ -329,7 +331,7 @@ static void ui_set_status_shift(const bool& b) {
 
 static IntervalShift ui_shift = {0, 0, 0};
 
-static int ui_code = 0;
+static int ui_code = DEFAULT_UI_CODE;
 static unsigned long int ui_code_sequence = 1000;
 
 static void refresh_path(const int&);
@@ -1131,7 +1133,7 @@ static void refresh_status() {
 
 void refresh_menu_buttons() {
 
-  static vector<string> disp;
+  static vector<string> display;
   static unsigned long int last_ui_code_sequence = 0;
 
   debug_write_v("Entering refresh_menu_buttons()");
@@ -1155,10 +1157,10 @@ void refresh_menu_buttons() {
   }
   debug_write_v("refresh_menu_buttons(): A");
   bool id = false;
-  if (menu_buttons_display.size() == disp.size()) {
+  if (menu_buttons_display.size() == display.size()) {
     id = true;
     vector<string>::iterator it1 = menu_buttons_display.begin();
-    for (vector<string>::iterator it2 = disp.begin(); it2 != disp.end(); it2++) {
+    for (vector<string>::iterator it2 = display.begin(); it2 != display.end(); it2++) {
       if (it1 == menu_buttons_display.end())
         throw(CalcFatal(__FILE__, __LINE__, "refresh_menu_buttons(): internal error!!!??"));
       if ((*it1) != (*it2))
@@ -1179,7 +1181,7 @@ void refresh_menu_buttons() {
       debug_write_v("Assigning menu button number %i the label '%s'", i - low, m.label.c_str());
       ui_impl->set_menu_button(i - low, m);
     }
-    disp = menu_buttons_display;
+    display = menu_buttons_display;
     last_ui_code_sequence = ui_code_sequence;
   }
   debug_write_v("Quitting refresh_menu_buttons()");
@@ -1601,11 +1603,11 @@ DisplayStackLayout::DisplayStackLayout(const int& w, const int& h) :
 }
 
   // Copy-constructor
-DisplayStackLayout::DisplayStackLayout(const DisplayStackLayout& dsl) :
-  width(dsl.width), height(dsl.height), min_stack(dsl.min_stack), max_stack(dsl.max_stack),
-  shift(dsl.shift), bmenu(dsl.bmenu), changed(dsl.changed),
-  to_be_continued(dsl.to_be_continued), to_be_continued_length(dsl.to_be_continued_length) {
-}
+//DisplayStackLayout::DisplayStackLayout(const DisplayStackLayout& dsl) :
+//  width(dsl.width), height(dsl.height), min_stack(dsl.min_stack), max_stack(dsl.max_stack),
+//  shift(dsl.shift), bmenu(dsl.bmenu), changed(dsl.changed),
+//  to_be_continued(dsl.to_be_continued), to_be_continued_length(dsl.to_be_continued_length) {
+//}
 
 void DisplayStackLayout::set_min_stack_height(const int& i) {
   min_stack = i;
@@ -1617,6 +1619,7 @@ int DisplayStackLayout::get_min_stack() const { return min_stack; }
 int DisplayStackLayout::get_max_stack() const { return max_stack; }
 
 void DisplayStackLayout::redefine_geometry(int new_max_stack, int new_width, bool no_callback_to_ui) {
+  debug_write("Call to redefine_geometry()");
   if (new_max_stack == -1)
     new_max_stack = (opt_height == -1 ? default_disp_height : opt_height);
   if (new_width == -1)
@@ -1637,6 +1640,7 @@ void DisplayStackLayout::redefine_geometry(int new_max_stack, int new_width, boo
       ui_set_recalc_stack_flag();
     }
   }
+  debug_write("End of redefine_geometry()");
 }
 
 int DisplayStackLayout::get_prompt_height() const { return height - max_stack - bmenu; }

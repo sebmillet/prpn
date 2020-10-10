@@ -17,6 +17,8 @@ bin_PROGRAMS=prpn prpnc
 prpn_SOURCES=${MAINSOURCES}
 prpnc_SOURCES=${MAINSOURCES}
 
+AM_CPPFLAGS = @CFLAGS@ -Wshadow -Wall -Wextra -I$(srcdir)
+
 Wx/SkHp28s.cpp: Wx/hp28sbg.cpp
 Wx/SkHp28s2.cpp: Wx/hp28sbg2.cpp
 Wx/SkHp28s3.cpp: Wx/hp28sbg3.cpp
@@ -35,7 +37,7 @@ Wx/hp28sbg3.cpp: Wx/hp28sbg3.png
 	xd -dhp28sbg3 Wx/hp28sbg3.png > $@
 	echo "unsigned long int nb_items_hp28sbg3 = sizeof(hp28sbg3) / sizeof(*hp28sbg3);" >> $@
 
-AM_CPPFLAGS=-DPKG_DOCDIR="\"${docdir}\"" -DPKG_HTMLDIR="\"${htmldir}\""
+AM_CPPFLAGS+= -DPKG_DOCDIR="\"${docdir}\"" -DPKG_HTMLDIR="\"${htmldir}\""
 AM_CPPFLAGS+= -DPKG_PREFIX="\"${prefix}\"" -DPKG_DATADIR="\"${datadir}\""
 AM_CPPFLAGS+= -DPKG_BINDIR="\"${bindir}\"" -DPKG_LOCALEDIR=\"$(localedir)\"
 

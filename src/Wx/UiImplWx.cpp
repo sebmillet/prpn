@@ -7,14 +7,27 @@
 // August 2009 - March 2010
 
 #include "../Ui.h"
+
+// save diagnostic state
+#pragma GCC diagnostic push
+// turn off the specific warning. Can also use "-Wall"
+#pragma GCC diagnostic ignored "-Wdeprecated-copy"
 #include <wx/wx.h>
+// turn the warnings back on
+#pragma GCC diagnostic pop
 
 #include "../platform/os_generic.h"
 
+// save diagnostic state
+#pragma GCC diagnostic push
+// turn off the specific warning. Can also use "-Wall"
+#pragma GCC diagnostic ignored "-Wdeprecated-copy"
   // To display HTML pages
 #include "wx/wxhtml.h"
 #include "wx/statline.h"
 #include "wx/clipbrd.h"
+// turn the warnings back on
+#pragma GCC diagnostic pop
 
 #include "../MyIntl.h"
 
@@ -75,14 +88,14 @@ const int MAX_WHEEL_STEPS_IN_1_EVENT = 5;
   // Common
 #define SIZER_CALCULATOR_BACKGROUND_COLOR (wxColour(0xFA, 0xFA, 0xFA))
   // Status area
-#define SIZER_STATUS_BORDER               0
-#define SIZER_STATUS_BORDER_STYLE         wxBORDER_NONE
+#define SIZER_STATUS_BORDERSTYLE          wxBORDER_NONE
+#define SIZER_STATUS_BORDERSIZE           0
 #define SIZER_STATUS_BACKGROUND_COLOUR    (wxColour(0xFA, 0xFA, 0xFA))
 #define SIZER_STATUS_WINDOW_ITEM_H_MARGIN 4
 #define SIZER_STATUS_WINDOW_ITEM_V_MARGIN 2
   // Path
-#define SIZER_PATH_BORDER                 0
 #define SIZER_PATH_BORDERSTYLE            wxBORDER_NONE
+#define SIZER_PATH_BORDERSIZE             0
 #define SIZER_PATH_FONTSIZE               10
 #define SIZER_PATH_FONTWEIGHT             wxFONTWEIGHT_NORMAL
 #define SIZER_PATH_BACKGROUND_COLOUR      SIZER_STATUS_BACKGROUND_COLOUR
@@ -144,7 +157,7 @@ sizer_color_codes_t sizer_color_codes[2][SLCC_NB_CODES] = {{
 //
 
 static gui_t gui_type(const int& ui_code) {
-  return ui_code == 0 ? GUI_SIZER : GUI_SKIN;
+  return ui_code <= 0 ? GUI_SIZER : GUI_SKIN;
 }
 
 static const wxColor sizer_slcc_to_bg_wxColor(const slcc_t& sizer_color_code) {
@@ -389,7 +402,7 @@ StatusWindow::StatusWindow(MyFrame *parent, wxWindowID id, const wxPoint &pos, c
       const wxBitmap& a_angle_deg, const wxBitmap& a_angle_rad,
       const wxBitmap& a_unit_bin, const wxBitmap& a_unit_oct,
       const wxBitmap& a_unit_dec, const wxBitmap& a_unit_hex)
-    : wxScrolledWindow(dynamic_cast<wxWindow*>(parent), id, pos, size, SIZER_STATUS_BORDER_STYLE),
+    : wxScrolledWindow(dynamic_cast<wxWindow*>(parent), id, pos, size, SIZER_STATUS_BORDERSTYLE),
     my_parent(parent),
     horoffset_exec(0),
     exec_norun(a_exec_norun), exec_run(a_exec_run),
@@ -560,9 +573,9 @@ void myBitmapButton::mySetBitmapSelected(wxBitmap* bm) {
   pressed = *bm;
 }
 
-void myBitmapButton::change_button_status(const bool& pressed) {
-  if (is_down != pressed) {
-    is_down = pressed;
+void myBitmapButton::change_button_status(const bool& is_pressed) {
+  if (is_down != is_pressed) {
+    is_down = is_pressed;
     Refresh();
   }
 }
@@ -579,18 +592,18 @@ static void build_menu_bar(const MenuDescription* const md, const int& nb, wxMen
 
   const MenuDescription *e = NULL;
   int e_type;
-    menuBar = new wxMenuBar;
+
+  menuBar = new wxMenuBar;
   vector<int> menu_stack;
   wxMenu **menus;
   menus = new wxMenu*[nb];
   int actual_menu;
   wxMenu *parent_wxMenu;
-  string s;
   int builtin_id;
   for (int i = 0; i < nb || menu_stack.size() >= 1; i++) {
     if (i < nb) {
       e = &(md[i]);
-      s = e->cmd;
+      string s = e->cmd;
       if (const_char_is_empty(e->text) && const_char_is_empty(e->cmd))
         e_type = MENUDESC_CLOSE;
       else if (const_char_is_empty(e->text) && s == "__SEPARATOR__")
@@ -630,13 +643,13 @@ static void build_menu_bar(const MenuDescription* const md, const int& nb, wxMen
           if (interface_menu) {
             wxMenuItem *wxmi0 = menus[actual_menu]->AppendCheckItem(ID_START_INTERFACE_CHOICE_MENUS,
                 const_char_to_wxString(_(MENU_LABEL_SWITCH_UI_SIZER)), const_char_to_wxString(_(MENU_HELP_SWITCH_UI_SIZER)));
-            wxmi0->Check(ui_code == 0);
-            wxmi0->Enable(ui_code != 0);
+            wxmi0->Enable(ui_code > 0);
+            wxmi0->Check(ui_code <= 0);
             for (int u = 0; static_cast<unsigned int>(u) < sizeof(skins) / sizeof(*skins); u++) {
               wxMenuItem *wxmi1 = menus[actual_menu]->AppendCheckItem(ID_START_INTERFACE_CHOICE_MENUS + u + 1,
                   const_char_to_wxString(_(skins[u]->menu_label)), const_char_to_wxString(_(skins[u]->menu_help)));
-              wxmi1->Check(ui_code == u + 1);
               wxmi1->Enable(ui_code != u + 1);
+              wxmi1->Check(ui_code == u + 1);
             }
           }
         }
@@ -692,7 +705,7 @@ void MyFrame::check_path_width() {
   if (read_width != last_read_width) {
     do {
       l++;
-      tmp = new wxStaticText(this, wxID_ANY, wxString(wxChar('Q'), l), wxPoint(0, 0), wxSize(wxDefaultSize),
+      tmp = new wxStaticText(this, wxID_ANY, wxString(wxChar('Q'), l), wxPoint(0, 0), wxSize(0, 0),
         SIZER_PATH_BORDERSTYLE);
       my_set_font(tmp, SIZER_PATH_FONTSIZE, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, SIZER_PATH_FONTWEIGHT, 0,
           (gui == GUI_SIZER ? NULL : &(skin->f_path)));
@@ -815,28 +828,31 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
     debug_write_v("Loadging bitmap images...");
     skin->load_bitmaps();
     debug_write_v("Finished loadging bitmap images...");
-    if (skin->menubar == MB_DEFAULT)
+    if (skin->menubar == MB_DEFAULT) {
       has_menu_bar = ui_has_menu_bar();
-    else
+    } else {
       has_menu_bar = (skin->menubar == MB_ENFORCE_MENU);
-      ui_dsl.redefine_geometry(skin->stack_height, skin->stack_width, true);
+    }
+    ui_dsl.redefine_geometry(skin->stack_height, skin->stack_width, true);
   }
 
-  if (gui == GUI_SIZER)
+  if (gui == GUI_SIZER) {
     SetBackgroundColour(SIZER_CALCULATOR_BACKGROUND_COLOR);
-
-  if (gui == GUI_SKIN)
+  } else if (gui == GUI_SKIN) {
     SetSize(wxSize(skin->frame_w, skin->frame_h));
+  }
 
+  wxMenuBar *menuBar;
   if (has_menu_bar) {
-    wxMenuBar *menuBar;
     build_menu_bar(menus_descriptions, nb_menus_descriptions, menuBar, ui_code);
+
     for (int i = 0; i < nb_menus_descriptions; i++) {
       Connect(ID_START_MENUS + i, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(MyFrame::OnMenu));
     }
     for (int i = 0; static_cast<unsigned int>(i) <= sizeof(skins) / sizeof(*skins); i++) {
       Connect(ID_START_INTERFACE_CHOICE_MENUS + i, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(MyFrame::OnMenu));
     }
+
     SetMenuBar(menuBar);
   }
 
@@ -847,7 +863,9 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
 
     // Status line (red arrow to show shift pressed, ...)
   if (gui == GUI_SIZER) {
-    stwin = new StatusWindow(this, wxID_ANY, wxPoint(wxDefaultPosition), wxSize(wxDefaultSize), SIZER_STATUS_BACKGROUND_COLOUR,
+        // FIXME: 16 is the height of images in the status bar, had better be
+        // read from the xpm files.
+    stwin = new StatusWindow(this, wxID_ANY, wxPoint(wxDefaultPosition), wxSize(0, 16), SIZER_STATUS_BACKGROUND_COLOUR,
         exec_norun_xpm, exec_run_xpm,
         shiftsel_xpm, shiftuns_xpm,
         angle_deg_xpm, angle_rad_xpm,
@@ -861,7 +879,7 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
   }
 
   if (gui == GUI_SIZER)
-    topSizer->Add(stwin, 0, wxLEFT | wxRIGHT | wxTOP | wxEXPAND, SIZER_STATUS_BORDER);
+    topSizer->Add(stwin, 0, wxALL | wxEXPAND, SIZER_STATUS_BORDERSIZE);
   else
     stwin->SetSize(skin->r_status.x, skin->r_status.y, skin->r_status.w, skin->r_status.h);
 
@@ -872,7 +890,7 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
       (gui == GUI_SIZER ? NULL : &(skin->f_path)));
   if (gui == GUI_SIZER) {
     path->SetForegroundColour(SIZER_PATH_FOREGROUND_COLOUR);
-    topSizer->Add(path, 0, wxLEFT | wxRIGHT | wxBOTTOM | wxEXPAND, SIZER_PATH_BORDER);
+    topSizer->Add(path, 0, wxLEFT | wxRIGHT | wxBOTTOM | wxEXPAND, SIZER_PATH_BORDERSIZE);
   } else if (gui == GUI_SKIN)
     shape(path, skin->r_path.x, skin->r_path.y, skin->r_path.w, skin->r_path.h, skin->path_bg_colour, skin->f_path.colour);
 
@@ -880,9 +898,9 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
   build_dispStack();
 
     // Type-in area
-  int w, h;
-  dispStack[0].t->GetSize(&w, &h);
-  textTypein = new wxTextCtrl(this, ID_TEXTTYPEIN, _T(""), wxPoint(wxDefaultPosition), wxSize(5, h),
+  int ignored, hh;
+  dispStack[0].t->GetSize(&ignored, &hh);
+  textTypein = new wxTextCtrl(this, ID_TEXTTYPEIN, _T(""), wxPoint(wxDefaultPosition), wxSize(0, hh),
             SIZER_TYPEIN_BORDERSTYLE | wxTE_PROCESS_ENTER | wxTE_MULTILINE);
   my_set_font(textTypein, SIZER_TYPEIN_FONTSIZE, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, SIZER_TYPEIN_FONTWEIGHT, 0,
                 gui == GUI_SIZER ? NULL : &(skin->f_typein));
@@ -1056,8 +1074,6 @@ void MyFrame::textTypein_recalc_and_setsize() {
 
   int x, y, w, h;
   int y0 = my_y0 + my_get_max_stack() * (my_y1 - my_y0);
-
-  debug_write_v("textTypein: x = %i, y = %i, w = %i, h = %i", x, y, w, h);
 
   textTypein->GetPosition(&x, &y);
   textTypein->GetSize(&w, &h);
@@ -1329,12 +1345,21 @@ void MyFrame::OnPaint(wxPaintEvent& ev) {
     int yy = my_y0 + (my_get_max_stack() + 1) * (my_y1 - my_y0);
     int hh = fh - yy;
 
-    debug_write_i("PAINT::minimal client width = %i", my_min_client_width);
-    debug_write_i("PAINT::minimal client height = %i", my_min_client_height);
-    SetMinSize(wxSize(my_min_client_width, my_min_client_height - hh / 2));
+    if (gui == GUI_SIZER) {
+      debug_write_i("PAINT::minimal client width = %i", my_min_client_width);
+      debug_write_i("PAINT::minimal client height = %i", my_min_client_height);
+      SetMinSize(wxSize(my_min_client_width, my_min_client_height - hh / 3));
+    } else if (gui == GUI_SKIN) {
+      SetMinSize(frame_size);
+      SetMaxSize(frame_size);
+    }
 
-    debug_write_v("  my_x0 = %i, my_w0 = %i, my_h0 = %i, my_y0 = %i, my_y1 = %i, "
-      "my_char_width = %i, s1 = %i, s2 = %i", my_x0, my_w0, my_h0, my_y0, my_y1, my_char_width, s1, s2);
+    debug_write_v(
+        "  my_x0 = %i, my_w0 = %i, my_h0 = %i, my_y0 = %i, my_y1 = %i,"
+        "my_char_width = %i, s1.w = %i, s1.h = %i, s2.w = %i, s2.h = %i",
+        my_x0, my_w0, my_h0, my_y0, my_y1, my_char_width,
+        s1.GetWidth(), s1.GetHeight(), s2.GetWidth(), s2.GetHeight()
+    );
 
     xy_set = true;
   }
@@ -1358,8 +1383,10 @@ void MyFrame::OnPaint(wxPaintEvent& ev) {
 void MyFrame::OnSize(wxSizeEvent& ev) {
   debug_write_v("MyFrame::OnSize() begin");
 
-  if (gui == GUI_SKIN)
+  if (gui == GUI_SKIN) {
+    debug_write_v("MyFrame::OnSize() end");
     return;
+  }
 
   wxSize s = GetClientSize();
   int new_w = s.GetWidth();
@@ -1744,6 +1771,7 @@ void MyApp::build_top_frame() {
   frame = new MyFrame(_T(PACKAGE_NAME), frame_pos, wxSize(0, 0),
     menus_descriptions, nb_menus_descriptions, btn_descriptions, nb_btn_descriptions, ui_get_ui_code());
 
+  debug_write_v("frame size: w = %i, h = %i", frame->GetSize().GetWidth(), frame->GetSize().GetHeight());
   frame->Show(true);
   SetTopWindow(frame);
 

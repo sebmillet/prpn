@@ -1,3 +1,9 @@
+2020-10-10 Sébastien Millet <milletseb@laposte.net>
+
+	* Release 0.6.0 built
+	* Fixes display issues with resizable GUI
+	* Fixes display issues with skins
+
 2018-07-06 Sébastien Millet <milletseb@laposte.net>
 
 	* Release 0.5.6 built
