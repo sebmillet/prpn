@@ -98,7 +98,7 @@ const int MAX_WHEEL_STEPS_IN_1_EVENT = 5;
 #define SIZER_TYPEIN_FOREGROUND_COLOUR    (*wxBLACK)
 #define SIZER_TYPEIN_BORDERSTYLE          wxBORDER_NONE
 #define SIZER_TYPEIN_BORDERSIZE           0
-#define SIZER_TYPEIN_FONTSIZE             14
+#define SIZER_TYPEIN_FONTSIZE             12
 #define SIZER_TYPEIN_FONTWEIGHT           wxFONTWEIGHT_NORMAL
   // Buttons layout
 #define SIZER_BTN_FONTSIZE                10
@@ -214,7 +214,7 @@ static int my_get_max_stack() {
   return n;
 }
 
-static void my_set_font(wxWindow *ctrl, const int& pointSize, const wxFontFamily& family, const int& style,
+static void my_set_font(wxWindow *ctrl, const int& pointSize, const wxFontFamily& family, const wxFontStyle& style,
                   const wxFontWeight& weight, const bool& underline, font_t const *pf) {
   if (pf == NULL) {
     ctrl->SetFont(wxFont(pointSize, family, style, weight, underline));
@@ -692,7 +692,7 @@ void MyFrame::check_path_width() {
   if (read_width != last_read_width) {
     do {
       l++;
-      tmp = new wxStaticText(this, wxID_ANY, wxString(wxChar(' '), l), wxPoint(0, 0), wxSize(wxDefaultSize),
+      tmp = new wxStaticText(this, wxID_ANY, wxString(wxChar('Q'), l), wxPoint(0, 0), wxSize(wxDefaultSize),
         SIZER_PATH_BORDERSTYLE);
       my_set_font(tmp, SIZER_PATH_FONTSIZE, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, SIZER_PATH_FONTWEIGHT, 0,
           (gui == GUI_SIZER ? NULL : &(skin->f_path)));
@@ -784,7 +784,7 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
   const MenuDescription*& md, int& nb_md, const BtnDescription*& bd, int& nb_bd, const int& u)
     : wxFrame(NULL, -1, title, pos, size,
         gui_type(u) == GUI_SIZER ?  wxDEFAULT_FRAME_STYLE :
-                        (wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxSYSTEM_MENU | wxCAPTION | wxCLOSE_BOX)),
+                        (wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxSYSTEM_MENU | wxCAPTION | wxCLOSE_BOX | wxRESIZE_BORDER)),
         menus_descriptions(md), nb_menus_descriptions(nb_md), btn_descriptions(bd), nb_btn_descriptions(nb_bd),
         gui(gui_type(u)), xy_set(false), my_x0(-1), my_w0(-1), my_h0(-1), my_y0(-1), my_y1(-1),
         my_char_width(-1), my_initial_stack_lines(-1), my_initial_stack_width(-1),
@@ -931,7 +931,7 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
         int cc_r; int cc_g; int cc_b;
         ui_decode_color_code(btn_descriptions[i].main_display, sz, cc_r, cc_g, cc_b);
         b = new wxButton(this, my_id, const_char_to_wxString(sz),
-            wxPoint(wxDefaultPosition), wxSize(wxDefaultSize));
+            wxPoint(wxDefaultPosition), wxSize(0, 0));
         if (cc_r >= 0 && cc_r <= 255 && cc_g >= 0 && cc_g <= 255 && cc_b >= 0 && cc_b <= 255)
           b->SetBackgroundColour(wxColour(cc_r, cc_g, cc_b));
 
@@ -1122,7 +1122,7 @@ void MyFrame::build_dispStack() {
 
     }
     l1.w = new wxWindow(this, wxID_ANY, wxp, wxs, SIZER_STACK_BORDERSTYLE);
-    l1.t = new wxStaticText(l1.w, wxID_ANY, wxString(wxChar(' '), ui_dsl.get_width()),
+    l1.t = new wxStaticText(l1.w, wxID_ANY, wxString(wxChar('Q'), ui_dsl.get_width()),
         wxPoint(0, 0), wxs, SIZER_STACK_BORDERSTYLE);
     stack_line_set_font(l1.t);
     if (gui == GUI_SIZER) {
@@ -1298,12 +1298,14 @@ void MyFrame::OnPaint(wxPaintEvent& ev) {
     my_x0 = x;
     my_y0 = y;
     my_y1 = y2;
-    wxStaticText *t1 = new wxStaticText(this, wxID_ANY, wxString(wxChar(' '), 1),
+    wxStaticText *t1 = new wxStaticText(this, wxID_ANY, "",
       wxPoint(0, 0), wxSize(wxDefaultSize), SIZER_STACK_BORDERSTYLE);
     stack_line_set_font(t1);
-    wxStaticText *t2 = new wxStaticText(this, wxID_ANY, wxString(wxChar(' '), 2),
+    t1->SetLabel("Q");
+    wxStaticText *t2 = new wxStaticText(this, wxID_ANY, "",
       wxPoint(0, 0), wxSize(wxDefaultSize), SIZER_STACK_BORDERSTYLE);
     stack_line_set_font(t2);
+    t2->SetLabel("QQ");
     wxSize s1 = t1->GetSize();
     wxSize s2 = t2->GetSize();
     t1->Destroy();
@@ -1332,7 +1334,7 @@ void MyFrame::OnPaint(wxPaintEvent& ev) {
     SetMinSize(wxSize(my_min_client_width, my_min_client_height - hh / 2));
 
     debug_write_v("  my_x0 = %i, my_w0 = %i, my_h0 = %i, my_y0 = %i, my_y1 = %i, "
-      "my_char_width = %i", my_x0, my_w0, my_h0, my_y0, my_y1, my_char_width);
+      "my_char_width = %i, s1 = %i, s2 = %i", my_x0, my_w0, my_h0, my_y0, my_y1, my_char_width, s1, s2);
 
     xy_set = true;
   }
@@ -1739,7 +1741,7 @@ void MyApp::build_top_frame() {
   int nb_btn_descriptions;
   ui_get_buttons_layout_description(btn_descriptions, nb_btn_descriptions);
 
-  frame = new MyFrame(_T(PACKAGE_NAME), frame_pos, wxSize(wxDefaultSize),
+  frame = new MyFrame(_T(PACKAGE_NAME), frame_pos, wxSize(0, 0),
     menus_descriptions, nb_menus_descriptions, btn_descriptions, nb_btn_descriptions, ui_get_ui_code());
 
   frame->Show(true);

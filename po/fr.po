@@ -197,7 +197,7 @@ msgstr "Infinite Result (résultat infini) traité en exception"
 
 #: src/Stack.cpp:1583
 msgid "[TRANSLATE_SPECIAL_AUTHOR]"
-msgstr "Sébastien Millet 2012"
+msgstr "Sébastien Millet 2018"
 
 #: src/Ui.cpp:457
 msgid "&File"
