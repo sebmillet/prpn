@@ -7,7 +7,13 @@ INPUT=$2
 OUTPUT=$3
 REFERENCE=$4
 
-$PRG -abz < $INPUT > $OUTPUT
+$PRG -abz < $INPUT > $OUTPUT 2>&1
+sed -i -e "/Warning: Mismatch between the program and library build versions \
+detected/d" $OUTPUT
+sed -i -e "/The library used .* (wchar_t,compiler with C++ ABI .*,wx \
+containers,compatible with .*)/d" $OUTPUT
+sed -i -e "/and your program used .* (wchar_t,compiler with C++ ABI .*,wx \
+containers,compatible with .*)/d" $OUTPUT
 
 REP=$(pwd | sed 's/.*\///')
 

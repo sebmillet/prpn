@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -u
+
 PRG=../../src/prpn
 
 PRGARGS=$1
@@ -20,6 +22,17 @@ while [ $i -le $N ]; do
 	OO="${OUTPUT}${i}${SUFFIXE}"
 	RR="${REFERENCE}${i}${SUFFIXE}"
 	$PRG $PRGARGS -abz < $II > $OO 2>&1
+
+        # Not a real FIXME
+        # ABI version errors might be bad, but they are not relevant when
+        # executing the test plan
+    sed -i -e "/Warning: Mismatch between the program and library build \
+versions detected/d" $OO
+    sed -i -e "/The library used .* (wchar_t,compiler with C++ ABI .*,wx \
+containers,compatible with .*)/d" $OO
+    sed -i -e "/and your program used .* (wchar_t,compiler with C++ ABI .*,wx \
+containers,compatible with .*)/d" $OO
+
 	if [ "$8" = "--batch" ]; then
 		cmp $RR $OO 2>&1 > /dev/null
 		if [ "$?" -ne "0" ]; then
