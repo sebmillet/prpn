@@ -16,7 +16,7 @@ AC_CANONICAL_HOST
 AC_USE_SYSTEM_EXTENSIONS
 
 AM_INIT_AUTOMAKE([subdir-objects])
-AM_GNU_GETTEXT
+AM_GNU_GETTEXT([external])
 
 AM_MAINTAINER_MODE
 
@@ -115,4 +115,5 @@ AC_TYPE_SIZE_T
 # Checks for library functions.
 AC_CHECK_FUNCS([sleep])
 
-AC_OUTPUT(Makefile src/Makefile doc/Makefile intl/Makefile po/Makefile.in)
+AC_OUTPUT(Makefile src/Makefile doc/Makefile po/Makefile.in)
+

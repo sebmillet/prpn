@@ -1815,38 +1815,6 @@ else
 fi
 ])
 
-# Copyright (C) 2003-2020 Free Software Foundation, Inc.
-#
-# This file is free software; the Free Software Foundation
-# gives unlimited permission to copy and/or distribute it,
-# with or without modifications, as long as this notice is preserved.
-
-# AM_PROG_MKDIR_P
-# ---------------
-# Check for 'mkdir -p'.
-AC_DEFUN([AM_PROG_MKDIR_P],
-[AC_PREREQ([2.60])dnl
-AC_REQUIRE([AC_PROG_MKDIR_P])dnl
-dnl FIXME we are no longer going to remove this! adjust warning
-dnl FIXME message accordingly.
-AC_DIAGNOSE([obsolete],
-[$0: this macro is deprecated, and will soon be removed.
-You should use the Autoconf-provided 'AC][_PROG_MKDIR_P' macro instead,
-and use '$(MKDIR_P)' instead of '$(mkdir_p)'in your Makefile.am files.])
-dnl Automake 1.8 to 1.9.6 used to define mkdir_p.  We now use MKDIR_P,
-dnl while keeping a definition of mkdir_p for backward compatibility.
-dnl @MKDIR_P@ is magic: AC_OUTPUT adjusts its value for each Makefile.
-dnl However we cannot define mkdir_p as $(MKDIR_P) for the sake of
-dnl Makefile.ins that do not define MKDIR_P, so we do our own
-dnl adjustment using top_builddir (which is defined more often than
-dnl MKDIR_P).
-AC_SUBST([mkdir_p], ["$MKDIR_P"])dnl
-case $mkdir_p in
-  [[\\/$]]* | ?:[[\\/]]*) ;;
-  */*) mkdir_p="\$(top_builddir)/$mkdir_p" ;;
-esac
-])
-
 # Helper functions for option handling.                     -*- Autoconf -*-
 
 # Copyright (C) 2001-2020 Free Software Foundation, Inc.
@@ -2263,31 +2231,13 @@ AC_SUBST([am__tar])
 AC_SUBST([am__untar])
 ]) # _AM_PROG_TAR
 
-m4_include([admin/codeset.m4])
 m4_include([admin/gettext.m4])
-m4_include([admin/glibc2.m4])
-m4_include([admin/glibc21.m4])
+m4_include([admin/host-cpu-c-abi.m4])
 m4_include([admin/iconv.m4])
-m4_include([admin/intdiv0.m4])
-m4_include([admin/intl.m4])
 m4_include([admin/intlmacosx.m4])
-m4_include([admin/intmax.m4])
-m4_include([admin/inttypes-pri.m4])
-m4_include([admin/inttypes_h.m4])
-m4_include([admin/lcmessage.m4])
 m4_include([admin/lib-ld.m4])
 m4_include([admin/lib-link.m4])
 m4_include([admin/lib-prefix.m4])
-m4_include([admin/lock.m4])
-m4_include([admin/longlong.m4])
 m4_include([admin/nls.m4])
 m4_include([admin/po.m4])
-m4_include([admin/printf-posix.m4])
 m4_include([admin/progtest.m4])
-m4_include([admin/size_max.m4])
-m4_include([admin/stdint_h.m4])
-m4_include([admin/uintmax_t.m4])
-m4_include([admin/visibility.m4])
-m4_include([admin/wchar_t.m4])
-m4_include([admin/wint_t.m4])
-m4_include([admin/xsize.m4])
