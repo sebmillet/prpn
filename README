@@ -155,7 +155,7 @@ Below is found information specific to this package.
          Execute:
            nmake -f makefile.vc
 
-       The executables are found in the build folers.
+       The executables are found in the build folders.
 
     (4) Note about Borland C++
         At first pRPN used to be compiled using Borland C++ 5.5. It worked
