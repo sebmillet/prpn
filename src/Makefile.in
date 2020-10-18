@@ -141,8 +141,8 @@ am__objects_1 = prpn-Main.$(OBJEXT) prpn-Compat.$(OBJEXT) \
 @BUILD_CLIENTGUI_TRUE@	Wx/prpn-hp28sbg3.$(OBJEXT)
 am_prpn_OBJECTS = $(am__objects_1) $(am__objects_2)
 prpn_OBJECTS = $(am_prpn_OBJECTS)
-prpn_LDADD = $(LDADD)
-prpn_LINK = $(CXXLD) $(prpn_CXXFLAGS) $(CXXFLAGS) $(prpn_LDFLAGS) \
+prpn_DEPENDENCIES =
+prpn_LINK = $(CXXLD) $(prpn_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
 am__objects_3 = Main.$(OBJEXT) Compat.$(OBJEXT) PGetOpt.$(OBJEXT) \
 	Scalar.$(OBJEXT) Stack.$(OBJEXT) Variable.$(OBJEXT) \
@@ -397,7 +397,7 @@ CMDSFR = ${top_srcdir}/doc/cmdsfr.txt
 CMDSFRTMP = ${top_srcdir}/doc/cmdsfr-0-tmp.txt
 noinst_DATA = ${CMDSEN} ${CMDSFR}
 @BUILD_CLIENTGUI_TRUE@prpn_CXXFLAGS = @WX_CXXFLAGS@ -DFOREIGN_MAIN -DPRPN_WX_GUI
-@BUILD_CLIENTGUI_TRUE@prpn_LDFLAGS = @WX_LIBS@
+@BUILD_CLIENTGUI_TRUE@prpn_LDADD = @WX_LIBS@
 all: all-am
 
 .SUFFIXES:

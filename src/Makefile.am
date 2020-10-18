@@ -66,6 +66,6 @@ prpn_SOURCES+=Wx/UiImplWx.cpp Wx/SkBase.cpp Wx/SkBase.h \
   Wx/SkHp28s3.cpp Wx/hp28sbg3.png Wx/hp28sbg3.cpp \
 	Wx/xpm prpn.rc prpn.ico
 prpn_CXXFLAGS=@WX_CXXFLAGS@ -DFOREIGN_MAIN -DPRPN_WX_GUI
-prpn_LDFLAGS=@WX_LIBS@
+prpn_LDADD=@WX_LIBS@
 
 endif

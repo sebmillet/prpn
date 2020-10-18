@@ -90,12 +90,6 @@ AM_CONDITIONAL(BUILD_CLIENTGUI, [ test "$wxWin" = 1 ])
 AC_SUBST([WX_CXXFLAGS])
 AC_SUBST([WX_LIBS])
 
-# Hack to successfully link wuth gcc version 4.6, cf. URL
-# http://ubuntuforums.org/showthread.php?p=11347972&posted=1#post11347972
-# It is gruiiik, but don't know how to change the options order
-# in g++ call.
-CXXFLAGS="$CXXFLAGS -Wl,--no-as-needed"
-
 # Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC

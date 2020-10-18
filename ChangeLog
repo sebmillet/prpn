@@ -1,3 +1,8 @@
+2020-10-18 Sébastien Millet <milletseb@laposte.net>
+
+	* 0.6.0 release candidate
+	* Windows executable OK (cross-compilation from Linux)
+
 2020-10-11  gettextize  <bug-gnu-gettext@gnu.org>
 
 	* admin/gettext.m4: Upgrade to gettext-0.21.
@@ -14,7 +19,7 @@
 
 2020-10-10 Sébastien Millet <milletseb@laposte.net>
 
-	* Release 0.6.0 built
+	* Release 0.6.0 started
 	* Fixes display issues with resizable GUI
 	* Fixes display issues with skins
 

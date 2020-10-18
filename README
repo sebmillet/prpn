@@ -48,7 +48,6 @@ instructions to compile and install the program, using the usual
 This INSTALL file is the one provided by default by autotools.
 Below is found information specific to this package.
 
-
 - Linux compilation
 
     The configure script provides the following options in addition to the
@@ -72,8 +71,56 @@ Below is found information specific to this package.
       Using bakefile generated makefiles under Linux is presumed to work fine
       but has not been tested for a while.
 
+- Windows compilation (NEW)
 
-- Windows compilation
+    Windows executable is now generated using Linux' mingw, doing
+    cross-compilation.
+    To be precise, the compiler is x86_64-w64-mingw32-g++.
+
+    To produce prpn.exe and prpnc.exe, you have to do the following:
+
+    (1) Install the below packages. On Arch Linux (October 2020), they all are
+        in the meta-package 'mingw-w64-toolchain'.
+          mingw-w64-binutils
+          mingw-w64-crt
+          mingw-w64-winpthreads
+          mingw-w64-headers
+          mingw-w64-gcc
+
+    (2) Install mingw-w64-wxmsw. On Arch Linux, it is available on AUR.
+        On 16th October 2020, you have to choose between
+          aur/mingw-w64-wxmsw 1:3.0.5.1-1  (release pkg)
+            and
+          aur/mingw-w64-wxmsw3.1 1:3.1.4-1 (development branch pkg)
+
+        The published windows executable is produced using the release package,
+        that is, aur/mingw-w64-wxmsw (=> 3.0 wx library).
+
+    (3) Make sure the program /usr/x86_64-w64-mingw32/bin/wx-config default
+        config is *static* wx library in version *3.0*. You can check it by
+        executing it with the --list option. Example of wx-config execution:
+
+        --
+          $ /usr/x86_64-w64-mingw32/bin/wx-config --list
+
+          Default config is x86_64-w64-mingw32-msw-unicode-static-3.0
+
+          Default config will be used for output
+
+          Alternate matches:
+          x86_64-w64-mingw32-msw-unicode-3.0
+        --
+
+        Note that after installing aur/mingw-w64-wxmsw, you should get it by
+        default (static, 3.0), but I strongly recommend to double-check.
+
+    (4) Launch the compilation by executing the following:
+          ./configure --host=x86_64-w64-mingw32 --with-wx-config=/usr/x86_64-w64-mingw32/bin/wx-config
+          make
+
+        This'll produce prpn.exe and prpnc.exe in the src directory.
+
+- Windows compilation (OLD)
 
     pRPN compiles with MinGW or Microsoft Visual C++ (msvc)
     It does not compile with Borland C++, see (4) below
