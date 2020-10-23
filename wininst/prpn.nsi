@@ -7,11 +7,13 @@
 
 ;--------------------------------
 
+Unicode True
+
 ; The name of the installer
 Name "pRPN"
 
 ; The file to write
-OutFile "pRPN-0.5.5-setup.exe"
+OutFile "pRPN-0.6.0-setup.exe"
 
 ; The default installation directory
 InstallDir $PROGRAMFILES\pRPN
@@ -66,9 +68,20 @@ Section !$(Sec1)
 	; Put file there
 	File "prpn.exe"
 	File "prpnc.exe"
-	File "libiconv2.dll"
-	File "libintl3.dll"
-	File "mingwm10.dll"
+	File "libgcc_s_seh-1.dll"
+	File "libiconv-2.dll"
+	File "libintl-8.dll"
+	File "libjpeg-8.dll"
+	File "liblzma-5.dll"
+	File "libpng16-16.dll"
+	File "libstdc++-6.dll"
+	File "libtiff-5.dll"
+	File "libwinpthread-1.dll"
+	File "libzstd.dll"
+	File "wxbase30u_gcc_custom.dll"
+	File "wxmsw30u_core_gcc_custom.dll"
+	File "wxmsw30u_html_gcc_custom.dll"
+	File "zlib1.dll"
 
 	StrCmp $(LNCC) "en" 0 +3
 	File "pRPNen.html"
@@ -99,7 +112,7 @@ Section !$(Sec2)
 
 	SetOutPath $INSTDIR
 	; Put file there
-	File "prpn-0.5.5.tar.gz"
+	File "prpn-0.6.0.tar.gz"
 
 SectionEnd
 
@@ -128,9 +141,21 @@ Section "Uninstall"
 	; Remove files and uninstaller
 	Delete $INSTDIR\prpn.exe
 	Delete $INSTDIR\prpnc.exe
-	Delete $INSTDIR\libiconv2.dll
-	Delete $INSTDIR\libintl3.dll
-	Delete $INSTDIR\mingwm10.dll
+
+	Delete $INSTDIR\libgcc_s_seh-1.dll
+	Delete $INSTDIR\libiconv-2.dll
+	Delete $INSTDIR\libintl-8.dll
+	Delete $INSTDIR\libjpeg-8.dll
+	Delete $INSTDIR\liblzma-5.dll
+	Delete $INSTDIR\libpng16-16.dll
+	Delete $INSTDIR\libstdc++-6.dll
+	Delete $INSTDIR\libtiff-5.dll
+	Delete $INSTDIR\libwinpthread-1.dll
+	Delete $INSTDIR\libzstd.dll
+	Delete $INSTDIR\wxbase30u_gcc_custom.dll
+	Delete $INSTDIR\wxmsw30u_core_gcc_custom.dll
+	Delete $INSTDIR\wxmsw30u_html_gcc_custom.dll
+	Delete $INSTDIR\zlib1.dll
 
 	; For previous installs
 	Delete $INSTDIR\pRPN.html
@@ -144,7 +169,7 @@ Section "Uninstall"
 	RMDir /r $INSTDIR\fr
 
 	Delete $INSTDIR\README.TXT
-	Delete $INSTDIR\prpn-0.5.5.tar.gz
+	Delete $INSTDIR\prpn-0.6.0.tar.gz
 	Delete $INSTDIR\uninstall.exe
 
 	; Remove shortcuts, if any
