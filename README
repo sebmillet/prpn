@@ -71,9 +71,15 @@ Below is found information specific to this package.
       Using bakefile generated makefiles under Linux is presumed to work fine
       but has not been tested for a while.
 
-- Windows compilation (NEW)
+- Windows compilation from Windows
 
-    Windows executable is now generated using Linux' mingw, doing
+    See wininst/README.txt
+    Today, Windows executables are generated using instructions found in
+    wininst/README.txt.
+
+- Windows compilation from Linux (NEW)
+
+    Windows executable can be generated using Linux' mingw, doing
     cross-compilation.
     To be precise, the compiler is x86_64-w64-mingw32-g++.
 
@@ -124,15 +130,16 @@ Below is found information specific to this package.
 
         Same remark as above about mingw-w64-wxmsw, if no AUR concept exists on
         your Linux, you'll have to download source and compile gettext library
-        (libintl), using x86_64-w64-mingw32-g++.
+        (libintl), using x86_64-w64-mingw32-gcc.
 
     (4) Launch the compilation by executing the following:
-          ./configure --host=x86_64-w64-mingw32 --with-wx-config=/usr/x86_64-w64-mingw32/bin/wx-config
+          ./configure --host=x86_64-w64-mingw32 \
+              --with-wx-config=/usr/x86_64-w64-mingw32/bin/wx-config
           make
 
         This'll produce prpn.exe and prpnc.exe in the src directory.
 
-- Windows compilation (OLD)
+- Windows compilation (OBSOLETE)
 
     pRPN compiles with MinGW or Microsoft Visual C++ (msvc)
     It does not compile with Borland C++, see (4) below

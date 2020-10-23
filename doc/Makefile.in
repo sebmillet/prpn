@@ -590,7 +590,7 @@ uninstall-man: uninstall-man1
 @BUILD_DOCS_TRUE@${MANPAGEEN}: ${CMDSEN} ${srcdir}/prpn1en-prefix ${srcdir}/prpn1en-postfix ${srcdir}/make-man-page.sh
 @BUILD_DOCS_TRUE@	${srcdir}/make-man-page.sh "${srcdir}" en
 @BUILD_DOCS_TRUE@${HTMLPAGEEN}: ${MANPAGEEN}
-@BUILD_DOCS_TRUE@	man2html ${MANPAGEEN} > $@
+@BUILD_DOCS_TRUE@	groff -man -T html $< > $@
 @BUILD_DOCS_TRUE@${TEXTPAGEEN}: ${MANPAGEEN}
 @BUILD_DOCS_TRUE@	nroff -man ${MANPAGEEN} | col -b > $@
 
@@ -598,7 +598,7 @@ uninstall-man: uninstall-man1
 @BUILD_DOCS_TRUE@${MANPAGEFR}: ${CMDSFR} ${srcdir}/prpn1fr-prefix ${srcdir}/prpn1fr-postfix ${srcdir}/make-man-page.sh
 @BUILD_DOCS_TRUE@	${srcdir}/make-man-page.sh "${srcdir}" fr
 @BUILD_DOCS_TRUE@${HTMLPAGEFR}: ${MANPAGEFR}
-@BUILD_DOCS_TRUE@	man2html ${MANPAGEFR} > $@
+@BUILD_DOCS_TRUE@	groff -man -T html $< > $@
 @BUILD_DOCS_TRUE@${TEXTPAGEFR}: ${MANPAGEFR}
 @BUILD_DOCS_TRUE@	nroff -man ${MANPAGEFR} | col -b > $@
 

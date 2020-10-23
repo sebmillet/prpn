@@ -7547,6 +7547,8 @@ else
 fi
 
 
+# libintl is available as a standard library when compiled with gcc.
+# But when cross-compiling, the linker needs option -lintl to be successful.
  if test "x${USE_NLS}" = "xyes" && test "x${host}" = "xx86_64-w64-mingw32"; then
   NLS_EXPLICIT_LIB_TRUE=
   NLS_EXPLICIT_LIB_FALSE='#'

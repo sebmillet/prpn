@@ -42,7 +42,7 @@ if BUILD_DOCS
 ${MANPAGEEN}: ${CMDSEN} ${srcdir}/prpn1en-prefix ${srcdir}/prpn1en-postfix ${srcdir}/make-man-page.sh
 	${srcdir}/make-man-page.sh "${srcdir}" en
 ${HTMLPAGEEN}: ${MANPAGEEN}
-	man2html ${MANPAGEEN} > $@
+	groff -man -T html $< > $@
 ${TEXTPAGEEN}: ${MANPAGEEN}
 	nroff -man ${MANPAGEEN} | col -b > $@
 
@@ -50,7 +50,7 @@ ${TEXTPAGEEN}: ${MANPAGEEN}
 ${MANPAGEFR}: ${CMDSFR} ${srcdir}/prpn1fr-prefix ${srcdir}/prpn1fr-postfix ${srcdir}/make-man-page.sh
 	${srcdir}/make-man-page.sh "${srcdir}" fr
 ${HTMLPAGEFR}: ${MANPAGEFR}
-	man2html ${MANPAGEFR} > $@
+	groff -man -T html $< > $@
 ${TEXTPAGEFR}: ${MANPAGEFR}
 	nroff -man ${MANPAGEFR} | col -b > $@
 

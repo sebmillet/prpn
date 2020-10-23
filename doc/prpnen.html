@@ -1,0 +1,1470 @@
+<!-- Creator     : groff version 1.22.4 -->
+<!-- CreationDate: Fri Oct 23 23:16:12 2020 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="Content-Style" content="text/css">
+<style type="text/css">
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
+</style>
+<title>pRPN</title>
+
+</head>
+<body>
+
+<h1 align="center">pRPN</h1>
+
+<a href="#NAME">NAME</a><br>
+<a href="#SYNOPSIS">SYNOPSIS</a><br>
+<a href="#DESCRIPTION">DESCRIPTION</a><br>
+<a href="#OPTIONS">OPTIONS</a><br>
+<a href="#OBJECT TYPES">OBJECT TYPES</a><br>
+<a href="#COMMANDS">COMMANDS</a><br>
+<a href="#LINEAR EQUATIONS SYSTEMS RESOLUTION">LINEAR EQUATIONS SYSTEMS RESOLUTION</a><br>
+<a href="#PROGRAM CONTROL INSTRUCTIONS">PROGRAM CONTROL INSTRUCTIONS</a><br>
+<a href="#TRICKS">TRICKS</a><br>
+<a href="#INITIALIZATION FILES">INITIALIZATION FILES</a><br>
+<a href="#AUTHOR">AUTHOR</a><br>
+<a href="#BUGS">BUGS</a><br>
+
+<hr>
+
+
+<h2>NAME
+<a name="NAME"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">pRPN &minus; a
+portable RPN calculator</p>
+
+<h2>SYNOPSIS
+<a name="SYNOPSIS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>prpn
+[options] <br>
+prpnc [options]</b> <br>
+prpn is the main, GUI, executable. prpnc is the command line
+version. <b><br>
+prpnc</b> is equivalent to <b>prpn -c</b>.</p>
+
+<h2>DESCRIPTION
+<a name="DESCRIPTION"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">The <b>pRPN</b>
+program is a RPN calculator inspired by HP calculators of
+late 80s.</p>
+
+<h2>OPTIONS
+<a name="OPTIONS"></a>
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>&minus;h,&nbsp;&minus;&minus;help</b></p>
+
+<p style="margin-left:22%;">Display a quick help screen and
+exit.</p>
+
+
+<p style="margin-left:11%;"><b>&minus;v&nbsp;&minus;&minus;version</b></p>
+
+<p style="margin-left:22%;">Display version information and
+exit.</p>
+
+
+<p style="margin-left:11%;"><b>&minus;c,&nbsp;&minus;&minus;console</b></p>
+
+<p style="margin-left:22%;">Run in console mode. Useful for
+prpn only. prpnc runs only in console mode.</p>
+
+
+<p style="margin-left:11%;"><b>&minus;w,&nbsp;&minus;&minus;width&nbsp;</b><i>width</i></p>
+
+<p style="margin-left:22%;">Set width to <i>width</i>,
+measured in number of characters. Defaults to 23.</p>
+
+
+<p style="margin-left:11%;"><b>&minus;h,&nbsp;&minus;&minus;height&nbsp;</b><i>height</i></p>
+
+<p style="margin-left:22%;">Set height to <i>height</i>,
+measured in number of lines. Defaults to 5.</p>
+
+
+<p style="margin-left:11%;"><b>&minus;&minus;min-stack-height&nbsp;</b><i>min-stack-height</i></p>
+
+<p style="margin-left:22%;">Set minimum stack height to
+<i>height</i>, measured in number of lines. Defaults to
+<i>height</i>. Only in console mode.</p>
+
+
+<p style="margin-left:11%;"><b>&minus;b,&nbsp;&minus;&minus;batch</b></p>
+
+<p style="margin-left:22%;">Batch mode, implies console
+mode.</p>
+
+
+<p style="margin-left:11%;"><b>&minus;z,&nbsp;&minus;&minus;dry&minus;run</b></p>
+
+<p style="margin-left:22%;">Ignore rc files.</p>
+
+
+<p style="margin-left:11%;"><b>&minus;a,&nbsp;&minus;&minus;class</b></p>
+
+<p style="margin-left:22%;">Display class count before
+exiting.</p>
+
+
+<p style="margin-left:11%;"><b>&minus;d,&nbsp;&minus;&minus;debug&nbsp;</b><i>debug_option</i></p>
+
+<p style="margin-left:22%;">Debug mode, requires a
+parameter.</p>
+
+<h2>OBJECT TYPES
+<a name="OBJECT TYPES"></a>
+</h2>
+
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="6%">
+
+
+<p style="margin-top: 1em"><i>Data</i></p></td>
+<td width="83%">
+</td></tr>
+</table>
+
+<p style="margin-left:11%;"><b>Real Number</b></p>
+
+<p style="margin-left:22%;">1.23456e-25</p>
+
+<p style="margin-left:11%;"><b>Complex Number</b></p>
+
+<p style="margin-left:22%;">( ) (123.45, 678.90)</p>
+
+<p style="margin-left:11%;"><b>Binary Integer</b></p>
+
+<p style="margin-left:22%;"># # 123AB</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>String</b></p></td>
+<td width="2%"></td>
+<td width="53%">
+
+
+<p>&quot; &quot; &quot;RESULT&quot;</p></td>
+<td width="25%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>Vector</b></p></td>
+<td width="2%"></td>
+<td width="53%">
+
+
+<p>[ ] [1.23 4.56 7.89]</p></td>
+<td width="25%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>Matrix</b></p></td>
+<td width="2%"></td>
+<td width="53%">
+
+
+<p>[[ ]] [[1.23 4.56] [6.54 3.21]]</p></td>
+<td width="25%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>List</b></p></td>
+<td width="2%"></td>
+<td width="53%">
+
+
+<p>{ } {1.23 &quot;ABC&quot; # 45d}</p></td>
+<td width="25%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><i>Names</i></p></td>
+<td width="2%"></td>
+<td width="53%">
+</td>
+<td width="25%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>Name</b></p></td>
+<td width="2%"></td>
+<td width="53%">
+
+
+<p>&acute; &acute; &acute;CALC&acute;</p></td>
+<td width="25%">
+</td></tr>
+</table>
+
+<p style="margin-left:11%;"><i>Procedures</i> <b><br>
+Program</b></p>
+
+<p style="margin-left:22%;">&lt;&lt; &gt;&gt; &lt;&lt; DUP
++ SWAP &gt;&gt;</p>
+
+<p style="margin-left:11%;"><b>Algebraic</b></p>
+
+<p style="margin-left:22%;">&acute; &acute;
+&acute;X+2*Y=Z&acute;</p>
+
+<h2>COMMANDS
+<a name="COMMANDS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Commands are
+followed by the number of arguments they take, in
+parenthesis. These arguments are taken from the stack.
+<b><br>
+_HELP&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Display a help screen</p>
+
+
+<p style="margin-left:11%;"><b>_HELP_FLAGS&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Display the list of flags</p>
+
+<p style="margin-left:11%;"><b>_EXIT&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Quit program</p>
+
+<p style="margin-left:11%;"><b>_ABOUT&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Display information about this
+program</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="7%">
+
+
+<p><b>+&nbsp;(2)</b></p></td>
+<td width="4%"></td>
+<td width="38%">
+
+
+<p>Addition: x + y</p></td>
+<td width="40%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="7%">
+
+
+<p><b>-&nbsp;(2)</b></p></td>
+<td width="4%"></td>
+<td width="38%">
+
+
+<p>Subtraction: x - y</p></td>
+<td width="40%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="7%">
+
+
+<p><b>*&nbsp;(2)</b></p></td>
+<td width="4%"></td>
+<td width="38%">
+
+
+<p>Multiplication: x * y</p></td>
+<td width="40%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="7%">
+
+
+<p><b>/&nbsp;(2)</b></p></td>
+<td width="4%"></td>
+<td width="38%">
+
+
+<p>Division: x / y</p></td>
+<td width="40%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="7%">
+
+
+<p><b>^&nbsp;(2)</b></p></td>
+<td width="4%"></td>
+<td width="38%">
+
+
+<p>Power: x ^ y</p></td>
+<td width="40%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="7%">
+
+
+<p><b>%&nbsp;(2)</b></p></td>
+<td width="4%"></td>
+<td width="38%">
+
+
+<p>Percentage: (x * y) / 100</p></td>
+<td width="40%">
+</td></tr>
+</table>
+
+<p style="margin-left:11%;"><b>%CH&nbsp;(2)</b></p>
+
+<p style="margin-left:22%;">Percentage change: 100 * (y -
+x) / x</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>%T&nbsp;(2)</b></p></td>
+<td width="2%"></td>
+<td width="49%">
+
+
+<p>Percentage of total: 100 * y / x</p></td>
+<td width="29%">
+</td></tr>
+</table>
+
+<p style="margin-left:11%;"><b>MOD&nbsp;(2)</b></p>
+
+<p style="margin-left:22%;">Modulus: x - y * FLOOR(x /
+y)</p>
+
+<p style="margin-left:11%;"><b>MIN&nbsp;(2)</b></p>
+
+<p style="margin-left:22%;">Minimum of two reals</p>
+
+<p style="margin-left:11%;"><b>MAX&nbsp;(2)</b></p>
+
+<p style="margin-left:22%;">Maximum of two reals</p>
+
+<p style="margin-left:11%;"><b>COS&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Cosine</p>
+
+<p style="margin-left:11%;"><b>SIN&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Sine</p>
+
+<p style="margin-left:11%;"><b>TAN&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Tangent</p>
+
+<p style="margin-left:11%;"><b>ACOS&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Arccos</p>
+
+<p style="margin-left:11%;"><b>ASIN&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Arcsin</p>
+
+<p style="margin-left:11%;"><b>ATAN&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Arctan</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>LN&nbsp;(1)</b></p></td>
+<td width="2%"></td>
+<td width="27%">
+
+
+<p>Logarihtm (e base)</p></td>
+<td width="51%">
+</td></tr>
+</table>
+
+<p style="margin-left:11%;"><b>EXP&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Exponential</p>
+
+<p style="margin-left:11%;"><b>LOG&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Logarithm (10 base)</p>
+
+<p style="margin-left:11%;"><b>ALOG&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">10 base exponential (10^x)</p>
+
+<p style="margin-left:11%;"><b>LNP1&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">LN(1+x)</p>
+
+<p style="margin-left:11%;"><b>EXPM&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">EXP(x)-1</p>
+
+<p style="margin-left:11%;"><b>COSH&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Hyperbolic cosine</p>
+
+<p style="margin-left:11%;"><b>SINH&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Hyperbolic sine</p>
+
+<p style="margin-left:11%;"><b>TANH&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Hyperbolic tangent</p>
+
+<p style="margin-left:11%;"><b>ACOSH&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Arc-hyperbolic cosine</p>
+
+<p style="margin-left:11%;"><b>ASINH&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Arc-hyperbolic sine</p>
+
+<p style="margin-left:11%;"><b>ATANH&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Arc-hyperbolic tangent</p>
+
+<p style="margin-left:11%;"><b>NEG&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Opposite</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>IP&nbsp;(1)</b></p></td>
+<td width="2%"></td>
+<td width="23%">
+
+
+<p>Integer part</p></td>
+<td width="55%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>FP&nbsp;(1)</b></p></td>
+<td width="2%"></td>
+<td width="23%">
+
+
+<p>Fractional part</p></td>
+<td width="55%">
+</td></tr>
+</table>
+
+<p style="margin-left:11%;"><b>FLOOR&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Greatest integer lower than or
+equal to x</p>
+
+<p style="margin-left:11%;"><b>CEIL&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Lowest integer greater than or
+equal to x</p>
+
+<p style="margin-left:11%;"><b>ABS&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Absolute of x</p>
+
+<p style="margin-left:11%;"><b>SIGN&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Sign of x: can be -1, 0 or
+1</p>
+
+<p style="margin-left:11%;"><b>MANT&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Mantisse of x</p>
+
+<p style="margin-left:11%;"><b>XPON&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Exponent of x</p>
+
+<p style="margin-left:11%;"><b>INV&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">1/x</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>SQ&nbsp;(1)</b></p></td>
+<td width="2%"></td>
+<td width="9%">
+
+
+<p>Square</p></td>
+<td width="69%">
+</td></tr>
+</table>
+
+<p style="margin-left:11%;"><b>SQR&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Square root</p>
+
+<p style="margin-left:11%;"><b>RDZ&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Initializes random values
+series, 0 to start from a timer value</p>
+
+<p style="margin-left:11%;"><b>RAND&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Get a random value x, 0 &lt;= x
+&lt; 1</p>
+
+<p style="margin-left:11%;"><b>MINR&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Smallest real greater than zero
+the calcultor can represent</p>
+
+<p style="margin-left:11%;"><b>MAXR&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Biggest real the calcultor can
+represent</p>
+
+<p style="margin-left:11%;"><b>-&gt;HMS&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Convert a decimal to HMS
+(h.MMSSss)</p>
+
+<p style="margin-left:11%;"><b>HMS-&gt;&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Convert a HMS (h.MMSSss) to a
+decimal</p>
+
+<p style="margin-left:11%;"><b>HMS+&nbsp;(2)</b></p>
+
+<p style="margin-left:22%;">Add two HMS (h.MMSSss)</p>
+
+<p style="margin-left:11%;"><b>HMS-&nbsp;(2)</b></p>
+
+<p style="margin-left:22%;">Subtract two HMS (h.MMSSss)</p>
+
+<p style="margin-left:11%;"><b>D-&gt;R&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Convert from degrees to
+radians</p>
+
+<p style="margin-left:11%;"><b>R-&gt;D&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Convert from radians to
+degrees</p>
+
+<p style="margin-left:11%;"><b>RAD&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Set angular mode to radians</p>
+
+<p style="margin-left:11%;"><b>DEG&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Set angular mode to degrees</p>
+
+<p style="margin-left:11%;"><b>+ML&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Display first item on multilpe
+lines</p>
+
+<p style="margin-left:11%;"><b>-ML&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Display first item on a single
+line</p>
+
+<p style="margin-left:11%;"><b>RDXP&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Set the decimal separator to
+&rsquo;.&rsquo;</p>
+
+<p style="margin-left:11%;"><b>RDXC&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Set the decimal separator to
+&rsquo;,&rsquo;</p>
+
+<p style="margin-left:11%;"><b>R-&gt;C&nbsp;(2)</b></p>
+
+<p style="margin-left:22%;">Real to complex</p>
+
+<p style="margin-left:11%;"><b>C-&gt;R&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Complex to real</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>RE&nbsp;(1)</b></p></td>
+<td width="2%"></td>
+<td width="72%">
+
+
+<p>Get real part of a complex number or array</p></td>
+<td width="6%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>IM&nbsp;(1)</b></p></td>
+<td width="2%"></td>
+<td width="72%">
+
+
+<p>Get imaginary part of a complex number or array</p></td>
+<td width="6%">
+</td></tr>
+</table>
+
+<p style="margin-left:11%;"><b>CONJ&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Get conjugate of a complex
+number or array</p>
+
+<p style="margin-left:11%;"><b>ARG&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Get argument of a complex
+number</p>
+
+<p style="margin-left:11%;"><b>R-&gt;P&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Rectangular to polar
+coordinates</p>
+
+<p style="margin-left:11%;"><b>P-&gt;R&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Polar to rectangular
+coordinates</p>
+
+<p style="margin-left:11%;"><b>SAME&nbsp;(2)</b></p>
+
+<p style="margin-left:22%;">Is identical</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>==&nbsp;(2)</b></p></td>
+<td width="2%"></td>
+<td width="36%">
+
+
+<p>Equal to</p></td>
+<td width="42%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>&lt;&gt;&nbsp;(2)</b></p></td>
+<td width="2%"></td>
+<td width="36%">
+
+
+<p>Different from</p></td>
+<td width="42%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>&lt;&nbsp;(2)</b></p></td>
+<td width="2%"></td>
+<td width="36%">
+
+
+<p>Lower than</p></td>
+<td width="42%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>&lt;=&nbsp;(2)</b></p></td>
+<td width="2%"></td>
+<td width="36%">
+
+
+<p>Lower than or equal to</p></td>
+<td width="42%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>&gt;&nbsp;(2)</b></p></td>
+<td width="2%"></td>
+<td width="36%">
+
+
+<p>Greater than</p></td>
+<td width="42%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>&gt;=&nbsp;(2)</b></p></td>
+<td width="2%"></td>
+<td width="36%">
+
+
+<p>Greater than or equal to</p></td>
+<td width="42%">
+</td></tr>
+</table>
+
+<p style="margin-left:11%;"><b>AND&nbsp;(2)</b></p>
+
+<p style="margin-left:22%;">Logical and</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>OR&nbsp;(2)</b></p></td>
+<td width="2%"></td>
+<td width="15%">
+
+
+<p>Logical or</p></td>
+<td width="63%">
+</td></tr>
+</table>
+
+<p style="margin-left:11%;"><b>XOR&nbsp;(2)</b></p>
+
+<p style="margin-left:22%;">Logical xor</p>
+
+<p style="margin-left:11%;"><b>NOT&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Logical not</p>
+
+<p style="margin-left:11%;"><b>DUP&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Copy the first item</p>
+
+<p style="margin-left:11%;"><b>SWAP&nbsp;(2)</b></p>
+
+<p style="margin-left:22%;">Exchange the first two
+items</p>
+
+<p style="margin-left:11%;"><b>DROP&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Delete the first item</p>
+
+<p style="margin-left:11%;"><b>CLEAR&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Clear the stack</p>
+
+<p style="margin-left:11%;"><b>OVER&nbsp;(2)</b></p>
+
+<p style="margin-left:22%;">Copy the second item</p>
+
+<p style="margin-left:11%;"><b>DUP2&nbsp;(2)</b></p>
+
+<p style="margin-left:22%;">Copy the first two items</p>
+
+<p style="margin-left:11%;"><b>DROP2&nbsp;(2)</b></p>
+
+<p style="margin-left:22%;">Delete the first two items</p>
+
+<p style="margin-left:11%;"><b>ROT&nbsp;(3)</b></p>
+
+<p style="margin-left:22%;">Move the third item to the
+first position</p>
+
+<p style="margin-left:11%;"><b>ROLLD&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Move the first item to the Nth
+position</p>
+
+<p style="margin-left:11%;"><b>ROLL&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Move the Nth item to the first
+position</p>
+
+<p style="margin-left:11%;"><b>PICK&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Copy the Nth item</p>
+
+<p style="margin-left:11%;"><b>DUPN&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Copy the n first items</p>
+
+<p style="margin-left:11%;"><b>DROPN&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Delete the n first items</p>
+
+<p style="margin-left:11%;"><b>DEPTH&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Get the number of items</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>SF&nbsp;(1)</b></p></td>
+<td width="2%"></td>
+<td width="15%">
+
+
+<p>Set flag</p></td>
+<td width="63%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>CF&nbsp;(1)</b></p></td>
+<td width="2%"></td>
+<td width="15%">
+
+
+<p>Clear flag</p></td>
+<td width="63%">
+</td></tr>
+</table>
+
+<p style="margin-left:11%;"><b>FS?&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Return 1 if flag is set, 0
+otherwise</p>
+
+<p style="margin-left:11%;"><b>FC?&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Return 0 if flag is set, 1
+otherwise</p>
+
+<p style="margin-left:11%;"><b>FS?C&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Do FS? then clear flag</p>
+
+<p style="margin-left:11%;"><b>FC?C&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Do FC? then clear flag</p>
+
+<p style="margin-left:11%;"><b>-&gt;STR&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Convert to string</p>
+
+<p style="margin-left:11%;"><b>STR-&gt;&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Convert from string</p>
+
+<p style="margin-left:11%;"><b>SUB&nbsp;(3)</b></p>
+
+<p style="margin-left:22%;">Extract content from a string
+or a list</p>
+
+<p style="margin-left:11%;"><b>-&gt;LIST&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Items to list</p>
+
+<p style="margin-left:11%;"><b>LIST-&gt;&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Extract items from list</p>
+
+<p style="margin-left:11%;"><b>GET&nbsp;(2)</b></p>
+
+<p style="margin-left:22%;">Get an item from a list or
+array</p>
+
+<p style="margin-left:11%;"><b>GETI&nbsp;(2)</b></p>
+
+<p style="margin-left:22%;">Get an item from a list or
+array by increments</p>
+
+<p style="margin-left:11%;"><b>PUT&nbsp;(3)</b></p>
+
+<p style="margin-left:22%;">Put an item into a list or
+array</p>
+
+<p style="margin-left:11%;"><b>PUTI&nbsp;(3)</b></p>
+
+<p style="margin-left:22%;">Put an item into a list or
+array by increments</p>
+
+<p style="margin-left:11%;"><b>SIZE&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Dimension of a list or
+array</p>
+
+<p style="margin-left:11%;"><b>ARRY-&gt;&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Replace an array by all its
+elements</p>
+
+<p style="margin-left:11%;"><b>-&gt;ARRY&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Create an array from a list of
+elements</p>
+
+<p style="margin-left:11%;"><b>CON&nbsp;(2)</b></p>
+
+<p style="margin-left:22%;">Create a constant array</p>
+
+<p style="margin-left:11%;"><b>TRN&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Transpose a matrix-type
+array</p>
+
+<p style="margin-left:11%;"><b>RDM&nbsp;(2)</b></p>
+
+<p style="margin-left:22%;">Modify the dimension of an
+array</p>
+
+<p style="margin-left:11%;"><b>IDN&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Create an identity matrix</p>
+
+<p style="margin-left:11%;"><b>CROSS&nbsp;(2)</b></p>
+
+<p style="margin-left:22%;">Cross product (vectorial
+product)</p>
+
+<p style="margin-left:11%;"><b>DOT&nbsp;(2)</b></p>
+
+<p style="margin-left:22%;">Dot product (scalar
+product)</p>
+
+<p style="margin-left:11%;"><b>EVAL&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Evaluate item</p>
+
+<p style="margin-left:11%;"><b>STO&nbsp;(2)</b></p>
+
+<p style="margin-left:22%;">Store value in variable
+name</p>
+
+<p style="margin-left:11%;"><b>RCL&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Recall value from variable
+name</p>
+
+<p style="margin-left:11%;"><b>PURGE&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Remove a variable</p>
+
+<p style="margin-left:11%;"><b>VARS&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Get the list of variables in
+current directory</p>
+
+<p style="margin-left:11%;"><b>PATH&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Get the list from root to
+current directory</p>
+
+<p style="margin-left:11%;"><b>CRDIR&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Create a directory</p>
+
+<p style="margin-left:11%;"><b>HOME&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Set root directory as the
+current one</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p><b>UP&nbsp;(0)</b></p></td>
+<td width="2%"></td>
+<td width="63%">
+
+
+<p>Make the parent directory the current one</p></td>
+<td width="15%">
+</td></tr>
+</table>
+
+<p style="margin-left:11%;"><b>BIN&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Use binary mode for binary
+integers</p>
+
+<p style="margin-left:11%;"><b>OCT&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Use octal mode for binary
+integers</p>
+
+<p style="margin-left:11%;"><b>DEC&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Use decimal mode for binary
+integers</p>
+
+<p style="margin-left:11%;"><b>HEX&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Use hexadecimal mode for binary
+integers</p>
+
+<p style="margin-left:11%;"><b>STWS&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Define the number of bits in
+binary integers (1 to 64)</p>
+
+<p style="margin-left:11%;"><b>RCWS&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Get the number of bits in
+binary integers</p>
+
+<p style="margin-left:11%;"><b>B-&gt;R&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Convert a binary integer into a
+real</p>
+
+<p style="margin-left:11%;"><b>R-&gt;B&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Convert a real into a binary
+integer</p>
+
+<p style="margin-left:11%;"><b>RCLF&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Save flag states in a binary
+integer</p>
+
+<p style="margin-left:11%;"><b>STOF&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Read flag states from a binary
+integer</p>
+
+<p style="margin-left:11%;"><b>WAIT&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Wait a number of seconds</p>
+
+<p style="margin-left:11%;"><b>HALT&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Halt program execution</p>
+
+<p style="margin-left:11%;"><b>SST&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Execute one step in the
+program</p>
+
+<p style="margin-left:11%;"><b>ABORT&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Abort current program
+execution</p>
+
+<p style="margin-left:11%;"><b>KILL&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Abort all programs
+execution</p>
+
+<p style="margin-left:11%;"><b>CONT&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Resume program execution</p>
+
+<p style="margin-left:11%;"><b>STD&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Set reals display to
+&rsquo;standard&rsquo;</p>
+
+<p style="margin-left:11%;"><b>SCI&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Set reals display to
+&rsquo;scientific&rsquo;</p>
+
+<p style="margin-left:11%;"><b>FIX&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Set reals display to
+&rsquo;fixed number of decimals&rsquo;</p>
+
+<p style="margin-left:11%;"><b>ENG&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Set reals display to
+&rsquo;engineering&rsquo;</p>
+
+<p style="margin-left:11%;"><b>CLLCD&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Clear the screen</p>
+
+<p style="margin-left:11%;"><b>CLMF&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Clear the message flag =&gt;
+unfreeze stack display</p>
+
+<p style="margin-left:11%;"><b>DISP&nbsp;(2)</b></p>
+
+<p style="margin-left:22%;">Display an item on a line of
+the screen</p>
+
+<p style="margin-left:11%;"><b>_READ&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Read file and puts its content
+in the stack</p>
+
+<p style="margin-left:11%;"><b>_WRITE&nbsp;(2)</b></p>
+
+<p style="margin-left:22%;">Write the second item into the
+file named by the first item</p>
+
+
+<p style="margin-left:11%;"><b>_HACK-REAL-MGMT&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Internal: tune real
+&rsquo;standard&rsquo; display management</p>
+
+
+<p style="margin-left:11%;"><b>_HACK-REAL-DOT&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Internal: set whether or not to
+keep a trailing dot in reals display</p>
+
+<p style="margin-left:11%;"><b>UNDO&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Undo last command, 50 levels by
+default</p>
+
+
+<p style="margin-left:11%;"><b>_UNDO_LEVELS&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Define number of undo
+levels</p>
+
+
+<p style="margin-left:11%;"><b>_UNDO_LEVELS?&nbsp;(0)</b></p>
+
+<p style="margin-left:22%;">Get number of undo levels</p>
+
+<p style="margin-left:11%;"><b>_UISET&nbsp;(1)</b></p>
+
+<p style="margin-left:22%;">Define the type of user
+interface</p>
+
+<h2>LINEAR EQUATIONS SYSTEMS RESOLUTION
+<a name="LINEAR EQUATIONS SYSTEMS RESOLUTION"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">You can solve a
+linear system by dividing a vector by a matrix.</p>
+
+<p style="margin-left:22%;"><i>Example</i> You would like
+to resolve the system <br>
+2x - y + z = 13 <br>
+x + 5y +3z = 3 <br>
+-2x + 4z = 4 <br>
+Type in the vector <br>
+[13 3 4] <br>
+Then type in the matrix <br>
+[[2 -1 1][1 5 3][-2 0 4]] <br>
+Do a division by clicking the &rsquo;/&rsquo; button. Here
+you go with the result: <br>
+[4 -2 3] <br>
+That reads &quot;the solution is x = 4, y = -2 and z =
+3&quot;</p>
+
+<h2>PROGRAM CONTROL INSTRUCTIONS
+<a name="PROGRAM CONTROL INSTRUCTIONS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>Note about
+booleans</b></p>
+
+<p style="margin-left:22%;">A test (IF, WHILE or UNTIL, see
+below) takes one item in the stack. The item must be of type
+real. Any non-null value is treated as TRUE, a null value is
+FALSE. <br>
+Below, the term &quot;bottom item of the stack&quot; refers
+to the actual object at level 1 of the stack.</p>
+
+<p style="margin-left:11%;"><b>IF/THEN/ELSE/END
+sequence</b></p>
+
+<p style="margin-left:22%;">Execute the instructions
+between IF and THEN. <br>
+Then, take the bottom item of the stack, if it is true (see
+above), execute the instructions between THEN and ELSE (or
+END if ELSE is not provided), otherwise execute the ELSE
+instructions. ELSE is optional.</p>
+
+<p style="margin-left:11%;"><i>Example 1</i></p>
+
+<p style="margin-left:22%;">Take the first item in the
+stack and tell whether it is positive or null, or negative
+<br>
+&lt;&lt; IF 0 &gt;= THEN &quot;Positive or null&quot; ELSE
+&quot;Negative&quot; END &gt;&gt;</p>
+
+<p style="margin-left:11%;"><i>Example 2</i></p>
+
+<p style="margin-left:22%;">Always execute the THEN part
+<br>
+&lt;&lt; IF 1 THEN &quot;Always executed&quot; ELSE
+&quot;Never executed&quot; END &gt;&gt;</p>
+
+<p style="margin-left:11%;"><i>Example 3</i></p>
+
+<p style="margin-left:22%;">Do nothing (!) <br>
+&lt;&lt; IF 0 THEN &quot;Never executed&quot; END
+&gt;&gt;</p>
+
+<p style="margin-left:11%;"><b>WHILE/REPEAT/END
+sequence</b></p>
+
+<p style="margin-left:22%;">Execute the instructions
+between WHILE and REPEAT. <br>
+Then take the bottom item of the stack, if it is true (see
+above), execute the instructions after REPEAT, then restart
+the sequence from the beginning of the WHILE.</p>
+
+<p style="margin-left:11%;"><i>Example</i></p>
+
+<p style="margin-left:22%;">Calculate the smallest N for
+which sum(i^2 with i taking all integer values in the range
+1..N) &gt;= 100 <br>
+&lt;&lt; 0 0 -&gt; n &lt;&lt; WHILE DUP 100 &lt; REPEAT n SQ
++ n 1 + &rsquo;n&rsquo; STO END n &gt;&gt; &gt;&gt;</p>
+
+<p style="margin-left:11%;"><b>DO/UNTIL/END
+sequence</b></p>
+
+<p style="margin-left:22%;">Execute the instructions
+between DO and UNTIL, then, between UNTIL and END. <br>
+Then, take the bottom item of the stack, if it is true (see
+above), restart the sequence from the beginning of the
+DO.</p>
+
+<p style="margin-left:11%;"><i>Example</i></p>
+
+<p style="margin-left:22%;">Calculate the smallest N for
+which sum(1/i with i taking all integer values in the range
+1..N) &gt;= 3 <br>
+&lt;&lt; 0 0 -&gt; n &lt;&lt; DO n 1 + &rsquo;n&rsquo; STO n
+INV + UNTIL DUP 7 &gt;= END n &gt;&gt; &gt;&gt;</p>
+
+<p style="margin-left:11%;"><b>FOR|START/NEXT|STEP
+sequence</b></p>
+
+<p style="margin-left:22%;">FOR or START launches a loop.
+It takes two arguments, the first argument (second level in
+the stack) being the start counter value, the second one
+(first level in the stack) being the target counter value,
+beyond which to stop the loop. <br>
+START is an anonymous loop, FOR takes one name and uses it
+as a local variable for the loop counter. <br>
+NEXT adds 1 to the counter if the target is greater than the
+start, subtracts 1 otherwise. <br>
+STEP takes one argument in the stack and adds it to the
+counter. NEXT can be used with either FOR or START, same
+with STEP.</p>
+
+<p style="margin-left:11%;"><i>Example 1</i></p>
+
+<p style="margin-left:22%;">Calculate the sum of the
+squares of the integers from 1 to 10 <br>
+&lt;&lt; 0 1 10 FOR i i SQ + NEXT &gt;&gt;</p>
+
+<p style="margin-left:11%;"><i>Example 2</i></p>
+
+<p style="margin-left:22%;">Calculate sum(2^i with i taking
+all integer values in the range 1..N), N being the first
+value in the stack <br>
+&lt;&lt; 0 1 1 4 ROLL START DUP ROT + SWAP 2 * NEXT DROP
+&gt;&gt; EVAL</p>
+
+<p style="margin-left:11%;"><i>Example 3</i></p>
+
+<p style="margin-left:22%;">Calculate sum(i with i taking
+all odd integer values in the range 1..N), N being the first
+value in the stack <br>
+&lt;&lt; 0 1 ROT FOR i i + 2 STEP &gt;&gt;</p>
+
+<p style="margin-left:11%;"><b>RPL Documentation</b></p>
+
+<p style="margin-left:22%;">RPL is HP language provided on
+top of RPN calculators. <br>
+
+http://en.wikipedia.org/wiki/RPL_%28programming_language%29</p>
+
+<h2>TRICKS
+<a name="TRICKS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>Increasing
+the type-in area</b></p>
+
+<p style="margin-left:22%;">Press &lt;Ctrl-Enter&gt;.</p>
+
+<p style="margin-left:11%;"><b>Resizing the window to the
+original size</b></p>
+
+<p style="margin-left:22%;">Double-click the
+&rsquo;status&rsquo; area of the window, where the angular
+mode and binary modes are displayed.</p>
+
+<h2>INITIALIZATION FILES
+<a name="INITIALIZATION FILES"></a>
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>~/.prpn/stackrc</b></p>
+
+<p style="margin-left:22%;">Settings and stack content.</p>
+
+<p style="margin-left:11%;"><b>~/.prpn/varsrc</b></p>
+
+<p style="margin-left:22%;">Variables structure, and actual
+working directory.</p>
+
+<h2>AUTHOR
+<a name="AUTHOR"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">Written by
+S&eacute;bastien Millet
+&lt;sebastien.millet1@club-internet.fr&gt;. <br>
+Permission is granted to copy, distribute and/or modify this
+document under the terms of the GNU General Public License,
+Version 3 published by the Free Software Foundation.</p>
+
+<h2>BUGS
+<a name="BUGS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>LNP1 and
+EXPM</b> <br>
+These functions are supposed to bring extra accuracy near x
+= 0. <br>
+Reminder:</p>
+
+<p style="margin-left:22%;">LNP1(x) = LN(X + 1) and EXPM(x)
+= EXP(x) - 1 <br>
+For now, these functions do NOT bring extra accuracy, they
+just call underlying LN() and EXP() functions.</p>
+
+<p style="margin-left:11%;"><b>Difference between prpn and
+prpnc</b></p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="7%">
+
+
+<p><i>Linux</i></p></td>
+<td width="4%"></td>
+<td width="78%">
+
+
+<p>prpn can be run with -c option. In that case it is
+almost identical to prpnc. &quot;Almost&quot; only. prpn is
+compiled with WxWidgets library and performs GUI-specific
+initializations upon startup. If graphical resources
+aren&rsquo;t found, it won&rsquo;t execute. For example, if
+you run the following command</p></td></tr>
+</table>
+
+<p style="margin-left:22%;"><b>DISPLAY=&quot;&quot; prpn
+-c</b> <br>
+You get this result <b><br>
+Error: Unable to initialize gtk, is DISPLAY set
+properly?</b> <br>
+prpnc solves this situation, as it is *not* compiled against
+WxWidgets and can run in a simple terminal with no graphical
+resources at all. Note a clean way to improve all this would
+be to prevent WxWidgets from initializing the GUI whenever
+-c is provided. If you know how to do that in a robust way
+(portable across systems and versions...), this
+program&rsquo; author is interested!</p>
+
+<p style="margin-left:11%;"><i>Windows</i></p>
+
+<p style="margin-left:22%;">prpn.exe can *not* be run with
+-c. For some reason, under Windows, WxWidgets disconnects
+the running program from the controlling terminal. The
+solutions is the same as Linux&rsquo; except that under
+Windows, it is mandatory: you must run prpnc.exe if you wish
+to use the command line version of the calculator.</p>
+<hr>
+</body>
+</html>

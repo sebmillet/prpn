@@ -87,6 +87,8 @@ fi
 
 AM_CONDITIONAL(BUILD_CLIENTGUI, [ test "$wxWin" = 1 ])
 
+# libintl is available as a standard library when compiled with gcc.
+# But when cross-compiling, the linker needs option -lintl to be successful.
 AM_CONDITIONAL([NLS_EXPLICIT_LIB], [test "x${USE_NLS}" = "xyes" && test "x${host}" = "xx86_64-w64-mingw32"])
 
 AC_SUBST([WX_CXXFLAGS])
