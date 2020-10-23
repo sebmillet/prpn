@@ -87,6 +87,8 @@ fi
 
 AM_CONDITIONAL(BUILD_CLIENTGUI, [ test "$wxWin" = 1 ])
 
+AM_CONDITIONAL([NLS_EXPLICIT_LIB], [test "x${USE_NLS}" = "xyes" && test "x${host}" = "xx86_64-w64-mingw32"])
+
 AC_SUBST([WX_CXXFLAGS])
 AC_SUBST([WX_LIBS])
 

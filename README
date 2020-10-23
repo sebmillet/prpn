@@ -93,8 +93,12 @@ Below is found information specific to this package.
             and
           aur/mingw-w64-wxmsw3.1 1:3.1.4-1 (development branch pkg)
 
-        The published windows executable is produced using the release package,
-        that is, aur/mingw-w64-wxmsw (=> 3.0 wx library).
+        Note: the published Windows executable is produced using the release
+              package, that is, aur/mingw-w64-wxmsw (=> 3.0 wx library).
+
+        Note (2): if not using a Linux where AUR is available, you'll have to
+                  download source and compile wxWidget library, using
+                  x86_64-w64-mingw32-g++.
 
     (3) Make sure the program /usr/x86_64-w64-mingw32/bin/wx-config default
         config is *static* wx library in version *3.0*. You can check it by
@@ -113,6 +117,14 @@ Below is found information specific to this package.
 
         Note that after installing aur/mingw-w64-wxmsw, you should get it by
         default (static, 3.0), but I strongly recommend to double-check.
+
+    (4) Install mingw-w64-gettext. On Arch Linux, it is available on AUR.
+        The exact package name is:
+          aur/mingw-w64-gettext
+
+        Same remark as above about mingw-w64-wxmsw, if no AUR concept exists on
+        your Linux, you'll have to download source and compile gettext library
+        (libintl), using x86_64-w64-mingw32-g++.
 
     (4) Launch the compilation by executing the following:
           ./configure --host=x86_64-w64-mingw32 --with-wx-config=/usr/x86_64-w64-mingw32/bin/wx-config

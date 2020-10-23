@@ -58,6 +58,9 @@ ${CMDSFR}: Commands.h
 
 endif
 
+prpn_LDADD=
+prpnc_LDADD=
+
 if BUILD_CLIENTGUI
 
 prpn_SOURCES+=Wx/UiImplWx.cpp Wx/SkBase.cpp Wx/SkBase.h \
@@ -66,6 +69,14 @@ prpn_SOURCES+=Wx/UiImplWx.cpp Wx/SkBase.cpp Wx/SkBase.h \
   Wx/SkHp28s3.cpp Wx/hp28sbg3.png Wx/hp28sbg3.cpp \
 	Wx/xpm prpn.rc prpn.ico
 prpn_CXXFLAGS=@WX_CXXFLAGS@ -DFOREIGN_MAIN -DPRPN_WX_GUI
-prpn_LDADD=@WX_LIBS@
+prpn_LDADD+=@WX_LIBS@
 
 endif
+
+if NLS_EXPLICIT_LIB
+
+prpn_LDADD+=-lintl
+prpnc_LDADD+=-lintl
+
+endif
+

@@ -633,6 +633,8 @@ CXXDEPMODE
 ac_ct_CXX
 CXXFLAGS
 CXX
+NLS_EXPLICIT_LIB_FALSE
+NLS_EXPLICIT_LIB_TRUE
 BUILD_CLIENTGUI_FALSE
 BUILD_CLIENTGUI_TRUE
 WX_VERSION_MICRO
@@ -7545,6 +7547,15 @@ else
 fi
 
 
+ if test "x${USE_NLS}" = "xyes" && test "x${host}" = "xx86_64-w64-mingw32"; then
+  NLS_EXPLICIT_LIB_TRUE=
+  NLS_EXPLICIT_LIB_FALSE='#'
+else
+  NLS_EXPLICIT_LIB_TRUE='#'
+  NLS_EXPLICIT_LIB_FALSE=
+fi
+
+
 
 
 
@@ -8998,6 +9009,10 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${BUILD_CLIENTGUI_TRUE}" && test -z "${BUILD_CLIENTGUI_FALSE}"; then
   as_fn_error $? "conditional \"BUILD_CLIENTGUI\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${NLS_EXPLICIT_LIB_TRUE}" && test -z "${NLS_EXPLICIT_LIB_FALSE}"; then
+  as_fn_error $? "conditional \"NLS_EXPLICIT_LIB\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${am__fastdepCXX_TRUE}" && test -z "${am__fastdepCXX_FALSE}"; then

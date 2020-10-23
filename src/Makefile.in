@@ -96,6 +96,9 @@ bin_PROGRAMS = prpn$(EXEEXT) prpnc$(EXEEXT)
 @BUILD_CLIENTGUI_TRUE@  Wx/SkHp28s3.cpp Wx/hp28sbg3.png Wx/hp28sbg3.cpp \
 @BUILD_CLIENTGUI_TRUE@	Wx/xpm prpn.rc prpn.ico
 
+@BUILD_CLIENTGUI_TRUE@am__append_2 = @WX_LIBS@
+@NLS_EXPLICIT_LIB_TRUE@am__append_3 = -lintl
+@NLS_EXPLICIT_LIB_TRUE@am__append_4 = -lintl
 subdir = src
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/admin/gettext.m4 \
@@ -141,7 +144,8 @@ am__objects_1 = prpn-Main.$(OBJEXT) prpn-Compat.$(OBJEXT) \
 @BUILD_CLIENTGUI_TRUE@	Wx/prpn-hp28sbg3.$(OBJEXT)
 am_prpn_OBJECTS = $(am__objects_1) $(am__objects_2)
 prpn_OBJECTS = $(am_prpn_OBJECTS)
-prpn_DEPENDENCIES =
+am__DEPENDENCIES_1 =
+prpn_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 prpn_LINK = $(CXXLD) $(prpn_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
 am__objects_3 = Main.$(OBJEXT) Compat.$(OBJEXT) PGetOpt.$(OBJEXT) \
@@ -150,7 +154,7 @@ am__objects_3 = Main.$(OBJEXT) Compat.$(OBJEXT) PGetOpt.$(OBJEXT) \
 	MyString.$(OBJEXT) platform/os_generic.$(OBJEXT)
 am_prpnc_OBJECTS = $(am__objects_3)
 prpnc_OBJECTS = $(am_prpnc_OBJECTS)
-prpnc_LDADD = $(LDADD)
+prpnc_DEPENDENCIES = $(am__DEPENDENCIES_1)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -396,8 +400,9 @@ CMDSEN = ${top_srcdir}/doc/cmdsen.txt
 CMDSFR = ${top_srcdir}/doc/cmdsfr.txt
 CMDSFRTMP = ${top_srcdir}/doc/cmdsfr-0-tmp.txt
 noinst_DATA = ${CMDSEN} ${CMDSFR}
+prpn_LDADD = $(am__append_2) $(am__append_3)
+prpnc_LDADD = $(am__append_4)
 @BUILD_CLIENTGUI_TRUE@prpn_CXXFLAGS = @WX_CXXFLAGS@ -DFOREIGN_MAIN -DPRPN_WX_GUI
-@BUILD_CLIENTGUI_TRUE@prpn_LDADD = @WX_LIBS@
 all: all-am
 
 .SUFFIXES:
