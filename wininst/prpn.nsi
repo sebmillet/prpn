@@ -16,7 +16,7 @@ Name "pRPN"
 OutFile "pRPN-0.6.0-setup.exe"
 
 ; The default installation directory
-InstallDir $PROGRAMFILES\pRPN
+InstallDir $APPDATA\pRPN
 
 ; Registry key to check for directory (so if you install again, it will
 ; overwrite the old one automatically)
@@ -141,7 +141,6 @@ Section "Uninstall"
 	; Remove files and uninstaller
 	Delete $INSTDIR\prpn.exe
 	Delete $INSTDIR\prpnc.exe
-
 	Delete $INSTDIR\libgcc_s_seh-1.dll
 	Delete $INSTDIR\libiconv-2.dll
 	Delete $INSTDIR\libintl-8.dll

@@ -1,0 +1,4 @@
+wx-config --rescomp
+windres --include-dir C:/msys64/mingw64/include/wx-3.0 --define __WIN32__ --define __GNUWIN32__ --define WX_CPU_AMD64 -o prpn.res prpn.rc
+
+ajouter prpn.res dans les fichiers à nettoyer
