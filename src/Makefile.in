@@ -91,14 +91,16 @@ build_triplet = @build@
 host_triplet = @host@
 bin_PROGRAMS = prpn$(EXEEXT) prpnc$(EXEEXT)
 @BUILD_CLIENTGUI_TRUE@am__append_1 = Wx/UiImplWx.cpp Wx/SkBase.cpp Wx/SkBase.h \
-@BUILD_CLIENTGUI_TRUE@  Wx/SkHp28s.cpp Wx/hp28sbg.png Wx/hp28sbg.cpp \
-@BUILD_CLIENTGUI_TRUE@  Wx/SkHp28s2.cpp Wx/hp28sbg2.png Wx/hp28sbg2.cpp \
-@BUILD_CLIENTGUI_TRUE@  Wx/SkHp28s3.cpp Wx/hp28sbg3.png Wx/hp28sbg3.cpp \
-@BUILD_CLIENTGUI_TRUE@	Wx/xpm prpn.rc prpn.ico
+@BUILD_CLIENTGUI_TRUE@	Wx/SkHp28s.cpp Wx/hp28sbg.png Wx/hp28sbg.cpp \
+@BUILD_CLIENTGUI_TRUE@	Wx/SkHp28s2.cpp Wx/hp28sbg2.png Wx/hp28sbg2.cpp \
+@BUILD_CLIENTGUI_TRUE@	Wx/SkHp28s3.cpp Wx/hp28sbg3.png Wx/hp28sbg3.cpp \
+@BUILD_CLIENTGUI_TRUE@	Wx/xpm
 
 @BUILD_CLIENTGUI_TRUE@am__append_2 = @WX_LIBS@
 @NLS_EXPLICIT_LIB_TRUE@am__append_3 = -lintl
 @NLS_EXPLICIT_LIB_TRUE@am__append_4 = -lintl
+@HAS_WINRES_TRUE@am__append_5 = prpnres.o
+@HAS_WINRES_TRUE@am__append_6 = prpnres.o
 subdir = src
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/admin/gettext.m4 \
@@ -123,10 +125,10 @@ am__prpn_SOURCES_DIST = Main.cpp Compat.cpp Common.h PGetOpt.cpp \
 	UiImplConsole.cpp MyString.cpp MyString.h \
 	platform/os_generic.cpp platform/os_generic.h \
 	platform/os_unknown.h platform/os_unix.h platform/os_win.h \
-	gettext.h MyIntl.h Wx/UiImplWx.cpp Wx/SkBase.cpp Wx/SkBase.h \
-	Wx/SkHp28s.cpp Wx/hp28sbg.png Wx/hp28sbg.cpp Wx/SkHp28s2.cpp \
-	Wx/hp28sbg2.png Wx/hp28sbg2.cpp Wx/SkHp28s3.cpp \
-	Wx/hp28sbg3.png Wx/hp28sbg3.cpp Wx/xpm prpn.rc prpn.ico
+	gettext.h MyIntl.h prpn.rc prpn.ico Wx/UiImplWx.cpp \
+	Wx/SkBase.cpp Wx/SkBase.h Wx/SkHp28s.cpp Wx/hp28sbg.png \
+	Wx/hp28sbg.cpp Wx/SkHp28s2.cpp Wx/hp28sbg2.png Wx/hp28sbg2.cpp \
+	Wx/SkHp28s3.cpp Wx/hp28sbg3.png Wx/hp28sbg3.cpp Wx/xpm
 am__dirstamp = $(am__leading_dot)dirstamp
 am__objects_1 = prpn-Main.$(OBJEXT) prpn-Compat.$(OBJEXT) \
 	prpn-PGetOpt.$(OBJEXT) prpn-Scalar.$(OBJEXT) \
@@ -145,7 +147,8 @@ am__objects_1 = prpn-Main.$(OBJEXT) prpn-Compat.$(OBJEXT) \
 am_prpn_OBJECTS = $(am__objects_1) $(am__objects_2)
 prpn_OBJECTS = $(am_prpn_OBJECTS)
 am__DEPENDENCIES_1 =
-prpn_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
+prpn_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__append_5)
 prpn_LINK = $(CXXLD) $(prpn_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
 am__objects_3 = Main.$(OBJEXT) Compat.$(OBJEXT) PGetOpt.$(OBJEXT) \
@@ -154,7 +157,7 @@ am__objects_3 = Main.$(OBJEXT) Compat.$(OBJEXT) PGetOpt.$(OBJEXT) \
 	MyString.$(OBJEXT) platform/os_generic.$(OBJEXT)
 am_prpnc_OBJECTS = $(am__objects_3)
 prpnc_OBJECTS = $(am_prpnc_OBJECTS)
-prpnc_DEPENDENCIES = $(am__DEPENDENCIES_1)
+prpnc_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__append_6)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -311,6 +314,7 @@ USE_NLS = @USE_NLS@
 VERSION = @VERSION@
 WX_CFLAGS = @WX_CFLAGS@
 WX_CFLAGS_ONLY = @WX_CFLAGS_ONLY@
+WX_CONFIG_NAME = @WX_CONFIG_NAME@
 WX_CONFIG_PATH = @WX_CONFIG_PATH@
 WX_CPPFLAGS = @WX_CPPFLAGS@
 WX_CXXFLAGS = @WX_CXXFLAGS@
@@ -388,7 +392,7 @@ MAINSOURCES = Main.cpp Compat.cpp Common.h \
 	MyString.cpp MyString.h \
 	platform/os_generic.cpp platform/os_generic.h \
 	platform/os_unknown.h platform/os_unix.h platform/os_win.h \
-	gettext.h MyIntl.h
+	gettext.h MyIntl.h prpn.rc prpn.ico
 
 prpn_SOURCES = ${MAINSOURCES} $(am__append_1)
 prpnc_SOURCES = ${MAINSOURCES}
@@ -400,8 +404,8 @@ CMDSEN = ${top_srcdir}/doc/cmdsen.txt
 CMDSFR = ${top_srcdir}/doc/cmdsfr.txt
 CMDSFRTMP = ${top_srcdir}/doc/cmdsfr-0-tmp.txt
 noinst_DATA = ${CMDSEN} ${CMDSFR}
-prpn_LDADD = $(am__append_2) $(am__append_3)
-prpnc_LDADD = $(am__append_4)
+prpn_LDADD = $(am__append_2) $(am__append_3) $(am__append_5)
+prpnc_LDADD = $(am__append_4) $(am__append_6)
 @BUILD_CLIENTGUI_TRUE@prpn_CXXFLAGS = @WX_CXXFLAGS@ -DFOREIGN_MAIN -DPRPN_WX_GUI
 all: all-am
 
@@ -1143,6 +1147,9 @@ Wx/hp28sbg3.cpp: Wx/hp28sbg3.png
 @BUILD_DOCS_TRUE@	echo "_HELP" | LC_ALL="fr_FR.utf8" ${builddir}/${EXENAME} -b > ${CMDSFRTMP}
 @BUILD_DOCS_TRUE@	iconv -f utf8 -t latin1 ${CMDSFRTMP} > ${CMDSFR}
 @BUILD_DOCS_TRUE@	rm -f ${CMDSFRTMP}
+@HAS_WINRES_TRUE@prpnres.o: prpn.rc
+@HAS_WINRES_TRUE@	rc=`$(WX_CONFIG_NAME) --rescomp`; \
+@HAS_WINRES_TRUE@	$${rc} $< -O coff -o $@
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

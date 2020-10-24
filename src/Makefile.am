@@ -11,7 +11,7 @@ MAINSOURCES=Main.cpp Compat.cpp Common.h \
 	MyString.cpp MyString.h \
 	platform/os_generic.cpp platform/os_generic.h \
 	platform/os_unknown.h platform/os_unix.h platform/os_win.h \
-	gettext.h MyIntl.h
+	gettext.h MyIntl.h prpn.rc prpn.ico
 
 bin_PROGRAMS=prpn prpnc
 prpn_SOURCES=${MAINSOURCES}
@@ -64,10 +64,10 @@ prpnc_LDADD=
 if BUILD_CLIENTGUI
 
 prpn_SOURCES+=Wx/UiImplWx.cpp Wx/SkBase.cpp Wx/SkBase.h \
-  Wx/SkHp28s.cpp Wx/hp28sbg.png Wx/hp28sbg.cpp \
-  Wx/SkHp28s2.cpp Wx/hp28sbg2.png Wx/hp28sbg2.cpp \
-  Wx/SkHp28s3.cpp Wx/hp28sbg3.png Wx/hp28sbg3.cpp \
-	Wx/xpm prpn.rc prpn.ico
+	Wx/SkHp28s.cpp Wx/hp28sbg.png Wx/hp28sbg.cpp \
+	Wx/SkHp28s2.cpp Wx/hp28sbg2.png Wx/hp28sbg2.cpp \
+	Wx/SkHp28s3.cpp Wx/hp28sbg3.png Wx/hp28sbg3.cpp \
+	Wx/xpm
 prpn_CXXFLAGS=@WX_CXXFLAGS@ -DFOREIGN_MAIN -DPRPN_WX_GUI
 prpn_LDADD+=@WX_LIBS@
 
@@ -77,6 +77,16 @@ if NLS_EXPLICIT_LIB
 
 prpn_LDADD+=-lintl
 prpnc_LDADD+=-lintl
+
+endif
+
+if HAS_WINRES
+
+prpn_LDADD+=prpnres.o
+prpnc_LDADD+=prpnres.o
+prpnres.o: prpn.rc
+	rc=`$(WX_CONFIG_NAME) --rescomp`; \
+	$${rc} $< -O coff -o $@
 
 endif
 

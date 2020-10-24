@@ -633,6 +633,9 @@ CXXDEPMODE
 ac_ct_CXX
 CXXFLAGS
 CXX
+WX_CONFIG_NAME
+HAS_WINRES_FALSE
+HAS_WINRES_TRUE
 NLS_EXPLICIT_LIB_FALSE
 NLS_EXPLICIT_LIB_TRUE
 BUILD_CLIENTGUI_FALSE
@@ -7558,6 +7561,16 @@ else
 fi
 
 
+ if test "x${host}" = "xx86_64-w64-mingw32"; then
+  HAS_WINRES_TRUE=
+  HAS_WINRES_FALSE='#'
+else
+  HAS_WINRES_TRUE='#'
+  HAS_WINRES_FALSE=
+fi
+
+
+
 
 
 
@@ -9015,6 +9028,10 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${NLS_EXPLICIT_LIB_TRUE}" && test -z "${NLS_EXPLICIT_LIB_FALSE}"; then
   as_fn_error $? "conditional \"NLS_EXPLICIT_LIB\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${HAS_WINRES_TRUE}" && test -z "${HAS_WINRES_FALSE}"; then
+  as_fn_error $? "conditional \"HAS_WINRES\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${am__fastdepCXX_TRUE}" && test -z "${am__fastdepCXX_FALSE}"; then

@@ -91,8 +91,11 @@ AM_CONDITIONAL(BUILD_CLIENTGUI, [ test "$wxWin" = 1 ])
 # But when cross-compiling, the linker needs option -lintl to be successful.
 AM_CONDITIONAL([NLS_EXPLICIT_LIB], [test "x${USE_NLS}" = "xyes" && test "x${host}" = "xx86_64-w64-mingw32"])
 
+AM_CONDITIONAL([HAS_WINRES], [test "x${host}" = "xx86_64-w64-mingw32"])
+
 AC_SUBST([WX_CXXFLAGS])
 AC_SUBST([WX_LIBS])
+AC_SUBST([WX_CONFIG_NAME])
 
 # Checks for programs.
 AC_PROG_CXX
