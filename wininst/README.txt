@@ -49,12 +49,16 @@ You may change it replacing x86_64 with i686 as appropriate.
 5. Prepare target files by executing:
 
    cd /path/to/prpn-source/wininst
-   ./prep.sh
+   ./step1-prep.sh
 
-6. Using Windows explorer, enter /path/to/prpn-source/wininst/winpkg directory,
-   right-click on prpn.nsi and click the menu:
+6. (option a) Using Windows explorer, enter /path/to/prpn-source/wininst/winpkg
+   directory, right-click on prpn.nsi and click the menu:
 
    Compile NSIS Script
+
+6. (option b) Execute:
+
+   ./step2-comp.sh
 
 This'll produce a file named pRPN-{version}-setup.exe (where {version} is prpn
 version), now it is:

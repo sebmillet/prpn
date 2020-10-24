@@ -1,3 +1,9 @@
+2020-10-24 Sébastien Millet <milletseb@laposte.net>
+
+	* Fixes Windows top frame size
+	* Compiles well in 2020 (wx library is 3.0.5)
+	* By default, installation does not need admin rights on PC
+
 2020-10-18 Sébastien Millet <milletseb@laposte.net>
 
 	* 0.6.0 release candidate

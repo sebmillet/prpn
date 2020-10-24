@@ -141,6 +141,9 @@ Below is found information specific to this package.
 
 - Windows compilation (OBSOLETE)
 
+    Note
+      Some files referred to below are now in the wininst/obsolete folder.
+
     pRPN compiles with MinGW or Microsoft Visual C++ (msvc)
     It does not compile with Borland C++, see (4) below
     Before compiling pRPN you have to compile wxWidgets library

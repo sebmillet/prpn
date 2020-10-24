@@ -1355,6 +1355,9 @@ void MyFrame::OnPaint(wxPaintEvent& ev) {
 #endif
       SetMinSize(frame_size);
       SetMaxSize(frame_size);
+#ifdef PROG_WINDOWS
+      SetSize(frame_size);
+#endif
     }
 
     debug_write_v(
