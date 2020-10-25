@@ -61,9 +61,9 @@ You may change it replacing x86_64 with i686 as appropriate.
    ./step2-comp.sh
 
 This'll produce a file named pRPN-{version}-setup.exe (where {version} is prpn
-version), now it is:
+version), if it is version 0.6.0 (October 2020), it'll be:
 
-   pRPN-0.6.0-setup.exe
+   path/to/prpn-source/wininst/pRPN-0.6.0-setup.exe
 
 You're done!
 

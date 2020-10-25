@@ -7,6 +7,7 @@
 
 set -euo pipefail
 
+ARCHIVE=pRPN-0.6.0-setup.exe
 WP=winpkg
 NSI_FILE=prpn.nsi
 
@@ -20,4 +21,6 @@ fi
 cd "${WP}"
 
 "${NSIS_EXE}" "${NSI_FILE}"
+
+mv -i "${ARCHIVE}" ..
 
