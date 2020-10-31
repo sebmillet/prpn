@@ -106,6 +106,8 @@ struct skin_t skin_hp28s2 = {
   _N("Use a fixed-size skin inspired of the HP 28S scientific calculator, size: 37 (width) x 8 (lines), few buttons"),
   MB_ENFORCE_MENU,
 
+// FIXME FIXME FIXME
+/*
 #ifdef PROG_UNIXLIKE
 //  316,
   337,
@@ -115,6 +117,10 @@ struct skin_t skin_hp28s2 = {
   341,
   403,
 #endif
+*/
+  337,
+  350,
+
   NULL,
   hp28sbg2, nb_items_hp28sbg2, wxBITMAP_TYPE_PNG,
 

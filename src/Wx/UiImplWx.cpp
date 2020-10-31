@@ -1350,14 +1350,16 @@ void MyFrame::OnPaint(wxPaintEvent& ev) {
       debug_write_i("PAINT::minimal client height = %i", my_min_client_height);
       SetMinSize(wxSize(my_min_client_width, my_min_client_height - hh / 3));
     } else if (gui == GUI_SKIN) {
-#ifdef PROG_WINDOWS
-      frame_size = wxSize(frame_size.GetWidth() + 12, frame_size.GetHeight() + 7);
-#endif
+
+			int cw, ch;
+			GetClientSize(&cw, &ch);
+			debug_write_v("CLIENTSIZE             .w = %4i, .h = %4i", cw, ch);
+			debug_write_v("THEROTECIAL CLIENTSIZE .w = %4i, .h = %4i", skin->frame_w, skin->frame_h);
+			frame_size = wxSize(frame_size.GetWidth() + skin->frame_w - cw, frame_size.GetHeight() + skin->frame_h - ch);
+
       SetMinSize(frame_size);
       SetMaxSize(frame_size);
-#ifdef PROG_WINDOWS
       SetSize(frame_size);
-#endif
     }
 
     debug_write_v(
