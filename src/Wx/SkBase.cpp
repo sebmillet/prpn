@@ -58,7 +58,7 @@ skin_t::~skin_t() {
 
 const wxString const_char_to_wxString(const char *);
 
-void skin_t::load_bitmaps() {
+void skin_t::load_bitmaps(double disp_scale) {
   debug_write_v("load_bitmap() called, for the skin \"%s\"", menu_label);
   debug_write_v("Nb bytes in bitmap raw data = %lu", sizeof_raw_data_frame_bg_image);
   delete_bitmaps();
@@ -72,7 +72,7 @@ void skin_t::load_bitmaps() {
 #else
   wxMemoryInputStream mem(raw_data_frame_bg_image, sizeof_raw_data_frame_bg_image);
   wxImage img(mem, frame_bg_image_type);
-  frame_bg_image = new wxBitmap(img);
+  frame_bg_image = new wxBitmap(img.Scale(img.GetWidth() * disp_scale, img.GetHeight() * disp_scale));
 #endif
 
   status_exec_norun = new wxBitmap(char_status_exec_norun);
@@ -86,7 +86,7 @@ void skin_t::load_bitmaps() {
   status_unit_dec = new wxBitmap(char_status_unit_dec);
   status_unit_hex = new wxBitmap(char_status_unit_hex);
   for (int i = 0; i < nb_btns; i++) {
-    btns[i].load_bitmaps();
+    btns[i].load_bitmaps(disp_scale);
   }
 }
 
@@ -101,7 +101,7 @@ skin_btn_t::~skin_btn_t() {
   delete_bitmaps();
 }
 
-void skin_btn_t::load_bitmaps() {
+void skin_btn_t::load_bitmaps(double disp_scale) {
   delete_bitmaps();
   released = new wxBitmap(char_released);
   pressed = new wxBitmap(char_pressed);

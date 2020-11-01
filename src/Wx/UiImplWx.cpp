@@ -248,6 +248,8 @@ class MyFrame;
 class StatusWindow;
 class myBitmapButton;
 
+void copy_scaled_bitmap(wxBitmap* dest, const wxBitmap* src, double scale);
+
 class MyApp: public wxApp {
   int what_am_i_to_do;
   MyFrame *frame;
@@ -295,6 +297,8 @@ class MyFrame: public wxFrame {
 
   wxBtnAll wxAllButtons;
 
+  double disp_scale;
+
   const MenuDescription *menus_descriptions;
   int nb_menus_descriptions;
   const BtnDescription *btn_descriptions;
@@ -335,6 +339,7 @@ class MyFrame: public wxFrame {
   void check_path_width();
   void display_help(const int&);
   void stack_line_set_font(wxStaticText*);
+
 public:
   friend class UiImplWx;
   MyFrame(const wxString&, const wxPoint&, const wxSize&, const MenuDescription*&,
@@ -352,6 +357,8 @@ public:
   void notify_ui_change();
   void textTypein_recalc_and_setsize();
   void textTypein_SetFocus();
+
+  double get_disp_scale() const;
 
   DECLARE_EVENT_TABLE()
 };
@@ -404,15 +411,27 @@ StatusWindow::StatusWindow(MyFrame *parent, wxWindowID id, const wxPoint &pos, c
       const wxBitmap& a_unit_dec, const wxBitmap& a_unit_hex)
     : wxScrolledWindow(dynamic_cast<wxWindow*>(parent), id, pos, size, SIZER_STATUS_BORDERSTYLE),
     my_parent(parent),
-    horoffset_exec(0),
-    exec_norun(a_exec_norun), exec_run(a_exec_run),
-    horoffset_arrow(0),
-    shiftsel(a_shiftsel), shiftuns(a_shiftuns),
-    horoffset_angle(0),
-    angle_deg(a_angle_deg), angle_rad(a_angle_rad),
-    horoffset_unit(0),
-    unit_bin(a_unit_bin), unit_oct(a_unit_oct), unit_dec(a_unit_dec), unit_hex(a_unit_hex), bg_color(bgc) {
+    //exec_norun(a_exec_norun), exec_run(a_exec_run),
+    //shiftsel(a_shiftsel), shiftuns(a_shiftuns),
+    //angle_deg(a_angle_deg), angle_rad(a_angle_rad),
+    //unit_bin(a_unit_bin), unit_oct(a_unit_oct), unit_dec(a_unit_dec), unit_hex(a_unit_hex),
+    bg_color(bgc) {
+
   SetBackgroundColour(bgc);
+
+  double scale = parent->get_disp_scale();
+
+  copy_scaled_bitmap(&exec_norun, &a_exec_norun, scale);
+  copy_scaled_bitmap(&exec_run, &a_exec_run, scale);
+  copy_scaled_bitmap(&shiftsel, &a_shiftsel, scale);
+  copy_scaled_bitmap(&shiftuns, &a_shiftuns, scale);
+  copy_scaled_bitmap(&angle_deg, &a_angle_deg, scale);
+  copy_scaled_bitmap(&angle_rad, &a_angle_rad, scale);
+  copy_scaled_bitmap(&unit_bin, &a_unit_bin, scale);
+  copy_scaled_bitmap(&unit_oct, &a_unit_oct, scale);
+  copy_scaled_bitmap(&unit_dec, &a_unit_dec, scale);
+  copy_scaled_bitmap(&unit_hex, &a_unit_hex, scale);
+
   int w = exec_run.GetWidth();
   int w2 = shiftsel.GetWidth();
   int h = shiftsel.GetHeight();
@@ -423,6 +442,11 @@ StatusWindow::StatusWindow(MyFrame *parent, wxWindowID id, const wxPoint &pos, c
   horoffset_angle = w + w2 + 3 * SIZER_STATUS_WINDOW_ITEM_H_MARGIN;
   horoffset_unit = w + w2 + w3 + 4 * SIZER_STATUS_WINDOW_ITEM_H_MARGIN;
   SetSize(wxSize(horoffset_unit + w4, h + 2 * SIZER_STATUS_WINDOW_ITEM_V_MARGIN));
+}
+
+void copy_scaled_bitmap(wxBitmap* dest, const wxBitmap* src, double scale) {
+  wxImage tmpimg = src->ConvertToImage();
+  *dest = tmpimg.Scale(scale * tmpimg.GetWidth(), scale * tmpimg.GetHeight());
 }
 
 void StatusWindow::OnPaint(wxPaintEvent&) {
@@ -527,9 +551,9 @@ BEGIN_EVENT_TABLE(myBitmapButton, wxWindow)
 END_EVENT_TABLE()
 
 myBitmapButton::myBitmapButton(MyFrame *p, wxWindowID id, wxBitmap *rel, wxBitmap *prs,
-		wxPoint pos, wxSize size, const char *mcmd, const char *acmd)
-			: wxWindow(p, id, pos, size, wxBORDER_NONE), parent(p), released(*rel), pressed(*prs),
-				main_cmd(mcmd), alt_cmd(acmd), is_down(false) {
+    wxPoint pos, wxSize size, const char *mcmd, const char *acmd)
+      : wxWindow(p, id, pos, size, wxBORDER_NONE), parent(p), released(*rel), pressed(*prs),
+        main_cmd(mcmd), alt_cmd(acmd), is_down(false) {
 }
 
 void myBitmapButton::OnPaint(wxPaintEvent& ev) {
@@ -743,25 +767,28 @@ static void skin_read_typein_info(int& x, int& y, int& w, int& h, const skin_t *
   debug_write_v("  s->r_stack.h = %i", s->r_stack.h);
 }
 
-static void shape(wxWindow *ctrl, const int& x, const int& y, const int& w, const int& h,
-    const wxColour& bg_color, const wxColour& fg_color) {
-  ctrl->SetSize(x, y, w, h);
+static void shape(wxWindow *ctrl, const int& x, const int& y,
+                  const int& w, const int& h,
+                  const wxColour& bg_color, const wxColour& fg_color,
+                  double scale) {
+  ctrl->SetSize(scale * x, scale * y, scale * (w + 5), scale * h);
   ctrl->SetBackgroundColour(bg_color);
   ctrl->SetForegroundColour(fg_color);
 }
 
 static void draw_button_text(wxBitmap *released, wxBitmap *pressed,
-        const char *t, const int& y_text_released, const int& y_text_pressed, const font_t& f_text) {
+        const char *t, const int& y_text_released, const int& y_text_pressed,
+        const font_t& f_text, double scale) {
   wxMemoryDC memdc;
   memdc.SelectObject(*released);
   int w = released->GetWidth();
   memdc.SetTextForeground(f_text.colour);
   memdc.SetFont(wxFont(f_text.pointSize, f_text.family, f_text.style, f_text.weight, f_text.underline));
   wxSize s = memdc.GetTextExtent(const_char_to_wxString(t));
-  memdc.DrawText(const_char_to_wxString(t), (w - s.GetWidth()) / 2, y_text_released);
+  memdc.DrawText(const_char_to_wxString(t), (w - s.GetWidth()) / 2, scale * y_text_released);
 
   memdc.SelectObject(*pressed);
-  memdc.DrawText(const_char_to_wxString(t), (w - s.GetWidth()) / 2, y_text_pressed);
+  memdc.DrawText(const_char_to_wxString(t), (w - s.GetWidth()) / 2, scale * y_text_pressed);
 
 }
 
@@ -770,12 +797,29 @@ myBitmapButton *build_bitmap_button(MyFrame *parent, wxWindowID id, const wxBitm
     const font_t& f_text, const char*main_cmd, const char *alt_cmd)
 {
 
-  wxBitmap copy_bm_released = bm_released;
-  wxBitmap copy_bm_pressed = bm_pressed;
+  double scale = parent->get_disp_scale();
 
-  draw_button_text(&copy_bm_released, &copy_bm_pressed, t, y_text_released, y_text_pressed, f_text);
+  //wxBitmap copy_bm_released = bm_released;
+  wxImage img_released = bm_released.ConvertToImage();
+  wxBitmap copy_bm_released = img_released.Scale(
+    scale * img_released.GetWidth(), scale * img_released.GetHeight());
 
-  myBitmapButton *b = new myBitmapButton(parent, id, &copy_bm_released, &copy_bm_pressed, pos, size, main_cmd, alt_cmd);
+  //wxBitmap copy_bm_pressed = bm_pressed;
+  wxImage img_pressed = bm_pressed.ConvertToImage();
+  wxBitmap copy_bm_pressed = img_pressed.Scale(
+    scale * img_pressed.GetWidth(), scale * img_pressed.GetHeight());
+
+  draw_button_text(&copy_bm_released, &copy_bm_pressed, t,
+                   y_text_released, y_text_pressed, f_text, scale);
+
+  wxPoint scaled_pos = wxPoint(scale * pos.x, scale * pos.y);
+  wxSize scaled_size = wxSize(scale * size.GetWidth(), scale * size.GetHeight());
+
+  debug_write_v(">>> scale = %f", scale);
+
+  myBitmapButton *b = new myBitmapButton(parent, id, &copy_bm_released, &copy_bm_pressed,
+    scaled_pos, scaled_size, main_cmd, alt_cmd);
+
   return b;
 }
 
@@ -810,6 +854,8 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
   debug_write_v("gui = %s", (gui == GUI_SIZER ? "sizer" : "skin"));
   debug_write_v("ui_code = %i", u);
 
+  disp_scale = GetContentScaleFactor();
+
   SetIcon(wxIcon(prpn_xpm));
 
   bool has_menu_bar;
@@ -826,7 +872,7 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
     debug_write_v("u = %i, ui_code = %i", u, ui_code);
     skin = skins[ui_code - 1];
     debug_write_v("Loadging bitmap images...");
-    skin->load_bitmaps();
+    skin->load_bitmaps(disp_scale);
     debug_write_v("Finished loadging bitmap images...");
     if (skin->menubar == MB_DEFAULT) {
       has_menu_bar = ui_has_menu_bar();
@@ -881,7 +927,8 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
   if (gui == GUI_SIZER)
     topSizer->Add(stwin, 0, wxALL | wxEXPAND, SIZER_STATUS_BORDERSIZE);
   else
-    stwin->SetSize(skin->r_status.x, skin->r_status.y, skin->r_status.w, skin->r_status.h);
+    stwin->SetSize(disp_scale * skin->r_status.x, disp_scale * skin->r_status.y,
+                   disp_scale * skin->r_status.w, disp_scale * skin->r_status.h);
 
     // Path
   path = new wxStaticText(this, wxID_ANY, _T(""), wxPoint(wxDefaultPosition), wxSize(wxDefaultSize), SIZER_PATH_BORDERSTYLE);
@@ -892,7 +939,8 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
     path->SetForegroundColour(SIZER_PATH_FOREGROUND_COLOUR);
     topSizer->Add(path, 0, wxLEFT | wxRIGHT | wxBOTTOM | wxEXPAND, SIZER_PATH_BORDERSIZE);
   } else if (gui == GUI_SKIN)
-    shape(path, skin->r_path.x, skin->r_path.y, skin->r_path.w, skin->r_path.h, skin->path_bg_colour, skin->f_path.colour);
+    shape(path, skin->r_path.x, skin->r_path.y, skin->r_path.w, skin->r_path.h,
+          skin->path_bg_colour, skin->f_path.colour, disp_scale);
 
     // Stack items
   build_dispStack();
@@ -911,7 +959,8 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
   } else if (gui == GUI_SKIN) {
     int x, y, w, h;
     skin_read_typein_info(x, y, w, h, skin);
-    shape(textTypein, x, y, w, h, skin->typein_bg_colour, skin->f_typein.colour);
+    shape(textTypein, x, y, w, h,
+          skin->typein_bg_colour, skin->f_typein.colour, disp_scale);
   }
 
 
@@ -1056,9 +1105,9 @@ int MyFrame::get_nb_menu_buttons() {
   } else if (gui == GUI_SKIN) {
     debug_write_v("MyFrame::get_nb_menu_buttons(): return %lu", skin_menu_buttons.size());
     return skin_menu_buttons.size();
-	}
-	// Never executed...
-	return 0;
+  }
+  // Never executed...
+  return 0;
 }
 
 void MyFrame::notify_ui_change() {
@@ -1146,8 +1195,9 @@ void MyFrame::build_dispStack() {
       l1.t->SetForegroundColour(sizer_slcc_to_fg_wxColor(SLCC_NORMAL));
       topSizer->Insert(STACK_INDEX_0 + i, l1.w, 0, wxALL, SIZER_STACK_BORDERSIZE);
     } else if (gui == GUI_SKIN) {
-      shape(l1.w, skin->r_stack.x, skin->r_stack.y + i * skin->stack_y_step, skin->r_stack.w, skin->r_stack.h,
-          skin->stack_bg_colour, skin->stack_fg_colour);
+      shape(l1.w, skin->r_stack.x, skin->r_stack.y + i * skin->stack_y_step,
+            skin->r_stack.w, skin->r_stack.h,
+            skin->stack_bg_colour, skin->stack_fg_colour, disp_scale);
     }
     dispStack.push_back(l1);
   }
@@ -1351,11 +1401,15 @@ void MyFrame::OnPaint(wxPaintEvent& ev) {
       SetMinSize(wxSize(my_min_client_width, my_min_client_height - hh / 3));
     } else if (gui == GUI_SKIN) {
 
-			int cw, ch;
-			GetClientSize(&cw, &ch);
-			debug_write_v("CLIENTSIZE             .w = %4i, .h = %4i", cw, ch);
-			debug_write_v("THEROTECIAL CLIENTSIZE .w = %4i, .h = %4i", skin->frame_w, skin->frame_h);
-			frame_size = wxSize(frame_size.GetWidth() + skin->frame_w - cw, frame_size.GetHeight() + skin->frame_h - ch);
+      int cw, ch;
+      GetClientSize(&cw, &ch);
+
+      debug_write_v("CLIENTSIZE             .w = %4i, .h = %4i", cw, ch);
+      debug_write_v("THERORECIAL CLIENTSIZE .w = %4i, .h = %4i", skin->frame_w, skin->frame_h);
+      debug_write_v("USERSCALE              .x = %f, .y = %f", x, y);
+      debug_write_v("CONTENTSCALEFACTOR     .f = %f", disp_scale);
+      frame_size = wxSize(frame_size.GetWidth() + disp_scale * skin->frame_w - cw,
+                          frame_size.GetHeight() + disp_scale * skin->frame_h - ch);
 
       SetMinSize(frame_size);
       SetMaxSize(frame_size);
@@ -1376,9 +1430,13 @@ void MyFrame::OnPaint(wxPaintEvent& ev) {
     wxPaintDC dc(this);
     PrepareDC(dc);
 
+    double scale = get_disp_scale();
+
     dc.DrawBitmap(*(skin->frame_bg_image), 0, 0);
     for (int i = 0; i < skin->nb_btns; i++) {
-      dc.DrawBitmap(*(skin->btns[i].released), skin->btns[i].rec.x + skin->btn_shift_x, skin->btns[i].rec.y + skin->btn_shift_y);
+      dc.DrawBitmap(*(skin->btns[i].released),
+                    scale * (skin->btns[i].rec.x + skin->btn_shift_x),
+                    scale * (skin->btns[i].rec.y + skin->btn_shift_y));
     }
   }
 
@@ -1439,6 +1497,10 @@ void MyFrame::OnMouseWheel(wxMouseEvent& ev) {
       ev.m_wheelDelta, ev.GetWheelDelta(), ev.GetWheelRotation(), nb_pas);
   ui_notify_key_pressed(UIK_WHEEL, nb_pas);
   ev.Skip();
+}
+
+double MyFrame::get_disp_scale() const {
+  return disp_scale;
 }
 
 
@@ -1583,11 +1645,27 @@ void UiImplWx::set_menu_button(const int& n, const menu_button_t& mb) {
     f->sizer_menu_buttons[n]->SetLabel(string_to_wxString(s));
   } else {
     string s = mb.label.substr(0, f->skin->menu_buttons_max_nb_chars);
-    wxBitmap copy_bm_released = *(f->skin->btns[f->skin_menu_button_1].released);
-    wxBitmap copy_bm_pressed = *(f->skin->btns[f->skin_menu_button_1].pressed);
 
-    draw_button_text(&copy_bm_released, &copy_bm_pressed, s.c_str(), f->skin->y_released, f->skin->y_pressed,
-        f->skin->btns_fonts[f->skin->btns[f->skin_menu_button_1].font_index]);
+    double scale = f->get_disp_scale();
+
+    debug_write_v(":::scale = %f", scale);
+
+    wxImage img_released =
+      f->skin->btns[f->skin_menu_button_1].released->ConvertToImage();
+    wxBitmap copy_bm_released = img_released.Scale(
+      scale * img_released.GetWidth(), scale * img_released.GetHeight());
+    //wxBitmap copy_bm_released = *(f->skin->btns[f->skin_menu_button_1].released);
+
+    wxImage img_pressed =
+      f->skin->btns[f->skin_menu_button_1].pressed->ConvertToImage();
+    wxBitmap copy_bm_pressed = img_pressed.Scale(
+      scale * img_pressed.GetWidth(), scale * img_pressed.GetHeight());
+    //wxBitmap copy_bm_pressed = *(f->skin->btns[f->skin_menu_button_1].pressed);
+
+    draw_button_text(&copy_bm_released, &copy_bm_pressed, s.c_str(),
+                     f->skin->y_released, f->skin->y_pressed,
+                     f->skin->btns_fonts[f->skin->btns[f->skin_menu_button_1].font_index],
+                     scale);
     f->skin_menu_buttons[n]->mySetBitmapLabel(&copy_bm_released);
     f->skin_menu_buttons[n]->mySetBitmapSelected(&copy_bm_pressed);
     dynamic_cast<wxWindow*>(f->skin_menu_buttons[n])->Refresh();
@@ -1689,7 +1767,9 @@ void UiImplWx::refresh_stack_height() {
     skin_read_typein_info(x, y, w, h, f->skin);
     int h2 = h * (f->skin->stack_height - my_get_max_stack() + 1);
     int y2 = y - h * (f->skin->stack_height - my_get_max_stack());
-    f->textTypein->SetSize(x, y2, w, h2);
+
+    double scale = f->get_disp_scale();
+    f->textTypein->SetSize(scale * x, scale * y2, scale * w, scale * h2);
   }
 
   f->Thaw();

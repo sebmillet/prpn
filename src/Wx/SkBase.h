@@ -51,7 +51,7 @@ struct skin_btn_t {
   wxBitmap *released;
   wxBitmap *pressed;
 
-  void load_bitmaps();
+  void load_bitmaps(double disp_scale);
   void delete_bitmaps();
   ~skin_btn_t();
 };
@@ -117,7 +117,7 @@ struct skin_t {
   const font_t *btns_fonts;
   int nb_btns_fonts;
 
-  void load_bitmaps();
+  void load_bitmaps(double disp_scale);
   void delete_bitmaps();
   ~skin_t();
 };
