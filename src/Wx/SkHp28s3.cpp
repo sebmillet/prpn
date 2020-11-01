@@ -173,7 +173,7 @@ struct skin_t skin_hp28s3 = {
   NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
 
     // stack
-  {19, 53, 298, 16},
+  {19, 53, 303, 16},
   16,       // Stack step (= height of each element)
   HP28S_GRAY, (*wxBLACK), // Bg/fg color in normal mode
   (*wxBLACK), HP28S_GRAY, // Bg/fg color in inverted mode

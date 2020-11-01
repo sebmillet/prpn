@@ -771,7 +771,7 @@ static void shape(wxWindow *ctrl, const int& x, const int& y,
                   const int& w, const int& h,
                   const wxColour& bg_color, const wxColour& fg_color,
                   double scale) {
-  ctrl->SetSize(scale * x, scale * y, scale * (w + 5), scale * h);
+  ctrl->SetSize(scale * x, scale * y, scale * w, scale * h);
   ctrl->SetBackgroundColour(bg_color);
   ctrl->SetForegroundColour(fg_color);
 }

@@ -157,11 +157,11 @@ struct skin_t skin_hp28s = {
   23,
 
     // path
-  {29, 58, 253, 16},
+  {29, 58, 262, 16},
   HP28S_GRAY, {10, wxFONTFAMILY_TELETYPE, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, *wxBLACK, false},
 
     // status
-  {29, 38, 253, 20},
+  {29, 38, 262, 20},
   HP28S_GRAY, (*wxBLACK),
     // Status window bitmaps
   exec_norun_s1_xpm, exec_run_s1_xpm,
@@ -171,7 +171,7 @@ struct skin_t skin_hp28s = {
   NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
 
     // stack
-  {29, 74, 253, 22},
+  {29, 74, 262, 22},
   22,       // Stack step (= height of each element)
   HP28S_GRAY, (*wxBLACK), // Bg/fg color in normal mode
   (*wxBLACK), HP28S_GRAY, // Bg/fg color in inverted mode
