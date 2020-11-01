@@ -146,7 +146,7 @@ struct skin_t skin_hp28s = {
   584,
 #endif
 */
-  316,
+  326,
   532,
 
   NULL,
@@ -184,7 +184,7 @@ struct skin_t skin_hp28s = {
 
     // Buttons
   4, 5,
-  0, 0,
+  5, 0,
   skin_btn_hp28s,
   sizeof(skin_btn_hp28s) / sizeof(*skin_btn_hp28s),
   5,
