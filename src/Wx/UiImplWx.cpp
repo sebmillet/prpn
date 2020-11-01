@@ -446,7 +446,7 @@ StatusWindow::StatusWindow(MyFrame *parent, wxWindowID id, const wxPoint &pos, c
 
 void copy_scaled_bitmap(wxBitmap* dest, const wxBitmap* src, double scale) {
   wxImage tmpimg = src->ConvertToImage();
-  *dest = tmpimg.Scale(scale * tmpimg.GetWidth(), scale * tmpimg.GetHeight());
+  *dest = wxBitmap(tmpimg.Scale(scale * tmpimg.GetWidth(), scale * tmpimg.GetHeight()));
 }
 
 void StatusWindow::OnPaint(wxPaintEvent&) {

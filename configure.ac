@@ -5,7 +5,7 @@
 
 AC_PREREQ([2.65])
 
-AC_INIT([pRPN], [0.6.0], [milletseb@laposte.net])
+AC_INIT([pRPN], [0.6.1], [milletseb@laposte.net])
 
 AC_CONFIG_SRCDIR([src/Common.h])
 AC_CONFIG_AUX_DIR([admin])

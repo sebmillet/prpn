@@ -1,0 +1,9 @@
+include/wx-3.0/wx/msw/init.h:33:// Call this function to prevent wxMSW from calling SetProcessDPIAware().
+include/wx-3.0/wx/msw/init.h:35:extern WXDLLIMPEXP_CORE void wxMSWDisableSettingHighDPIAware();
+include/shellscalingapi.h:61:STDAPI GetProcessDpiAwareness(HANDLE hprocess, PROCESS_DPI_AWARENESS *value);
+include/shellscalingapi.h:62:STDAPI SetProcessDpiAwareness(PROCESS_DPI_AWARENESS value);
+include/mshtmdid.h:6554:#define DISPID_IHTMLFILTERPAINTER2_ISDPIAWARE
+include/winuser.h:5864:  WINUSERAPI WINBOOL WINAPI SetProcessDPIAware (VOID);
+include/winuser.h:5865:  WINUSERAPI WINBOOL WINAPI IsProcessDPIAware (VOID);
+include/wx-3.1/wx/msw/nonownedwnd.h:50:    // application manifest contains <dpiAwareness>PerMonitorV2</dpiAwareness>.
+include/wx-3.1/wx/msw/nonownedwnd.h:51:    bool m_perMonitorDPIaware;

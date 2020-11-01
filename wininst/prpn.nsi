@@ -13,7 +13,7 @@ Unicode True
 Name "pRPN"
 
 ; The file to write
-OutFile "pRPN-0.6.0-setup.exe"
+OutFile "pRPN-0.6.1-setup.exe"
 
 ; The default installation directory
 InstallDir $APPDATA\pRPN
@@ -112,7 +112,7 @@ Section !$(Sec2)
 
 	SetOutPath $INSTDIR
 	; Put file there
-	File "prpn-0.6.0.tar.gz"
+	File "prpn-0.6.1.tar.gz"
 
 SectionEnd
 
@@ -168,7 +168,7 @@ Section "Uninstall"
 	RMDir /r $INSTDIR\fr
 
 	Delete $INSTDIR\README.TXT
-	Delete $INSTDIR\prpn-0.6.0.tar.gz
+	Delete $INSTDIR\prpn-0.6.1.tar.gz
 	Delete $INSTDIR\uninstall.exe
 
 	; Remove shortcuts, if any

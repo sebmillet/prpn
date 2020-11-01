@@ -7,7 +7,7 @@
 
 set -euo pipefail
 
-ARCHIVE=pRPN-0.6.0-setup.exe
+ARCHIVE=pRPN-0.6.1-setup.exe
 WP=winpkg
 NSI_FILE=prpn.nsi
 

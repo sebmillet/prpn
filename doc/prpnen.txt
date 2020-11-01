@@ -695,4 +695,4 @@ BUGS
 
 
 
-October 10h, 2020		 version 0.6.0			       pRPN(1)
+November 1st, 2020		 version 0.6.1			       pRPN(1)

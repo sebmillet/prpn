@@ -16,7 +16,7 @@ You may change it replacing x86_64 with i686 as appropriate.
    executables, therefore the tarball must be available.
    Today the file is:
 
-      prpn-0.6.0.tar.gz
+      prpn-0.6.1.tar.gz
 
    and it is generated *FROM LINUX* executing make dist or make distcheck.
 
@@ -61,9 +61,9 @@ You may change it replacing x86_64 with i686 as appropriate.
    ./step2-comp.sh
 
 This'll produce a file named pRPN-{version}-setup.exe (where {version} is prpn
-version), if it is version 0.6.0 (October 2020), it'll be:
+version), if it is version 0.6.1 (November 2020), it'll be:
 
-   path/to/prpn-source/wininst/pRPN-0.6.0-setup.exe
+   path/to/prpn-source/wininst/pRPN-0.6.1-setup.exe
 
 You're done!
 
