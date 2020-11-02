@@ -20,7 +20,7 @@ InstallDir $APPDATA\pRPN
 
 ; Registry key to check for directory (so if you install again, it will
 ; overwrite the old one automatically)
-InstallDirRegKey HKLM "Software\pRPN" "InstallationDirectory"
+InstallDirRegKey HKCU "Software\pRPN" "InstallationDirectory"
 
 ; Request application privileges for Windows Vista
 RequestExecutionLevel user
@@ -78,9 +78,9 @@ Section !$(Sec1)
 	File "libtiff-5.dll"
 	File "libwinpthread-1.dll"
 	File "libzstd.dll"
-	File "wxbase30u_gcc_custom.dll"
-	File "wxmsw30u_core_gcc_custom.dll"
-	File "wxmsw30u_html_gcc_custom.dll"
+	File "wxbase313u_gcc_custom.dll"
+	File "wxmsw313u_core_gcc_custom.dll"
+	File "wxmsw313u_html_gcc_custom.dll"
 	File "zlib1.dll"
 
 	StrCmp $(LNCC) "en" 0 +3
@@ -96,14 +96,14 @@ Section !$(Sec1)
 	File "README.TXT"
 
 	; Write the installation path into the registry
-	WriteRegStr HKLM SOFTWARE\pRPN "InstallationDirectory" "$INSTDIR"
-	WriteRegStr HKLM SOFTWARE\pRPN "Language" "$(LNCC)"
+	WriteRegStr HKCU SOFTWARE\pRPN "InstallationDirectory" "$INSTDIR"
+	WriteRegStr HKCU SOFTWARE\pRPN "Language" "$(LNCC)"
 
 	; Write the uninstall keys for Windows
-	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\pRPN" "DisplayName" "pRPN"
-	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\pRPN" "UninstallString" '"$INSTDIR\uninstall.exe"'
-	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\pRPN" "NoModify" 1
-	WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\pRPN" "NoRepair" 1
+	WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\pRPN" "DisplayName" "pRPN"
+	WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\pRPN" "UninstallString" '"$INSTDIR\uninstall.exe"'
+	WriteRegDWORD HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\pRPN" "NoModify" 1
+	WriteRegDWORD HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\pRPN" "NoRepair" 1
 	WriteUninstaller "uninstall.exe"
 
 SectionEnd
@@ -135,8 +135,8 @@ SectionEnd
 Section "Uninstall"
 
 	; Remove registry keys
-	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\pRPN"
-	DeleteRegKey HKLM SOFTWARE\pRPN
+	DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\pRPN"
+	DeleteRegKey HKCU SOFTWARE\pRPN
 
 	; Remove files and uninstaller
 	Delete $INSTDIR\prpn.exe
@@ -151,9 +151,9 @@ Section "Uninstall"
 	Delete $INSTDIR\libtiff-5.dll
 	Delete $INSTDIR\libwinpthread-1.dll
 	Delete $INSTDIR\libzstd.dll
-	Delete $INSTDIR\wxbase30u_gcc_custom.dll
-	Delete $INSTDIR\wxmsw30u_core_gcc_custom.dll
-	Delete $INSTDIR\wxmsw30u_html_gcc_custom.dll
+	Delete $INSTDIR\wxbase313u_gcc_custom.dll
+	Delete $INSTDIR\wxmsw313u_core_gcc_custom.dll
+	Delete $INSTDIR\wxmsw313u_html_gcc_custom.dll
 	Delete $INSTDIR\zlib1.dll
 
 	; For previous installs

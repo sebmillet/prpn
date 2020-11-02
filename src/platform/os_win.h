@@ -20,7 +20,7 @@
 
 #define SEP					'\\'
 #define MAX_REGISTRY_KEY_VALUE_LENGTH	MAX_PATH
-#define REG_ROOT_HKEY		HKEY_LOCAL_MACHINE
+#define REG_ROOT_HKEY		HKEY_CURRENT_USER
 #define REG_ROOT_PATH		"SOFTWARE\\pRPN"
 #define REG_KEY_INSTDIR		"InstallationDirectory"
 #define REG_KEY_LANGUAGE	"Language"

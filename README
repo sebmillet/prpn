@@ -131,7 +131,7 @@ Below is found information specific to this package.
         your Linux, you'll have to download source and compile gettext library
         (libintl), using x86_64-w64-mingw32-gcc.
 
-    (4) Launch the compilation by executing the following:
+    (5) Launch the compilation by executing the following:
           ./configure --host=x86_64-w64-mingw32 \
               --with-wx-config=/usr/x86_64-w64-mingw32/bin/wx-config
           make

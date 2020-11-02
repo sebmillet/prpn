@@ -41,9 +41,9 @@ cp -i dlls/libstdc++-6.dll "${WP}"/
 cp -i dlls/libtiff-5.dll "${WP}"/
 cp -i dlls/libwinpthread-1.dll "${WP}"/
 cp -i dlls/libzstd.dll "${WP}"/
-cp -i dlls/wxbase30u_gcc_custom.dll "${WP}"/
-cp -i dlls/wxmsw30u_core_gcc_custom.dll "${WP}"/
-cp -i dlls/wxmsw30u_html_gcc_custom.dll "${WP}"/
+cp -i dlls/wxbase313u_gcc_custom.dll "${WP}"/
+cp -i dlls/wxmsw313u_core_gcc_custom.dll "${WP}"/
+cp -i dlls/wxmsw313u_html_gcc_custom.dll "${WP}"/
 cp -i dlls/zlib1.dll "${WP}"/
 
 cp -i ../prpn-0.6.1.tar.gz "${WP}"/
