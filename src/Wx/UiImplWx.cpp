@@ -4,7 +4,7 @@
 // RPN calculator
 
 // Sébastien Millet
-// August 2009 - March 2010
+// August 2009 - March 2010, October - November 2020
 
 #include "../Ui.h"
 
@@ -93,6 +93,9 @@ const int MAX_WHEEL_STEPS_IN_1_EVENT = 5;
 #define SIZER_STATUS_BACKGROUND_COLOUR    (wxColour(0xFA, 0xFA, 0xFA))
 #define SIZER_STATUS_WINDOW_ITEM_H_MARGIN 4
 #define SIZER_STATUS_WINDOW_ITEM_V_MARGIN 2
+  // FIXME: 16 is the height of images in the status bar, had better be
+  // read from the xpm files.
+#define SIZER_STATUS_WINDOW_HEIGHT        16
   // Path
 #define SIZER_PATH_BORDERSTYLE            wxBORDER_NONE
 #define SIZER_PATH_BORDERSIZE             0
@@ -909,9 +912,9 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size,
 
     // Status line (red arrow to show shift pressed, ...)
   if (gui == GUI_SIZER) {
-        // FIXME: 16 is the height of images in the status bar, had better be
-        // read from the xpm files.
-    stwin = new StatusWindow(this, wxID_ANY, wxPoint(wxDefaultPosition), wxSize(0, 16), SIZER_STATUS_BACKGROUND_COLOUR,
+    stwin = new StatusWindow(this, wxID_ANY, wxPoint(wxDefaultPosition),
+        wxSize(0, disp_scale * SIZER_STATUS_WINDOW_HEIGHT),
+        SIZER_STATUS_BACKGROUND_COLOUR,
         exec_norun_xpm, exec_run_xpm,
         shiftsel_xpm, shiftuns_xpm,
         angle_deg_xpm, angle_rad_xpm,
