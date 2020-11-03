@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: prpn 0.6.1\n"
 "Report-Msgid-Bugs-To: milletseb@laposte.net\n"
-"POT-Creation-Date: 2020-11-01 19:00+0100\n"
+"POT-Creation-Date: 2020-11-03 21:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -214,7 +214,7 @@ msgstr ""
 msgid "&Quit"
 msgstr ""
 
-#: src/Ui.cpp:465 src/Wx/UiImplWx.cpp:662
+#: src/Ui.cpp:465 src/Wx/UiImplWx.cpp:665
 msgid "__INTERFACE__"
 msgstr ""
 
@@ -1032,10 +1032,10 @@ msgstr ""
 msgid "Use WX 'sizer' mechanism to build the interface, can fit any size"
 msgstr ""
 
-#: src/Wx/UiImplWx.cpp:1214
+#: src/Wx/UiImplWx.cpp:1217
 msgid "Help"
 msgstr ""
 
-#: src/Wx/UiImplWx.cpp:1236 src/Wx/UiImplWx.cpp:1249
+#: src/Wx/UiImplWx.cpp:1239 src/Wx/UiImplWx.cpp:1252
 msgid "OK"
 msgstr ""

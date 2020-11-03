@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: prpn 0.5.0\n"
 "Report-Msgid-Bugs-To: milletseb@laposte.net\n"
-"POT-Creation-Date: 2020-11-01 19:00+0100\n"
+"POT-Creation-Date: 2020-11-03 21:05+0100\n"
 "PO-Revision-Date: 2012-05-01 16:58+0100\n"
 "Last-Translator: Sébastien Millet <sebastien.millet1@club-internet.fr>\n"
 "Language-Team: French\n"
@@ -215,7 +215,7 @@ msgstr "&Liste des indicateurs binaires"
 msgid "&Quit"
 msgstr "&Quitter"
 
-#: src/Ui.cpp:465 src/Wx/UiImplWx.cpp:662
+#: src/Ui.cpp:465 src/Wx/UiImplWx.cpp:665
 msgid "__INTERFACE__"
 msgstr "Interface"
 
@@ -1045,11 +1045,11 @@ msgstr ""
 "Utilise le mécanisme \"sizer\" de WX pour construire l'interface, s'adapte à "
 "n'importe quelle taille"
 
-#: src/Wx/UiImplWx.cpp:1214
+#: src/Wx/UiImplWx.cpp:1217
 msgid "Help"
 msgstr "Aide"
 
-#: src/Wx/UiImplWx.cpp:1236 src/Wx/UiImplWx.cpp:1249
+#: src/Wx/UiImplWx.cpp:1239 src/Wx/UiImplWx.cpp:1252
 msgid "OK"
 msgstr "OK"
 
